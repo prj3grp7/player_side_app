@@ -1,0 +1,2466 @@
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 1856
+  28              	cy_meta_configecc:
+  29 0000 02       		.byte	2
+  30 0001 4F       		.byte	79
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 04       		.byte	4
+  34 0005 52       		.byte	82
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 03       		.byte	3
+  38 0009 64       		.byte	100
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 04       		.byte	4
+  42 000d 65       		.byte	101
+  43 000e 00       		.byte	0
+  44 000f 40       		.byte	64
+  45 0010 01       		.byte	1
+  46 0011 03       		.byte	3
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 04       		.byte	4
+  50 0015 04       		.byte	4
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 01       		.byte	1
+  54 0019 05       		.byte	5
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 01       		.byte	1
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 2
+
+
+  58 001d 07       		.byte	7
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 4F       		.byte	79
+  62 0021 08       		.byte	8
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 4A       		.byte	74
+  66 0025 09       		.byte	9
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 61       		.byte	97
+  70 0029 0A       		.byte	10
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 42       		.byte	66
+  74 002d 0B       		.byte	11
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 16       		.byte	22
+  78 0031 0C       		.byte	12
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 34       		.byte	52
+  82 0035 0D       		.byte	13
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 01       		.byte	1
+  86 0039 17       		.byte	23
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 26       		.byte	38
+  90 003d 18       		.byte	24
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 46       		.byte	70
+  94 0041 19       		.byte	25
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 50       		.byte	80
+  98 0045 1A       		.byte	26
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 40       		.byte	64
+ 102 0049 1B       		.byte	27
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 02       		.byte	2
+ 106 004d 40       		.byte	64
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 04       		.byte	4
+ 110 0051 41       		.byte	65
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 03       		.byte	3
+ 114 0055 42       		.byte	66
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 03       		.byte	3
+ 118 0059 43       		.byte	67
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 06       		.byte	6
+ 122 005d 45       		.byte	69
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 01       		.byte	1
+ 126 0061 46       		.byte	70
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 03       		.byte	3
+ 130 0065 47       		.byte	71
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 03       		.byte	3
+ 134 0069 48       		.byte	72
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 09       		.byte	9
+ 138 006d 4C       		.byte	76
+ 139 006e 01       		.byte	1
+ 140 006f 40       		.byte	64
+ 141 0070 0C       		.byte	12
+ 142 0071 4D       		.byte	77
+ 143 0072 01       		.byte	1
+ 144 0073 40       		.byte	64
+ 145 0074 05       		.byte	5
+ 146 0075 50       		.byte	80
+ 147 0076 01       		.byte	1
+ 148 0077 40       		.byte	64
+ 149 0078 01       		.byte	1
+ 150 0079 51       		.byte	81
+ 151 007a 01       		.byte	1
+ 152 007b 40       		.byte	64
+ 153 007c 01       		.byte	1
+ 154 007d 30       		.byte	48
+ 155 007e 0A       		.byte	10
+ 156 007f 4B       		.byte	75
+ 157 0080 08       		.byte	8
+ 158 0081 30       		.byte	48
+ 159 0082 09       		.byte	9
+ 160 0083 10       		.byte	16
+ 161 0084 10       		.byte	16
+ 162 0085 05       		.byte	5
+ 163 0086 11       		.byte	17
+ 164 0087 04       		.byte	4
+ 165 0088 88       		.byte	-120
+ 166 0089 0D       		.byte	13
+ 167 008a 89       		.byte	-119
+ 168 008b 0D       		.byte	13
+ 169 008c 8C       		.byte	-116
+ 170 008d 0F       		.byte	15
+ 171 008e 88       		.byte	-120
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 4
+
+
+ 172 008f 0F       		.byte	15
+ 173 0090 89       		.byte	-119
+ 174 0091 38       		.byte	56
+ 175 0092 8A       		.byte	-118
+ 176 0093 72       		.byte	114
+ 177 0094 8B       		.byte	-117
+ 178 0095 0D       		.byte	13
+ 179 0096 E0       		.byte	-32
+ 180 0097 40       		.byte	64
+ 181 0098 B8       		.byte	-72
+ 182 0099 80       		.byte	-128
+ 183 009a BE       		.byte	-66
+ 184 009b 40       		.byte	64
+ 185 009c D8       		.byte	-40
+ 186 009d 04       		.byte	4
+ 187 009e DF       		.byte	-33
+ 188 009f 01       		.byte	1
+ 189 00a0 1F       		.byte	31
+ 190 00a1 80       		.byte	-128
+ 191 00a2 AF       		.byte	-81
+ 192 00a3 80       		.byte	-128
+ 193 00a4 01       		.byte	1
+ 194 00a5 70       		.byte	112
+ 195 00a6 02       		.byte	2
+ 196 00a7 0D       		.byte	13
+ 197 00a8 05       		.byte	5
+ 198 00a9 20       		.byte	32
+ 199 00aa 07       		.byte	7
+ 200 00ab 4B       		.byte	75
+ 201 00ac 09       		.byte	9
+ 202 00ad 28       		.byte	40
+ 203 00ae 0B       		.byte	11
+ 204 00af 53       		.byte	83
+ 205 00b0 0F       		.byte	15
+ 206 00b1 02       		.byte	2
+ 207 00b2 16       		.byte	22
+ 208 00b3 04       		.byte	4
+ 209 00b4 17       		.byte	23
+ 210 00b5 04       		.byte	4
+ 211 00b6 18       		.byte	24
+ 212 00b7 08       		.byte	8
+ 213 00b8 19       		.byte	25
+ 214 00b9 19       		.byte	25
+ 215 00ba 1B       		.byte	27
+ 216 00bb 20       		.byte	32
+ 217 00bc 2B       		.byte	43
+ 218 00bd 04       		.byte	4
+ 219 00be 2E       		.byte	46
+ 220 00bf 02       		.byte	2
+ 221 00c0 30       		.byte	48
+ 222 00c1 04       		.byte	4
+ 223 00c2 31       		.byte	49
+ 224 00c3 78       		.byte	120
+ 225 00c4 32       		.byte	50
+ 226 00c5 02       		.byte	2
+ 227 00c6 34       		.byte	52
+ 228 00c7 01       		.byte	1
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 5
+
+
+ 229 00c8 35       		.byte	53
+ 230 00c9 04       		.byte	4
+ 231 00ca 36       		.byte	54
+ 232 00cb 08       		.byte	8
+ 233 00cc 37       		.byte	55
+ 234 00cd 03       		.byte	3
+ 235 00ce 39       		.byte	57
+ 236 00cf 02       		.byte	2
+ 237 00d0 3F       		.byte	63
+ 238 00d1 10       		.byte	16
+ 239 00d2 52       		.byte	82
+ 240 00d3 80       		.byte	-128
+ 241 00d4 54       		.byte	84
+ 242 00d5 05       		.byte	5
+ 243 00d6 58       		.byte	88
+ 244 00d7 04       		.byte	4
+ 245 00d8 59       		.byte	89
+ 246 00d9 04       		.byte	4
+ 247 00da 5B       		.byte	91
+ 248 00db 04       		.byte	4
+ 249 00dc 5C       		.byte	92
+ 250 00dd 10       		.byte	16
+ 251 00de 5F       		.byte	95
+ 252 00df 01       		.byte	1
+ 253 00e0 82       		.byte	-126
+ 254 00e1 80       		.byte	-128
+ 255 00e2 84       		.byte	-124
+ 256 00e3 13       		.byte	19
+ 257 00e4 86       		.byte	-122
+ 258 00e5 4C       		.byte	76
+ 259 00e6 87       		.byte	-121
+ 260 00e7 07       		.byte	7
+ 261 00e8 88       		.byte	-120
+ 262 00e9 13       		.byte	19
+ 263 00ea 8A       		.byte	-118
+ 264 00eb C4       		.byte	-60
+ 265 00ec 8E       		.byte	-114
+ 266 00ed 88       		.byte	-120
+ 267 00ee 91       		.byte	-111
+ 268 00ef 02       		.byte	2
+ 269 00f0 92       		.byte	-110
+ 270 00f1 55       		.byte	85
+ 271 00f2 96       		.byte	-106
+ 272 00f3 20       		.byte	32
+ 273 00f4 A2       		.byte	-94
+ 274 00f5 20       		.byte	32
+ 275 00f6 A3       		.byte	-93
+ 276 00f7 04       		.byte	4
+ 277 00f8 A4       		.byte	-92
+ 278 00f9 03       		.byte	3
+ 279 00fa A6       		.byte	-90
+ 280 00fb 14       		.byte	20
+ 281 00fc A8       		.byte	-88
+ 282 00fd 8A       		.byte	-118
+ 283 00fe AA       		.byte	-86
+ 284 00ff 54       		.byte	84
+ 285 0100 B0       		.byte	-80
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 6
+
+
+ 286 0101 20       		.byte	32
+ 287 0102 B1       		.byte	-79
+ 288 0103 01       		.byte	1
+ 289 0104 B2       		.byte	-78
+ 290 0105 C8       		.byte	-56
+ 291 0106 B3       		.byte	-77
+ 292 0107 04       		.byte	4
+ 293 0108 B4       		.byte	-76
+ 294 0109 0F       		.byte	15
+ 295 010a B5       		.byte	-75
+ 296 010b 02       		.byte	2
+ 297 010c B6       		.byte	-74
+ 298 010d 10       		.byte	16
+ 299 010e BA       		.byte	-70
+ 300 010f 28       		.byte	40
+ 301 0110 BE       		.byte	-66
+ 302 0111 41       		.byte	65
+ 303 0112 C0       		.byte	-64
+ 304 0113 25       		.byte	37
+ 305 0114 C1       		.byte	-63
+ 306 0115 03       		.byte	3
+ 307 0116 C5       		.byte	-59
+ 308 0117 0C       		.byte	12
+ 309 0118 C6       		.byte	-58
+ 310 0119 E0       		.byte	-32
+ 311 011a C7       		.byte	-57
+ 312 011b B0       		.byte	-80
+ 313 011c C8       		.byte	-56
+ 314 011d 29       		.byte	41
+ 315 011e C9       		.byte	-55
+ 316 011f FF       		.byte	-1
+ 317 0120 CA       		.byte	-54
+ 318 0121 FF       		.byte	-1
+ 319 0122 CB       		.byte	-53
+ 320 0123 FF       		.byte	-1
+ 321 0124 CE       		.byte	-50
+ 322 0125 F0       		.byte	-16
+ 323 0126 CF       		.byte	-49
+ 324 0127 44       		.byte	68
+ 325 0128 D0       		.byte	-48
+ 326 0129 0C       		.byte	12
+ 327 012a D2       		.byte	-46
+ 328 012b 80       		.byte	-128
+ 329 012c D4       		.byte	-44
+ 330 012d 05       		.byte	5
+ 331 012e D8       		.byte	-40
+ 332 012f 04       		.byte	4
+ 333 0130 D9       		.byte	-39
+ 334 0131 04       		.byte	4
+ 335 0132 DA       		.byte	-38
+ 336 0133 04       		.byte	4
+ 337 0134 DB       		.byte	-37
+ 338 0135 04       		.byte	4
+ 339 0136 DC       		.byte	-36
+ 340 0137 02       		.byte	2
+ 341 0138 DD       		.byte	-35
+ 342 0139 02       		.byte	2
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 7
+
+
+ 343 013a DF       		.byte	-33
+ 344 013b 01       		.byte	1
+ 345 013c E6       		.byte	-26
+ 346 013d C0       		.byte	-64
+ 347 013e EA       		.byte	-22
+ 348 013f 40       		.byte	64
+ 349 0140 EB       		.byte	-21
+ 350 0141 02       		.byte	2
+ 351 0142 00       		.byte	0
+ 352 0143 10       		.byte	16
+ 353 0144 02       		.byte	2
+ 354 0145 82       		.byte	-126
+ 355 0146 03       		.byte	3
+ 356 0147 20       		.byte	32
+ 357 0148 06       		.byte	6
+ 358 0149 80       		.byte	-128
+ 359 014a 0A       		.byte	10
+ 360 014b 10       		.byte	16
+ 361 014c 0B       		.byte	11
+ 362 014d 80       		.byte	-128
+ 363 014e 0D       		.byte	13
+ 364 014f 08       		.byte	8
+ 365 0150 0E       		.byte	14
+ 366 0151 08       		.byte	8
+ 367 0152 10       		.byte	16
+ 368 0153 A0       		.byte	-96
+ 369 0154 12       		.byte	18
+ 370 0155 08       		.byte	8
+ 371 0156 17       		.byte	23
+ 372 0157 40       		.byte	64
+ 373 0158 18       		.byte	24
+ 374 0159 10       		.byte	16
+ 375 015a 19       		.byte	25
+ 376 015b A0       		.byte	-96
+ 377 015c 1A       		.byte	26
+ 378 015d 20       		.byte	32
+ 379 015e 1B       		.byte	27
+ 380 015f 21       		.byte	33
+ 381 0160 1C       		.byte	28
+ 382 0161 40       		.byte	64
+ 383 0162 1D       		.byte	29
+ 384 0163 0C       		.byte	12
+ 385 0164 1E       		.byte	30
+ 386 0165 0A       		.byte	10
+ 387 0166 20       		.byte	32
+ 388 0167 04       		.byte	4
+ 389 0168 21       		.byte	33
+ 390 0169 02       		.byte	2
+ 391 016a 23       		.byte	35
+ 392 016b 10       		.byte	16
+ 393 016c 25       		.byte	37
+ 394 016d 41       		.byte	65
+ 395 016e 27       		.byte	39
+ 396 016f 08       		.byte	8
+ 397 0170 28       		.byte	40
+ 398 0171 40       		.byte	64
+ 399 0172 2F       		.byte	47
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 8
+
+
+ 400 0173 08       		.byte	8
+ 401 0174 31       		.byte	49
+ 402 0175 02       		.byte	2
+ 403 0176 34       		.byte	52
+ 404 0177 10       		.byte	16
+ 405 0178 35       		.byte	53
+ 406 0179 04       		.byte	4
+ 407 017a 38       		.byte	56
+ 408 017b 08       		.byte	8
+ 409 017c 3D       		.byte	61
+ 410 017d 8A       		.byte	-118
+ 411 017e 3E       		.byte	62
+ 412 017f 20       		.byte	32
+ 413 0180 40       		.byte	64
+ 414 0181 10       		.byte	16
+ 415 0182 43       		.byte	67
+ 416 0183 20       		.byte	32
+ 417 0184 48       		.byte	72
+ 418 0185 20       		.byte	32
+ 419 0186 4A       		.byte	74
+ 420 0187 10       		.byte	16
+ 421 0188 4B       		.byte	75
+ 422 0189 80       		.byte	-128
+ 423 018a 51       		.byte	81
+ 424 018b 10       		.byte	16
+ 425 018c 53       		.byte	83
+ 426 018d 01       		.byte	1
+ 427 018e 59       		.byte	89
+ 428 018f 01       		.byte	1
+ 429 0190 5A       		.byte	90
+ 430 0191 44       		.byte	68
+ 431 0192 5D       		.byte	93
+ 432 0193 42       		.byte	66
+ 433 0194 5F       		.byte	95
+ 434 0195 08       		.byte	8
+ 435 0196 73       		.byte	115
+ 436 0197 40       		.byte	64
+ 437 0198 77       		.byte	119
+ 438 0199 40       		.byte	64
+ 439 019a 79       		.byte	121
+ 440 019b 40       		.byte	64
+ 441 019c 7A       		.byte	122
+ 442 019d 01       		.byte	1
+ 443 019e 80       		.byte	-128
+ 444 019f 40       		.byte	64
+ 445 01a0 85       		.byte	-123
+ 446 01a1 40       		.byte	64
+ 447 01a2 90       		.byte	-112
+ 448 01a3 08       		.byte	8
+ 449 01a4 92       		.byte	-110
+ 450 01a5 05       		.byte	5
+ 451 01a6 93       		.byte	-109
+ 452 01a7 80       		.byte	-128
+ 453 01a8 96       		.byte	-106
+ 454 01a9 20       		.byte	32
+ 455 01aa 97       		.byte	-105
+ 456 01ab 02       		.byte	2
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 9
+
+
+ 457 01ac 98       		.byte	-104
+ 458 01ad 50       		.byte	80
+ 459 01ae 99       		.byte	-103
+ 460 01af 01       		.byte	1
+ 461 01b0 9A       		.byte	-102
+ 462 01b1 20       		.byte	32
+ 463 01b2 9D       		.byte	-99
+ 464 01b3 20       		.byte	32
+ 465 01b4 9E       		.byte	-98
+ 466 01b5 40       		.byte	64
+ 467 01b6 A1       		.byte	-95
+ 468 01b7 04       		.byte	4
+ 469 01b8 A2       		.byte	-94
+ 470 01b9 8A       		.byte	-118
+ 471 01ba A7       		.byte	-89
+ 472 01bb 20       		.byte	32
+ 473 01bc B4       		.byte	-76
+ 474 01bd 20       		.byte	32
+ 475 01be B5       		.byte	-75
+ 476 01bf 40       		.byte	64
+ 477 01c0 C0       		.byte	-64
+ 478 01c1 1F       		.byte	31
+ 479 01c2 C2       		.byte	-62
+ 480 01c3 6C       		.byte	108
+ 481 01c4 C4       		.byte	-60
+ 482 01c5 8E       		.byte	-114
+ 483 01c6 CA       		.byte	-54
+ 484 01c7 21       		.byte	33
+ 485 01c8 CC       		.byte	-52
+ 486 01c9 61       		.byte	97
+ 487 01ca CE       		.byte	-50
+ 488 01cb F2       		.byte	-14
+ 489 01cc D0       		.byte	-48
+ 490 01cd 06       		.byte	6
+ 491 01ce D2       		.byte	-46
+ 492 01cf 08       		.byte	8
+ 493 01d0 D6       		.byte	-42
+ 494 01d1 DB       		.byte	-37
+ 495 01d2 E0       		.byte	-32
+ 496 01d3 02       		.byte	2
+ 497 01d4 E4       		.byte	-28
+ 498 01d5 04       		.byte	4
+ 499 01d6 04       		.byte	4
+ 500 01d7 10       		.byte	16
+ 501 01d8 06       		.byte	6
+ 502 01d9 0C       		.byte	12
+ 503 01da 0A       		.byte	10
+ 504 01db 03       		.byte	3
+ 505 01dc 0C       		.byte	12
+ 506 01dd 09       		.byte	9
+ 507 01de 0D       		.byte	13
+ 508 01df 80       		.byte	-128
+ 509 01e0 0E       		.byte	14
+ 510 01e1 10       		.byte	16
+ 511 01e2 0F       		.byte	15
+ 512 01e3 13       		.byte	19
+ 513 01e4 13       		.byte	19
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 10
+
+
+ 514 01e5 0C       		.byte	12
+ 515 01e6 14       		.byte	20
+ 516 01e7 0C       		.byte	12
+ 517 01e8 15       		.byte	21
+ 518 01e9 2C       		.byte	44
+ 519 01ea 16       		.byte	22
+ 520 01eb 11       		.byte	17
+ 521 01ec 17       		.byte	23
+ 522 01ed 43       		.byte	67
+ 523 01ee 19       		.byte	25
+ 524 01ef 71       		.byte	113
+ 525 01f0 1B       		.byte	27
+ 526 01f1 0E       		.byte	14
+ 527 01f2 1C       		.byte	28
+ 528 01f3 14       		.byte	20
+ 529 01f4 1F       		.byte	31
+ 530 01f5 08       		.byte	8
+ 531 01f6 20       		.byte	32
+ 532 01f7 10       		.byte	16
+ 533 01f8 28       		.byte	40
+ 534 01f9 1C       		.byte	28
+ 535 01fa 29       		.byte	41
+ 536 01fb 71       		.byte	113
+ 537 01fc 2A       		.byte	42
+ 538 01fd 02       		.byte	2
+ 539 01fe 2B       		.byte	43
+ 540 01ff 06       		.byte	6
+ 541 0200 31       		.byte	49
+ 542 0201 C0       		.byte	-64
+ 543 0202 32       		.byte	50
+ 544 0203 1F       		.byte	31
+ 545 0204 33       		.byte	51
+ 546 0205 0F       		.byte	15
+ 547 0206 36       		.byte	54
+ 548 0207 1F       		.byte	31
+ 549 0208 37       		.byte	55
+ 550 0209 30       		.byte	48
+ 551 020a 39       		.byte	57
+ 552 020b 82       		.byte	-126
+ 553 020c 3B       		.byte	59
+ 554 020d 08       		.byte	8
+ 555 020e 3F       		.byte	63
+ 556 020f 40       		.byte	64
+ 557 0210 40       		.byte	64
+ 558 0211 40       		.byte	64
+ 559 0212 41       		.byte	65
+ 560 0213 05       		.byte	5
+ 561 0214 45       		.byte	69
+ 562 0215 D0       		.byte	-48
+ 563 0216 47       		.byte	71
+ 564 0217 21       		.byte	33
+ 565 0218 48       		.byte	72
+ 566 0219 32       		.byte	50
+ 567 021a 49       		.byte	73
+ 568 021b FF       		.byte	-1
+ 569 021c 4A       		.byte	74
+ 570 021d FF       		.byte	-1
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 11
+
+
+ 571 021e 4B       		.byte	75
+ 572 021f FF       		.byte	-1
+ 573 0220 4D       		.byte	77
+ 574 0221 A0       		.byte	-96
+ 575 0222 4F       		.byte	79
+ 576 0223 04       		.byte	4
+ 577 0224 50       		.byte	80
+ 578 0225 18       		.byte	24
+ 579 0226 58       		.byte	88
+ 580 0227 04       		.byte	4
+ 581 0228 59       		.byte	89
+ 582 0229 04       		.byte	4
+ 583 022a 5A       		.byte	90
+ 584 022b 04       		.byte	4
+ 585 022c 5C       		.byte	92
+ 586 022d 22       		.byte	34
+ 587 022e 5F       		.byte	95
+ 588 022f 01       		.byte	1
+ 589 0230 60       		.byte	96
+ 590 0231 40       		.byte	64
+ 591 0232 62       		.byte	98
+ 592 0233 C0       		.byte	-64
+ 593 0234 64       		.byte	100
+ 594 0235 40       		.byte	64
+ 595 0236 65       		.byte	101
+ 596 0237 40       		.byte	64
+ 597 0238 66       		.byte	102
+ 598 0239 C0       		.byte	-64
+ 599 023a 68       		.byte	104
+ 600 023b C0       		.byte	-64
+ 601 023c 6A       		.byte	106
+ 602 023d C0       		.byte	-64
+ 603 023e 6C       		.byte	108
+ 604 023f C0       		.byte	-64
+ 605 0240 6E       		.byte	110
+ 606 0241 C0       		.byte	-64
+ 607 0242 80       		.byte	-128
+ 608 0243 2D       		.byte	45
+ 609 0244 84       		.byte	-124
+ 610 0245 02       		.byte	2
+ 611 0246 85       		.byte	-123
+ 612 0247 CC       		.byte	-52
+ 613 0248 86       		.byte	-122
+ 614 0249 0D       		.byte	13
+ 615 024a 87       		.byte	-121
+ 616 024b 30       		.byte	48
+ 617 024c 88       		.byte	-120
+ 618 024d 02       		.byte	2
+ 619 024e 89       		.byte	-119
+ 620 024f 10       		.byte	16
+ 621 0250 8A       		.byte	-118
+ 622 0251 48       		.byte	72
+ 623 0252 8B       		.byte	-117
+ 624 0253 68       		.byte	104
+ 625 0254 8D       		.byte	-115
+ 626 0255 04       		.byte	4
+ 627 0256 8E       		.byte	-114
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 12
+
+
+ 628 0257 10       		.byte	16
+ 629 0258 90       		.byte	-112
+ 630 0259 0D       		.byte	13
+ 631 025a 92       		.byte	-110
+ 632 025b 20       		.byte	32
+ 633 025c 94       		.byte	-108
+ 634 025d 2D       		.byte	45
+ 635 025e 95       		.byte	-107
+ 636 025f AE       		.byte	-82
+ 637 0260 97       		.byte	-105
+ 638 0261 51       		.byte	81
+ 639 0262 98       		.byte	-104
+ 640 0263 01       		.byte	1
+ 641 0264 99       		.byte	-103
+ 642 0265 99       		.byte	-103
+ 643 0266 9A       		.byte	-102
+ 644 0267 42       		.byte	66
+ 645 0268 9B       		.byte	-101
+ 646 0269 62       		.byte	98
+ 647 026a 9C       		.byte	-100
+ 648 026b 2D       		.byte	45
+ 649 026c A2       		.byte	-94
+ 650 026d 10       		.byte	16
+ 651 026e A4       		.byte	-92
+ 652 026f 42       		.byte	66
+ 653 0270 A6       		.byte	-90
+ 654 0271 04       		.byte	4
+ 655 0272 A8       		.byte	-88
+ 656 0273 2D       		.byte	45
+ 657 0274 B0       		.byte	-80
+ 658 0275 40       		.byte	64
+ 659 0276 B1       		.byte	-79
+ 660 0277 80       		.byte	-128
+ 661 0278 B2       		.byte	-78
+ 662 0279 0F       		.byte	15
+ 663 027a B3       		.byte	-77
+ 664 027b 07       		.byte	7
+ 665 027c B4       		.byte	-76
+ 666 027d 10       		.byte	16
+ 667 027e B5       		.byte	-75
+ 668 027f 78       		.byte	120
+ 669 0280 B6       		.byte	-74
+ 670 0281 20       		.byte	32
+ 671 0282 BA       		.byte	-70
+ 672 0283 08       		.byte	8
+ 673 0284 BB       		.byte	-69
+ 674 0285 28       		.byte	40
+ 675 0286 BE       		.byte	-66
+ 676 0287 51       		.byte	81
+ 677 0288 BF       		.byte	-65
+ 678 0289 01       		.byte	1
+ 679 028a D4       		.byte	-44
+ 680 028b 09       		.byte	9
+ 681 028c D8       		.byte	-40
+ 682 028d 04       		.byte	4
+ 683 028e D9       		.byte	-39
+ 684 028f 04       		.byte	4
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 13
+
+
+ 685 0290 DB       		.byte	-37
+ 686 0291 04       		.byte	4
+ 687 0292 DC       		.byte	-36
+ 688 0293 11       		.byte	17
+ 689 0294 DD       		.byte	-35
+ 690 0295 10       		.byte	16
+ 691 0296 DF       		.byte	-33
+ 692 0297 01       		.byte	1
+ 693 0298 00       		.byte	0
+ 694 0299 10       		.byte	16
+ 695 029a 02       		.byte	2
+ 696 029b 02       		.byte	2
+ 697 029c 03       		.byte	3
+ 698 029d 20       		.byte	32
+ 699 029e 04       		.byte	4
+ 700 029f 20       		.byte	32
+ 701 02a0 05       		.byte	5
+ 702 02a1 04       		.byte	4
+ 703 02a2 06       		.byte	6
+ 704 02a3 01       		.byte	1
+ 705 02a4 07       		.byte	7
+ 706 02a5 40       		.byte	64
+ 707 02a6 0A       		.byte	10
+ 708 02a7 20       		.byte	32
+ 709 02a8 0B       		.byte	11
+ 710 02a9 02       		.byte	2
+ 711 02aa 0C       		.byte	12
+ 712 02ab 90       		.byte	-112
+ 713 02ac 0E       		.byte	14
+ 714 02ad A8       		.byte	-88
+ 715 02ae 12       		.byte	18
+ 716 02af 88       		.byte	-120
+ 717 02b0 14       		.byte	20
+ 718 02b1 40       		.byte	64
+ 719 02b2 15       		.byte	21
+ 720 02b3 02       		.byte	2
+ 721 02b4 16       		.byte	22
+ 722 02b5 20       		.byte	32
+ 723 02b6 17       		.byte	23
+ 724 02b7 18       		.byte	24
+ 725 02b8 18       		.byte	24
+ 726 02b9 10       		.byte	16
+ 727 02ba 1A       		.byte	26
+ 728 02bb 01       		.byte	1
+ 729 02bc 1D       		.byte	29
+ 730 02bd 84       		.byte	-124
+ 731 02be 1E       		.byte	30
+ 732 02bf 46       		.byte	70
+ 733 02c0 20       		.byte	32
+ 734 02c1 02       		.byte	2
+ 735 02c2 22       		.byte	34
+ 736 02c3 0E       		.byte	14
+ 737 02c4 24       		.byte	36
+ 738 02c5 24       		.byte	36
+ 739 02c6 25       		.byte	37
+ 740 02c7 1D       		.byte	29
+ 741 02c8 29       		.byte	41
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 14
+
+
+ 742 02c9 20       		.byte	32
+ 743 02ca 32       		.byte	50
+ 744 02cb 96       		.byte	-106
+ 745 02cc 34       		.byte	52
+ 746 02cd 10       		.byte	16
+ 747 02ce 37       		.byte	55
+ 748 02cf 08       		.byte	8
+ 749 02d0 38       		.byte	56
+ 750 02d1 80       		.byte	-128
+ 751 02d2 3B       		.byte	59
+ 752 02d3 80       		.byte	-128
+ 753 02d4 3D       		.byte	61
+ 754 02d5 68       		.byte	104
+ 755 02d6 3F       		.byte	63
+ 756 02d7 80       		.byte	-128
+ 757 02d8 40       		.byte	64
+ 758 02d9 0C       		.byte	12
+ 759 02da 41       		.byte	65
+ 760 02db 01       		.byte	1
+ 761 02dc 48       		.byte	72
+ 762 02dd 02       		.byte	2
+ 763 02de 49       		.byte	73
+ 764 02df 01       		.byte	1
+ 765 02e0 50       		.byte	80
+ 766 02e1 06       		.byte	6
+ 767 02e2 52       		.byte	82
+ 768 02e3 01       		.byte	1
+ 769 02e4 5C       		.byte	92
+ 770 02e5 20       		.byte	32
+ 771 02e6 5E       		.byte	94
+ 772 02e7 42       		.byte	66
+ 773 02e8 5F       		.byte	95
+ 774 02e9 04       		.byte	4
+ 775 02ea 64       		.byte	100
+ 776 02eb 02       		.byte	2
+ 777 02ec 7C       		.byte	124
+ 778 02ed 02       		.byte	2
+ 779 02ee 7D       		.byte	125
+ 780 02ef 02       		.byte	2
+ 781 02f0 90       		.byte	-112
+ 782 02f1 80       		.byte	-128
+ 783 02f2 91       		.byte	-111
+ 784 02f3 02       		.byte	2
+ 785 02f4 93       		.byte	-109
+ 786 02f5 04       		.byte	4
+ 787 02f6 94       		.byte	-108
+ 788 02f7 20       		.byte	32
+ 789 02f8 9B       		.byte	-101
+ 790 02f9 58       		.byte	88
+ 791 02fa 9C       		.byte	-100
+ 792 02fb 18       		.byte	24
+ 793 02fc 9E       		.byte	-98
+ 794 02fd 40       		.byte	64
+ 795 02fe A0       		.byte	-96
+ 796 02ff 80       		.byte	-128
+ 797 0300 A2       		.byte	-94
+ 798 0301 D4       		.byte	-44
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 15
+
+
+ 799 0302 A3       		.byte	-93
+ 800 0303 40       		.byte	64
+ 801 0304 A4       		.byte	-92
+ 802 0305 01       		.byte	1
+ 803 0306 A5       		.byte	-91
+ 804 0307 8C       		.byte	-116
+ 805 0308 C0       		.byte	-64
+ 806 0309 F7       		.byte	-9
+ 807 030a C2       		.byte	-62
+ 808 030b F5       		.byte	-11
+ 809 030c C4       		.byte	-60
+ 810 030d 7A       		.byte	122
+ 811 030e CA       		.byte	-54
+ 812 030f 04       		.byte	4
+ 813 0310 CC       		.byte	-52
+ 814 0311 6F       		.byte	111
+ 815 0312 CE       		.byte	-50
+ 816 0313 78       		.byte	120
+ 817 0314 D0       		.byte	-48
+ 818 0315 01       		.byte	1
+ 819 0316 D2       		.byte	-46
+ 820 0317 08       		.byte	8
+ 821 0318 D6       		.byte	-42
+ 822 0319 F0       		.byte	-16
+ 823 031a D8       		.byte	-40
+ 824 031b 10       		.byte	16
+ 825 031c AF       		.byte	-81
+ 826 031d 01       		.byte	1
+ 827 031e B1       		.byte	-79
+ 828 031f 01       		.byte	1
+ 829 0320 C0       		.byte	-64
+ 830 0321 05       		.byte	5
+ 831 0322 C5       		.byte	-59
+ 832 0323 40       		.byte	64
+ 833 0324 C9       		.byte	-55
+ 834 0325 FF       		.byte	-1
+ 835 0326 CA       		.byte	-54
+ 836 0327 07       		.byte	7
+ 837 0328 CB       		.byte	-53
+ 838 0329 FF       		.byte	-1
+ 839 032a CC       		.byte	-52
+ 840 032b 40       		.byte	64
+ 841 032c CD       		.byte	-51
+ 842 032d 20       		.byte	32
+ 843 032e CE       		.byte	-50
+ 844 032f F0       		.byte	-16
+ 845 0330 CF       		.byte	-49
+ 846 0331 05       		.byte	5
+ 847 0332 D0       		.byte	-48
+ 848 0333 08       		.byte	8
+ 849 0334 D4       		.byte	-44
+ 850 0335 40       		.byte	64
+ 851 0336 D9       		.byte	-39
+ 852 0337 04       		.byte	4
+ 853 0338 DA       		.byte	-38
+ 854 0339 04       		.byte	4
+ 855 033a DB       		.byte	-37
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 16
+
+
+ 856 033b 04       		.byte	4
+ 857 033c DD       		.byte	-35
+ 858 033d 12       		.byte	18
+ 859 033e DF       		.byte	-33
+ 860 033f 01       		.byte	1
+ 861 0340 E0       		.byte	-32
+ 862 0341 40       		.byte	64
+ 863 0342 E1       		.byte	-31
+ 864 0343 A8       		.byte	-88
+ 865 0344 E2       		.byte	-30
+ 866 0345 40       		.byte	64
+ 867 0346 E3       		.byte	-29
+ 868 0347 20       		.byte	32
+ 869 0348 04       		.byte	4
+ 870 0349 21       		.byte	33
+ 871 034a 05       		.byte	5
+ 872 034b 40       		.byte	64
+ 873 034c 06       		.byte	6
+ 874 034d 10       		.byte	16
+ 875 034e 0C       		.byte	12
+ 876 034f 80       		.byte	-128
+ 877 0350 0D       		.byte	13
+ 878 0351 22       		.byte	34
+ 879 0352 0E       		.byte	14
+ 880 0353 20       		.byte	32
+ 881 0354 14       		.byte	20
+ 882 0355 10       		.byte	16
+ 883 0356 17       		.byte	23
+ 884 0357 51       		.byte	81
+ 885 0358 1C       		.byte	28
+ 886 0359 10       		.byte	16
+ 887 035a 1D       		.byte	29
+ 888 035b 40       		.byte	64
+ 889 035c 21       		.byte	33
+ 890 035d 01       		.byte	1
+ 891 035e 24       		.byte	36
+ 892 035f 01       		.byte	1
+ 893 0360 25       		.byte	37
+ 894 0361 20       		.byte	32
+ 895 0362 26       		.byte	38
+ 896 0363 0C       		.byte	12
+ 897 0364 27       		.byte	39
+ 898 0365 08       		.byte	8
+ 899 0366 2A       		.byte	42
+ 900 0367 40       		.byte	64
+ 901 0368 2D       		.byte	45
+ 902 0369 80       		.byte	-128
+ 903 036a 2F       		.byte	47
+ 904 036b A0       		.byte	-96
+ 905 036c 36       		.byte	54
+ 906 036d 10       		.byte	16
+ 907 036e 37       		.byte	55
+ 908 036f 09       		.byte	9
+ 909 0370 3C       		.byte	60
+ 910 0371 01       		.byte	1
+ 911 0372 3D       		.byte	61
+ 912 0373 08       		.byte	8
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 17
+
+
+ 913 0374 3F       		.byte	63
+ 914 0375 A0       		.byte	-96
+ 915 0376 45       		.byte	69
+ 916 0377 A8       		.byte	-88
+ 917 0378 48       		.byte	72
+ 918 0379 01       		.byte	1
+ 919 037a 4A       		.byte	74
+ 920 037b 80       		.byte	-128
+ 921 037c 4D       		.byte	77
+ 922 037d 40       		.byte	64
+ 923 037e 4E       		.byte	78
+ 924 037f 08       		.byte	8
+ 925 0380 4F       		.byte	79
+ 926 0381 26       		.byte	38
+ 927 0382 50       		.byte	80
+ 928 0383 40       		.byte	64
+ 929 0384 55       		.byte	85
+ 930 0385 02       		.byte	2
+ 931 0386 56       		.byte	86
+ 932 0387 10       		.byte	16
+ 933 0388 57       		.byte	87
+ 934 0389 44       		.byte	68
+ 935 038a 60       		.byte	96
+ 936 038b 10       		.byte	16
+ 937 038c 63       		.byte	99
+ 938 038d 0A       		.byte	10
+ 939 038e 64       		.byte	100
+ 940 038f 08       		.byte	8
+ 941 0390 6E       		.byte	110
+ 942 0391 A0       		.byte	-96
+ 943 0392 6F       		.byte	111
+ 944 0393 F1       		.byte	-15
+ 945 0394 74       		.byte	116
+ 946 0395 80       		.byte	-128
+ 947 0396 75       		.byte	117
+ 948 0397 80       		.byte	-128
+ 949 0398 89       		.byte	-119
+ 950 0399 40       		.byte	64
+ 951 039a 8D       		.byte	-115
+ 952 039b 40       		.byte	64
+ 953 039c C0       		.byte	-64
+ 954 039d F0       		.byte	-16
+ 955 039e C2       		.byte	-62
+ 956 039f F0       		.byte	-16
+ 957 03a0 C4       		.byte	-60
+ 958 03a1 F0       		.byte	-16
+ 959 03a2 CA       		.byte	-54
+ 960 03a3 D8       		.byte	-40
+ 961 03a4 CC       		.byte	-52
+ 962 03a5 E0       		.byte	-32
+ 963 03a6 CE       		.byte	-50
+ 964 03a7 F0       		.byte	-16
+ 965 03a8 D0       		.byte	-48
+ 966 03a9 70       		.byte	112
+ 967 03aa D2       		.byte	-46
+ 968 03ab 38       		.byte	56
+ 969 03ac D8       		.byte	-40
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 18
+
+
+ 970 03ad 2E       		.byte	46
+ 971 03ae E0       		.byte	-32
+ 972 03af 40       		.byte	64
+ 973 03b0 E6       		.byte	-26
+ 974 03b1 01       		.byte	1
+ 975 03b2 01       		.byte	1
+ 976 03b3 02       		.byte	2
+ 977 03b4 0F       		.byte	15
+ 978 03b5 01       		.byte	1
+ 979 03b6 28       		.byte	40
+ 980 03b7 01       		.byte	1
+ 981 03b8 31       		.byte	49
+ 982 03b9 01       		.byte	1
+ 983 03ba 33       		.byte	51
+ 984 03bb 02       		.byte	2
+ 985 03bc 34       		.byte	52
+ 986 03bd 01       		.byte	1
+ 987 03be 35       		.byte	53
+ 988 03bf 01       		.byte	1
+ 989 03c0 37       		.byte	55
+ 990 03c1 01       		.byte	1
+ 991 03c2 3E       		.byte	62
+ 992 03c3 10       		.byte	16
+ 993 03c4 3F       		.byte	63
+ 994 03c5 04       		.byte	4
+ 995 03c6 40       		.byte	64
+ 996 03c7 30       		.byte	48
+ 997 03c8 41       		.byte	65
+ 998 03c9 06       		.byte	6
+ 999 03ca 45       		.byte	69
+ 1000 03cb D0       		.byte	-48
+ 1001 03cc 46       		.byte	70
+ 1002 03cd 01       		.byte	1
+ 1003 03ce 47       		.byte	71
+ 1004 03cf 02       		.byte	2
+ 1005 03d0 48       		.byte	72
+ 1006 03d1 16       		.byte	22
+ 1007 03d2 49       		.byte	73
+ 1008 03d3 FF       		.byte	-1
+ 1009 03d4 4A       		.byte	74
+ 1010 03d5 FF       		.byte	-1
+ 1011 03d6 4B       		.byte	75
+ 1012 03d7 FF       		.byte	-1
+ 1013 03d8 4D       		.byte	77
+ 1014 03d9 A0       		.byte	-96
+ 1015 03da 4F       		.byte	79
+ 1016 03db 04       		.byte	4
+ 1017 03dc 50       		.byte	80
+ 1018 03dd 18       		.byte	24
+ 1019 03de 54       		.byte	84
+ 1020 03df 01       		.byte	1
+ 1021 03e0 58       		.byte	88
+ 1022 03e1 04       		.byte	4
+ 1023 03e2 59       		.byte	89
+ 1024 03e3 04       		.byte	4
+ 1025 03e4 5A       		.byte	90
+ 1026 03e5 04       		.byte	4
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 19
+
+
+ 1027 03e6 5B       		.byte	91
+ 1028 03e7 04       		.byte	4
+ 1029 03e8 5D       		.byte	93
+ 1030 03e9 20       		.byte	32
+ 1031 03ea 5F       		.byte	95
+ 1032 03eb 01       		.byte	1
+ 1033 03ec 60       		.byte	96
+ 1034 03ed 40       		.byte	64
+ 1035 03ee 62       		.byte	98
+ 1036 03ef C0       		.byte	-64
+ 1037 03f0 64       		.byte	100
+ 1038 03f1 40       		.byte	64
+ 1039 03f2 65       		.byte	101
+ 1040 03f3 40       		.byte	64
+ 1041 03f4 66       		.byte	102
+ 1042 03f5 C0       		.byte	-64
+ 1043 03f6 68       		.byte	104
+ 1044 03f7 C0       		.byte	-64
+ 1045 03f8 6A       		.byte	106
+ 1046 03f9 C0       		.byte	-64
+ 1047 03fa 6C       		.byte	108
+ 1048 03fb C0       		.byte	-64
+ 1049 03fc 6E       		.byte	110
+ 1050 03fd C0       		.byte	-64
+ 1051 03fe 00       		.byte	0
+ 1052 03ff 46       		.byte	70
+ 1053 0400 01       		.byte	1
+ 1054 0401 20       		.byte	32
+ 1055 0402 09       		.byte	9
+ 1056 0403 80       		.byte	-128
+ 1057 0404 0A       		.byte	10
+ 1058 0405 84       		.byte	-124
+ 1059 0406 0B       		.byte	11
+ 1060 0407 20       		.byte	32
+ 1061 0408 10       		.byte	16
+ 1062 0409 42       		.byte	66
+ 1063 040a 13       		.byte	19
+ 1064 040b 10       		.byte	16
+ 1065 040c 14       		.byte	20
+ 1066 040d 44       		.byte	68
+ 1067 040e 15       		.byte	21
+ 1068 040f 22       		.byte	34
+ 1069 0410 18       		.byte	24
+ 1070 0411 05       		.byte	5
+ 1071 0412 19       		.byte	25
+ 1072 0413 01       		.byte	1
+ 1073 0414 1A       		.byte	26
+ 1074 0415 10       		.byte	16
+ 1075 0416 1E       		.byte	30
+ 1076 0417 08       		.byte	8
+ 1077 0418 21       		.byte	33
+ 1078 0419 01       		.byte	1
+ 1079 041a 22       		.byte	34
+ 1080 041b 82       		.byte	-126
+ 1081 041c 23       		.byte	35
+ 1082 041d 04       		.byte	4
+ 1083 041e 24       		.byte	36
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 20
+
+
+ 1084 041f 20       		.byte	32
+ 1085 0420 27       		.byte	39
+ 1086 0421 8A       		.byte	-118
+ 1087 0422 2B       		.byte	43
+ 1088 0423 02       		.byte	2
+ 1089 0424 32       		.byte	50
+ 1090 0425 88       		.byte	-120
+ 1091 0426 38       		.byte	56
+ 1092 0427 46       		.byte	70
+ 1093 0428 39       		.byte	57
+ 1094 0429 80       		.byte	-128
+ 1095 042a 3E       		.byte	62
+ 1096 042b 01       		.byte	1
+ 1097 042c 3F       		.byte	63
+ 1098 042d 40       		.byte	64
+ 1099 042e 40       		.byte	64
+ 1100 042f 01       		.byte	1
+ 1101 0430 41       		.byte	65
+ 1102 0431 01       		.byte	1
+ 1103 0432 42       		.byte	66
+ 1104 0433 10       		.byte	16
+ 1105 0434 43       		.byte	67
+ 1106 0435 02       		.byte	2
+ 1107 0436 45       		.byte	69
+ 1108 0437 08       		.byte	8
+ 1109 0438 48       		.byte	72
+ 1110 0439 02       		.byte	2
+ 1111 043a 49       		.byte	73
+ 1112 043b 40       		.byte	64
+ 1113 043c 4A       		.byte	74
+ 1114 043d 08       		.byte	8
+ 1115 043e 4B       		.byte	75
+ 1116 043f 20       		.byte	32
+ 1117 0440 4C       		.byte	76
+ 1118 0441 08       		.byte	8
+ 1119 0442 4D       		.byte	77
+ 1120 0443 02       		.byte	2
+ 1121 0444 50       		.byte	80
+ 1122 0445 81       		.byte	-127
+ 1123 0446 54       		.byte	84
+ 1124 0447 08       		.byte	8
+ 1125 0448 56       		.byte	86
+ 1126 0449 80       		.byte	-128
+ 1127 044a 57       		.byte	87
+ 1128 044b 08       		.byte	8
+ 1129 044c 59       		.byte	89
+ 1130 044d 01       		.byte	1
+ 1131 044e 5D       		.byte	93
+ 1132 044f 81       		.byte	-127
+ 1133 0450 5E       		.byte	94
+ 1134 0451 28       		.byte	40
+ 1135 0452 60       		.byte	96
+ 1136 0453 80       		.byte	-128
+ 1137 0454 63       		.byte	99
+ 1138 0455 06       		.byte	6
+ 1139 0456 80       		.byte	-128
+ 1140 0457 80       		.byte	-128
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 21
+
+
+ 1141 0458 91       		.byte	-111
+ 1142 0459 20       		.byte	32
+ 1143 045a 92       		.byte	-110
+ 1144 045b 01       		.byte	1
+ 1145 045c 93       		.byte	-109
+ 1146 045d 40       		.byte	64
+ 1147 045e 96       		.byte	-106
+ 1148 045f 10       		.byte	16
+ 1149 0460 99       		.byte	-103
+ 1150 0461 80       		.byte	-128
+ 1151 0462 9D       		.byte	-99
+ 1152 0463 02       		.byte	2
+ 1153 0464 9E       		.byte	-98
+ 1154 0465 C0       		.byte	-64
+ 1155 0466 A1       		.byte	-95
+ 1156 0467 08       		.byte	8
+ 1157 0468 A2       		.byte	-94
+ 1158 0469 10       		.byte	16
+ 1159 046a A3       		.byte	-93
+ 1160 046b 01       		.byte	1
+ 1161 046c A4       		.byte	-92
+ 1162 046d 80       		.byte	-128
+ 1163 046e A7       		.byte	-89
+ 1164 046f 08       		.byte	8
+ 1165 0470 B3       		.byte	-77
+ 1166 0471 10       		.byte	16
+ 1167 0472 B4       		.byte	-76
+ 1168 0473 04       		.byte	4
+ 1169 0474 B6       		.byte	-74
+ 1170 0475 40       		.byte	64
+ 1171 0476 C0       		.byte	-64
+ 1172 0477 0F       		.byte	15
+ 1173 0478 C2       		.byte	-62
+ 1174 0479 0F       		.byte	15
+ 1175 047a C4       		.byte	-60
+ 1176 047b 4B       		.byte	75
+ 1177 047c CA       		.byte	-54
+ 1178 047d 08       		.byte	8
+ 1179 047e CC       		.byte	-52
+ 1180 047f 0A       		.byte	10
+ 1181 0480 CE       		.byte	-50
+ 1182 0481 9B       		.byte	-101
+ 1183 0482 D0       		.byte	-48
+ 1184 0483 4B       		.byte	75
+ 1185 0484 D2       		.byte	-46
+ 1186 0485 2C       		.byte	44
+ 1187 0486 D6       		.byte	-42
+ 1188 0487 F1       		.byte	-15
+ 1189 0488 D8       		.byte	-40
+ 1190 0489 0D       		.byte	13
+ 1191 048a 01       		.byte	1
+ 1192 048b 10       		.byte	16
+ 1193 048c 05       		.byte	5
+ 1194 048d 18       		.byte	24
+ 1195 048e 08       		.byte	8
+ 1196 048f 22       		.byte	34
+ 1197 0490 09       		.byte	9
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 22
+
+
+ 1198 0491 08       		.byte	8
+ 1199 0492 0A       		.byte	10
+ 1200 0493 09       		.byte	9
+ 1201 0494 0C       		.byte	12
+ 1202 0495 04       		.byte	4
+ 1203 0496 0D       		.byte	13
+ 1204 0497 9C       		.byte	-100
+ 1205 0498 0F       		.byte	15
+ 1206 0499 62       		.byte	98
+ 1207 049a 10       		.byte	16
+ 1208 049b 08       		.byte	8
+ 1209 049c 11       		.byte	17
+ 1210 049d FF       		.byte	-1
+ 1211 049e 12       		.byte	18
+ 1212 049f 30       		.byte	48
+ 1213 04a0 15       		.byte	21
+ 1214 04a1 E7       		.byte	-25
+ 1215 04a2 17       		.byte	23
+ 1216 04a3 18       		.byte	24
+ 1217 04a4 18       		.byte	24
+ 1218 04a5 11       		.byte	17
+ 1219 04a6 19       		.byte	25
+ 1220 04a7 40       		.byte	64
+ 1221 04a8 1A       		.byte	26
+ 1222 04a9 4A       		.byte	74
+ 1223 04aa 1D       		.byte	29
+ 1224 04ab 60       		.byte	96
+ 1225 04ac 23       		.byte	35
+ 1226 04ad 63       		.byte	99
+ 1227 04ae 24       		.byte	36
+ 1228 04af 3F       		.byte	63
+ 1229 04b0 25       		.byte	37
+ 1230 04b1 24       		.byte	36
+ 1231 04b2 28       		.byte	40
+ 1232 04b3 3F       		.byte	63
+ 1233 04b4 2B       		.byte	43
+ 1234 04b5 04       		.byte	4
+ 1235 04b6 2D       		.byte	45
+ 1236 04b7 FC       		.byte	-4
+ 1237 04b8 2F       		.byte	47
+ 1238 04b9 01       		.byte	1
+ 1239 04ba 30       		.byte	48
+ 1240 04bb 38       		.byte	56
+ 1241 04bc 32       		.byte	50
+ 1242 04bd 40       		.byte	64
+ 1243 04be 33       		.byte	51
+ 1244 04bf 78       		.byte	120
+ 1245 04c0 34       		.byte	52
+ 1246 04c1 03       		.byte	3
+ 1247 04c2 35       		.byte	53
+ 1248 04c3 80       		.byte	-128
+ 1249 04c4 36       		.byte	54
+ 1250 04c5 04       		.byte	4
+ 1251 04c6 37       		.byte	55
+ 1252 04c7 1F       		.byte	31
+ 1253 04c8 3B       		.byte	59
+ 1254 04c9 88       		.byte	-120
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 23
+
+
+ 1255 04ca 3F       		.byte	63
+ 1256 04cb 10       		.byte	16
+ 1257 04cc 56       		.byte	86
+ 1258 04cd 02       		.byte	2
+ 1259 04ce 57       		.byte	87
+ 1260 04cf 11       		.byte	17
+ 1261 04d0 58       		.byte	88
+ 1262 04d1 04       		.byte	4
+ 1263 04d2 59       		.byte	89
+ 1264 04d3 04       		.byte	4
+ 1265 04d4 5B       		.byte	91
+ 1266 04d5 04       		.byte	4
+ 1267 04d6 5C       		.byte	92
+ 1268 04d7 22       		.byte	34
+ 1269 04d8 5D       		.byte	93
+ 1270 04d9 20       		.byte	32
+ 1271 04da 5F       		.byte	95
+ 1272 04db 01       		.byte	1
+ 1273 04dc 83       		.byte	-125
+ 1274 04dd 01       		.byte	1
+ 1275 04de 84       		.byte	-124
+ 1276 04df 01       		.byte	1
+ 1277 04e0 93       		.byte	-109
+ 1278 04e1 01       		.byte	1
+ 1279 04e2 96       		.byte	-106
+ 1280 04e3 04       		.byte	4
+ 1281 04e4 9E       		.byte	-98
+ 1282 04e5 03       		.byte	3
+ 1283 04e6 AE       		.byte	-82
+ 1284 04e7 04       		.byte	4
+ 1285 04e8 B0       		.byte	-80
+ 1286 04e9 01       		.byte	1
+ 1287 04ea B1       		.byte	-79
+ 1288 04eb 01       		.byte	1
+ 1289 04ec B2       		.byte	-78
+ 1290 04ed 02       		.byte	2
+ 1291 04ee B4       		.byte	-76
+ 1292 04ef 04       		.byte	4
+ 1293 04f0 BE       		.byte	-66
+ 1294 04f1 10       		.byte	16
+ 1295 04f2 C0       		.byte	-64
+ 1296 04f3 30       		.byte	48
+ 1297 04f4 C1       		.byte	-63
+ 1298 04f5 06       		.byte	6
+ 1299 04f6 C5       		.byte	-59
+ 1300 04f7 D0       		.byte	-48
+ 1301 04f8 C6       		.byte	-58
+ 1302 04f9 20       		.byte	32
+ 1303 04fa C7       		.byte	-57
+ 1304 04fb 10       		.byte	16
+ 1305 04fc C8       		.byte	-56
+ 1306 04fd 2A       		.byte	42
+ 1307 04fe C9       		.byte	-55
+ 1308 04ff FF       		.byte	-1
+ 1309 0500 CA       		.byte	-54
+ 1310 0501 FF       		.byte	-1
+ 1311 0502 CB       		.byte	-53
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 24
+
+
+ 1312 0503 FF       		.byte	-1
+ 1313 0504 CD       		.byte	-51
+ 1314 0505 A0       		.byte	-96
+ 1315 0506 CF       		.byte	-49
+ 1316 0507 04       		.byte	4
+ 1317 0508 D0       		.byte	-48
+ 1318 0509 18       		.byte	24
+ 1319 050a D2       		.byte	-46
+ 1320 050b 80       		.byte	-128
+ 1321 050c D4       		.byte	-44
+ 1322 050d 05       		.byte	5
+ 1323 050e D8       		.byte	-40
+ 1324 050f 04       		.byte	4
+ 1325 0510 D9       		.byte	-39
+ 1326 0511 04       		.byte	4
+ 1327 0512 DA       		.byte	-38
+ 1328 0513 04       		.byte	4
+ 1329 0514 DB       		.byte	-37
+ 1330 0515 04       		.byte	4
+ 1331 0516 DF       		.byte	-33
+ 1332 0517 01       		.byte	1
+ 1333 0518 E0       		.byte	-32
+ 1334 0519 40       		.byte	64
+ 1335 051a E2       		.byte	-30
+ 1336 051b C0       		.byte	-64
+ 1337 051c E4       		.byte	-28
+ 1338 051d 40       		.byte	64
+ 1339 051e E5       		.byte	-27
+ 1340 051f 40       		.byte	64
+ 1341 0520 E6       		.byte	-26
+ 1342 0521 C0       		.byte	-64
+ 1343 0522 E8       		.byte	-24
+ 1344 0523 C0       		.byte	-64
+ 1345 0524 EA       		.byte	-22
+ 1346 0525 C0       		.byte	-64
+ 1347 0526 EC       		.byte	-20
+ 1348 0527 C0       		.byte	-64
+ 1349 0528 EE       		.byte	-18
+ 1350 0529 C0       		.byte	-64
+ 1351 052a 01       		.byte	1
+ 1352 052b 60       		.byte	96
+ 1353 052c 05       		.byte	5
+ 1354 052d 04       		.byte	4
+ 1355 052e 08       		.byte	8
+ 1356 052f 20       		.byte	32
+ 1357 0530 0A       		.byte	10
+ 1358 0531 80       		.byte	-128
+ 1359 0532 0F       		.byte	15
+ 1360 0533 22       		.byte	34
+ 1361 0534 10       		.byte	16
+ 1362 0535 28       		.byte	40
+ 1363 0536 17       		.byte	23
+ 1364 0537 80       		.byte	-128
+ 1365 0538 19       		.byte	25
+ 1366 0539 70       		.byte	112
+ 1367 053a 1A       		.byte	26
+ 1368 053b 80       		.byte	-128
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 25
+
+
+ 1369 053c 1B       		.byte	27
+ 1370 053d 88       		.byte	-120
+ 1371 053e 1D       		.byte	29
+ 1372 053f 04       		.byte	4
+ 1373 0540 1E       		.byte	30
+ 1374 0541 48       		.byte	72
+ 1375 0542 21       		.byte	33
+ 1376 0543 40       		.byte	64
+ 1377 0544 22       		.byte	34
+ 1378 0545 18       		.byte	24
+ 1379 0546 25       		.byte	37
+ 1380 0547 01       		.byte	1
+ 1381 0548 28       		.byte	40
+ 1382 0549 20       		.byte	32
+ 1383 054a 2B       		.byte	43
+ 1384 054b 8A       		.byte	-118
+ 1385 054c 31       		.byte	49
+ 1386 054d 10       		.byte	16
+ 1387 054e 32       		.byte	50
+ 1388 054f 4A       		.byte	74
+ 1389 0550 37       		.byte	55
+ 1390 0551 02       		.byte	2
+ 1391 0552 38       		.byte	56
+ 1392 0553 28       		.byte	40
+ 1393 0554 39       		.byte	57
+ 1394 0555 80       		.byte	-128
+ 1395 0556 3A       		.byte	58
+ 1396 0557 02       		.byte	2
+ 1397 0558 3F       		.byte	63
+ 1398 0559 02       		.byte	2
+ 1399 055a 47       		.byte	71
+ 1400 055b 08       		.byte	8
+ 1401 055c 4F       		.byte	79
+ 1402 055d 21       		.byte	33
+ 1403 055e 57       		.byte	87
+ 1404 055f 11       		.byte	17
+ 1405 0560 5A       		.byte	90
+ 1406 0561 20       		.byte	32
+ 1407 0562 5E       		.byte	94
+ 1408 0563 48       		.byte	72
+ 1409 0564 5F       		.byte	95
+ 1410 0565 01       		.byte	1
+ 1411 0566 68       		.byte	104
+ 1412 0567 28       		.byte	40
+ 1413 0568 69       		.byte	105
+ 1414 0569 40       		.byte	64
+ 1415 056a 70       		.byte	112
+ 1416 056b 14       		.byte	20
+ 1417 056c 71       		.byte	113
+ 1418 056d 80       		.byte	-128
+ 1419 056e 72       		.byte	114
+ 1420 056f 06       		.byte	6
+ 1421 0570 73       		.byte	115
+ 1422 0571 10       		.byte	16
+ 1423 0572 76       		.byte	118
+ 1424 0573 40       		.byte	64
+ 1425 0574 80       		.byte	-128
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 26
+
+
+ 1426 0575 04       		.byte	4
+ 1427 0576 83       		.byte	-125
+ 1428 0577 02       		.byte	2
+ 1429 0578 88       		.byte	-120
+ 1430 0579 21       		.byte	33
+ 1431 057a 8D       		.byte	-115
+ 1432 057b 01       		.byte	1
+ 1433 057c 90       		.byte	-112
+ 1434 057d 04       		.byte	4
+ 1435 057e 95       		.byte	-107
+ 1436 057f 80       		.byte	-128
+ 1437 0580 96       		.byte	-106
+ 1438 0581 84       		.byte	-124
+ 1439 0582 97       		.byte	-105
+ 1440 0583 10       		.byte	16
+ 1441 0584 9B       		.byte	-101
+ 1442 0585 8A       		.byte	-118
+ 1443 0586 9D       		.byte	-99
+ 1444 0587 60       		.byte	96
+ 1445 0588 9E       		.byte	-98
+ 1446 0589 40       		.byte	64
+ 1447 058a A2       		.byte	-94
+ 1448 058b 02       		.byte	2
+ 1449 058c A4       		.byte	-92
+ 1450 058d 01       		.byte	1
+ 1451 058e A5       		.byte	-91
+ 1452 058f 80       		.byte	-128
+ 1453 0590 A6       		.byte	-90
+ 1454 0591 08       		.byte	8
+ 1455 0592 AC       		.byte	-84
+ 1456 0593 04       		.byte	4
+ 1457 0594 AD       		.byte	-83
+ 1458 0595 01       		.byte	1
+ 1459 0596 B4       		.byte	-76
+ 1460 0597 10       		.byte	16
+ 1461 0598 C0       		.byte	-64
+ 1462 0599 23       		.byte	35
+ 1463 059a C2       		.byte	-62
+ 1464 059b AA       		.byte	-86
+ 1465 059c C4       		.byte	-60
+ 1466 059d 86       		.byte	-122
+ 1467 059e CA       		.byte	-54
+ 1468 059f 0F       		.byte	15
+ 1469 05a0 CC       		.byte	-52
+ 1470 05a1 8F       		.byte	-113
+ 1471 05a2 CE       		.byte	-50
+ 1472 05a3 8F       		.byte	-113
+ 1473 05a4 D0       		.byte	-48
+ 1474 05a5 40       		.byte	64
+ 1475 05a6 D2       		.byte	-46
+ 1476 05a7 20       		.byte	32
+ 1477 05a8 D6       		.byte	-42
+ 1478 05a9 D4       		.byte	-44
+ 1479 05aa 32       		.byte	50
+ 1480 05ab 40       		.byte	64
+ 1481 05ac CC       		.byte	-52
+ 1482 05ad 10       		.byte	16
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 27
+
+
+ 1483 05ae 03       		.byte	3
+ 1484 05af 80       		.byte	-128
+ 1485 05b0 8F       		.byte	-113
+ 1486 05b1 80       		.byte	-128
+ 1487 05b2 96       		.byte	-106
+ 1488 05b3 80       		.byte	-128
+ 1489 05b4 C0       		.byte	-64
+ 1490 05b5 10       		.byte	16
+ 1491 05b6 63       		.byte	99
+ 1492 05b7 02       		.byte	2
+ 1493 05b8 96       		.byte	-106
+ 1494 05b9 80       		.byte	-128
+ 1495 05ba D6       		.byte	-42
+ 1496 05bb 40       		.byte	64
+ 1497 05bc 96       		.byte	-106
+ 1498 05bd 80       		.byte	-128
+ 1499 05be AF       		.byte	-81
+ 1500 05bf 01       		.byte	1
+ 1501 05c0 EE       		.byte	-18
+ 1502 05c1 10       		.byte	16
+ 1503 05c2 56       		.byte	86
+ 1504 05c3 80       		.byte	-128
+ 1505 05c4 57       		.byte	87
+ 1506 05c5 01       		.byte	1
+ 1507 05c6 8B       		.byte	-117
+ 1508 05c7 01       		.byte	1
+ 1509 05c8 D4       		.byte	-44
+ 1510 05c9 02       		.byte	2
+ 1511 05ca D6       		.byte	-42
+ 1512 05cb 04       		.byte	4
+ 1513 05cc E0       		.byte	-32
+ 1514 05cd 01       		.byte	1
+ 1515 05ce 9E       		.byte	-98
+ 1516 05cf 80       		.byte	-128
+ 1517 05d0 82       		.byte	-126
+ 1518 05d1 02       		.byte	2
+ 1519 05d2 86       		.byte	-122
+ 1520 05d3 80       		.byte	-128
+ 1521 05d4 9E       		.byte	-98
+ 1522 05d5 80       		.byte	-128
+ 1523 05d6 82       		.byte	-126
+ 1524 05d7 40       		.byte	64
+ 1525 05d8 96       		.byte	-106
+ 1526 05d9 80       		.byte	-128
+ 1527 05da E6       		.byte	-26
+ 1528 05db 80       		.byte	-128
+ 1529 05dc 5B       		.byte	91
+ 1530 05dd 08       		.byte	8
+ 1531 05de 5C       		.byte	92
+ 1532 05df 02       		.byte	2
+ 1533 05e0 66       		.byte	102
+ 1534 05e1 02       		.byte	2
+ 1535 05e2 9A       		.byte	-102
+ 1536 05e3 02       		.byte	2
+ 1537 05e4 9B       		.byte	-101
+ 1538 05e5 08       		.byte	8
+ 1539 05e6 B3       		.byte	-77
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 28
+
+
+ 1540 05e7 08       		.byte	8
+ 1541 05e8 D6       		.byte	-42
+ 1542 05e9 03       		.byte	3
+ 1543 05ea D8       		.byte	-40
+ 1544 05eb 01       		.byte	1
+ 1545 05ec EC       		.byte	-20
+ 1546 05ed 01       		.byte	1
+ 1547 05ee 10       		.byte	16
+ 1548 05ef 40       		.byte	64
+ 1549 05f0 75       		.byte	117
+ 1550 05f1 01       		.byte	1
+ 1551 05f2 88       		.byte	-120
+ 1552 05f3 40       		.byte	64
+ 1553 05f4 8C       		.byte	-116
+ 1554 05f5 02       		.byte	2
+ 1555 05f6 99       		.byte	-103
+ 1556 05f7 01       		.byte	1
+ 1557 05f8 9C       		.byte	-100
+ 1558 05f9 02       		.byte	2
+ 1559 05fa B5       		.byte	-75
+ 1560 05fb 01       		.byte	1
+ 1561 05fc C4       		.byte	-60
+ 1562 05fd 08       		.byte	8
+ 1563 05fe DE       		.byte	-34
+ 1564 05ff 04       		.byte	4
+ 1565 0600 E0       		.byte	-32
+ 1566 0601 08       		.byte	8
+ 1567 0602 E2       		.byte	-30
+ 1568 0603 01       		.byte	1
+ 1569 0604 EC       		.byte	-20
+ 1570 0605 02       		.byte	2
+ 1571 0606 00       		.byte	0
+ 1572 0607 07       		.byte	7
+ 1573 0608 0C       		.byte	12
+ 1574 0609 07       		.byte	7
+ 1575 060a 0E       		.byte	14
+ 1576 060b 07       		.byte	7
+ 1577 060c 10       		.byte	16
+ 1578 060d 05       		.byte	5
+ 1579 060e 1C       		.byte	28
+ 1580 060f 05       		.byte	5
+ 1581 0610 00       		.byte	0
+ 1582 0611 03       		.byte	3
+ 1583 0612 00       		.byte	0
+ 1584 0613 00       		.byte	0
+ 1585 0614 80       		.byte	-128
+ 1586 0615 80       		.byte	-128
+ 1587 0616 00       		.byte	0
+ 1588 0617 00       		.byte	0
+ 1589 0618 40       		.byte	64
+ 1590 0619 00       		.byte	0
+ 1591 061a 00       		.byte	0
+ 1592 061b 00       		.byte	0
+ 1593 061c 04       		.byte	4
+ 1594 061d 38       		.byte	56
+ 1595 061e 00       		.byte	0
+ 1596 061f C0       		.byte	-64
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 29
+
+
+ 1597 0620 00       		.byte	0
+ 1598 0621 FC       		.byte	-4
+ 1599 0622 80       		.byte	-128
+ 1600 0623 03       		.byte	3
+ 1601 0624 56       		.byte	86
+ 1602 0625 13       		.byte	19
+ 1603 0626 09       		.byte	9
+ 1604 0627 64       		.byte	100
+ 1605 0628 01       		.byte	1
+ 1606 0629 02       		.byte	2
+ 1607 062a 00       		.byte	0
+ 1608 062b 00       		.byte	0
+ 1609 062c 60       		.byte	96
+ 1610 062d 98       		.byte	-104
+ 1611 062e 00       		.byte	0
+ 1612 062f 02       		.byte	2
+ 1613 0630 80       		.byte	-128
+ 1614 0631 21       		.byte	33
+ 1615 0632 04       		.byte	4
+ 1616 0633 D8       		.byte	-40
+ 1617 0634 0A       		.byte	10
+ 1618 0635 02       		.byte	2
+ 1619 0636 10       		.byte	16
+ 1620 0637 98       		.byte	-104
+ 1621 0638 84       		.byte	-124
+ 1622 0639 00       		.byte	0
+ 1623 063a 00       		.byte	0
+ 1624 063b 00       		.byte	0
+ 1625 063c 04       		.byte	4
+ 1626 063d 9A       		.byte	-102
+ 1627 063e 80       		.byte	-128
+ 1628 063f 00       		.byte	0
+ 1629 0640 07       		.byte	7
+ 1630 0641 98       		.byte	-104
+ 1631 0642 38       		.byte	56
+ 1632 0643 02       		.byte	2
+ 1633 0644 84       		.byte	-124
+ 1634 0645 00       		.byte	0
+ 1635 0646 00       		.byte	0
+ 1636 0647 00       		.byte	0
+ 1637 0648 84       		.byte	-124
+ 1638 0649 9A       		.byte	-102
+ 1639 064a 00       		.byte	0
+ 1640 064b 00       		.byte	0
+ 1641 064c 00       		.byte	0
+ 1642 064d 00       		.byte	0
+ 1643 064e 80       		.byte	-128
+ 1644 064f 13       		.byte	19
+ 1645 0650 00       		.byte	0
+ 1646 0651 0F       		.byte	15
+ 1647 0652 7F       		.byte	127
+ 1648 0653 E0       		.byte	-32
+ 1649 0654 80       		.byte	-128
+ 1650 0655 00       		.byte	0
+ 1651 0656 00       		.byte	0
+ 1652 0657 A0       		.byte	-96
+ 1653 0658 00       		.byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 30
+
+
+ 1654 0659 00       		.byte	0
+ 1655 065a 04       		.byte	4
+ 1656 065b 00       		.byte	0
+ 1657 065c 23       		.byte	35
+ 1658 065d 06       		.byte	6
+ 1659 065e 10       		.byte	16
+ 1660 065f 00       		.byte	0
+ 1661 0660 05       		.byte	5
+ 1662 0661 DE       		.byte	-34
+ 1663 0662 DC       		.byte	-36
+ 1664 0663 BF       		.byte	-65
+ 1665 0664 3F       		.byte	63
+ 1666 0665 FF       		.byte	-1
+ 1667 0666 FF       		.byte	-1
+ 1668 0667 FF       		.byte	-1
+ 1669 0668 22       		.byte	34
+ 1670 0669 00       		.byte	0
+ 1671 066a F0       		.byte	-16
+ 1672 066b 08       		.byte	8
+ 1673 066c 04       		.byte	4
+ 1674 066d 00       		.byte	0
+ 1675 066e 00       		.byte	0
+ 1676 066f 00       		.byte	0
+ 1677 0670 00       		.byte	0
+ 1678 0671 00       		.byte	0
+ 1679 0672 02       		.byte	2
+ 1680 0673 24       		.byte	36
+ 1681 0674 04       		.byte	4
+ 1682 0675 04       		.byte	4
+ 1683 0676 04       		.byte	4
+ 1684 0677 04       		.byte	4
+ 1685 0678 11       		.byte	17
+ 1686 0679 11       		.byte	17
+ 1687 067a 00       		.byte	0
+ 1688 067b 01       		.byte	1
+ 1689 067c 00       		.byte	0
+ 1690 067d 00       		.byte	0
+ 1691 067e C0       		.byte	-64
+ 1692 067f 00       		.byte	0
+ 1693 0680 40       		.byte	64
+ 1694 0681 01       		.byte	1
+ 1695 0682 10       		.byte	16
+ 1696 0683 11       		.byte	17
+ 1697 0684 C0       		.byte	-64
+ 1698 0685 01       		.byte	1
+ 1699 0686 00       		.byte	0
+ 1700 0687 11       		.byte	17
+ 1701 0688 40       		.byte	64
+ 1702 0689 01       		.byte	1
+ 1703 068a 40       		.byte	64
+ 1704 068b 01       		.byte	1
+ 1705 068c 00       		.byte	0
+ 1706 068d 00       		.byte	0
+ 1707 068e 00       		.byte	0
+ 1708 068f 00       		.byte	0
+ 1709 0690 00       		.byte	0
+ 1710 0691 00       		.byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 31
+
+
+ 1711 0692 00       		.byte	0
+ 1712 0693 00       		.byte	0
+ 1713 0694 00       		.byte	0
+ 1714 0695 00       		.byte	0
+ 1715 0696 00       		.byte	0
+ 1716 0697 00       		.byte	0
+ 1717 0698 00       		.byte	0
+ 1718 0699 00       		.byte	0
+ 1719 069a 00       		.byte	0
+ 1720 069b 00       		.byte	0
+ 1721 069c 01       		.byte	1
+ 1722 069d 00       		.byte	0
+ 1723 069e 08       		.byte	8
+ 1724 069f 02       		.byte	2
+ 1725 06a0 60       		.byte	96
+ 1726 06a1 00       		.byte	0
+ 1727 06a2 93       		.byte	-109
+ 1728 06a3 01       		.byte	1
+ 1729 06a4 02       		.byte	2
+ 1730 06a5 00       		.byte	0
+ 1731 06a6 08       		.byte	8
+ 1732 06a7 00       		.byte	0
+ 1733 06a8 70       		.byte	112
+ 1734 06a9 00       		.byte	0
+ 1735 06aa 83       		.byte	-125
+ 1736 06ab 01       		.byte	1
+ 1737 06ac 03       		.byte	3
+ 1738 06ad 00       		.byte	0
+ 1739 06ae 04       		.byte	4
+ 1740 06af 00       		.byte	0
+ 1741 06b0 93       		.byte	-109
+ 1742 06b1 01       		.byte	1
+ 1743 06b2 60       		.byte	96
+ 1744 06b3 00       		.byte	0
+ 1745 06b4 20       		.byte	32
+ 1746 06b5 00       		.byte	0
+ 1747 06b6 00       		.byte	0
+ 1748 06b7 00       		.byte	0
+ 1749 06b8 40       		.byte	64
+ 1750 06b9 00       		.byte	0
+ 1751 06ba 00       		.byte	0
+ 1752 06bb 02       		.byte	2
+ 1753 06bc F3       		.byte	-13
+ 1754 06bd 00       		.byte	0
+ 1755 06be 00       		.byte	0
+ 1756 06bf 00       		.byte	0
+ 1757 06c0 00       		.byte	0
+ 1758 06c1 00       		.byte	0
+ 1759 06c2 00       		.byte	0
+ 1760 06c3 00       		.byte	0
+ 1761 06c4 60       		.byte	96
+ 1762 06c5 00       		.byte	0
+ 1763 06c6 00       		.byte	0
+ 1764 06c7 00       		.byte	0
+ 1765 06c8 00       		.byte	0
+ 1766 06c9 01       		.byte	1
+ 1767 06ca 93       		.byte	-109
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 32
+
+
+ 1768 06cb 00       		.byte	0
+ 1769 06cc 03       		.byte	3
+ 1770 06cd 00       		.byte	0
+ 1771 06ce 70       		.byte	112
+ 1772 06cf 00       		.byte	0
+ 1773 06d0 E0       		.byte	-32
+ 1774 06d1 02       		.byte	2
+ 1775 06d2 0C       		.byte	12
+ 1776 06d3 01       		.byte	1
+ 1777 06d4 00       		.byte	0
+ 1778 06d5 80       		.byte	-128
+ 1779 06d6 20       		.byte	32
+ 1780 06d7 02       		.byte	2
+ 1781 06d8 00       		.byte	0
+ 1782 06d9 00       		.byte	0
+ 1783 06da 40       		.byte	64
+ 1784 06db 10       		.byte	16
+ 1785 06dc 65       		.byte	101
+ 1786 06dd 04       		.byte	4
+ 1787 06de 03       		.byte	3
+ 1788 06df 00       		.byte	0
+ 1789 06e0 01       		.byte	1
+ 1790 06e1 00       		.byte	0
+ 1791 06e2 0C       		.byte	12
+ 1792 06e3 E0       		.byte	-32
+ 1793 06e4 24       		.byte	36
+ 1794 06e5 FF       		.byte	-1
+ 1795 06e6 FF       		.byte	-1
+ 1796 06e7 FF       		.byte	-1
+ 1797 06e8 62       		.byte	98
+ 1798 06e9 A0       		.byte	-96
+ 1799 06ea F0       		.byte	-16
+ 1800 06eb 41       		.byte	65
+ 1801 06ec 0C       		.byte	12
+ 1802 06ed 00       		.byte	0
+ 1803 06ee 00       		.byte	0
+ 1804 06ef 00       		.byte	0
+ 1805 06f0 18       		.byte	24
+ 1806 06f1 00       		.byte	0
+ 1807 06f2 04       		.byte	4
+ 1808 06f3 00       		.byte	0
+ 1809 06f4 04       		.byte	4
+ 1810 06f5 04       		.byte	4
+ 1811 06f6 04       		.byte	4
+ 1812 06f7 04       		.byte	4
+ 1813 06f8 22       		.byte	34
+ 1814 06f9 22       		.byte	34
+ 1815 06fa 00       		.byte	0
+ 1816 06fb 01       		.byte	1
+ 1817 06fc 00       		.byte	0
+ 1818 06fd 00       		.byte	0
+ 1819 06fe 00       		.byte	0
+ 1820 06ff 00       		.byte	0
+ 1821 0700 00       		.byte	0
+ 1822 0701 00       		.byte	0
+ 1823 0702 40       		.byte	64
+ 1824 0703 02       		.byte	2
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 33
+
+
+ 1825 0704 00       		.byte	0
+ 1826 0705 10       		.byte	16
+ 1827 0706 30       		.byte	48
+ 1828 0707 10       		.byte	16
+ 1829 0708 00       		.byte	0
+ 1830 0709 10       		.byte	16
+ 1831 070a 10       		.byte	16
+ 1832 070b 12       		.byte	18
+ 1833 070c 00       		.byte	0
+ 1834 070d 00       		.byte	0
+ 1835 070e 00       		.byte	0
+ 1836 070f 00       		.byte	0
+ 1837 0710 00       		.byte	0
+ 1838 0711 00       		.byte	0
+ 1839 0712 00       		.byte	0
+ 1840 0713 00       		.byte	0
+ 1841 0714 00       		.byte	0
+ 1842 0715 00       		.byte	0
+ 1843 0716 00       		.byte	0
+ 1844 0717 00       		.byte	0
+ 1845 0718 00       		.byte	0
+ 1846 0719 00       		.byte	0
+ 1847 071a 00       		.byte	0
+ 1848 071b 00       		.byte	0
+ 1849 071c 01       		.byte	1
+ 1850 071d 00       		.byte	0
+ 1851 071e 00       		.byte	0
+ 1852 071f 00       		.byte	0
+ 1853 0720 00       		.byte	0
+ 1854 0721 00       		.byte	0
+ 1855 0722 00       		.byte	0
+ 1856 0723 00       		.byte	0
+ 1857 0724 80       		.byte	-128
+ 1858 0725 00       		.byte	0
+ 1859 0726 40       		.byte	64
+ 1860 0727 80       		.byte	-128
+ 1861 0728 80       		.byte	-128
+ 1862 0729 00       		.byte	0
+ 1863 072a 80       		.byte	-128
+ 1864 072b 00       		.byte	0
+ 1865 072c 00       		.byte	0
+ 1866 072d 00       		.byte	0
+ 1867 072e 00       		.byte	0
+ 1868 072f 00       		.byte	0
+ 1869 0730 00       		.byte	0
+ 1870 0731 7B       		.byte	123
+ 1871 0732 7B       		.byte	123
+ 1872 0733 00       		.byte	0
+ 1873 0734 70       		.byte	112
+ 1874 0735 00       		.byte	0
+ 1875 0736 00       		.byte	0
+ 1876 0737 00       		.byte	0
+ 1877 0738 00       		.byte	0
+ 1878 0739 0F       		.byte	15
+ 1879 073a 0F       		.byte	15
+ 1880 073b 00       		.byte	0
+ 1881 073c 05       		.byte	5
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 34
+
+
+ 1882 073d 00       		.byte	0
+ 1883 073e 00       		.byte	0
+ 1884 073f 00       		.byte	0
+ 1885              		.section	.cywolatch,"a",%progbits
+ 1886              		.align	2
+ 1887              		.type	cy_meta_wonvl, %object
+ 1888              		.size	cy_meta_wonvl, 4
+ 1889              	cy_meta_wonvl:
+ 1890 0000 BC       		.byte	-68
+ 1891 0001 90       		.byte	-112
+ 1892 0002 AC       		.byte	-84
+ 1893 0003 AF       		.byte	-81
+ 1894              		.section	.cycustnvl,"a",%progbits
+ 1895              		.align	2
+ 1896              		.type	cy_meta_custnvl, %object
+ 1897              		.size	cy_meta_custnvl, 4
+ 1898              	cy_meta_custnvl:
+ 1899 0000 00       		.byte	0
+ 1900 0001 00       		.byte	0
+ 1901 0002 40       		.byte	64
+ 1902 0003 05       		.byte	5
+ 1903              		.section	.cymeta,"a",%progbits
+ 1904              		.align	2
+ 1905              		.type	cy_metadata, %object
+ 1906              		.size	cy_metadata, 12
+ 1907              	cy_metadata:
+ 1908 0000 00       		.byte	0
+ 1909 0001 01       		.byte	1
+ 1910 0002 2E       		.byte	46
+ 1911 0003 16       		.byte	22
+ 1912 0004 10       		.byte	16
+ 1913 0005 69       		.byte	105
+ 1914 0006 00       		.byte	0
+ 1915 0007 01       		.byte	1
+ 1916 0008 00       		.byte	0
+ 1917 0009 00       		.byte	0
+ 1918 000a 00       		.byte	0
+ 1919 000b 00       		.byte	0
+ 1920              		.section	.cyflashprotect,"a",%progbits
+ 1921              		.align	2
+ 1922              		.type	cy_meta_flashprotect, %object
+ 1923              		.size	cy_meta_flashprotect, 256
+ 1924              	cy_meta_flashprotect:
+ 1925 0000 00000000 		.space	256
+ 1925      00000000 
+ 1925      00000000 
+ 1925      00000000 
+ 1925      00000000 
+ 1926              		.text
+ 1927              	.Letext0:
+ 1928              		.file 1 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 1929              		.file 2 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 1930              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 1931              		.section	.debug_info,"",%progbits
+ 1932              	.Ldebug_info0:
+ 1933 0000 35010000 		.4byte	0x135
+ 1934 0004 0400     		.2byte	0x4
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 35
+
+
+ 1935 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1936 000a 04       		.byte	0x4
+ 1937 000b 01       		.uleb128 0x1
+ 1938 000c 24000000 		.4byte	.LASF17
+ 1939 0010 0C       		.byte	0xc
+ 1940 0011 F1010000 		.4byte	.LASF18
+ 1941 0015 F9000000 		.4byte	.LASF19
+ 1942 0019 00000000 		.4byte	.Ldebug_line0
+ 1943 001d 02       		.uleb128 0x2
+ 1944 001e 01       		.byte	0x1
+ 1945 001f 06       		.byte	0x6
+ 1946 0020 E5010000 		.4byte	.LASF0
+ 1947 0024 03       		.uleb128 0x3
+ 1948 0025 00000000 		.4byte	.LASF9
+ 1949 0029 01       		.byte	0x1
+ 1950 002a 1D       		.byte	0x1d
+ 1951 002b 2F000000 		.4byte	0x2f
+ 1952 002f 02       		.uleb128 0x2
+ 1953 0030 01       		.byte	0x1
+ 1954 0031 08       		.byte	0x8
+ 1955 0032 16000000 		.4byte	.LASF1
+ 1956 0036 02       		.uleb128 0x2
+ 1957 0037 02       		.byte	0x2
+ 1958 0038 05       		.byte	0x5
+ 1959 0039 D2010000 		.4byte	.LASF2
+ 1960 003d 02       		.uleb128 0x2
+ 1961 003e 02       		.byte	0x2
+ 1962 003f 07       		.byte	0x7
+ 1963 0040 C4000000 		.4byte	.LASF3
+ 1964 0044 02       		.uleb128 0x2
+ 1965 0045 04       		.byte	0x4
+ 1966 0046 05       		.byte	0x5
+ 1967 0047 DC010000 		.4byte	.LASF4
+ 1968 004b 02       		.uleb128 0x2
+ 1969 004c 04       		.byte	0x4
+ 1970 004d 07       		.byte	0x7
+ 1971 004e B2000000 		.4byte	.LASF5
+ 1972 0052 02       		.uleb128 0x2
+ 1973 0053 08       		.byte	0x8
+ 1974 0054 05       		.byte	0x5
+ 1975 0055 C4010000 		.4byte	.LASF6
+ 1976 0059 02       		.uleb128 0x2
+ 1977 005a 08       		.byte	0x8
+ 1978 005b 07       		.byte	0x7
+ 1979 005c 79010000 		.4byte	.LASF7
+ 1980 0060 04       		.uleb128 0x4
+ 1981 0061 04       		.byte	0x4
+ 1982 0062 05       		.byte	0x5
+ 1983 0063 696E7400 		.ascii	"int\000"
+ 1984 0067 02       		.uleb128 0x2
+ 1985 0068 04       		.byte	0x4
+ 1986 0069 07       		.byte	0x7
+ 1987 006a 6C010000 		.4byte	.LASF8
+ 1988 006e 03       		.uleb128 0x3
+ 1989 006f 90010000 		.4byte	.LASF10
+ 1990 0073 02       		.byte	0x2
+ 1991 0074 18       		.byte	0x18
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 36
+
+
+ 1992 0075 24000000 		.4byte	0x24
+ 1993 0079 05       		.uleb128 0x5
+ 1994 007a 91000000 		.4byte	0x91
+ 1995 007e 8A000000 		.4byte	0x8a
+ 1996 0082 06       		.uleb128 0x6
+ 1997 0083 8A000000 		.4byte	0x8a
+ 1998 0087 3F07     		.2byte	0x73f
+ 1999 0089 00       		.byte	0
+ 2000 008a 02       		.uleb128 0x2
+ 2001 008b 04       		.byte	0x4
+ 2002 008c 07       		.byte	0x7
+ 2003 008d BB010000 		.4byte	.LASF11
+ 2004 0091 07       		.uleb128 0x7
+ 2005 0092 6E000000 		.4byte	0x6e
+ 2006 0096 08       		.uleb128 0x8
+ 2007 0097 E7000000 		.4byte	.LASF12
+ 2008 009b 03       		.byte	0x3
+ 2009 009c 1F       		.byte	0x1f
+ 2010 009d A7000000 		.4byte	0xa7
+ 2011 00a1 05       		.uleb128 0x5
+ 2012 00a2 03       		.byte	0x3
+ 2013 00a3 00000000 		.4byte	cy_meta_configecc
+ 2014 00a7 07       		.uleb128 0x7
+ 2015 00a8 79000000 		.4byte	0x79
+ 2016 00ac 05       		.uleb128 0x5
+ 2017 00ad 91000000 		.4byte	0x91
+ 2018 00b1 BC000000 		.4byte	0xbc
+ 2019 00b5 09       		.uleb128 0x9
+ 2020 00b6 8A000000 		.4byte	0x8a
+ 2021 00ba 03       		.byte	0x3
+ 2022 00bb 00       		.byte	0
+ 2023 00bc 0A       		.uleb128 0xa
+ 2024 00bd D7000000 		.4byte	.LASF13
+ 2025 00c1 03       		.byte	0x3
+ 2026 00c2 1401     		.2byte	0x114
+ 2027 00c4 CE000000 		.4byte	0xce
+ 2028 00c8 05       		.uleb128 0x5
+ 2029 00c9 03       		.byte	0x3
+ 2030 00ca 00000000 		.4byte	cy_meta_custnvl
+ 2031 00ce 07       		.uleb128 0x7
+ 2032 00cf AC000000 		.4byte	0xac
+ 2033 00d3 0A       		.uleb128 0xa
+ 2034 00d4 AD010000 		.4byte	.LASF14
+ 2035 00d8 03       		.byte	0x3
+ 2036 00d9 2201     		.2byte	0x122
+ 2037 00db E5000000 		.4byte	0xe5
+ 2038 00df 05       		.uleb128 0x5
+ 2039 00e0 03       		.byte	0x3
+ 2040 00e1 00000000 		.4byte	cy_meta_wonvl
+ 2041 00e5 07       		.uleb128 0x7
+ 2042 00e6 AC000000 		.4byte	0xac
+ 2043 00ea 05       		.uleb128 0x5
+ 2044 00eb 91000000 		.4byte	0x91
+ 2045 00ef FA000000 		.4byte	0xfa
+ 2046 00f3 09       		.uleb128 0x9
+ 2047 00f4 8A000000 		.4byte	0x8a
+ 2048 00f8 FF       		.byte	0xff
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 37
+
+
+ 2049 00f9 00       		.byte	0
+ 2050 00fa 0A       		.uleb128 0xa
+ 2051 00fb 98010000 		.4byte	.LASF15
+ 2052 00ff 03       		.byte	0x3
+ 2053 0100 3001     		.2byte	0x130
+ 2054 0102 0C010000 		.4byte	0x10c
+ 2055 0106 05       		.uleb128 0x5
+ 2056 0107 03       		.byte	0x3
+ 2057 0108 00000000 		.4byte	cy_meta_flashprotect
+ 2058 010c 07       		.uleb128 0x7
+ 2059 010d EA000000 		.4byte	0xea
+ 2060 0111 05       		.uleb128 0x5
+ 2061 0112 91000000 		.4byte	0x91
+ 2062 0116 21010000 		.4byte	0x121
+ 2063 011a 09       		.uleb128 0x9
+ 2064 011b 8A000000 		.4byte	0x8a
+ 2065 011f 0B       		.byte	0xb
+ 2066 0120 00       		.byte	0
+ 2067 0121 0A       		.uleb128 0xa
+ 2068 0122 0A000000 		.4byte	.LASF16
+ 2069 0126 03       		.byte	0x3
+ 2070 0127 5D01     		.2byte	0x15d
+ 2071 0129 33010000 		.4byte	0x133
+ 2072 012d 05       		.uleb128 0x5
+ 2073 012e 03       		.byte	0x3
+ 2074 012f 00000000 		.4byte	cy_metadata
+ 2075 0133 07       		.uleb128 0x7
+ 2076 0134 11010000 		.4byte	0x111
+ 2077 0138 00       		.byte	0
+ 2078              		.section	.debug_abbrev,"",%progbits
+ 2079              	.Ldebug_abbrev0:
+ 2080 0000 01       		.uleb128 0x1
+ 2081 0001 11       		.uleb128 0x11
+ 2082 0002 01       		.byte	0x1
+ 2083 0003 25       		.uleb128 0x25
+ 2084 0004 0E       		.uleb128 0xe
+ 2085 0005 13       		.uleb128 0x13
+ 2086 0006 0B       		.uleb128 0xb
+ 2087 0007 03       		.uleb128 0x3
+ 2088 0008 0E       		.uleb128 0xe
+ 2089 0009 1B       		.uleb128 0x1b
+ 2090 000a 0E       		.uleb128 0xe
+ 2091 000b 10       		.uleb128 0x10
+ 2092 000c 17       		.uleb128 0x17
+ 2093 000d 00       		.byte	0
+ 2094 000e 00       		.byte	0
+ 2095 000f 02       		.uleb128 0x2
+ 2096 0010 24       		.uleb128 0x24
+ 2097 0011 00       		.byte	0
+ 2098 0012 0B       		.uleb128 0xb
+ 2099 0013 0B       		.uleb128 0xb
+ 2100 0014 3E       		.uleb128 0x3e
+ 2101 0015 0B       		.uleb128 0xb
+ 2102 0016 03       		.uleb128 0x3
+ 2103 0017 0E       		.uleb128 0xe
+ 2104 0018 00       		.byte	0
+ 2105 0019 00       		.byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 38
+
+
+ 2106 001a 03       		.uleb128 0x3
+ 2107 001b 16       		.uleb128 0x16
+ 2108 001c 00       		.byte	0
+ 2109 001d 03       		.uleb128 0x3
+ 2110 001e 0E       		.uleb128 0xe
+ 2111 001f 3A       		.uleb128 0x3a
+ 2112 0020 0B       		.uleb128 0xb
+ 2113 0021 3B       		.uleb128 0x3b
+ 2114 0022 0B       		.uleb128 0xb
+ 2115 0023 49       		.uleb128 0x49
+ 2116 0024 13       		.uleb128 0x13
+ 2117 0025 00       		.byte	0
+ 2118 0026 00       		.byte	0
+ 2119 0027 04       		.uleb128 0x4
+ 2120 0028 24       		.uleb128 0x24
+ 2121 0029 00       		.byte	0
+ 2122 002a 0B       		.uleb128 0xb
+ 2123 002b 0B       		.uleb128 0xb
+ 2124 002c 3E       		.uleb128 0x3e
+ 2125 002d 0B       		.uleb128 0xb
+ 2126 002e 03       		.uleb128 0x3
+ 2127 002f 08       		.uleb128 0x8
+ 2128 0030 00       		.byte	0
+ 2129 0031 00       		.byte	0
+ 2130 0032 05       		.uleb128 0x5
+ 2131 0033 01       		.uleb128 0x1
+ 2132 0034 01       		.byte	0x1
+ 2133 0035 49       		.uleb128 0x49
+ 2134 0036 13       		.uleb128 0x13
+ 2135 0037 01       		.uleb128 0x1
+ 2136 0038 13       		.uleb128 0x13
+ 2137 0039 00       		.byte	0
+ 2138 003a 00       		.byte	0
+ 2139 003b 06       		.uleb128 0x6
+ 2140 003c 21       		.uleb128 0x21
+ 2141 003d 00       		.byte	0
+ 2142 003e 49       		.uleb128 0x49
+ 2143 003f 13       		.uleb128 0x13
+ 2144 0040 2F       		.uleb128 0x2f
+ 2145 0041 05       		.uleb128 0x5
+ 2146 0042 00       		.byte	0
+ 2147 0043 00       		.byte	0
+ 2148 0044 07       		.uleb128 0x7
+ 2149 0045 26       		.uleb128 0x26
+ 2150 0046 00       		.byte	0
+ 2151 0047 49       		.uleb128 0x49
+ 2152 0048 13       		.uleb128 0x13
+ 2153 0049 00       		.byte	0
+ 2154 004a 00       		.byte	0
+ 2155 004b 08       		.uleb128 0x8
+ 2156 004c 34       		.uleb128 0x34
+ 2157 004d 00       		.byte	0
+ 2158 004e 03       		.uleb128 0x3
+ 2159 004f 0E       		.uleb128 0xe
+ 2160 0050 3A       		.uleb128 0x3a
+ 2161 0051 0B       		.uleb128 0xb
+ 2162 0052 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 39
+
+
+ 2163 0053 0B       		.uleb128 0xb
+ 2164 0054 49       		.uleb128 0x49
+ 2165 0055 13       		.uleb128 0x13
+ 2166 0056 3F       		.uleb128 0x3f
+ 2167 0057 19       		.uleb128 0x19
+ 2168 0058 02       		.uleb128 0x2
+ 2169 0059 18       		.uleb128 0x18
+ 2170 005a 00       		.byte	0
+ 2171 005b 00       		.byte	0
+ 2172 005c 09       		.uleb128 0x9
+ 2173 005d 21       		.uleb128 0x21
+ 2174 005e 00       		.byte	0
+ 2175 005f 49       		.uleb128 0x49
+ 2176 0060 13       		.uleb128 0x13
+ 2177 0061 2F       		.uleb128 0x2f
+ 2178 0062 0B       		.uleb128 0xb
+ 2179 0063 00       		.byte	0
+ 2180 0064 00       		.byte	0
+ 2181 0065 0A       		.uleb128 0xa
+ 2182 0066 34       		.uleb128 0x34
+ 2183 0067 00       		.byte	0
+ 2184 0068 03       		.uleb128 0x3
+ 2185 0069 0E       		.uleb128 0xe
+ 2186 006a 3A       		.uleb128 0x3a
+ 2187 006b 0B       		.uleb128 0xb
+ 2188 006c 3B       		.uleb128 0x3b
+ 2189 006d 05       		.uleb128 0x5
+ 2190 006e 49       		.uleb128 0x49
+ 2191 006f 13       		.uleb128 0x13
+ 2192 0070 3F       		.uleb128 0x3f
+ 2193 0071 19       		.uleb128 0x19
+ 2194 0072 02       		.uleb128 0x2
+ 2195 0073 18       		.uleb128 0x18
+ 2196 0074 00       		.byte	0
+ 2197 0075 00       		.byte	0
+ 2198 0076 00       		.byte	0
+ 2199              		.section	.debug_aranges,"",%progbits
+ 2200 0000 14000000 		.4byte	0x14
+ 2201 0004 0200     		.2byte	0x2
+ 2202 0006 00000000 		.4byte	.Ldebug_info0
+ 2203 000a 04       		.byte	0x4
+ 2204 000b 00       		.byte	0
+ 2205 000c 0000     		.2byte	0
+ 2206 000e 0000     		.2byte	0
+ 2207 0010 00000000 		.4byte	0
+ 2208 0014 00000000 		.4byte	0
+ 2209              		.section	.debug_line,"",%progbits
+ 2210              	.Ldebug_line0:
+ 2211 0000 25010000 		.section	.debug_str,"MS",%progbits,1
+ 2211      02001F01 
+ 2211      00000201 
+ 2211      FB0E0D00 
+ 2211      01010101 
+ 2212              	.LASF9:
+ 2213 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 2213      6E74385F 
+ 2213      7400
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 40
+
+
+ 2214              	.LASF16:
+ 2215 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 2215      65746164 
+ 2215      61746100 
+ 2216              	.LASF1:
+ 2217 0016 756E7369 		.ascii	"unsigned char\000"
+ 2217      676E6564 
+ 2217      20636861 
+ 2217      7200
+ 2218              	.LASF17:
+ 2219 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2219      43313120 
+ 2219      352E342E 
+ 2219      31203230 
+ 2219      31363036 
+ 2220 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2220      20726576 
+ 2220      6973696F 
+ 2220      6E203233 
+ 2220      37373135 
+ 2221 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2221      66756E63 
+ 2221      74696F6E 
+ 2221      2D736563 
+ 2221      74696F6E 
+ 2222              	.LASF5:
+ 2223 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2223      20756E73 
+ 2223      69676E65 
+ 2223      6420696E 
+ 2223      7400
+ 2224              	.LASF3:
+ 2225 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 2225      7420756E 
+ 2225      7369676E 
+ 2225      65642069 
+ 2225      6E7400
+ 2226              	.LASF13:
+ 2227 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 2227      6574615F 
+ 2227      63757374 
+ 2227      6E766C00 
+ 2228              	.LASF12:
+ 2229 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 2229      6574615F 
+ 2229      636F6E66 
+ 2229      69676563 
+ 2229      6300
+ 2230              	.LASF19:
+ 2231 00f9 433A5C55 		.ascii	"C:\\Users\\Marcus Gasberg\\Documents\\GitHub\\i3prj"
+ 2231      73657273 
+ 2231      5C4D6172 
+ 2231      63757320 
+ 2231      47617362 
+ 2232 0127 5F70726F 		.ascii	"_projekt\\Softwaredesign\\Demoer\\BeerPongTable_LED"
+ 2232      6A656B74 
+ 2232      5C536F66 
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 41
+
+
+ 2232      74776172 
+ 2232      65646573 
+ 2233 0157 5F44656D 		.ascii	"_Demo\\Design01.cydsn\000"
+ 2233      6F5C4465 
+ 2233      7369676E 
+ 2233      30312E63 
+ 2233      7964736E 
+ 2234              	.LASF8:
+ 2235 016c 756E7369 		.ascii	"unsigned int\000"
+ 2235      676E6564 
+ 2235      20696E74 
+ 2235      00
+ 2236              	.LASF7:
+ 2237 0179 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2237      206C6F6E 
+ 2237      6720756E 
+ 2237      7369676E 
+ 2237      65642069 
+ 2238              	.LASF10:
+ 2239 0190 75696E74 		.ascii	"uint8_t\000"
+ 2239      385F7400 
+ 2240              	.LASF15:
+ 2241 0198 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 2241      6574615F 
+ 2241      666C6173 
+ 2241      6870726F 
+ 2241      74656374 
+ 2242              	.LASF14:
+ 2243 01ad 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 2243      6574615F 
+ 2243      776F6E76 
+ 2243      6C00
+ 2244              	.LASF11:
+ 2245 01bb 73697A65 		.ascii	"sizetype\000"
+ 2245      74797065 
+ 2245      00
+ 2246              	.LASF6:
+ 2247 01c4 6C6F6E67 		.ascii	"long long int\000"
+ 2247      206C6F6E 
+ 2247      6720696E 
+ 2247      7400
+ 2248              	.LASF2:
+ 2249 01d2 73686F72 		.ascii	"short int\000"
+ 2249      7420696E 
+ 2249      7400
+ 2250              	.LASF4:
+ 2251 01dc 6C6F6E67 		.ascii	"long int\000"
+ 2251      20696E74 
+ 2251      00
+ 2252              	.LASF0:
+ 2253 01e5 7369676E 		.ascii	"signed char\000"
+ 2253      65642063 
+ 2253      68617200 
+ 2254              	.LASF18:
+ 2255 01f1 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 2255      72617465 
+ 2255      645F536F 
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccV4BCIc.s 			page 42
+
+
+ 2255      75726365 
+ 2255      5C50536F 
+ 2256              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

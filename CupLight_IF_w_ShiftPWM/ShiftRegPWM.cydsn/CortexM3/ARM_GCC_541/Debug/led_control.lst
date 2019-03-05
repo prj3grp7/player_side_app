@@ -1,0 +1,1348 @@
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"led_control.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.latchShiftReg,"ax",%progbits
+  20              		.align	2
+  21              		.global	latchShiftReg
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	latchShiftReg, %function
+  25              	latchShiftReg:
+  26              	.LFB66:
+  27              		.file 1 "led_control.c"
+   1:led_control.c **** /* ========================================
+   2:led_control.c ****  *
+   3:led_control.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:led_control.c ****  * All Rights Reserved
+   5:led_control.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:led_control.c ****  *
+   7:led_control.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:led_control.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:led_control.c ****  *
+  10:led_control.c ****  * ========================================
+  11:led_control.c **** */
+  12:led_control.c **** #include "led_control.h"
+  13:led_control.c **** 
+  14:led_control.c **** 
+  15:led_control.c **** void initLedControl()
+  16:led_control.c **** {
+  17:led_control.c ****     isr_update_leds_StartEx(led_updater_handler );
+  18:led_control.c ****     initRGBLED();
+  19:led_control.c ****     
+  20:led_control.c ****     for (uint32_t i = 0; i < LEDS_TO_CONTROL; i++){
+  21:led_control.c ****          setColorOfLed(i,255,255,255);
+  22:led_control.c ****     }
+  23:led_control.c ****     
+  24:led_control.c ****     SPIM_led_control_Start();
+  25:led_control.c ****     Timer_led_updater_Start();
+  26:led_control.c **** }
+  27:led_control.c **** 
+  28:led_control.c **** CY_ISR(led_updater_handler)
+  29:led_control.c **** {
+  30:led_control.c ****     updateLeds();
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 2
+
+
+  31:led_control.c **** }
+  32:led_control.c **** 
+  33:led_control.c **** void updateLeds()
+  34:led_control.c **** {
+  35:led_control.c ****     SPIM_led_control_WriteTxData(1<<ledToUpdate);
+  36:led_control.c ****     setColor(rgb_leds[ledToUpdate].red,
+  37:led_control.c ****                 rgb_leds[ledToUpdate].green,
+  38:led_control.c ****                     rgb_leds[ledToUpdate].blue); //Update color
+  39:led_control.c ****     latchShiftReg();
+  40:led_control.c ****     if(ledToUpdate++ == LEDS_TO_CONTROL)
+  41:led_control.c ****     {
+  42:led_control.c ****         ledToUpdate = 0;
+  43:led_control.c ****     }
+  44:led_control.c **** }
+  45:led_control.c **** 
+  46:led_control.c **** void latchShiftReg()
+  47:led_control.c **** {
+  28              		.loc 1 47 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  48:led_control.c ****     Pin_latch_Write(0);
+  36              		.loc 1 48 0
+  37 0002 0020     		movs	r0, #0
+  38 0004 FFF7FEFF 		bl	Pin_latch_Write
+  39              	.LVL0:
+  49:led_control.c ****     Pin_latch_Write(1);
+  40              		.loc 1 49 0
+  41 0008 0120     		movs	r0, #1
+  42 000a FFF7FEFF 		bl	Pin_latch_Write
+  43              	.LVL1:
+  44 000e 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE66:
+  47              		.size	latchShiftReg, .-latchShiftReg
+  48              		.section	.text.updateLeds,"ax",%progbits
+  49              		.align	2
+  50              		.global	updateLeds
+  51              		.thumb
+  52              		.thumb_func
+  53              		.type	updateLeds, %function
+  54              	updateLeds:
+  55              	.LFB65:
+  34:led_control.c ****     SPIM_led_control_WriteTxData(1<<ledToUpdate);
+  56              		.loc 1 34 0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60 0000 10B5     		push	{r4, lr}
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 4, -8
+  63              		.cfi_offset 14, -4
+  35:led_control.c ****     setColor(rgb_leds[ledToUpdate].red,
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 3
+
+
+  64              		.loc 1 35 0
+  65 0002 0D4C     		ldr	r4, .L6
+  66 0004 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+  67 0006 0123     		movs	r3, #1
+  68 0008 03FA00F0 		lsl	r0, r3, r0
+  69 000c C0B2     		uxtb	r0, r0
+  70 000e FFF7FEFF 		bl	SPIM_led_control_WriteTxData
+  71              	.LVL2:
+  36:led_control.c ****                 rgb_leds[ledToUpdate].green,
+  72              		.loc 1 36 0
+  73 0012 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  74 0014 03EB4303 		add	r3, r3, r3, lsl #1
+  75 0018 2344     		add	r3, r3, r4
+  76 001a 9A79     		ldrb	r2, [r3, #6]	@ zero_extendqisi2
+  77 001c 5979     		ldrb	r1, [r3, #5]	@ zero_extendqisi2
+  78 001e 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+  79 0020 FFF7FEFF 		bl	setColor
+  80              	.LVL3:
+  39:led_control.c ****     if(ledToUpdate++ == LEDS_TO_CONTROL)
+  81              		.loc 1 39 0
+  82 0024 FFF7FEFF 		bl	latchShiftReg
+  83              	.LVL4:
+  40:led_control.c ****     {
+  84              		.loc 1 40 0
+  85 0028 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  86 002a 5A1C     		adds	r2, r3, #1
+  87 002c 2270     		strb	r2, [r4]
+  88 002e 042B     		cmp	r3, #4
+  89 0030 01D1     		bne	.L3
+  42:led_control.c ****     }
+  90              		.loc 1 42 0
+  91 0032 0022     		movs	r2, #0
+  92 0034 2270     		strb	r2, [r4]
+  93              	.L3:
+  94 0036 10BD     		pop	{r4, pc}
+  95              	.L7:
+  96              		.align	2
+  97              	.L6:
+  98 0038 00000000 		.word	.LANCHOR0
+  99              		.cfi_endproc
+ 100              	.LFE65:
+ 101              		.size	updateLeds, .-updateLeds
+ 102              		.section	.text.led_updater_handler,"ax",%progbits
+ 103              		.align	2
+ 104              		.global	led_updater_handler
+ 105              		.thumb
+ 106              		.thumb_func
+ 107              		.type	led_updater_handler, %function
+ 108              	led_updater_handler:
+ 109              	.LFB64:
+  29:led_control.c ****     updateLeds();
+ 110              		.loc 1 29 0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114 0000 08B5     		push	{r3, lr}
+ 115              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 4
+
+
+ 116              		.cfi_offset 3, -8
+ 117              		.cfi_offset 14, -4
+  30:led_control.c **** }
+ 118              		.loc 1 30 0
+ 119 0002 FFF7FEFF 		bl	updateLeds
+ 120              	.LVL5:
+ 121 0006 08BD     		pop	{r3, pc}
+ 122              		.cfi_endproc
+ 123              	.LFE64:
+ 124              		.size	led_updater_handler, .-led_updater_handler
+ 125              		.section	.text.setColorOfLed,"ax",%progbits
+ 126              		.align	2
+ 127              		.global	setColorOfLed
+ 128              		.thumb
+ 129              		.thumb_func
+ 130              		.type	setColorOfLed, %function
+ 131              	setColorOfLed:
+ 132              	.LFB67:
+  50:led_control.c **** }
+  51:led_control.c **** void setColorOfLed(uint8_t nr, uint8_t R,uint8_t G,uint8_t B)
+  52:led_control.c **** {
+ 133              		.loc 1 52 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138              	.LVL6:
+  53:led_control.c ****     if (nr >= 0 && nr < LEDS_TO_CONTROL)
+ 139              		.loc 1 53 0
+ 140 0000 0328     		cmp	r0, #3
+ 141 0002 08D8     		bhi	.L14
+  52:led_control.c ****     if (nr >= 0 && nr < LEDS_TO_CONTROL)
+ 142              		.loc 1 52 0
+ 143 0004 10B4     		push	{r4}
+ 144              		.cfi_def_cfa_offset 4
+ 145              		.cfi_offset 4, -4
+  54:led_control.c ****     {
+  55:led_control.c ****         rgb_leds[nr].red = R>=0 && R<=255 ? R : getRed(); //Bound Check
+ 146              		.loc 1 55 0
+ 147 0006 00EB4000 		add	r0, r0, r0, lsl #1
+ 148              	.LVL7:
+ 149 000a 034C     		ldr	r4, .L15
+ 150 000c 2044     		add	r0, r0, r4
+ 151 000e 0171     		strb	r1, [r0, #4]
+  56:led_control.c ****         rgb_leds[nr].green = G>=0 && G<=255 ? G : getGreen(); //Bound Check
+ 152              		.loc 1 56 0
+ 153 0010 4271     		strb	r2, [r0, #5]
+  57:led_control.c ****         rgb_leds[nr].blue = B>=0 && B<=255 ? B : getBlue(); //Bound Check
+ 154              		.loc 1 57 0
+ 155 0012 8371     		strb	r3, [r0, #6]
+  58:led_control.c ****     }
+  59:led_control.c **** }
+ 156              		.loc 1 59 0
+ 157 0014 10BC     		pop	{r4}
+ 158              		.cfi_restore 4
+ 159              		.cfi_def_cfa_offset 0
+ 160              	.L14:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 5
+
+
+ 161 0016 7047     		bx	lr
+ 162              	.L16:
+ 163              		.align	2
+ 164              	.L15:
+ 165 0018 00000000 		.word	.LANCHOR0
+ 166              		.cfi_endproc
+ 167              	.LFE67:
+ 168              		.size	setColorOfLed, .-setColorOfLed
+ 169              		.section	.text.initLedControl,"ax",%progbits
+ 170              		.align	2
+ 171              		.global	initLedControl
+ 172              		.thumb
+ 173              		.thumb_func
+ 174              		.type	initLedControl, %function
+ 175              	initLedControl:
+ 176              	.LFB63:
+  16:led_control.c ****     isr_update_leds_StartEx(led_updater_handler );
+ 177              		.loc 1 16 0
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181 0000 10B5     		push	{r4, lr}
+ 182              		.cfi_def_cfa_offset 8
+ 183              		.cfi_offset 4, -8
+ 184              		.cfi_offset 14, -4
+  17:led_control.c ****     initRGBLED();
+ 185              		.loc 1 17 0
+ 186 0002 0A48     		ldr	r0, .L21
+ 187 0004 FFF7FEFF 		bl	isr_update_leds_StartEx
+ 188              	.LVL8:
+  18:led_control.c ****     
+ 189              		.loc 1 18 0
+ 190 0008 FFF7FEFF 		bl	initRGBLED
+ 191              	.LVL9:
+ 192              	.LBB2:
+  20:led_control.c ****          setColorOfLed(i,255,255,255);
+ 193              		.loc 1 20 0
+ 194 000c 0024     		movs	r4, #0
+ 195 000e 06E0     		b	.L18
+ 196              	.LVL10:
+ 197              	.L19:
+  21:led_control.c ****     }
+ 198              		.loc 1 21 0 discriminator 3
+ 199 0010 FF23     		movs	r3, #255
+ 200 0012 1A46     		mov	r2, r3
+ 201 0014 1946     		mov	r1, r3
+ 202 0016 E0B2     		uxtb	r0, r4
+ 203 0018 FFF7FEFF 		bl	setColorOfLed
+ 204              	.LVL11:
+  20:led_control.c ****          setColorOfLed(i,255,255,255);
+ 205              		.loc 1 20 0 discriminator 3
+ 206 001c 0134     		adds	r4, r4, #1
+ 207              	.LVL12:
+ 208              	.L18:
+  20:led_control.c ****          setColorOfLed(i,255,255,255);
+ 209              		.loc 1 20 0 is_stmt 0 discriminator 1
+ 210 001e 032C     		cmp	r4, #3
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 6
+
+
+ 211 0020 F6D9     		bls	.L19
+ 212              	.LBE2:
+  24:led_control.c ****     Timer_led_updater_Start();
+ 213              		.loc 1 24 0 is_stmt 1
+ 214 0022 FFF7FEFF 		bl	SPIM_led_control_Start
+ 215              	.LVL13:
+  25:led_control.c **** }
+ 216              		.loc 1 25 0
+ 217 0026 FFF7FEFF 		bl	Timer_led_updater_Start
+ 218              	.LVL14:
+ 219 002a 10BD     		pop	{r4, pc}
+ 220              	.LVL15:
+ 221              	.L22:
+ 222              		.align	2
+ 223              	.L21:
+ 224 002c 00000000 		.word	led_updater_handler
+ 225              		.cfi_endproc
+ 226              	.LFE63:
+ 227              		.size	initLedControl, .-initLedControl
+ 228              		.bss
+ 229              		.align	2
+ 230              		.set	.LANCHOR0,. + 0
+ 231              		.type	ledToUpdate, %object
+ 232              		.size	ledToUpdate, 1
+ 233              	ledToUpdate:
+ 234 0000 00       		.space	1
+ 235 0001 000000   		.space	3
+ 236              		.type	rgb_leds, %object
+ 237              		.size	rgb_leds, 12
+ 238              	rgb_leds:
+ 239 0004 00000000 		.space	12
+ 239      00000000 
+ 239      00000000 
+ 240              		.text
+ 241              	.Letext0:
+ 242              		.file 2 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 243              		.file 3 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 244              		.file 4 "rgb_led.h"
+ 245              		.file 5 "led_control.h"
+ 246              		.file 6 "Generated_Source\\PSoC5/Pin_latch.h"
+ 247              		.file 7 "Generated_Source\\PSoC5/SPIM_led_control.h"
+ 248              		.file 8 "Generated_Source\\PSoC5/isr_update_leds.h"
+ 249              		.file 9 "Generated_Source\\PSoC5/Timer_led_updater.h"
+ 250              		.file 10 "Generated_Source\\PSoC5/core_cm3.h"
+ 251              		.section	.debug_info,"",%progbits
+ 252              	.Ldebug_info0:
+ 253 0000 E0020000 		.4byte	0x2e0
+ 254 0004 0400     		.2byte	0x4
+ 255 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 256 000a 04       		.byte	0x4
+ 257 000b 01       		.uleb128 0x1
+ 258 000c 25010000 		.4byte	.LASF36
+ 259 0010 0C       		.byte	0xc
+ 260 0011 F8010000 		.4byte	.LASF37
+ 261 0015 30000000 		.4byte	.LASF38
+ 262 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 263 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 7
+
+
+ 264 0021 00000000 		.4byte	.Ldebug_line0
+ 265 0025 02       		.uleb128 0x2
+ 266 0026 01       		.byte	0x1
+ 267 0027 06       		.byte	0x6
+ 268 0028 6A020000 		.4byte	.LASF0
+ 269 002c 03       		.uleb128 0x3
+ 270 002d 0E000000 		.4byte	.LASF4
+ 271 0031 02       		.byte	0x2
+ 272 0032 1D       		.byte	0x1d
+ 273 0033 37000000 		.4byte	0x37
+ 274 0037 02       		.uleb128 0x2
+ 275 0038 01       		.byte	0x1
+ 276 0039 08       		.byte	0x8
+ 277 003a 17010000 		.4byte	.LASF1
+ 278 003e 02       		.uleb128 0x2
+ 279 003f 02       		.byte	0x2
+ 280 0040 05       		.byte	0x5
+ 281 0041 A9020000 		.4byte	.LASF2
+ 282 0045 02       		.uleb128 0x2
+ 283 0046 02       		.byte	0x2
+ 284 0047 07       		.byte	0x7
+ 285 0048 D1020000 		.4byte	.LASF3
+ 286 004c 03       		.uleb128 0x3
+ 287 004d AB000000 		.4byte	.LASF5
+ 288 0051 02       		.byte	0x2
+ 289 0052 3F       		.byte	0x3f
+ 290 0053 57000000 		.4byte	0x57
+ 291 0057 02       		.uleb128 0x2
+ 292 0058 04       		.byte	0x4
+ 293 0059 05       		.byte	0x5
+ 294 005a BC020000 		.4byte	.LASF6
+ 295 005e 03       		.uleb128 0x3
+ 296 005f B3010000 		.4byte	.LASF7
+ 297 0063 02       		.byte	0x2
+ 298 0064 41       		.byte	0x41
+ 299 0065 69000000 		.4byte	0x69
+ 300 0069 02       		.uleb128 0x2
+ 301 006a 04       		.byte	0x4
+ 302 006b 07       		.byte	0x7
+ 303 006c CC010000 		.4byte	.LASF8
+ 304 0070 02       		.uleb128 0x2
+ 305 0071 08       		.byte	0x8
+ 306 0072 05       		.byte	0x5
+ 307 0073 87020000 		.4byte	.LASF9
+ 308 0077 02       		.uleb128 0x2
+ 309 0078 08       		.byte	0x8
+ 310 0079 07       		.byte	0x7
+ 311 007a 47020000 		.4byte	.LASF10
+ 312 007e 04       		.uleb128 0x4
+ 313 007f 04       		.byte	0x4
+ 314 0080 05       		.byte	0x5
+ 315 0081 696E7400 		.ascii	"int\000"
+ 316 0085 02       		.uleb128 0x2
+ 317 0086 04       		.byte	0x4
+ 318 0087 07       		.byte	0x7
+ 319 0088 22020000 		.4byte	.LASF11
+ 320 008c 03       		.uleb128 0x3
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 8
+
+
+ 321 008d BE000000 		.4byte	.LASF12
+ 322 0091 03       		.byte	0x3
+ 323 0092 18       		.byte	0x18
+ 324 0093 2C000000 		.4byte	0x2c
+ 325 0097 03       		.uleb128 0x3
+ 326 0098 76020000 		.4byte	.LASF13
+ 327 009c 03       		.byte	0x3
+ 328 009d 2C       		.byte	0x2c
+ 329 009e 4C000000 		.4byte	0x4c
+ 330 00a2 03       		.uleb128 0x3
+ 331 00a3 B3020000 		.4byte	.LASF14
+ 332 00a7 03       		.byte	0x3
+ 333 00a8 30       		.byte	0x30
+ 334 00a9 5E000000 		.4byte	0x5e
+ 335 00ad 02       		.uleb128 0x2
+ 336 00ae 04       		.byte	0x4
+ 337 00af 04       		.byte	0x4
+ 338 00b0 EF000000 		.4byte	.LASF15
+ 339 00b4 02       		.uleb128 0x2
+ 340 00b5 08       		.byte	0x8
+ 341 00b6 04       		.byte	0x4
+ 342 00b7 F1010000 		.4byte	.LASF16
+ 343 00bb 02       		.uleb128 0x2
+ 344 00bc 01       		.byte	0x1
+ 345 00bd 08       		.byte	0x8
+ 346 00be A4020000 		.4byte	.LASF17
+ 347 00c2 02       		.uleb128 0x2
+ 348 00c3 08       		.byte	0x8
+ 349 00c4 04       		.byte	0x4
+ 350 00c5 C5020000 		.4byte	.LASF18
+ 351 00c9 02       		.uleb128 0x2
+ 352 00ca 04       		.byte	0x4
+ 353 00cb 07       		.byte	0x7
+ 354 00cc 7E020000 		.4byte	.LASF19
+ 355 00d0 05       		.uleb128 0x5
+ 356 00d1 1A020000 		.4byte	.LASF39
+ 357 00d5 03       		.byte	0x3
+ 358 00d6 04       		.byte	0x4
+ 359 00d7 0F       		.byte	0xf
+ 360 00d8 01010000 		.4byte	0x101
+ 361 00dc 06       		.uleb128 0x6
+ 362 00dd 72656400 		.ascii	"red\000"
+ 363 00e1 04       		.byte	0x4
+ 364 00e2 11       		.byte	0x11
+ 365 00e3 8C000000 		.4byte	0x8c
+ 366 00e7 00       		.byte	0
+ 367 00e8 07       		.uleb128 0x7
+ 368 00e9 DE010000 		.4byte	.LASF20
+ 369 00ed 04       		.byte	0x4
+ 370 00ee 12       		.byte	0x12
+ 371 00ef 8C000000 		.4byte	0x8c
+ 372 00f3 01       		.byte	0x1
+ 373 00f4 07       		.uleb128 0x7
+ 374 00f5 DA000000 		.4byte	.LASF21
+ 375 00f9 04       		.byte	0x4
+ 376 00fa 13       		.byte	0x13
+ 377 00fb 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 9
+
+
+ 378 00ff 02       		.byte	0x2
+ 379 0100 00       		.byte	0
+ 380 0101 08       		.uleb128 0x8
+ 381 0102 BE010000 		.4byte	.LASF22
+ 382 0106 01       		.byte	0x1
+ 383 0107 2E       		.byte	0x2e
+ 384 0108 00000000 		.4byte	.LFB66
+ 385 010c 10000000 		.4byte	.LFE66-.LFB66
+ 386 0110 01       		.uleb128 0x1
+ 387 0111 9C       		.byte	0x9c
+ 388 0112 39010000 		.4byte	0x139
+ 389 0116 09       		.uleb128 0x9
+ 390 0117 08000000 		.4byte	.LVL0
+ 391 011b 96020000 		.4byte	0x296
+ 392 011f 29010000 		.4byte	0x129
+ 393 0123 0A       		.uleb128 0xa
+ 394 0124 01       		.uleb128 0x1
+ 395 0125 50       		.byte	0x50
+ 396 0126 01       		.uleb128 0x1
+ 397 0127 30       		.byte	0x30
+ 398 0128 00       		.byte	0
+ 399 0129 0B       		.uleb128 0xb
+ 400 012a 0E000000 		.4byte	.LVL1
+ 401 012e 96020000 		.4byte	0x296
+ 402 0132 0A       		.uleb128 0xa
+ 403 0133 01       		.uleb128 0x1
+ 404 0134 50       		.byte	0x50
+ 405 0135 01       		.uleb128 0x1
+ 406 0136 31       		.byte	0x31
+ 407 0137 00       		.byte	0
+ 408 0138 00       		.byte	0
+ 409 0139 08       		.uleb128 0x8
+ 410 013a F5000000 		.4byte	.LASF23
+ 411 013e 01       		.byte	0x1
+ 412 013f 21       		.byte	0x21
+ 413 0140 00000000 		.4byte	.LFB65
+ 414 0144 3C000000 		.4byte	.LFE65-.LFB65
+ 415 0148 01       		.uleb128 0x1
+ 416 0149 9C       		.byte	0x9c
+ 417 014a 6A010000 		.4byte	0x16a
+ 418 014e 0C       		.uleb128 0xc
+ 419 014f 12000000 		.4byte	.LVL2
+ 420 0153 A1020000 		.4byte	0x2a1
+ 421 0157 0C       		.uleb128 0xc
+ 422 0158 24000000 		.4byte	.LVL3
+ 423 015c AC020000 		.4byte	0x2ac
+ 424 0160 0C       		.uleb128 0xc
+ 425 0161 28000000 		.4byte	.LVL4
+ 426 0165 01010000 		.4byte	0x101
+ 427 0169 00       		.byte	0
+ 428 016a 0D       		.uleb128 0xd
+ 429 016b C6000000 		.4byte	.LASF24
+ 430 016f 01       		.byte	0x1
+ 431 0170 1C       		.byte	0x1c
+ 432 0171 00000000 		.4byte	.LFB64
+ 433 0175 08000000 		.4byte	.LFE64-.LFB64
+ 434 0179 01       		.uleb128 0x1
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 10
+
+
+ 435 017a 9C       		.byte	0x9c
+ 436 017b 89010000 		.4byte	0x189
+ 437 017f 0C       		.uleb128 0xc
+ 438 0180 06000000 		.4byte	.LVL5
+ 439 0184 39010000 		.4byte	0x139
+ 440 0188 00       		.byte	0
+ 441 0189 0D       		.uleb128 0xd
+ 442 018a 00000000 		.4byte	.LASF25
+ 443 018e 01       		.byte	0x1
+ 444 018f 33       		.byte	0x33
+ 445 0190 00000000 		.4byte	.LFB67
+ 446 0194 1C000000 		.4byte	.LFE67-.LFB67
+ 447 0198 01       		.uleb128 0x1
+ 448 0199 9C       		.byte	0x9c
+ 449 019a CE010000 		.4byte	0x1ce
+ 450 019e 0E       		.uleb128 0xe
+ 451 019f 6E7200   		.ascii	"nr\000"
+ 452 01a2 01       		.byte	0x1
+ 453 01a3 33       		.byte	0x33
+ 454 01a4 8C000000 		.4byte	0x8c
+ 455 01a8 00000000 		.4byte	.LLST0
+ 456 01ac 0F       		.uleb128 0xf
+ 457 01ad 5200     		.ascii	"R\000"
+ 458 01af 01       		.byte	0x1
+ 459 01b0 33       		.byte	0x33
+ 460 01b1 8C000000 		.4byte	0x8c
+ 461 01b5 01       		.uleb128 0x1
+ 462 01b6 51       		.byte	0x51
+ 463 01b7 0F       		.uleb128 0xf
+ 464 01b8 4700     		.ascii	"G\000"
+ 465 01ba 01       		.byte	0x1
+ 466 01bb 33       		.byte	0x33
+ 467 01bc 8C000000 		.4byte	0x8c
+ 468 01c0 01       		.uleb128 0x1
+ 469 01c1 52       		.byte	0x52
+ 470 01c2 0F       		.uleb128 0xf
+ 471 01c3 4200     		.ascii	"B\000"
+ 472 01c5 01       		.byte	0x1
+ 473 01c6 33       		.byte	0x33
+ 474 01c7 8C000000 		.4byte	0x8c
+ 475 01cb 01       		.uleb128 0x1
+ 476 01cc 53       		.byte	0x53
+ 477 01cd 00       		.byte	0
+ 478 01ce 08       		.uleb128 0x8
+ 479 01cf 95020000 		.4byte	.LASF26
+ 480 01d3 01       		.byte	0x1
+ 481 01d4 0F       		.byte	0xf
+ 482 01d5 00000000 		.4byte	.LFB63
+ 483 01d9 30000000 		.4byte	.LFE63-.LFB63
+ 484 01dd 01       		.uleb128 0x1
+ 485 01de 9C       		.byte	0x9c
+ 486 01df 53020000 		.4byte	0x253
+ 487 01e3 10       		.uleb128 0x10
+ 488 01e4 0C000000 		.4byte	.LBB2
+ 489 01e8 16000000 		.4byte	.LBE2-.LBB2
+ 490 01ec 20020000 		.4byte	0x220
+ 491 01f0 11       		.uleb128 0x11
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 11
+
+
+ 492 01f1 6900     		.ascii	"i\000"
+ 493 01f3 01       		.byte	0x1
+ 494 01f4 14       		.byte	0x14
+ 495 01f5 A2000000 		.4byte	0xa2
+ 496 01f9 21000000 		.4byte	.LLST1
+ 497 01fd 0B       		.uleb128 0xb
+ 498 01fe 1C000000 		.4byte	.LVL11
+ 499 0202 89010000 		.4byte	0x189
+ 500 0206 0A       		.uleb128 0xa
+ 501 0207 01       		.uleb128 0x1
+ 502 0208 50       		.byte	0x50
+ 503 0209 02       		.uleb128 0x2
+ 504 020a 74       		.byte	0x74
+ 505 020b 00       		.sleb128 0
+ 506 020c 0A       		.uleb128 0xa
+ 507 020d 01       		.uleb128 0x1
+ 508 020e 51       		.byte	0x51
+ 509 020f 02       		.uleb128 0x2
+ 510 0210 09       		.byte	0x9
+ 511 0211 FF       		.byte	0xff
+ 512 0212 0A       		.uleb128 0xa
+ 513 0213 01       		.uleb128 0x1
+ 514 0214 52       		.byte	0x52
+ 515 0215 02       		.uleb128 0x2
+ 516 0216 09       		.byte	0x9
+ 517 0217 FF       		.byte	0xff
+ 518 0218 0A       		.uleb128 0xa
+ 519 0219 01       		.uleb128 0x1
+ 520 021a 53       		.byte	0x53
+ 521 021b 02       		.uleb128 0x2
+ 522 021c 09       		.byte	0x9
+ 523 021d FF       		.byte	0xff
+ 524 021e 00       		.byte	0
+ 525 021f 00       		.byte	0
+ 526 0220 09       		.uleb128 0x9
+ 527 0221 08000000 		.4byte	.LVL8
+ 528 0225 B7020000 		.4byte	0x2b7
+ 529 0229 37020000 		.4byte	0x237
+ 530 022d 0A       		.uleb128 0xa
+ 531 022e 01       		.uleb128 0x1
+ 532 022f 50       		.byte	0x50
+ 533 0230 05       		.uleb128 0x5
+ 534 0231 03       		.byte	0x3
+ 535 0232 00000000 		.4byte	led_updater_handler
+ 536 0236 00       		.byte	0
+ 537 0237 0C       		.uleb128 0xc
+ 538 0238 0C000000 		.4byte	.LVL9
+ 539 023c C2020000 		.4byte	0x2c2
+ 540 0240 0C       		.uleb128 0xc
+ 541 0241 26000000 		.4byte	.LVL13
+ 542 0245 CD020000 		.4byte	0x2cd
+ 543 0249 0C       		.uleb128 0xc
+ 544 024a 2A000000 		.4byte	.LVL14
+ 545 024e D8020000 		.4byte	0x2d8
+ 546 0252 00       		.byte	0
+ 547 0253 12       		.uleb128 0x12
+ 548 0254 D0000000 		.4byte	0xd0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 12
+
+
+ 549 0258 63020000 		.4byte	0x263
+ 550 025c 13       		.uleb128 0x13
+ 551 025d C9000000 		.4byte	0xc9
+ 552 0261 03       		.byte	0x3
+ 553 0262 00       		.byte	0
+ 554 0263 14       		.uleb128 0x14
+ 555 0264 11020000 		.4byte	.LASF27
+ 556 0268 05       		.byte	0x5
+ 557 0269 12       		.byte	0x12
+ 558 026a 53020000 		.4byte	0x253
+ 559 026e 05       		.uleb128 0x5
+ 560 026f 03       		.byte	0x3
+ 561 0270 04000000 		.4byte	rgb_leds
+ 562 0274 14       		.uleb128 0x14
+ 563 0275 5E020000 		.4byte	.LASF28
+ 564 0279 05       		.byte	0x5
+ 565 027a 13       		.byte	0x13
+ 566 027b 8C000000 		.4byte	0x8c
+ 567 027f 05       		.uleb128 0x5
+ 568 0280 03       		.byte	0x3
+ 569 0281 00000000 		.4byte	ledToUpdate
+ 570 0285 15       		.uleb128 0x15
+ 571 0286 E4010000 		.4byte	.LASF40
+ 572 028a 0A       		.byte	0xa
+ 573 028b 1207     		.2byte	0x712
+ 574 028d 91020000 		.4byte	0x291
+ 575 0291 16       		.uleb128 0x16
+ 576 0292 97000000 		.4byte	0x97
+ 577 0296 17       		.uleb128 0x17
+ 578 0297 DF000000 		.4byte	.LASF29
+ 579 029b DF000000 		.4byte	.LASF29
+ 580 029f 06       		.byte	0x6
+ 581 02a0 26       		.byte	0x26
+ 582 02a1 17       		.uleb128 0x17
+ 583 02a2 8E000000 		.4byte	.LASF30
+ 584 02a6 8E000000 		.4byte	.LASF30
+ 585 02aa 07       		.byte	0x7
+ 586 02ab 5E       		.byte	0x5e
+ 587 02ac 17       		.uleb128 0x17
+ 588 02ad B5000000 		.4byte	.LASF31
+ 589 02b1 B5000000 		.4byte	.LASF31
+ 590 02b5 04       		.byte	0x4
+ 591 02b6 1A       		.byte	0x1a
+ 592 02b7 17       		.uleb128 0x17
+ 593 02b8 18000000 		.4byte	.LASF32
+ 594 02bc 18000000 		.4byte	.LASF32
+ 595 02c0 08       		.byte	0x8
+ 596 02c1 18       		.byte	0x18
+ 597 02c2 17       		.uleb128 0x17
+ 598 02c3 06020000 		.4byte	.LASF33
+ 599 02c7 06020000 		.4byte	.LASF33
+ 600 02cb 04       		.byte	0x4
+ 601 02cc 17       		.byte	0x17
+ 602 02cd 17       		.uleb128 0x17
+ 603 02ce 00010000 		.4byte	.LASF34
+ 604 02d2 00010000 		.4byte	.LASF34
+ 605 02d6 07       		.byte	0x7
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 13
+
+
+ 606 02d7 4D       		.byte	0x4d
+ 607 02d8 17       		.uleb128 0x17
+ 608 02d9 2F020000 		.4byte	.LASF35
+ 609 02dd 2F020000 		.4byte	.LASF35
+ 610 02e1 09       		.byte	0x9
+ 611 02e2 5A       		.byte	0x5a
+ 612 02e3 00       		.byte	0
+ 613              		.section	.debug_abbrev,"",%progbits
+ 614              	.Ldebug_abbrev0:
+ 615 0000 01       		.uleb128 0x1
+ 616 0001 11       		.uleb128 0x11
+ 617 0002 01       		.byte	0x1
+ 618 0003 25       		.uleb128 0x25
+ 619 0004 0E       		.uleb128 0xe
+ 620 0005 13       		.uleb128 0x13
+ 621 0006 0B       		.uleb128 0xb
+ 622 0007 03       		.uleb128 0x3
+ 623 0008 0E       		.uleb128 0xe
+ 624 0009 1B       		.uleb128 0x1b
+ 625 000a 0E       		.uleb128 0xe
+ 626 000b 55       		.uleb128 0x55
+ 627 000c 17       		.uleb128 0x17
+ 628 000d 11       		.uleb128 0x11
+ 629 000e 01       		.uleb128 0x1
+ 630 000f 10       		.uleb128 0x10
+ 631 0010 17       		.uleb128 0x17
+ 632 0011 00       		.byte	0
+ 633 0012 00       		.byte	0
+ 634 0013 02       		.uleb128 0x2
+ 635 0014 24       		.uleb128 0x24
+ 636 0015 00       		.byte	0
+ 637 0016 0B       		.uleb128 0xb
+ 638 0017 0B       		.uleb128 0xb
+ 639 0018 3E       		.uleb128 0x3e
+ 640 0019 0B       		.uleb128 0xb
+ 641 001a 03       		.uleb128 0x3
+ 642 001b 0E       		.uleb128 0xe
+ 643 001c 00       		.byte	0
+ 644 001d 00       		.byte	0
+ 645 001e 03       		.uleb128 0x3
+ 646 001f 16       		.uleb128 0x16
+ 647 0020 00       		.byte	0
+ 648 0021 03       		.uleb128 0x3
+ 649 0022 0E       		.uleb128 0xe
+ 650 0023 3A       		.uleb128 0x3a
+ 651 0024 0B       		.uleb128 0xb
+ 652 0025 3B       		.uleb128 0x3b
+ 653 0026 0B       		.uleb128 0xb
+ 654 0027 49       		.uleb128 0x49
+ 655 0028 13       		.uleb128 0x13
+ 656 0029 00       		.byte	0
+ 657 002a 00       		.byte	0
+ 658 002b 04       		.uleb128 0x4
+ 659 002c 24       		.uleb128 0x24
+ 660 002d 00       		.byte	0
+ 661 002e 0B       		.uleb128 0xb
+ 662 002f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 14
+
+
+ 663 0030 3E       		.uleb128 0x3e
+ 664 0031 0B       		.uleb128 0xb
+ 665 0032 03       		.uleb128 0x3
+ 666 0033 08       		.uleb128 0x8
+ 667 0034 00       		.byte	0
+ 668 0035 00       		.byte	0
+ 669 0036 05       		.uleb128 0x5
+ 670 0037 13       		.uleb128 0x13
+ 671 0038 01       		.byte	0x1
+ 672 0039 03       		.uleb128 0x3
+ 673 003a 0E       		.uleb128 0xe
+ 674 003b 0B       		.uleb128 0xb
+ 675 003c 0B       		.uleb128 0xb
+ 676 003d 3A       		.uleb128 0x3a
+ 677 003e 0B       		.uleb128 0xb
+ 678 003f 3B       		.uleb128 0x3b
+ 679 0040 0B       		.uleb128 0xb
+ 680 0041 01       		.uleb128 0x1
+ 681 0042 13       		.uleb128 0x13
+ 682 0043 00       		.byte	0
+ 683 0044 00       		.byte	0
+ 684 0045 06       		.uleb128 0x6
+ 685 0046 0D       		.uleb128 0xd
+ 686 0047 00       		.byte	0
+ 687 0048 03       		.uleb128 0x3
+ 688 0049 08       		.uleb128 0x8
+ 689 004a 3A       		.uleb128 0x3a
+ 690 004b 0B       		.uleb128 0xb
+ 691 004c 3B       		.uleb128 0x3b
+ 692 004d 0B       		.uleb128 0xb
+ 693 004e 49       		.uleb128 0x49
+ 694 004f 13       		.uleb128 0x13
+ 695 0050 38       		.uleb128 0x38
+ 696 0051 0B       		.uleb128 0xb
+ 697 0052 00       		.byte	0
+ 698 0053 00       		.byte	0
+ 699 0054 07       		.uleb128 0x7
+ 700 0055 0D       		.uleb128 0xd
+ 701 0056 00       		.byte	0
+ 702 0057 03       		.uleb128 0x3
+ 703 0058 0E       		.uleb128 0xe
+ 704 0059 3A       		.uleb128 0x3a
+ 705 005a 0B       		.uleb128 0xb
+ 706 005b 3B       		.uleb128 0x3b
+ 707 005c 0B       		.uleb128 0xb
+ 708 005d 49       		.uleb128 0x49
+ 709 005e 13       		.uleb128 0x13
+ 710 005f 38       		.uleb128 0x38
+ 711 0060 0B       		.uleb128 0xb
+ 712 0061 00       		.byte	0
+ 713 0062 00       		.byte	0
+ 714 0063 08       		.uleb128 0x8
+ 715 0064 2E       		.uleb128 0x2e
+ 716 0065 01       		.byte	0x1
+ 717 0066 3F       		.uleb128 0x3f
+ 718 0067 19       		.uleb128 0x19
+ 719 0068 03       		.uleb128 0x3
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 15
+
+
+ 720 0069 0E       		.uleb128 0xe
+ 721 006a 3A       		.uleb128 0x3a
+ 722 006b 0B       		.uleb128 0xb
+ 723 006c 3B       		.uleb128 0x3b
+ 724 006d 0B       		.uleb128 0xb
+ 725 006e 11       		.uleb128 0x11
+ 726 006f 01       		.uleb128 0x1
+ 727 0070 12       		.uleb128 0x12
+ 728 0071 06       		.uleb128 0x6
+ 729 0072 40       		.uleb128 0x40
+ 730 0073 18       		.uleb128 0x18
+ 731 0074 9742     		.uleb128 0x2117
+ 732 0076 19       		.uleb128 0x19
+ 733 0077 01       		.uleb128 0x1
+ 734 0078 13       		.uleb128 0x13
+ 735 0079 00       		.byte	0
+ 736 007a 00       		.byte	0
+ 737 007b 09       		.uleb128 0x9
+ 738 007c 898201   		.uleb128 0x4109
+ 739 007f 01       		.byte	0x1
+ 740 0080 11       		.uleb128 0x11
+ 741 0081 01       		.uleb128 0x1
+ 742 0082 31       		.uleb128 0x31
+ 743 0083 13       		.uleb128 0x13
+ 744 0084 01       		.uleb128 0x1
+ 745 0085 13       		.uleb128 0x13
+ 746 0086 00       		.byte	0
+ 747 0087 00       		.byte	0
+ 748 0088 0A       		.uleb128 0xa
+ 749 0089 8A8201   		.uleb128 0x410a
+ 750 008c 00       		.byte	0
+ 751 008d 02       		.uleb128 0x2
+ 752 008e 18       		.uleb128 0x18
+ 753 008f 9142     		.uleb128 0x2111
+ 754 0091 18       		.uleb128 0x18
+ 755 0092 00       		.byte	0
+ 756 0093 00       		.byte	0
+ 757 0094 0B       		.uleb128 0xb
+ 758 0095 898201   		.uleb128 0x4109
+ 759 0098 01       		.byte	0x1
+ 760 0099 11       		.uleb128 0x11
+ 761 009a 01       		.uleb128 0x1
+ 762 009b 31       		.uleb128 0x31
+ 763 009c 13       		.uleb128 0x13
+ 764 009d 00       		.byte	0
+ 765 009e 00       		.byte	0
+ 766 009f 0C       		.uleb128 0xc
+ 767 00a0 898201   		.uleb128 0x4109
+ 768 00a3 00       		.byte	0
+ 769 00a4 11       		.uleb128 0x11
+ 770 00a5 01       		.uleb128 0x1
+ 771 00a6 31       		.uleb128 0x31
+ 772 00a7 13       		.uleb128 0x13
+ 773 00a8 00       		.byte	0
+ 774 00a9 00       		.byte	0
+ 775 00aa 0D       		.uleb128 0xd
+ 776 00ab 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 16
+
+
+ 777 00ac 01       		.byte	0x1
+ 778 00ad 3F       		.uleb128 0x3f
+ 779 00ae 19       		.uleb128 0x19
+ 780 00af 03       		.uleb128 0x3
+ 781 00b0 0E       		.uleb128 0xe
+ 782 00b1 3A       		.uleb128 0x3a
+ 783 00b2 0B       		.uleb128 0xb
+ 784 00b3 3B       		.uleb128 0x3b
+ 785 00b4 0B       		.uleb128 0xb
+ 786 00b5 27       		.uleb128 0x27
+ 787 00b6 19       		.uleb128 0x19
+ 788 00b7 11       		.uleb128 0x11
+ 789 00b8 01       		.uleb128 0x1
+ 790 00b9 12       		.uleb128 0x12
+ 791 00ba 06       		.uleb128 0x6
+ 792 00bb 40       		.uleb128 0x40
+ 793 00bc 18       		.uleb128 0x18
+ 794 00bd 9742     		.uleb128 0x2117
+ 795 00bf 19       		.uleb128 0x19
+ 796 00c0 01       		.uleb128 0x1
+ 797 00c1 13       		.uleb128 0x13
+ 798 00c2 00       		.byte	0
+ 799 00c3 00       		.byte	0
+ 800 00c4 0E       		.uleb128 0xe
+ 801 00c5 05       		.uleb128 0x5
+ 802 00c6 00       		.byte	0
+ 803 00c7 03       		.uleb128 0x3
+ 804 00c8 08       		.uleb128 0x8
+ 805 00c9 3A       		.uleb128 0x3a
+ 806 00ca 0B       		.uleb128 0xb
+ 807 00cb 3B       		.uleb128 0x3b
+ 808 00cc 0B       		.uleb128 0xb
+ 809 00cd 49       		.uleb128 0x49
+ 810 00ce 13       		.uleb128 0x13
+ 811 00cf 02       		.uleb128 0x2
+ 812 00d0 17       		.uleb128 0x17
+ 813 00d1 00       		.byte	0
+ 814 00d2 00       		.byte	0
+ 815 00d3 0F       		.uleb128 0xf
+ 816 00d4 05       		.uleb128 0x5
+ 817 00d5 00       		.byte	0
+ 818 00d6 03       		.uleb128 0x3
+ 819 00d7 08       		.uleb128 0x8
+ 820 00d8 3A       		.uleb128 0x3a
+ 821 00d9 0B       		.uleb128 0xb
+ 822 00da 3B       		.uleb128 0x3b
+ 823 00db 0B       		.uleb128 0xb
+ 824 00dc 49       		.uleb128 0x49
+ 825 00dd 13       		.uleb128 0x13
+ 826 00de 02       		.uleb128 0x2
+ 827 00df 18       		.uleb128 0x18
+ 828 00e0 00       		.byte	0
+ 829 00e1 00       		.byte	0
+ 830 00e2 10       		.uleb128 0x10
+ 831 00e3 0B       		.uleb128 0xb
+ 832 00e4 01       		.byte	0x1
+ 833 00e5 11       		.uleb128 0x11
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 17
+
+
+ 834 00e6 01       		.uleb128 0x1
+ 835 00e7 12       		.uleb128 0x12
+ 836 00e8 06       		.uleb128 0x6
+ 837 00e9 01       		.uleb128 0x1
+ 838 00ea 13       		.uleb128 0x13
+ 839 00eb 00       		.byte	0
+ 840 00ec 00       		.byte	0
+ 841 00ed 11       		.uleb128 0x11
+ 842 00ee 34       		.uleb128 0x34
+ 843 00ef 00       		.byte	0
+ 844 00f0 03       		.uleb128 0x3
+ 845 00f1 08       		.uleb128 0x8
+ 846 00f2 3A       		.uleb128 0x3a
+ 847 00f3 0B       		.uleb128 0xb
+ 848 00f4 3B       		.uleb128 0x3b
+ 849 00f5 0B       		.uleb128 0xb
+ 850 00f6 49       		.uleb128 0x49
+ 851 00f7 13       		.uleb128 0x13
+ 852 00f8 02       		.uleb128 0x2
+ 853 00f9 17       		.uleb128 0x17
+ 854 00fa 00       		.byte	0
+ 855 00fb 00       		.byte	0
+ 856 00fc 12       		.uleb128 0x12
+ 857 00fd 01       		.uleb128 0x1
+ 858 00fe 01       		.byte	0x1
+ 859 00ff 49       		.uleb128 0x49
+ 860 0100 13       		.uleb128 0x13
+ 861 0101 01       		.uleb128 0x1
+ 862 0102 13       		.uleb128 0x13
+ 863 0103 00       		.byte	0
+ 864 0104 00       		.byte	0
+ 865 0105 13       		.uleb128 0x13
+ 866 0106 21       		.uleb128 0x21
+ 867 0107 00       		.byte	0
+ 868 0108 49       		.uleb128 0x49
+ 869 0109 13       		.uleb128 0x13
+ 870 010a 2F       		.uleb128 0x2f
+ 871 010b 0B       		.uleb128 0xb
+ 872 010c 00       		.byte	0
+ 873 010d 00       		.byte	0
+ 874 010e 14       		.uleb128 0x14
+ 875 010f 34       		.uleb128 0x34
+ 876 0110 00       		.byte	0
+ 877 0111 03       		.uleb128 0x3
+ 878 0112 0E       		.uleb128 0xe
+ 879 0113 3A       		.uleb128 0x3a
+ 880 0114 0B       		.uleb128 0xb
+ 881 0115 3B       		.uleb128 0x3b
+ 882 0116 0B       		.uleb128 0xb
+ 883 0117 49       		.uleb128 0x49
+ 884 0118 13       		.uleb128 0x13
+ 885 0119 02       		.uleb128 0x2
+ 886 011a 18       		.uleb128 0x18
+ 887 011b 00       		.byte	0
+ 888 011c 00       		.byte	0
+ 889 011d 15       		.uleb128 0x15
+ 890 011e 34       		.uleb128 0x34
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 18
+
+
+ 891 011f 00       		.byte	0
+ 892 0120 03       		.uleb128 0x3
+ 893 0121 0E       		.uleb128 0xe
+ 894 0122 3A       		.uleb128 0x3a
+ 895 0123 0B       		.uleb128 0xb
+ 896 0124 3B       		.uleb128 0x3b
+ 897 0125 05       		.uleb128 0x5
+ 898 0126 49       		.uleb128 0x49
+ 899 0127 13       		.uleb128 0x13
+ 900 0128 3F       		.uleb128 0x3f
+ 901 0129 19       		.uleb128 0x19
+ 902 012a 3C       		.uleb128 0x3c
+ 903 012b 19       		.uleb128 0x19
+ 904 012c 00       		.byte	0
+ 905 012d 00       		.byte	0
+ 906 012e 16       		.uleb128 0x16
+ 907 012f 35       		.uleb128 0x35
+ 908 0130 00       		.byte	0
+ 909 0131 49       		.uleb128 0x49
+ 910 0132 13       		.uleb128 0x13
+ 911 0133 00       		.byte	0
+ 912 0134 00       		.byte	0
+ 913 0135 17       		.uleb128 0x17
+ 914 0136 2E       		.uleb128 0x2e
+ 915 0137 00       		.byte	0
+ 916 0138 3F       		.uleb128 0x3f
+ 917 0139 19       		.uleb128 0x19
+ 918 013a 3C       		.uleb128 0x3c
+ 919 013b 19       		.uleb128 0x19
+ 920 013c 6E       		.uleb128 0x6e
+ 921 013d 0E       		.uleb128 0xe
+ 922 013e 03       		.uleb128 0x3
+ 923 013f 0E       		.uleb128 0xe
+ 924 0140 3A       		.uleb128 0x3a
+ 925 0141 0B       		.uleb128 0xb
+ 926 0142 3B       		.uleb128 0x3b
+ 927 0143 0B       		.uleb128 0xb
+ 928 0144 00       		.byte	0
+ 929 0145 00       		.byte	0
+ 930 0146 00       		.byte	0
+ 931              		.section	.debug_loc,"",%progbits
+ 932              	.Ldebug_loc0:
+ 933              	.LLST0:
+ 934 0000 00000000 		.4byte	.LVL6
+ 935 0004 0A000000 		.4byte	.LVL7
+ 936 0008 0100     		.2byte	0x1
+ 937 000a 50       		.byte	0x50
+ 938 000b 0A000000 		.4byte	.LVL7
+ 939 000f 1C000000 		.4byte	.LFE67
+ 940 0013 0400     		.2byte	0x4
+ 941 0015 F3       		.byte	0xf3
+ 942 0016 01       		.uleb128 0x1
+ 943 0017 50       		.byte	0x50
+ 944 0018 9F       		.byte	0x9f
+ 945 0019 00000000 		.4byte	0
+ 946 001d 00000000 		.4byte	0
+ 947              	.LLST1:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 19
+
+
+ 948 0021 0C000000 		.4byte	.LVL9
+ 949 0025 10000000 		.4byte	.LVL10
+ 950 0029 0200     		.2byte	0x2
+ 951 002b 30       		.byte	0x30
+ 952 002c 9F       		.byte	0x9f
+ 953 002d 10000000 		.4byte	.LVL10
+ 954 0031 2C000000 		.4byte	.LVL15
+ 955 0035 0100     		.2byte	0x1
+ 956 0037 54       		.byte	0x54
+ 957 0038 00000000 		.4byte	0
+ 958 003c 00000000 		.4byte	0
+ 959              		.section	.debug_aranges,"",%progbits
+ 960 0000 3C000000 		.4byte	0x3c
+ 961 0004 0200     		.2byte	0x2
+ 962 0006 00000000 		.4byte	.Ldebug_info0
+ 963 000a 04       		.byte	0x4
+ 964 000b 00       		.byte	0
+ 965 000c 0000     		.2byte	0
+ 966 000e 0000     		.2byte	0
+ 967 0010 00000000 		.4byte	.LFB66
+ 968 0014 10000000 		.4byte	.LFE66-.LFB66
+ 969 0018 00000000 		.4byte	.LFB65
+ 970 001c 3C000000 		.4byte	.LFE65-.LFB65
+ 971 0020 00000000 		.4byte	.LFB64
+ 972 0024 08000000 		.4byte	.LFE64-.LFB64
+ 973 0028 00000000 		.4byte	.LFB67
+ 974 002c 1C000000 		.4byte	.LFE67-.LFB67
+ 975 0030 00000000 		.4byte	.LFB63
+ 976 0034 30000000 		.4byte	.LFE63-.LFB63
+ 977 0038 00000000 		.4byte	0
+ 978 003c 00000000 		.4byte	0
+ 979              		.section	.debug_ranges,"",%progbits
+ 980              	.Ldebug_ranges0:
+ 981 0000 00000000 		.4byte	.LFB66
+ 982 0004 10000000 		.4byte	.LFE66
+ 983 0008 00000000 		.4byte	.LFB65
+ 984 000c 3C000000 		.4byte	.LFE65
+ 985 0010 00000000 		.4byte	.LFB64
+ 986 0014 08000000 		.4byte	.LFE64
+ 987 0018 00000000 		.4byte	.LFB67
+ 988 001c 1C000000 		.4byte	.LFE67
+ 989 0020 00000000 		.4byte	.LFB63
+ 990 0024 30000000 		.4byte	.LFE63
+ 991 0028 00000000 		.4byte	0
+ 992 002c 00000000 		.4byte	0
+ 993              		.section	.debug_line,"",%progbits
+ 994              	.Ldebug_line0:
+ 995 0000 12020000 		.section	.debug_str,"MS",%progbits,1
+ 995      02009D01 
+ 995      00000201 
+ 995      FB0E0D00 
+ 995      01010101 
+ 996              	.LASF25:
+ 997 0000 73657443 		.ascii	"setColorOfLed\000"
+ 997      6F6C6F72 
+ 997      4F664C65 
+ 997      6400
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 20
+
+
+ 998              	.LASF4:
+ 999 000e 5F5F7569 		.ascii	"__uint8_t\000"
+ 999      6E74385F 
+ 999      7400
+ 1000              	.LASF32:
+ 1001 0018 6973725F 		.ascii	"isr_update_leds_StartEx\000"
+ 1001      75706461 
+ 1001      74655F6C 
+ 1001      6564735F 
+ 1001      53746172 
+ 1002              	.LASF38:
+ 1003 0030 433A5C55 		.ascii	"C:\\Users\\Marcus Gasberg\\Documents\\PSoC Creator\\"
+ 1003      73657273 
+ 1003      5C4D6172 
+ 1003      63757320 
+ 1003      47617362 
+ 1004 005f 50726F6A 		.ascii	"Projects\\BeerPongTable_LED_Demo\\Design01.cydsn\000"
+ 1004      65637473 
+ 1004      5C426565 
+ 1004      72506F6E 
+ 1004      67546162 
+ 1005              	.LASF30:
+ 1006 008e 5350494D 		.ascii	"SPIM_led_control_WriteTxData\000"
+ 1006      5F6C6564 
+ 1006      5F636F6E 
+ 1006      74726F6C 
+ 1006      5F577269 
+ 1007              	.LASF5:
+ 1008 00ab 5F5F696E 		.ascii	"__int32_t\000"
+ 1008      7433325F 
+ 1008      7400
+ 1009              	.LASF31:
+ 1010 00b5 73657443 		.ascii	"setColor\000"
+ 1010      6F6C6F72 
+ 1010      00
+ 1011              	.LASF12:
+ 1012 00be 75696E74 		.ascii	"uint8_t\000"
+ 1012      385F7400 
+ 1013              	.LASF24:
+ 1014 00c6 6C65645F 		.ascii	"led_updater_handler\000"
+ 1014      75706461 
+ 1014      7465725F 
+ 1014      68616E64 
+ 1014      6C657200 
+ 1015              	.LASF21:
+ 1016 00da 626C7565 		.ascii	"blue\000"
+ 1016      00
+ 1017              	.LASF29:
+ 1018 00df 50696E5F 		.ascii	"Pin_latch_Write\000"
+ 1018      6C617463 
+ 1018      685F5772 
+ 1018      69746500 
+ 1019              	.LASF15:
+ 1020 00ef 666C6F61 		.ascii	"float\000"
+ 1020      7400
+ 1021              	.LASF23:
+ 1022 00f5 75706461 		.ascii	"updateLeds\000"
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 21
+
+
+ 1022      74654C65 
+ 1022      647300
+ 1023              	.LASF34:
+ 1024 0100 5350494D 		.ascii	"SPIM_led_control_Start\000"
+ 1024      5F6C6564 
+ 1024      5F636F6E 
+ 1024      74726F6C 
+ 1024      5F537461 
+ 1025              	.LASF1:
+ 1026 0117 756E7369 		.ascii	"unsigned char\000"
+ 1026      676E6564 
+ 1026      20636861 
+ 1026      7200
+ 1027              	.LASF36:
+ 1028 0125 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1028      43313120 
+ 1028      352E342E 
+ 1028      31203230 
+ 1028      31363036 
+ 1029 0158 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1029      20726576 
+ 1029      6973696F 
+ 1029      6E203233 
+ 1029      37373135 
+ 1030 018b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1030      66756E63 
+ 1030      74696F6E 
+ 1030      2D736563 
+ 1030      74696F6E 
+ 1031              	.LASF7:
+ 1032 01b3 5F5F7569 		.ascii	"__uint32_t\000"
+ 1032      6E743332 
+ 1032      5F7400
+ 1033              	.LASF22:
+ 1034 01be 6C617463 		.ascii	"latchShiftReg\000"
+ 1034      68536869 
+ 1034      66745265 
+ 1034      6700
+ 1035              	.LASF8:
+ 1036 01cc 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1036      20756E73 
+ 1036      69676E65 
+ 1036      6420696E 
+ 1036      7400
+ 1037              	.LASF20:
+ 1038 01de 67726565 		.ascii	"green\000"
+ 1038      6E00
+ 1039              	.LASF40:
+ 1040 01e4 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1040      52784275 
+ 1040      66666572 
+ 1040      00
+ 1041              	.LASF16:
+ 1042 01f1 646F7562 		.ascii	"double\000"
+ 1042      6C6500
+ 1043              	.LASF37:
+ 1044 01f8 6C65645F 		.ascii	"led_control.c\000"
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 22
+
+
+ 1044      636F6E74 
+ 1044      726F6C2E 
+ 1044      6300
+ 1045              	.LASF33:
+ 1046 0206 696E6974 		.ascii	"initRGBLED\000"
+ 1046      5247424C 
+ 1046      454400
+ 1047              	.LASF27:
+ 1048 0211 7267625F 		.ascii	"rgb_leds\000"
+ 1048      6C656473 
+ 1048      00
+ 1049              	.LASF39:
+ 1050 021a 5247425F 		.ascii	"RGB_LED\000"
+ 1050      4C454400 
+ 1051              	.LASF11:
+ 1052 0222 756E7369 		.ascii	"unsigned int\000"
+ 1052      676E6564 
+ 1052      20696E74 
+ 1052      00
+ 1053              	.LASF35:
+ 1054 022f 54696D65 		.ascii	"Timer_led_updater_Start\000"
+ 1054      725F6C65 
+ 1054      645F7570 
+ 1054      64617465 
+ 1054      725F5374 
+ 1055              	.LASF10:
+ 1056 0247 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1056      206C6F6E 
+ 1056      6720756E 
+ 1056      7369676E 
+ 1056      65642069 
+ 1057              	.LASF28:
+ 1058 025e 6C656454 		.ascii	"ledToUpdate\000"
+ 1058      6F557064 
+ 1058      61746500 
+ 1059              	.LASF0:
+ 1060 026a 7369676E 		.ascii	"signed char\000"
+ 1060      65642063 
+ 1060      68617200 
+ 1061              	.LASF13:
+ 1062 0276 696E7433 		.ascii	"int32_t\000"
+ 1062      325F7400 
+ 1063              	.LASF19:
+ 1064 027e 73697A65 		.ascii	"sizetype\000"
+ 1064      74797065 
+ 1064      00
+ 1065              	.LASF9:
+ 1066 0287 6C6F6E67 		.ascii	"long long int\000"
+ 1066      206C6F6E 
+ 1066      6720696E 
+ 1066      7400
+ 1067              	.LASF26:
+ 1068 0295 696E6974 		.ascii	"initLedControl\000"
+ 1068      4C656443 
+ 1068      6F6E7472 
+ 1068      6F6C00
+ 1069              	.LASF17:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\cceUZLhf.s 			page 23
+
+
+ 1070 02a4 63686172 		.ascii	"char\000"
+ 1070      00
+ 1071              	.LASF2:
+ 1072 02a9 73686F72 		.ascii	"short int\000"
+ 1072      7420696E 
+ 1072      7400
+ 1073              	.LASF14:
+ 1074 02b3 75696E74 		.ascii	"uint32_t\000"
+ 1074      33325F74 
+ 1074      00
+ 1075              	.LASF6:
+ 1076 02bc 6C6F6E67 		.ascii	"long int\000"
+ 1076      20696E74 
+ 1076      00
+ 1077              	.LASF18:
+ 1078 02c5 6C6F6E67 		.ascii	"long double\000"
+ 1078      20646F75 
+ 1078      626C6500 
+ 1079              	.LASF3:
+ 1080 02d1 73686F72 		.ascii	"short unsigned int\000"
+ 1080      7420756E 
+ 1080      7369676E 
+ 1080      65642069 
+ 1080      6E7400
+ 1081              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

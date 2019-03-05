@@ -1,0 +1,6 @@
+C:\Users\Marcus Gasberg\Documents\GitHub\player_side_app\CupLight_IF_w_ShiftPWM\ShiftRegPWM.cydsn\ShiftRegPWM.cyprj|d718a5e7-becc-464d-9386-cc35e8530d20
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|1eda6fb7-4975-4d40-8099-a6688f1149cb
+C:\Users\Marcus Gasberg\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|25fc1f21-95d7-4d74-a398-b62923fdd5a4
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|a21b9f5f-6973-40f1-bb50-b72be4b4238c
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|edf5ab6f-ed48-4b80-8dba-75df9ec0dacb
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|6514966b-98ec-4d65-a632-ae28f468e0c7

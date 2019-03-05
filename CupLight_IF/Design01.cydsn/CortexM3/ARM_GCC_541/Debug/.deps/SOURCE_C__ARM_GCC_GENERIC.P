@@ -1,0 +1,104 @@
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/CortexM3/ARM_GCC_541/Debug/main.o : C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_LedUpdate.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_PWM.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_SPI.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyDmac.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyFlash.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyLib.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CySpc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_BLUE.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_GREEN.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_RED.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_BLUE.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_BLUE_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_GREEN.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_GREEN_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_RED.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_RED_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_latch.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_latch_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_miso.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_miso_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_mosi.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_mosi_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_output_enable.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_output_enable_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_sclk.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_sclk_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/SPIM_led_control.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/SPIM_led_control_PVT.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Timer_led_updater.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/UART_1.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/UART_1_IntClock.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_armcc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_compiler.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_gcc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/core_cm3.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyPm.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydevice.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydisabledsheets.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyfitter.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cypins.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cytypes.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/isr_uart_rx.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/isr_update_leds.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/project.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/light_control.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/main.c C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/rgb_led.h 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_LedUpdate.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_PWM.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Clock_SPI.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyDmac.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyFlash.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CyLib.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/CySpc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_BLUE.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_GREEN.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/PWM_RED.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_BLUE.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_BLUE_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_GREEN.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_GREEN_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_RED.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_RED_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_latch.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_latch_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_miso.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_miso_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_mosi.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_mosi_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_output_enable.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_output_enable_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_sclk.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Pin_sclk_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/SPIM_led_control.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/SPIM_led_control_PVT.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/Timer_led_updater.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/UART_1.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/UART_1_IntClock.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_armcc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_compiler.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cmsis_gcc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/core_cm3.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyPm.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydevice.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydevice_trm.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cydisabledsheets.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyfitter.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cypins.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/cytypes.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/isr_uart_rx.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/isr_update_leds.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/Generated_Source/PSoC5/project.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/light_control.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/main.c : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF/Design01.cydsn/rgb_led.h : 
+

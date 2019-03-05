@@ -1,0 +1,265 @@
+--
+--	Conversion of OpticSensorTest.v to vh2:
+--
+--	Cypress Semiconductor - WARP Version 6.3 IR 41
+<<<<<<< HEAD
+--	Thu Nov 01 19:21:00 2018
+=======
+--	Wed Oct 31 18:21:11 2018
+>>>>>>> fix
+--
+
+USE cypress.cypress.all;
+USE cypress.rtlpkg.all;
+ENTITY top_RTL IS
+ATTRIBUTE part_name of top_RTL:TYPE IS "cpsoc3";
+END top_RTL;
+--------------------------------------------------------
+ARCHITECTURE R_T_L OF top_RTL IS
+TERMINAL Net_2 : bit;
+TERMINAL Net_1 : bit;
+SIGNAL \TIA_1:Net_37\ : bit;
+SIGNAL \TIA_1:Net_52\ : bit;
+SIGNAL \TIA_1:Net_38\ : bit;
+SIGNAL \TIA_1:Net_39\ : bit;
+SIGNAL \TIA_1:Net_60\ : bit;
+TERMINAL Net_26 : bit;
+SIGNAL tmpOE__PhotoIn_net_0 : bit;
+SIGNAL zero : bit;
+SIGNAL tmpFB_0__PhotoIn_net_0 : bit;
+SIGNAL tmpIO_0__PhotoIn_net_0 : bit;
+TERMINAL tmpSIOVREF__PhotoIn_net_0 : bit;
+TERMINAL Net_30 : bit;
+SIGNAL one : bit;
+SIGNAL tmpINTERRUPT_0__PhotoIn_net_0 : bit;
+SIGNAL tmpOE__AmpOut_net_0 : bit;
+SIGNAL tmpFB_0__AmpOut_net_0 : bit;
+SIGNAL tmpIO_0__AmpOut_net_0 : bit;
+TERMINAL tmpSIOVREF__AmpOut_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__AmpOut_net_0 : bit;
+TERMINAL Net_29 : bit;
+<<<<<<< HEAD
+TERMINAL Net_513 : bit;
+TERMINAL Net_514 : bit;
+TERMINAL Net_515 : bit;
+TERMINAL Net_519 : bit;
+=======
+TERMINAL Net_510 : bit;
+>>>>>>> fix
+BEGIN
+
+zero <=  ('0') ;
+
+tmpOE__PhotoIn_net_0 <=  ('1') ;
+
+\TIA_1:SC\:cy_psoc3_scblock_v1_0
+	GENERIC MAP(cy_registers=>"")
+	PORT MAP(vref=>Net_2,
+		vin=>Net_1,
+		aclk=>zero,
+		bst_clk=>zero,
+		clk_udb=>zero,
+		dyn_cntl=>zero,
+		modout_sync=>\TIA_1:Net_60\,
+		vout=>Net_26);
+PhotoIn:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"77715107-f8d5-47e5-a629-0fb83101ac6b",
+		drive_mode=>"000",
+		ibuf_enabled=>"0",
+		init_dr_st=>"0",
+		input_sync=>"1",
+		input_clk_en=>'0',
+		input_sync_mode=>"0",
+		intr_mode=>"00",
+		invert_in_clock=>'0',
+		invert_in_clock_en=>'0',
+		invert_in_reset=>'0',
+		invert_out_clock=>'0',
+		invert_out_clock_en=>'0',
+		invert_out_reset=>'0',
+		io_voltage=>"",
+		layout_mode=>"CONTIGUOUS",
+		output_conn=>"0",
+		output_sync=>"0",
+		output_clk_en=>'0',
+		output_mode=>"0",
+		output_reset=>'0',
+		output_clock_mode=>"0",
+		oe_sync=>"0",
+		oe_conn=>"0",
+		oe_reset=>'0',
+		pin_aliases=>"",
+		pin_mode=>"A",
+		por_state=>4,
+		sio_group_cnt=>0,
+		sio_hifreq=>"00000000",
+		sio_hyst=>"1",
+		sio_ibuf=>"00000000",
+		sio_info=>"00",
+		sio_obuf=>"00000000",
+		sio_refsel=>"00000000",
+		sio_vtrip=>"00000000",
+		sio_vohsel=>"00000000",
+		slew_rate=>"0",
+		spanning=>'0',
+		sw_only=>'0',
+		vtrip=>"10",
+		width=>1,
+		port_alias_required=>'0',
+		port_alias_group=>"",
+		use_annotation=>"1",
+		pa_in_clock=>-1,
+		pa_in_clock_en=>-1,
+		pa_in_reset=>-1,
+		pa_out_clock=>-1,
+		pa_out_clock_en=>-1,
+		pa_out_reset=>-1,
+		ovt_needed=>"0",
+		ovt_slew_control=>"00",
+		ovt_hyst_trim=>"0",
+		input_buffer_sel=>"00")
+	PORT MAP(oe=>(tmpOE__PhotoIn_net_0),
+		y=>(zero),
+		fb=>(tmpFB_0__PhotoIn_net_0),
+		analog=>Net_1,
+		io=>(tmpIO_0__PhotoIn_net_0),
+		siovref=>(tmpSIOVREF__PhotoIn_net_0),
+		annotation=>Net_30,
+		in_clock=>zero,
+		in_clock_en=>tmpOE__PhotoIn_net_0,
+		in_reset=>zero,
+		out_clock=>zero,
+		out_clock_en=>tmpOE__PhotoIn_net_0,
+		out_reset=>zero,
+		interrupt=>tmpINTERRUPT_0__PhotoIn_net_0);
+AmpOut:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"ae02d9c0-95f1-4585-8a24-2a51e91ecee2",
+		drive_mode=>"000",
+		ibuf_enabled=>"0",
+		init_dr_st=>"0",
+		input_sync=>"1",
+		input_clk_en=>'0',
+		input_sync_mode=>"0",
+		intr_mode=>"00",
+		invert_in_clock=>'0',
+		invert_in_clock_en=>'0',
+		invert_in_reset=>'0',
+		invert_out_clock=>'0',
+		invert_out_clock_en=>'0',
+		invert_out_reset=>'0',
+		io_voltage=>"",
+		layout_mode=>"CONTIGUOUS",
+		output_conn=>"0",
+		output_sync=>"0",
+		output_clk_en=>'0',
+		output_mode=>"0",
+		output_reset=>'0',
+		output_clock_mode=>"0",
+		oe_sync=>"0",
+		oe_conn=>"0",
+		oe_reset=>'0',
+		pin_aliases=>"",
+		pin_mode=>"A",
+		por_state=>4,
+		sio_group_cnt=>0,
+		sio_hifreq=>"00000000",
+		sio_hyst=>"1",
+		sio_ibuf=>"00000000",
+		sio_info=>"00",
+		sio_obuf=>"00000000",
+		sio_refsel=>"00000000",
+		sio_vtrip=>"00000000",
+		sio_vohsel=>"00000000",
+		slew_rate=>"0",
+		spanning=>'0',
+		sw_only=>'0',
+		vtrip=>"10",
+		width=>1,
+		port_alias_required=>'0',
+		port_alias_group=>"",
+		use_annotation=>"0",
+		pa_in_clock=>-1,
+		pa_in_clock_en=>-1,
+		pa_in_reset=>-1,
+		pa_out_clock=>-1,
+		pa_out_clock_en=>-1,
+		pa_out_reset=>-1,
+		ovt_needed=>"0",
+		ovt_slew_control=>"00",
+		ovt_hyst_trim=>"0",
+		input_buffer_sel=>"00")
+	PORT MAP(oe=>(tmpOE__PhotoIn_net_0),
+		y=>(zero),
+		fb=>(tmpFB_0__AmpOut_net_0),
+		analog=>Net_26,
+		io=>(tmpIO_0__AmpOut_net_0),
+		siovref=>(tmpSIOVREF__AmpOut_net_0),
+		annotation=>(open),
+		in_clock=>zero,
+		in_clock_en=>tmpOE__PhotoIn_net_0,
+		in_reset=>zero,
+		out_clock=>zero,
+		out_clock_en=>tmpOE__PhotoIn_net_0,
+		out_reset=>zero,
+		interrupt=>tmpINTERRUPT_0__AmpOut_net_0);
+vRef_1:cy_vref_v1_0
+	GENERIC MAP(guid=>"15B3DB15-B7B3-4d62-A2DF-25EA392A7161",
+		name=>"Vssa (GND)",
+		autoenable=>'1',
+		ignoresleep=>'0')
+	PORT MAP(vout=>Net_2);
+GND_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_29);
+D_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"PhotoDiode_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_29, Net_30));
+<<<<<<< HEAD
+D_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_513, Net_514));
+R_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_515, Net_514));
+R_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_514, Net_515));
+GND_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_519);
+PWR_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Power_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_513);
+Q_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"NPN_v1_0",
+		port_names=>"B, C, E",
+		width=>3)
+	PORT MAP(connect=>(Net_513, Net_515, Net_519));
+=======
+GND_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_510);
+D_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"PhotoDiode_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_510, Net_30));
+>>>>>>> fix
+
+END R_T_L;

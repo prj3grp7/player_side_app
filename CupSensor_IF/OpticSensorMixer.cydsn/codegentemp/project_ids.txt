@@ -1,0 +1,26 @@
+<<<<<<< HEAD
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF_v1.cydsn\CupSensor_IF_v1.cyprj|77ee8d8e-6885-4ab2-b514-f9a4f2100f06
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|222197e7-51ea-4f5d-a399-252e7bf169f2
+C:\Users\nikol\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|a66b3f33-001a-463d-a5d5-7909f69bc07b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|5c3ba578-1fac-4555-bda0-2d2fa4981b01
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|511251a0-e21b-4748-a96e-0d884db161be
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|4271bcb4-c05e-4769-bf6b-9738e6dbfaa8
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CapSense_CSD_Design01.cydsn\CapSense_CSD_Design01.cyprj|2a0f2882-4ded-468e-ae4d-5f7b8e236185
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|d2fdc6b4-8e8b-4140-8534-388ba7dd27b1
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensor.cydsn\OpticSensor.cyprj|a81e3763-e38b-4388-9482-561daf55f9f6
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorTest.cydsn\OpticSensorTest.cyprj|5baefe27-9a69-4905-9eaa-8c1b043c5922
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorMixer.cydsn\OpticSensorMixer.cyprj|953b0516-35e8-4d05-a362-1f77df3a7511
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF.cydsn\CupSensor_IF.cyprj|10371692-79fc-4c27-8552-632131428a76
+=======
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF_v1.cydsn\CupSensor_IF_v1.cyprj|1fb3bdad-ca30-4988-88e0-1c4f02d8c568
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|95466770-e3ca-48e2-8687-e8c3ab014b16
+C:\Users\nikol\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|45a42903-be6e-4e61-934c-eb21a5dfaa6b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|8680f9e6-6bd8-4ee5-82dc-90b131282f75
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|043bd452-20fc-45d3-88ad-5073e260e2f4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|be2c5a06-1119-4abf-ad10-c5ef0636b972
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CapSense_CSD_Design01.cydsn\CapSense_CSD_Design01.cyprj|3778d398-903f-42f6-b82c-4a265964c029
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|268206f8-3f08-4093-9103-8e18e96ce601
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensor.cydsn\OpticSensor.cyprj|e08ad42c-8c94-4473-a452-be6c81eacab1
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorTest.cydsn\OpticSensorTest.cyprj|d3d016e2-4115-4dab-a271-62187755ce35
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorMixer.cydsn\OpticSensorMixer.cyprj|a039afe5-0818-4d48-9564-fa5ea1ec6497
+>>>>>>> fix

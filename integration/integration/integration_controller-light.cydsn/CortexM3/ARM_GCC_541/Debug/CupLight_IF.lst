@@ -1,0 +1,979 @@
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CupLight_IF.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.controlLight,"ax",%progbits
+  20              		.align	2
+  21              		.global	controlLight
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	controlLight, %function
+  25              	controlLight:
+  26              	.LFB63:
+  27              		.file 1 "CupLight_IF.c"
+   1:CupLight_IF.c **** /* ========================================
+   2:CupLight_IF.c ****  *
+   3:CupLight_IF.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:CupLight_IF.c ****  * All Rights Reserved
+   5:CupLight_IF.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:CupLight_IF.c ****  *
+   7:CupLight_IF.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:CupLight_IF.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:CupLight_IF.c ****  *
+  10:CupLight_IF.c ****  * ========================================
+  11:CupLight_IF.c **** */
+  12:CupLight_IF.c **** #include "CupLight_IF.h"
+  13:CupLight_IF.c **** 
+  14:CupLight_IF.c **** void controlLight(uint8_t nr, color_t color)
+  15:CupLight_IF.c **** {
+  28              		.loc 1 15 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37 0002 82B0     		sub	sp, sp, #8
+  38              		.cfi_def_cfa_offset 16
+  39 0004 0191     		str	r1, [sp, #4]
+  16:CupLight_IF.c ****     if (nr < NUMLEDS)
+  40              		.loc 1 16 0
+  41 0006 C8B9     		cbnz	r0, .L1
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 2
+
+
+  42              	.LBB2:
+  17:CupLight_IF.c ****     {
+  18:CupLight_IF.c ****         uint8_t shiftRegPos = 3*nr;
+  43              		.loc 1 18 0
+  44 0008 00EB4004 		add	r4, r0, r0, lsl #1
+  45 000c E4B2     		uxtb	r4, r4
+  46              	.LVL1:
+  19:CupLight_IF.c ****         setPin(shiftRegPos,~color.Red);
+  47              		.loc 1 19 0
+  48 000e 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+  49 0012 C943     		mvns	r1, r1
+  50 0014 C9B2     		uxtb	r1, r1
+  51 0016 2046     		mov	r0, r4
+  52              	.LVL2:
+  53 0018 FFF7FEFF 		bl	setPin
+  54              	.LVL3:
+  20:CupLight_IF.c ****         setPin(shiftRegPos+1,~color.Green);
+  55              		.loc 1 20 0
+  56 001c 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
+  57 0020 C943     		mvns	r1, r1
+  58 0022 601C     		adds	r0, r4, #1
+  59 0024 C9B2     		uxtb	r1, r1
+  60 0026 C0B2     		uxtb	r0, r0
+  61 0028 FFF7FEFF 		bl	setPin
+  62              	.LVL4:
+  21:CupLight_IF.c ****         setPin(shiftRegPos+2,~color.Blue);
+  63              		.loc 1 21 0
+  64 002c 9DF80610 		ldrb	r1, [sp, #6]	@ zero_extendqisi2
+  65 0030 C943     		mvns	r1, r1
+  66 0032 A01C     		adds	r0, r4, #2
+  67 0034 C9B2     		uxtb	r1, r1
+  68 0036 C0B2     		uxtb	r0, r0
+  69 0038 FFF7FEFF 		bl	setPin
+  70              	.LVL5:
+  71              	.L1:
+  72              	.LBE2:
+  22:CupLight_IF.c ****     }
+  23:CupLight_IF.c **** }
+  73              		.loc 1 23 0
+  74 003c 02B0     		add	sp, sp, #8
+  75              		.cfi_def_cfa_offset 8
+  76              		@ sp needed
+  77 003e 10BD     		pop	{r4, pc}
+  78              		.cfi_endproc
+  79              	.LFE63:
+  80              		.size	controlLight, .-controlLight
+  81              		.section	.text.controlAllLights,"ax",%progbits
+  82              		.align	2
+  83              		.global	controlAllLights
+  84              		.thumb
+  85              		.thumb_func
+  86              		.type	controlAllLights, %function
+  87              	controlAllLights:
+  88              	.LFB64:
+  24:CupLight_IF.c **** 
+  25:CupLight_IF.c **** void controlAllLights(color_t color)
+  26:CupLight_IF.c **** {
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 3
+
+
+  89              		.loc 1 26 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 8
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93 0000 10B5     		push	{r4, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+  97 0002 82B0     		sub	sp, sp, #8
+  98              		.cfi_def_cfa_offset 16
+  99 0004 0190     		str	r0, [sp, #4]
+ 100              	.LVL6:
+ 101              	.LBB3:
+  27:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 102              		.loc 1 27 0
+ 103 0006 0024     		movs	r4, #0
+ 104 0008 05E0     		b	.L5
+ 105              	.LVL7:
+ 106              	.L6:
+  28:CupLight_IF.c ****          controlLight(i,color);
+ 107              		.loc 1 28 0 discriminator 3
+ 108 000a 0199     		ldr	r1, [sp, #4]
+ 109 000c 2046     		mov	r0, r4
+ 110 000e FFF7FEFF 		bl	controlLight
+ 111              	.LVL8:
+  27:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 112              		.loc 1 27 0 discriminator 3
+ 113 0012 0134     		adds	r4, r4, #1
+ 114              	.LVL9:
+ 115 0014 E4B2     		uxtb	r4, r4
+ 116              	.LVL10:
+ 117              	.L5:
+  27:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 118              		.loc 1 27 0 is_stmt 0 discriminator 1
+ 119 0016 002C     		cmp	r4, #0
+ 120 0018 F7D0     		beq	.L6
+ 121              	.LBE3:
+  29:CupLight_IF.c ****     }
+  30:CupLight_IF.c **** }
+ 122              		.loc 1 30 0 is_stmt 1
+ 123 001a 02B0     		add	sp, sp, #8
+ 124              		.cfi_def_cfa_offset 8
+ 125              		@ sp needed
+ 126 001c 10BD     		pop	{r4, pc}
+ 127              		.cfi_endproc
+ 128              	.LFE64:
+ 129              		.size	controlAllLights, .-controlAllLights
+ 130 001e 00BF     		.text
+ 131              	.Letext0:
+ 132              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 133              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 134              		.file 4 "CupLight_IF.h"
+ 135              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 136              		.file 6 "ShiftRegPWM.h"
+ 137              		.section	.debug_info,"",%progbits
+ 138              	.Ldebug_info0:
+ 139 0000 01020000 		.4byte	0x201
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 4
+
+
+ 140 0004 0400     		.2byte	0x4
+ 141 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 142 000a 04       		.byte	0x4
+ 143 000b 01       		.uleb128 0x1
+ 144 000c B4000000 		.4byte	.LASF25
+ 145 0010 0C       		.byte	0xc
+ 146 0011 08020000 		.4byte	.LASF26
+ 147 0015 14000000 		.4byte	.LASF27
+ 148 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 149 001d 00000000 		.4byte	0
+ 150 0021 00000000 		.4byte	.Ldebug_line0
+ 151 0025 02       		.uleb128 0x2
+ 152 0026 01       		.byte	0x1
+ 153 0027 06       		.byte	0x6
+ 154 0028 35020000 		.4byte	.LASF0
+ 155 002c 03       		.uleb128 0x3
+ 156 002d 00000000 		.4byte	.LASF4
+ 157 0031 02       		.byte	0x2
+ 158 0032 1D       		.byte	0x1d
+ 159 0033 37000000 		.4byte	0x37
+ 160 0037 02       		.uleb128 0x2
+ 161 0038 01       		.byte	0x1
+ 162 0039 08       		.byte	0x8
+ 163 003a A6000000 		.4byte	.LASF1
+ 164 003e 02       		.uleb128 0x2
+ 165 003f 02       		.byte	0x2
+ 166 0040 05       		.byte	0x5
+ 167 0041 16020000 		.4byte	.LASF2
+ 168 0045 02       		.uleb128 0x2
+ 169 0046 02       		.byte	0x2
+ 170 0047 07       		.byte	0x7
+ 171 0048 54010000 		.4byte	.LASF3
+ 172 004c 03       		.uleb128 0x3
+ 173 004d 0A000000 		.4byte	.LASF5
+ 174 0051 02       		.byte	0x2
+ 175 0052 3F       		.byte	0x3f
+ 176 0053 57000000 		.4byte	0x57
+ 177 0057 02       		.uleb128 0x2
+ 178 0058 04       		.byte	0x4
+ 179 0059 05       		.byte	0x5
+ 180 005a 20020000 		.4byte	.LASF6
+ 181 005e 02       		.uleb128 0x2
+ 182 005f 04       		.byte	0x4
+ 183 0060 07       		.byte	0x7
+ 184 0061 42010000 		.4byte	.LASF7
+ 185 0065 02       		.uleb128 0x2
+ 186 0066 08       		.byte	0x8
+ 187 0067 05       		.byte	0x5
+ 188 0068 EE010000 		.4byte	.LASF8
+ 189 006c 02       		.uleb128 0x2
+ 190 006d 08       		.byte	0x8
+ 191 006e 07       		.byte	0x7
+ 192 006f A1010000 		.4byte	.LASF9
+ 193 0073 04       		.uleb128 0x4
+ 194 0074 04       		.byte	0x4
+ 195 0075 05       		.byte	0x5
+ 196 0076 696E7400 		.ascii	"int\000"
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 5
+
+
+ 197 007a 02       		.uleb128 0x2
+ 198 007b 04       		.byte	0x4
+ 199 007c 07       		.byte	0x7
+ 200 007d 8E010000 		.4byte	.LASF10
+ 201 0081 03       		.uleb128 0x3
+ 202 0082 B8010000 		.4byte	.LASF11
+ 203 0086 03       		.byte	0x3
+ 204 0087 18       		.byte	0x18
+ 205 0088 2C000000 		.4byte	0x2c
+ 206 008c 03       		.uleb128 0x3
+ 207 008d CC010000 		.4byte	.LASF12
+ 208 0091 03       		.byte	0x3
+ 209 0092 2C       		.byte	0x2c
+ 210 0093 4C000000 		.4byte	0x4c
+ 211 0097 02       		.uleb128 0x2
+ 212 0098 04       		.byte	0x4
+ 213 0099 04       		.byte	0x4
+ 214 009a A0000000 		.4byte	.LASF13
+ 215 009e 02       		.uleb128 0x2
+ 216 009f 08       		.byte	0x8
+ 217 00a0 04       		.byte	0x4
+ 218 00a1 81010000 		.4byte	.LASF14
+ 219 00a5 02       		.uleb128 0x2
+ 220 00a6 01       		.byte	0x1
+ 221 00a7 08       		.byte	0x8
+ 222 00a8 FC010000 		.4byte	.LASF15
+ 223 00ac 02       		.uleb128 0x2
+ 224 00ad 08       		.byte	0x8
+ 225 00ae 04       		.byte	0x4
+ 226 00af 29020000 		.4byte	.LASF16
+ 227 00b3 02       		.uleb128 0x2
+ 228 00b4 04       		.byte	0x4
+ 229 00b5 07       		.byte	0x7
+ 230 00b6 D4010000 		.4byte	.LASF17
+ 231 00ba 05       		.uleb128 0x5
+ 232 00bb 88010000 		.4byte	.LASF21
+ 233 00bf 03       		.byte	0x3
+ 234 00c0 04       		.byte	0x4
+ 235 00c1 11       		.byte	0x11
+ 236 00c2 EB000000 		.4byte	0xeb
+ 237 00c6 06       		.uleb128 0x6
+ 238 00c7 52656400 		.ascii	"Red\000"
+ 239 00cb 04       		.byte	0x4
+ 240 00cc 13       		.byte	0x13
+ 241 00cd 81000000 		.4byte	0x81
+ 242 00d1 00       		.byte	0
+ 243 00d2 07       		.uleb128 0x7
+ 244 00d3 9B010000 		.4byte	.LASF18
+ 245 00d7 04       		.byte	0x4
+ 246 00d8 14       		.byte	0x14
+ 247 00d9 81000000 		.4byte	0x81
+ 248 00dd 01       		.byte	0x1
+ 249 00de 07       		.uleb128 0x7
+ 250 00df 74010000 		.4byte	.LASF19
+ 251 00e3 04       		.byte	0x4
+ 252 00e4 15       		.byte	0x15
+ 253 00e5 81000000 		.4byte	0x81
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 6
+
+
+ 254 00e9 02       		.byte	0x2
+ 255 00ea 00       		.byte	0
+ 256 00eb 03       		.uleb128 0x3
+ 257 00ec 79010000 		.4byte	.LASF20
+ 258 00f0 04       		.byte	0x4
+ 259 00f1 16       		.byte	0x16
+ 260 00f2 BA000000 		.4byte	0xba
+ 261 00f6 08       		.uleb128 0x8
+ 262 00f7 93000000 		.4byte	.LASF22
+ 263 00fb 01       		.byte	0x1
+ 264 00fc 0E       		.byte	0xe
+ 265 00fd 00000000 		.4byte	.LFB63
+ 266 0101 40000000 		.4byte	.LFE63-.LFB63
+ 267 0105 01       		.uleb128 0x1
+ 268 0106 9C       		.byte	0x9c
+ 269 0107 9D010000 		.4byte	0x19d
+ 270 010b 09       		.uleb128 0x9
+ 271 010c 6E7200   		.ascii	"nr\000"
+ 272 010f 01       		.byte	0x1
+ 273 0110 0E       		.byte	0xe
+ 274 0111 81000000 		.4byte	0x81
+ 275 0115 00000000 		.4byte	.LLST0
+ 276 0119 0A       		.uleb128 0xa
+ 277 011a 88010000 		.4byte	.LASF21
+ 278 011e 01       		.byte	0x1
+ 279 011f 0E       		.byte	0xe
+ 280 0120 EB000000 		.4byte	0xeb
+ 281 0124 02       		.uleb128 0x2
+ 282 0125 91       		.byte	0x91
+ 283 0126 74       		.sleb128 -12
+ 284 0127 0B       		.uleb128 0xb
+ 285 0128 08000000 		.4byte	.LBB2
+ 286 012c 34000000 		.4byte	.LBE2-.LBB2
+ 287 0130 0C       		.uleb128 0xc
+ 288 0131 C0010000 		.4byte	.LASF24
+ 289 0135 01       		.byte	0x1
+ 290 0136 12       		.byte	0x12
+ 291 0137 81000000 		.4byte	0x81
+ 292 013b 21000000 		.4byte	.LLST1
+ 293 013f 0D       		.uleb128 0xd
+ 294 0140 1C000000 		.4byte	.LVL3
+ 295 0144 F9010000 		.4byte	0x1f9
+ 296 0148 5F010000 		.4byte	0x15f
+ 297 014c 0E       		.uleb128 0xe
+ 298 014d 01       		.uleb128 0x1
+ 299 014e 50       		.byte	0x50
+ 300 014f 02       		.uleb128 0x2
+ 301 0150 74       		.byte	0x74
+ 302 0151 00       		.sleb128 0
+ 303 0152 0E       		.uleb128 0xe
+ 304 0153 01       		.uleb128 0x1
+ 305 0154 51       		.byte	0x51
+ 306 0155 08       		.uleb128 0x8
+ 307 0156 91       		.byte	0x91
+ 308 0157 74       		.sleb128 -12
+ 309 0158 94       		.byte	0x94
+ 310 0159 01       		.byte	0x1
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 7
+
+
+ 311 015a 08       		.byte	0x8
+ 312 015b FF       		.byte	0xff
+ 313 015c 1A       		.byte	0x1a
+ 314 015d 20       		.byte	0x20
+ 315 015e 00       		.byte	0
+ 316 015f 0D       		.uleb128 0xd
+ 317 0160 2C000000 		.4byte	.LVL4
+ 318 0164 F9010000 		.4byte	0x1f9
+ 319 0168 7F010000 		.4byte	0x17f
+ 320 016c 0E       		.uleb128 0xe
+ 321 016d 01       		.uleb128 0x1
+ 322 016e 50       		.byte	0x50
+ 323 016f 02       		.uleb128 0x2
+ 324 0170 74       		.byte	0x74
+ 325 0171 01       		.sleb128 1
+ 326 0172 0E       		.uleb128 0xe
+ 327 0173 01       		.uleb128 0x1
+ 328 0174 51       		.byte	0x51
+ 329 0175 08       		.uleb128 0x8
+ 330 0176 91       		.byte	0x91
+ 331 0177 75       		.sleb128 -11
+ 332 0178 94       		.byte	0x94
+ 333 0179 01       		.byte	0x1
+ 334 017a 08       		.byte	0x8
+ 335 017b FF       		.byte	0xff
+ 336 017c 1A       		.byte	0x1a
+ 337 017d 20       		.byte	0x20
+ 338 017e 00       		.byte	0
+ 339 017f 0F       		.uleb128 0xf
+ 340 0180 3C000000 		.4byte	.LVL5
+ 341 0184 F9010000 		.4byte	0x1f9
+ 342 0188 0E       		.uleb128 0xe
+ 343 0189 01       		.uleb128 0x1
+ 344 018a 50       		.byte	0x50
+ 345 018b 02       		.uleb128 0x2
+ 346 018c 74       		.byte	0x74
+ 347 018d 02       		.sleb128 2
+ 348 018e 0E       		.uleb128 0xe
+ 349 018f 01       		.uleb128 0x1
+ 350 0190 51       		.byte	0x51
+ 351 0191 08       		.uleb128 0x8
+ 352 0192 91       		.byte	0x91
+ 353 0193 76       		.sleb128 -10
+ 354 0194 94       		.byte	0x94
+ 355 0195 01       		.byte	0x1
+ 356 0196 08       		.byte	0x8
+ 357 0197 FF       		.byte	0xff
+ 358 0198 1A       		.byte	0x1a
+ 359 0199 20       		.byte	0x20
+ 360 019a 00       		.byte	0
+ 361 019b 00       		.byte	0
+ 362 019c 00       		.byte	0
+ 363 019d 08       		.uleb128 0x8
+ 364 019e DD010000 		.4byte	.LASF23
+ 365 01a2 01       		.byte	0x1
+ 366 01a3 19       		.byte	0x19
+ 367 01a4 00000000 		.4byte	.LFB64
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 8
+
+
+ 368 01a8 1E000000 		.4byte	.LFE64-.LFB64
+ 369 01ac 01       		.uleb128 0x1
+ 370 01ad 9C       		.byte	0x9c
+ 371 01ae E8010000 		.4byte	0x1e8
+ 372 01b2 0A       		.uleb128 0xa
+ 373 01b3 88010000 		.4byte	.LASF21
+ 374 01b7 01       		.byte	0x1
+ 375 01b8 19       		.byte	0x19
+ 376 01b9 EB000000 		.4byte	0xeb
+ 377 01bd 02       		.uleb128 0x2
+ 378 01be 91       		.byte	0x91
+ 379 01bf 74       		.sleb128 -12
+ 380 01c0 0B       		.uleb128 0xb
+ 381 01c1 06000000 		.4byte	.LBB3
+ 382 01c5 14000000 		.4byte	.LBE3-.LBB3
+ 383 01c9 10       		.uleb128 0x10
+ 384 01ca 6900     		.ascii	"i\000"
+ 385 01cc 01       		.byte	0x1
+ 386 01cd 1B       		.byte	0x1b
+ 387 01ce 81000000 		.4byte	0x81
+ 388 01d2 34000000 		.4byte	.LLST2
+ 389 01d6 0F       		.uleb128 0xf
+ 390 01d7 12000000 		.4byte	.LVL8
+ 391 01db F6000000 		.4byte	0xf6
+ 392 01df 0E       		.uleb128 0xe
+ 393 01e0 01       		.uleb128 0x1
+ 394 01e1 50       		.byte	0x50
+ 395 01e2 02       		.uleb128 0x2
+ 396 01e3 74       		.byte	0x74
+ 397 01e4 00       		.sleb128 0
+ 398 01e5 00       		.byte	0
+ 399 01e6 00       		.byte	0
+ 400 01e7 00       		.byte	0
+ 401 01e8 11       		.uleb128 0x11
+ 402 01e9 67010000 		.4byte	.LASF28
+ 403 01ed 05       		.byte	0x5
+ 404 01ee 1207     		.2byte	0x712
+ 405 01f0 F4010000 		.4byte	0x1f4
+ 406 01f4 12       		.uleb128 0x12
+ 407 01f5 8C000000 		.4byte	0x8c
+ 408 01f9 13       		.uleb128 0x13
+ 409 01fa 01020000 		.4byte	.LASF29
+ 410 01fe 01020000 		.4byte	.LASF29
+ 411 0202 06       		.byte	0x6
+ 412 0203 22       		.byte	0x22
+ 413 0204 00       		.byte	0
+ 414              		.section	.debug_abbrev,"",%progbits
+ 415              	.Ldebug_abbrev0:
+ 416 0000 01       		.uleb128 0x1
+ 417 0001 11       		.uleb128 0x11
+ 418 0002 01       		.byte	0x1
+ 419 0003 25       		.uleb128 0x25
+ 420 0004 0E       		.uleb128 0xe
+ 421 0005 13       		.uleb128 0x13
+ 422 0006 0B       		.uleb128 0xb
+ 423 0007 03       		.uleb128 0x3
+ 424 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 9
+
+
+ 425 0009 1B       		.uleb128 0x1b
+ 426 000a 0E       		.uleb128 0xe
+ 427 000b 55       		.uleb128 0x55
+ 428 000c 17       		.uleb128 0x17
+ 429 000d 11       		.uleb128 0x11
+ 430 000e 01       		.uleb128 0x1
+ 431 000f 10       		.uleb128 0x10
+ 432 0010 17       		.uleb128 0x17
+ 433 0011 00       		.byte	0
+ 434 0012 00       		.byte	0
+ 435 0013 02       		.uleb128 0x2
+ 436 0014 24       		.uleb128 0x24
+ 437 0015 00       		.byte	0
+ 438 0016 0B       		.uleb128 0xb
+ 439 0017 0B       		.uleb128 0xb
+ 440 0018 3E       		.uleb128 0x3e
+ 441 0019 0B       		.uleb128 0xb
+ 442 001a 03       		.uleb128 0x3
+ 443 001b 0E       		.uleb128 0xe
+ 444 001c 00       		.byte	0
+ 445 001d 00       		.byte	0
+ 446 001e 03       		.uleb128 0x3
+ 447 001f 16       		.uleb128 0x16
+ 448 0020 00       		.byte	0
+ 449 0021 03       		.uleb128 0x3
+ 450 0022 0E       		.uleb128 0xe
+ 451 0023 3A       		.uleb128 0x3a
+ 452 0024 0B       		.uleb128 0xb
+ 453 0025 3B       		.uleb128 0x3b
+ 454 0026 0B       		.uleb128 0xb
+ 455 0027 49       		.uleb128 0x49
+ 456 0028 13       		.uleb128 0x13
+ 457 0029 00       		.byte	0
+ 458 002a 00       		.byte	0
+ 459 002b 04       		.uleb128 0x4
+ 460 002c 24       		.uleb128 0x24
+ 461 002d 00       		.byte	0
+ 462 002e 0B       		.uleb128 0xb
+ 463 002f 0B       		.uleb128 0xb
+ 464 0030 3E       		.uleb128 0x3e
+ 465 0031 0B       		.uleb128 0xb
+ 466 0032 03       		.uleb128 0x3
+ 467 0033 08       		.uleb128 0x8
+ 468 0034 00       		.byte	0
+ 469 0035 00       		.byte	0
+ 470 0036 05       		.uleb128 0x5
+ 471 0037 13       		.uleb128 0x13
+ 472 0038 01       		.byte	0x1
+ 473 0039 03       		.uleb128 0x3
+ 474 003a 0E       		.uleb128 0xe
+ 475 003b 0B       		.uleb128 0xb
+ 476 003c 0B       		.uleb128 0xb
+ 477 003d 3A       		.uleb128 0x3a
+ 478 003e 0B       		.uleb128 0xb
+ 479 003f 3B       		.uleb128 0x3b
+ 480 0040 0B       		.uleb128 0xb
+ 481 0041 01       		.uleb128 0x1
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 10
+
+
+ 482 0042 13       		.uleb128 0x13
+ 483 0043 00       		.byte	0
+ 484 0044 00       		.byte	0
+ 485 0045 06       		.uleb128 0x6
+ 486 0046 0D       		.uleb128 0xd
+ 487 0047 00       		.byte	0
+ 488 0048 03       		.uleb128 0x3
+ 489 0049 08       		.uleb128 0x8
+ 490 004a 3A       		.uleb128 0x3a
+ 491 004b 0B       		.uleb128 0xb
+ 492 004c 3B       		.uleb128 0x3b
+ 493 004d 0B       		.uleb128 0xb
+ 494 004e 49       		.uleb128 0x49
+ 495 004f 13       		.uleb128 0x13
+ 496 0050 38       		.uleb128 0x38
+ 497 0051 0B       		.uleb128 0xb
+ 498 0052 00       		.byte	0
+ 499 0053 00       		.byte	0
+ 500 0054 07       		.uleb128 0x7
+ 501 0055 0D       		.uleb128 0xd
+ 502 0056 00       		.byte	0
+ 503 0057 03       		.uleb128 0x3
+ 504 0058 0E       		.uleb128 0xe
+ 505 0059 3A       		.uleb128 0x3a
+ 506 005a 0B       		.uleb128 0xb
+ 507 005b 3B       		.uleb128 0x3b
+ 508 005c 0B       		.uleb128 0xb
+ 509 005d 49       		.uleb128 0x49
+ 510 005e 13       		.uleb128 0x13
+ 511 005f 38       		.uleb128 0x38
+ 512 0060 0B       		.uleb128 0xb
+ 513 0061 00       		.byte	0
+ 514 0062 00       		.byte	0
+ 515 0063 08       		.uleb128 0x8
+ 516 0064 2E       		.uleb128 0x2e
+ 517 0065 01       		.byte	0x1
+ 518 0066 3F       		.uleb128 0x3f
+ 519 0067 19       		.uleb128 0x19
+ 520 0068 03       		.uleb128 0x3
+ 521 0069 0E       		.uleb128 0xe
+ 522 006a 3A       		.uleb128 0x3a
+ 523 006b 0B       		.uleb128 0xb
+ 524 006c 3B       		.uleb128 0x3b
+ 525 006d 0B       		.uleb128 0xb
+ 526 006e 27       		.uleb128 0x27
+ 527 006f 19       		.uleb128 0x19
+ 528 0070 11       		.uleb128 0x11
+ 529 0071 01       		.uleb128 0x1
+ 530 0072 12       		.uleb128 0x12
+ 531 0073 06       		.uleb128 0x6
+ 532 0074 40       		.uleb128 0x40
+ 533 0075 18       		.uleb128 0x18
+ 534 0076 9742     		.uleb128 0x2117
+ 535 0078 19       		.uleb128 0x19
+ 536 0079 01       		.uleb128 0x1
+ 537 007a 13       		.uleb128 0x13
+ 538 007b 00       		.byte	0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 11
+
+
+ 539 007c 00       		.byte	0
+ 540 007d 09       		.uleb128 0x9
+ 541 007e 05       		.uleb128 0x5
+ 542 007f 00       		.byte	0
+ 543 0080 03       		.uleb128 0x3
+ 544 0081 08       		.uleb128 0x8
+ 545 0082 3A       		.uleb128 0x3a
+ 546 0083 0B       		.uleb128 0xb
+ 547 0084 3B       		.uleb128 0x3b
+ 548 0085 0B       		.uleb128 0xb
+ 549 0086 49       		.uleb128 0x49
+ 550 0087 13       		.uleb128 0x13
+ 551 0088 02       		.uleb128 0x2
+ 552 0089 17       		.uleb128 0x17
+ 553 008a 00       		.byte	0
+ 554 008b 00       		.byte	0
+ 555 008c 0A       		.uleb128 0xa
+ 556 008d 05       		.uleb128 0x5
+ 557 008e 00       		.byte	0
+ 558 008f 03       		.uleb128 0x3
+ 559 0090 0E       		.uleb128 0xe
+ 560 0091 3A       		.uleb128 0x3a
+ 561 0092 0B       		.uleb128 0xb
+ 562 0093 3B       		.uleb128 0x3b
+ 563 0094 0B       		.uleb128 0xb
+ 564 0095 49       		.uleb128 0x49
+ 565 0096 13       		.uleb128 0x13
+ 566 0097 02       		.uleb128 0x2
+ 567 0098 18       		.uleb128 0x18
+ 568 0099 00       		.byte	0
+ 569 009a 00       		.byte	0
+ 570 009b 0B       		.uleb128 0xb
+ 571 009c 0B       		.uleb128 0xb
+ 572 009d 01       		.byte	0x1
+ 573 009e 11       		.uleb128 0x11
+ 574 009f 01       		.uleb128 0x1
+ 575 00a0 12       		.uleb128 0x12
+ 576 00a1 06       		.uleb128 0x6
+ 577 00a2 00       		.byte	0
+ 578 00a3 00       		.byte	0
+ 579 00a4 0C       		.uleb128 0xc
+ 580 00a5 34       		.uleb128 0x34
+ 581 00a6 00       		.byte	0
+ 582 00a7 03       		.uleb128 0x3
+ 583 00a8 0E       		.uleb128 0xe
+ 584 00a9 3A       		.uleb128 0x3a
+ 585 00aa 0B       		.uleb128 0xb
+ 586 00ab 3B       		.uleb128 0x3b
+ 587 00ac 0B       		.uleb128 0xb
+ 588 00ad 49       		.uleb128 0x49
+ 589 00ae 13       		.uleb128 0x13
+ 590 00af 02       		.uleb128 0x2
+ 591 00b0 17       		.uleb128 0x17
+ 592 00b1 00       		.byte	0
+ 593 00b2 00       		.byte	0
+ 594 00b3 0D       		.uleb128 0xd
+ 595 00b4 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 12
+
+
+ 596 00b7 01       		.byte	0x1
+ 597 00b8 11       		.uleb128 0x11
+ 598 00b9 01       		.uleb128 0x1
+ 599 00ba 31       		.uleb128 0x31
+ 600 00bb 13       		.uleb128 0x13
+ 601 00bc 01       		.uleb128 0x1
+ 602 00bd 13       		.uleb128 0x13
+ 603 00be 00       		.byte	0
+ 604 00bf 00       		.byte	0
+ 605 00c0 0E       		.uleb128 0xe
+ 606 00c1 8A8201   		.uleb128 0x410a
+ 607 00c4 00       		.byte	0
+ 608 00c5 02       		.uleb128 0x2
+ 609 00c6 18       		.uleb128 0x18
+ 610 00c7 9142     		.uleb128 0x2111
+ 611 00c9 18       		.uleb128 0x18
+ 612 00ca 00       		.byte	0
+ 613 00cb 00       		.byte	0
+ 614 00cc 0F       		.uleb128 0xf
+ 615 00cd 898201   		.uleb128 0x4109
+ 616 00d0 01       		.byte	0x1
+ 617 00d1 11       		.uleb128 0x11
+ 618 00d2 01       		.uleb128 0x1
+ 619 00d3 31       		.uleb128 0x31
+ 620 00d4 13       		.uleb128 0x13
+ 621 00d5 00       		.byte	0
+ 622 00d6 00       		.byte	0
+ 623 00d7 10       		.uleb128 0x10
+ 624 00d8 34       		.uleb128 0x34
+ 625 00d9 00       		.byte	0
+ 626 00da 03       		.uleb128 0x3
+ 627 00db 08       		.uleb128 0x8
+ 628 00dc 3A       		.uleb128 0x3a
+ 629 00dd 0B       		.uleb128 0xb
+ 630 00de 3B       		.uleb128 0x3b
+ 631 00df 0B       		.uleb128 0xb
+ 632 00e0 49       		.uleb128 0x49
+ 633 00e1 13       		.uleb128 0x13
+ 634 00e2 02       		.uleb128 0x2
+ 635 00e3 17       		.uleb128 0x17
+ 636 00e4 00       		.byte	0
+ 637 00e5 00       		.byte	0
+ 638 00e6 11       		.uleb128 0x11
+ 639 00e7 34       		.uleb128 0x34
+ 640 00e8 00       		.byte	0
+ 641 00e9 03       		.uleb128 0x3
+ 642 00ea 0E       		.uleb128 0xe
+ 643 00eb 3A       		.uleb128 0x3a
+ 644 00ec 0B       		.uleb128 0xb
+ 645 00ed 3B       		.uleb128 0x3b
+ 646 00ee 05       		.uleb128 0x5
+ 647 00ef 49       		.uleb128 0x49
+ 648 00f0 13       		.uleb128 0x13
+ 649 00f1 3F       		.uleb128 0x3f
+ 650 00f2 19       		.uleb128 0x19
+ 651 00f3 3C       		.uleb128 0x3c
+ 652 00f4 19       		.uleb128 0x19
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 13
+
+
+ 653 00f5 00       		.byte	0
+ 654 00f6 00       		.byte	0
+ 655 00f7 12       		.uleb128 0x12
+ 656 00f8 35       		.uleb128 0x35
+ 657 00f9 00       		.byte	0
+ 658 00fa 49       		.uleb128 0x49
+ 659 00fb 13       		.uleb128 0x13
+ 660 00fc 00       		.byte	0
+ 661 00fd 00       		.byte	0
+ 662 00fe 13       		.uleb128 0x13
+ 663 00ff 2E       		.uleb128 0x2e
+ 664 0100 00       		.byte	0
+ 665 0101 3F       		.uleb128 0x3f
+ 666 0102 19       		.uleb128 0x19
+ 667 0103 3C       		.uleb128 0x3c
+ 668 0104 19       		.uleb128 0x19
+ 669 0105 6E       		.uleb128 0x6e
+ 670 0106 0E       		.uleb128 0xe
+ 671 0107 03       		.uleb128 0x3
+ 672 0108 0E       		.uleb128 0xe
+ 673 0109 3A       		.uleb128 0x3a
+ 674 010a 0B       		.uleb128 0xb
+ 675 010b 3B       		.uleb128 0x3b
+ 676 010c 0B       		.uleb128 0xb
+ 677 010d 00       		.byte	0
+ 678 010e 00       		.byte	0
+ 679 010f 00       		.byte	0
+ 680              		.section	.debug_loc,"",%progbits
+ 681              	.Ldebug_loc0:
+ 682              	.LLST0:
+ 683 0000 00000000 		.4byte	.LVL0
+ 684 0004 18000000 		.4byte	.LVL2
+ 685 0008 0100     		.2byte	0x1
+ 686 000a 50       		.byte	0x50
+ 687 000b 18000000 		.4byte	.LVL2
+ 688 000f 40000000 		.4byte	.LFE63
+ 689 0013 0400     		.2byte	0x4
+ 690 0015 F3       		.byte	0xf3
+ 691 0016 01       		.uleb128 0x1
+ 692 0017 50       		.byte	0x50
+ 693 0018 9F       		.byte	0x9f
+ 694 0019 00000000 		.4byte	0
+ 695 001d 00000000 		.4byte	0
+ 696              	.LLST1:
+ 697 0021 0E000000 		.4byte	.LVL1
+ 698 0025 3C000000 		.4byte	.LVL5
+ 699 0029 0100     		.2byte	0x1
+ 700 002b 54       		.byte	0x54
+ 701 002c 00000000 		.4byte	0
+ 702 0030 00000000 		.4byte	0
+ 703              	.LLST2:
+ 704 0034 06000000 		.4byte	.LVL6
+ 705 0038 0A000000 		.4byte	.LVL7
+ 706 003c 0200     		.2byte	0x2
+ 707 003e 30       		.byte	0x30
+ 708 003f 9F       		.byte	0x9f
+ 709 0040 0A000000 		.4byte	.LVL7
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 14
+
+
+ 710 0044 14000000 		.4byte	.LVL9
+ 711 0048 0100     		.2byte	0x1
+ 712 004a 54       		.byte	0x54
+ 713 004b 16000000 		.4byte	.LVL10
+ 714 004f 1E000000 		.4byte	.LFE64
+ 715 0053 0100     		.2byte	0x1
+ 716 0055 54       		.byte	0x54
+ 717 0056 00000000 		.4byte	0
+ 718 005a 00000000 		.4byte	0
+ 719              		.section	.debug_aranges,"",%progbits
+ 720 0000 24000000 		.4byte	0x24
+ 721 0004 0200     		.2byte	0x2
+ 722 0006 00000000 		.4byte	.Ldebug_info0
+ 723 000a 04       		.byte	0x4
+ 724 000b 00       		.byte	0
+ 725 000c 0000     		.2byte	0
+ 726 000e 0000     		.2byte	0
+ 727 0010 00000000 		.4byte	.LFB63
+ 728 0014 40000000 		.4byte	.LFE63-.LFB63
+ 729 0018 00000000 		.4byte	.LFB64
+ 730 001c 1E000000 		.4byte	.LFE64-.LFB64
+ 731 0020 00000000 		.4byte	0
+ 732 0024 00000000 		.4byte	0
+ 733              		.section	.debug_ranges,"",%progbits
+ 734              	.Ldebug_ranges0:
+ 735 0000 00000000 		.4byte	.LFB63
+ 736 0004 40000000 		.4byte	.LFE63
+ 737 0008 00000000 		.4byte	.LFB64
+ 738 000c 1E000000 		.4byte	.LFE64
+ 739 0010 00000000 		.4byte	0
+ 740 0014 00000000 		.4byte	0
+ 741              		.section	.debug_line,"",%progbits
+ 742              	.Ldebug_line0:
+ 743 0000 A5010000 		.section	.debug_str,"MS",%progbits,1
+ 743      02006801 
+ 743      00000201 
+ 743      FB0E0D00 
+ 743      01010101 
+ 744              	.LASF4:
+ 745 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 745      6E74385F 
+ 745      7400
+ 746              	.LASF5:
+ 747 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 747      7433325F 
+ 747      7400
+ 748              	.LASF27:
+ 749 0014 433A5C55 		.ascii	"C:\\Users\\marti\\OneDrive\\Dokumenter\\3 semester "
+ 749      73657273 
+ 749      5C6D6172 
+ 749      74695C4F 
+ 749      6E654472 
+ 750 0042 7265706F 		.ascii	"repos\\player_side_app\\integration\\integration\\i"
+ 750      735C706C 
+ 750      61796572 
+ 750      5F736964 
+ 750      655F6170 
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 15
+
+
+ 751 0071 6E746567 		.ascii	"ntegration_controller-light.cydsn\000"
+ 751      72617469 
+ 751      6F6E5F63 
+ 751      6F6E7472 
+ 751      6F6C6C65 
+ 752              	.LASF22:
+ 753 0093 636F6E74 		.ascii	"controlLight\000"
+ 753      726F6C4C 
+ 753      69676874 
+ 753      00
+ 754              	.LASF13:
+ 755 00a0 666C6F61 		.ascii	"float\000"
+ 755      7400
+ 756              	.LASF1:
+ 757 00a6 756E7369 		.ascii	"unsigned char\000"
+ 757      676E6564 
+ 757      20636861 
+ 757      7200
+ 758              	.LASF25:
+ 759 00b4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 759      43313120 
+ 759      352E342E 
+ 759      31203230 
+ 759      31363036 
+ 760 00e7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 760      20726576 
+ 760      6973696F 
+ 760      6E203233 
+ 760      37373135 
+ 761 011a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 761      66756E63 
+ 761      74696F6E 
+ 761      2D736563 
+ 761      74696F6E 
+ 762              	.LASF7:
+ 763 0142 6C6F6E67 		.ascii	"long unsigned int\000"
+ 763      20756E73 
+ 763      69676E65 
+ 763      6420696E 
+ 763      7400
+ 764              	.LASF3:
+ 765 0154 73686F72 		.ascii	"short unsigned int\000"
+ 765      7420756E 
+ 765      7369676E 
+ 765      65642069 
+ 765      6E7400
+ 766              	.LASF28:
+ 767 0167 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 767      52784275 
+ 767      66666572 
+ 767      00
+ 768              	.LASF19:
+ 769 0174 426C7565 		.ascii	"Blue\000"
+ 769      00
+ 770              	.LASF20:
+ 771 0179 636F6C6F 		.ascii	"color_t\000"
+ 771      725F7400 
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 16
+
+
+ 772              	.LASF14:
+ 773 0181 646F7562 		.ascii	"double\000"
+ 773      6C6500
+ 774              	.LASF21:
+ 775 0188 636F6C6F 		.ascii	"color\000"
+ 775      7200
+ 776              	.LASF10:
+ 777 018e 756E7369 		.ascii	"unsigned int\000"
+ 777      676E6564 
+ 777      20696E74 
+ 777      00
+ 778              	.LASF18:
+ 779 019b 47726565 		.ascii	"Green\000"
+ 779      6E00
+ 780              	.LASF9:
+ 781 01a1 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 781      206C6F6E 
+ 781      6720756E 
+ 781      7369676E 
+ 781      65642069 
+ 782              	.LASF11:
+ 783 01b8 75696E74 		.ascii	"uint8_t\000"
+ 783      385F7400 
+ 784              	.LASF24:
+ 785 01c0 73686966 		.ascii	"shiftRegPos\000"
+ 785      74526567 
+ 785      506F7300 
+ 786              	.LASF12:
+ 787 01cc 696E7433 		.ascii	"int32_t\000"
+ 787      325F7400 
+ 788              	.LASF17:
+ 789 01d4 73697A65 		.ascii	"sizetype\000"
+ 789      74797065 
+ 789      00
+ 790              	.LASF23:
+ 791 01dd 636F6E74 		.ascii	"controlAllLights\000"
+ 791      726F6C41 
+ 791      6C6C4C69 
+ 791      67687473 
+ 791      00
+ 792              	.LASF8:
+ 793 01ee 6C6F6E67 		.ascii	"long long int\000"
+ 793      206C6F6E 
+ 793      6720696E 
+ 793      7400
+ 794              	.LASF15:
+ 795 01fc 63686172 		.ascii	"char\000"
+ 795      00
+ 796              	.LASF29:
+ 797 0201 73657450 		.ascii	"setPin\000"
+ 797      696E00
+ 798              	.LASF26:
+ 799 0208 4375704C 		.ascii	"CupLight_IF.c\000"
+ 799      69676874 
+ 799      5F49462E 
+ 799      6300
+ 800              	.LASF2:
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccf3GVMl.s 			page 17
+
+
+ 801 0216 73686F72 		.ascii	"short int\000"
+ 801      7420696E 
+ 801      7400
+ 802              	.LASF6:
+ 803 0220 6C6F6E67 		.ascii	"long int\000"
+ 803      20696E74 
+ 803      00
+ 804              	.LASF16:
+ 805 0229 6C6F6E67 		.ascii	"long double\000"
+ 805      20646F75 
+ 805      626C6500 
+ 806              	.LASF0:
+ 807 0235 7369676E 		.ascii	"signed char\000"
+ 807      65642063 
+ 807      68617200 
+ 808              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

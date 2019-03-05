@@ -1,0 +1,1813 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 1240
+  28              	cy_meta_configecc:
+  29 0000 03       		.byte	3
+  30 0001 64       		.byte	100
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 01       		.byte	1
+  34 0005 05       		.byte	5
+  35 0006 01       		.byte	1
+  36 0007 40       		.byte	64
+  37 0008 02       		.byte	2
+  38 0009 07       		.byte	7
+  39 000a 01       		.byte	1
+  40 000b 40       		.byte	64
+  41 000c 05       		.byte	5
+  42 000d 09       		.byte	9
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 4F       		.byte	79
+  46 0011 0A       		.byte	10
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 49       		.byte	73
+  50 0015 0B       		.byte	11
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 51       		.byte	81
+  54 0019 0C       		.byte	12
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 41       		.byte	65
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 2
+
+
+  58 001d 0D       		.byte	13
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 56       		.byte	86
+  62 0021 0E       		.byte	14
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 38       		.byte	56
+  66 0025 0F       		.byte	15
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 02       		.byte	2
+  70 0029 15       		.byte	21
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 03       		.byte	3
+  74 002d 19       		.byte	25
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 06       		.byte	6
+  78 0031 1B       		.byte	27
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 02       		.byte	2
+  82 0035 40       		.byte	64
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 03       		.byte	3
+  86 0039 41       		.byte	65
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 0C       		.byte	12
+  90 003d 42       		.byte	66
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 07       		.byte	7
+  94 0041 43       		.byte	67
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 07       		.byte	7
+  98 0045 44       		.byte	68
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 02       		.byte	2
+ 102 0049 45       		.byte	69
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 0B       		.byte	11
+ 106 004d 46       		.byte	70
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 02       		.byte	2
+ 110 0051 47       		.byte	71
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 04       		.byte	4
+ 114 0055 48       		.byte	72
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 08       		.byte	8
+ 118 0059 49       		.byte	73
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 02       		.byte	2
+ 122 005d 4C       		.byte	76
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 09       		.byte	9
+ 126 0061 4D       		.byte	77
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 03       		.byte	3
+ 130 0065 50       		.byte	80
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 02       		.byte	2
+ 134 0069 51       		.byte	81
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 8B       		.byte	-117
+ 138 006d 72       		.byte	114
+ 139 006e 8C       		.byte	-116
+ 140 006f 0F       		.byte	15
+ 141 0070 8F       		.byte	-113
+ 142 0071 38       		.byte	56
+ 143 0072 EA       		.byte	-22
+ 144 0073 03       		.byte	3
+ 145 0074 EA       		.byte	-22
+ 146 0075 04       		.byte	4
+ 147 0076 EE       		.byte	-18
+ 148 0077 01       		.byte	1
+ 149 0078 9D       		.byte	-99
+ 150 0079 08       		.byte	8
+ 151 007a 9F       		.byte	-97
+ 152 007b 04       		.byte	4
+ 153 007c A4       		.byte	-92
+ 154 007d 01       		.byte	1
+ 155 007e A9       		.byte	-87
+ 156 007f 01       		.byte	1
+ 157 0080 AA       		.byte	-86
+ 158 0081 20       		.byte	32
+ 159 0082 00       		.byte	0
+ 160 0083 04       		.byte	4
+ 161 0084 02       		.byte	2
+ 162 0085 02       		.byte	2
+ 163 0086 08       		.byte	8
+ 164 0087 02       		.byte	2
+ 165 0088 0A       		.byte	10
+ 166 0089 0C       		.byte	12
+ 167 008a 18       		.byte	24
+ 168 008b 0E       		.byte	14
+ 169 008c 1C       		.byte	28
+ 170 008d 08       		.byte	8
+ 171 008e 1E       		.byte	30
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 4
+
+
+ 172 008f 02       		.byte	2
+ 173 0090 20       		.byte	32
+ 174 0091 01       		.byte	1
+ 175 0092 24       		.byte	36
+ 176 0093 0E       		.byte	14
+ 177 0094 32       		.byte	50
+ 178 0095 0E       		.byte	14
+ 179 0096 34       		.byte	52
+ 180 0097 01       		.byte	1
+ 181 0098 39       		.byte	57
+ 182 0099 80       		.byte	-128
+ 183 009a 3E       		.byte	62
+ 184 009b 10       		.byte	16
+ 185 009c 3F       		.byte	63
+ 186 009d 40       		.byte	64
+ 187 009e 58       		.byte	88
+ 188 009f 04       		.byte	4
+ 189 00a0 59       		.byte	89
+ 190 00a1 04       		.byte	4
+ 191 00a2 5C       		.byte	92
+ 192 00a3 01       		.byte	1
+ 193 00a4 5F       		.byte	95
+ 194 00a5 01       		.byte	1
+ 195 00a6 80       		.byte	-128
+ 196 00a7 33       		.byte	51
+ 197 00a8 81       		.byte	-127
+ 198 00a9 10       		.byte	16
+ 199 00aa 82       		.byte	-126
+ 200 00ab 0C       		.byte	12
+ 201 00ac 84       		.byte	-124
+ 202 00ad 01       		.byte	1
+ 203 00ae 85       		.byte	-123
+ 204 00af 08       		.byte	8
+ 205 00b0 88       		.byte	-120
+ 206 00b1 03       		.byte	3
+ 207 00b2 8B       		.byte	-117
+ 208 00b3 04       		.byte	4
+ 209 00b4 8C       		.byte	-116
+ 210 00b5 1F       		.byte	31
+ 211 00b6 8D       		.byte	-115
+ 212 00b7 FF       		.byte	-1
+ 213 00b8 8E       		.byte	-114
+ 214 00b9 20       		.byte	32
+ 215 00ba 93       		.byte	-109
+ 216 00bb E3       		.byte	-29
+ 217 00bc 94       		.byte	-108
+ 218 00bd 1C       		.byte	28
+ 219 00be 95       		.byte	-107
+ 220 00bf 18       		.byte	24
+ 221 00c0 96       		.byte	-106
+ 222 00c1 23       		.byte	35
+ 223 00c2 98       		.byte	-104
+ 224 00c3 3F       		.byte	63
+ 225 00c4 99       		.byte	-103
+ 226 00c5 C0       		.byte	-64
+ 227 00c6 9C       		.byte	-100
+ 228 00c7 02       		.byte	2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 5
+
+
+ 229 00c8 9D       		.byte	-99
+ 230 00c9 1C       		.byte	28
+ 231 00ca 9F       		.byte	-97
+ 232 00cb E1       		.byte	-31
+ 233 00cc A1       		.byte	-95
+ 234 00cd 80       		.byte	-128
+ 235 00ce A2       		.byte	-94
+ 236 00cf 23       		.byte	35
+ 237 00d0 A4       		.byte	-92
+ 238 00d1 04       		.byte	4
+ 239 00d2 A5       		.byte	-91
+ 240 00d3 44       		.byte	68
+ 241 00d4 A8       		.byte	-88
+ 242 00d5 0C       		.byte	12
+ 243 00d6 A9       		.byte	-87
+ 244 00d7 3C       		.byte	60
+ 245 00d8 AB       		.byte	-85
+ 246 00d9 C2       		.byte	-62
+ 247 00da AC       		.byte	-84
+ 248 00db 08       		.byte	8
+ 249 00dc AD       		.byte	-83
+ 250 00dd E7       		.byte	-25
+ 251 00de AF       		.byte	-81
+ 252 00df 18       		.byte	24
+ 253 00e0 B0       		.byte	-80
+ 254 00e1 10       		.byte	16
+ 255 00e2 B2       		.byte	-78
+ 256 00e3 0F       		.byte	15
+ 257 00e4 B3       		.byte	-77
+ 258 00e5 38       		.byte	56
+ 259 00e6 B5       		.byte	-75
+ 260 00e7 1F       		.byte	31
+ 261 00e8 B6       		.byte	-74
+ 262 00e9 2C       		.byte	44
+ 263 00ea B7       		.byte	-73
+ 264 00eb C0       		.byte	-64
+ 265 00ec BA       		.byte	-70
+ 266 00ed A8       		.byte	-88
+ 267 00ee BB       		.byte	-69
+ 268 00ef 20       		.byte	32
+ 269 00f0 BE       		.byte	-66
+ 270 00f1 01       		.byte	1
+ 271 00f2 C0       		.byte	-64
+ 272 00f3 06       		.byte	6
+ 273 00f4 C5       		.byte	-59
+ 274 00f5 40       		.byte	64
+ 275 00f6 C9       		.byte	-55
+ 276 00f7 FF       		.byte	-1
+ 277 00f8 CA       		.byte	-54
+ 278 00f9 07       		.byte	7
+ 279 00fa CB       		.byte	-53
+ 280 00fb FF       		.byte	-1
+ 281 00fc CC       		.byte	-52
+ 282 00fd 40       		.byte	64
+ 283 00fe CD       		.byte	-51
+ 284 00ff 20       		.byte	32
+ 285 0100 CE       		.byte	-50
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 6
+
+
+ 286 0101 F0       		.byte	-16
+ 287 0102 CF       		.byte	-49
+ 288 0103 05       		.byte	5
+ 289 0104 D0       		.byte	-48
+ 290 0105 08       		.byte	8
+ 291 0106 D6       		.byte	-42
+ 292 0107 02       		.byte	2
+ 293 0108 D7       		.byte	-41
+ 294 0109 10       		.byte	16
+ 295 010a D8       		.byte	-40
+ 296 010b 04       		.byte	4
+ 297 010c D9       		.byte	-39
+ 298 010d 04       		.byte	4
+ 299 010e DA       		.byte	-38
+ 300 010f 04       		.byte	4
+ 301 0110 DB       		.byte	-37
+ 302 0111 04       		.byte	4
+ 303 0112 DC       		.byte	-36
+ 304 0113 11       		.byte	17
+ 305 0114 DD       		.byte	-35
+ 306 0115 11       		.byte	17
+ 307 0116 DF       		.byte	-33
+ 308 0117 01       		.byte	1
+ 309 0118 E0       		.byte	-32
+ 310 0119 40       		.byte	64
+ 311 011a E1       		.byte	-31
+ 312 011b A8       		.byte	-88
+ 313 011c E2       		.byte	-30
+ 314 011d 40       		.byte	64
+ 315 011e E3       		.byte	-29
+ 316 011f 20       		.byte	32
+ 317 0120 00       		.byte	0
+ 318 0121 12       		.byte	18
+ 319 0122 04       		.byte	4
+ 320 0123 10       		.byte	16
+ 321 0124 05       		.byte	5
+ 322 0125 58       		.byte	88
+ 323 0126 06       		.byte	6
+ 324 0127 80       		.byte	-128
+ 325 0128 07       		.byte	7
+ 326 0129 40       		.byte	64
+ 327 012a 09       		.byte	9
+ 328 012b 10       		.byte	16
+ 329 012c 0A       		.byte	10
+ 330 012d 01       		.byte	1
+ 331 012e 0C       		.byte	12
+ 332 012f 18       		.byte	24
+ 333 0130 0E       		.byte	14
+ 334 0131 25       		.byte	37
+ 335 0132 10       		.byte	16
+ 336 0133 20       		.byte	32
+ 337 0134 12       		.byte	18
+ 338 0135 80       		.byte	-128
+ 339 0136 16       		.byte	22
+ 340 0137 02       		.byte	2
+ 341 0138 17       		.byte	23
+ 342 0139 29       		.byte	41
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 7
+
+
+ 343 013a 18       		.byte	24
+ 344 013b 10       		.byte	16
+ 345 013c 1B       		.byte	27
+ 346 013d 10       		.byte	16
+ 347 013e 1C       		.byte	28
+ 348 013f 40       		.byte	64
+ 349 0140 1D       		.byte	29
+ 350 0141 48       		.byte	72
+ 351 0142 1E       		.byte	30
+ 352 0143 06       		.byte	6
+ 353 0144 1F       		.byte	31
+ 354 0145 08       		.byte	8
+ 355 0146 21       		.byte	33
+ 356 0147 40       		.byte	64
+ 357 0148 24       		.byte	36
+ 358 0149 01       		.byte	1
+ 359 014a 26       		.byte	38
+ 360 014b 10       		.byte	16
+ 361 014c 27       		.byte	39
+ 362 014d 10       		.byte	16
+ 363 014e 2C       		.byte	44
+ 364 014f 08       		.byte	8
+ 365 0150 2D       		.byte	45
+ 366 0151 08       		.byte	8
+ 367 0152 2E       		.byte	46
+ 368 0153 81       		.byte	-127
+ 369 0154 35       		.byte	53
+ 370 0155 54       		.byte	84
+ 371 0156 37       		.byte	55
+ 372 0157 01       		.byte	1
+ 373 0158 3C       		.byte	60
+ 374 0159 20       		.byte	32
+ 375 015a 3E       		.byte	62
+ 376 015b 0A       		.byte	10
+ 377 015c 3F       		.byte	63
+ 378 015d 40       		.byte	64
+ 379 015e 4E       		.byte	78
+ 380 015f 40       		.byte	64
+ 381 0160 4F       		.byte	79
+ 382 0161 10       		.byte	16
+ 383 0162 56       		.byte	86
+ 384 0163 01       		.byte	1
+ 385 0164 5C       		.byte	92
+ 386 0165 40       		.byte	64
+ 387 0166 6C       		.byte	108
+ 388 0167 34       		.byte	52
+ 389 0168 6D       		.byte	109
+ 390 0169 60       		.byte	96
+ 391 016a 75       		.byte	117
+ 392 016b 04       		.byte	4
+ 393 016c 76       		.byte	118
+ 394 016d 0A       		.byte	10
+ 395 016e 77       		.byte	119
+ 396 016f 28       		.byte	40
+ 397 0170 83       		.byte	-125
+ 398 0171 10       		.byte	16
+ 399 0172 88       		.byte	-120
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 8
+
+
+ 400 0173 10       		.byte	16
+ 401 0174 8B       		.byte	-117
+ 402 0175 40       		.byte	64
+ 403 0176 8D       		.byte	-115
+ 404 0177 40       		.byte	64
+ 405 0178 8F       		.byte	-113
+ 406 0179 48       		.byte	72
+ 407 017a 92       		.byte	-110
+ 408 017b 01       		.byte	1
+ 409 017c 93       		.byte	-109
+ 410 017d 10       		.byte	16
+ 411 017e 94       		.byte	-108
+ 412 017f 39       		.byte	57
+ 413 0180 95       		.byte	-107
+ 414 0181 40       		.byte	64
+ 415 0182 96       		.byte	-106
+ 416 0183 80       		.byte	-128
+ 417 0184 97       		.byte	-105
+ 418 0185 40       		.byte	64
+ 419 0186 99       		.byte	-103
+ 420 0187 01       		.byte	1
+ 421 0188 9B       		.byte	-101
+ 422 0189 01       		.byte	1
+ 423 018a 9E       		.byte	-98
+ 424 018b 01       		.byte	1
+ 425 018c 9F       		.byte	-97
+ 426 018d 14       		.byte	20
+ 427 018e A0       		.byte	-96
+ 428 018f 10       		.byte	16
+ 429 0190 A2       		.byte	-94
+ 430 0191 A0       		.byte	-96
+ 431 0192 A4       		.byte	-92
+ 432 0193 09       		.byte	9
+ 433 0194 A5       		.byte	-91
+ 434 0195 08       		.byte	8
+ 435 0196 A6       		.byte	-90
+ 436 0197 01       		.byte	1
+ 437 0198 A8       		.byte	-88
+ 438 0199 40       		.byte	64
+ 439 019a AF       		.byte	-81
+ 440 019b 20       		.byte	32
+ 441 019c B0       		.byte	-80
+ 442 019d 12       		.byte	18
+ 443 019e B4       		.byte	-76
+ 444 019f 04       		.byte	4
+ 445 01a0 C0       		.byte	-64
+ 446 01a1 FA       		.byte	-6
+ 447 01a2 C2       		.byte	-62
+ 448 01a3 E3       		.byte	-29
+ 449 01a4 C4       		.byte	-60
+ 450 01a5 FC       		.byte	-4
+ 451 01a6 CA       		.byte	-54
+ 452 01a7 F0       		.byte	-16
+ 453 01a8 CC       		.byte	-52
+ 454 01a9 F0       		.byte	-16
+ 455 01aa CE       		.byte	-50
+ 456 01ab F0       		.byte	-16
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 9
+
+
+ 457 01ac D2       		.byte	-46
+ 458 01ad 20       		.byte	32
+ 459 01ae D6       		.byte	-42
+ 460 01af 10       		.byte	16
+ 461 01b0 E4       		.byte	-28
+ 462 01b1 01       		.byte	1
+ 463 01b2 00       		.byte	0
+ 464 01b3 01       		.byte	1
+ 465 01b4 02       		.byte	2
+ 466 01b5 0A       		.byte	10
+ 467 01b6 04       		.byte	4
+ 468 01b7 03       		.byte	3
+ 469 01b8 05       		.byte	5
+ 470 01b9 0B       		.byte	11
+ 471 01ba 08       		.byte	8
+ 472 01bb 03       		.byte	3
+ 473 01bc 09       		.byte	9
+ 474 01bd 0A       		.byte	10
+ 475 01be 0B       		.byte	11
+ 476 01bf 01       		.byte	1
+ 477 01c0 0D       		.byte	13
+ 478 01c1 04       		.byte	4
+ 479 01c2 12       		.byte	18
+ 480 01c3 04       		.byte	4
+ 481 01c4 17       		.byte	23
+ 482 01c5 0B       		.byte	11
+ 483 01c6 1C       		.byte	28
+ 484 01c7 02       		.byte	2
+ 485 01c8 1E       		.byte	30
+ 486 01c9 01       		.byte	1
+ 487 01ca 24       		.byte	36
+ 488 01cb 10       		.byte	16
+ 489 01cc 25       		.byte	37
+ 490 01cd 04       		.byte	4
+ 491 01ce 29       		.byte	41
+ 492 01cf 04       		.byte	4
+ 493 01d0 2A       		.byte	42
+ 494 01d1 04       		.byte	4
+ 495 01d2 2D       		.byte	45
+ 496 01d3 08       		.byte	8
+ 497 01d4 2F       		.byte	47
+ 498 01d5 03       		.byte	3
+ 499 01d6 30       		.byte	48
+ 500 01d7 04       		.byte	4
+ 501 01d8 31       		.byte	49
+ 502 01d9 02       		.byte	2
+ 503 01da 32       		.byte	50
+ 504 01db 08       		.byte	8
+ 505 01dc 33       		.byte	51
+ 506 01dd 08       		.byte	8
+ 507 01de 34       		.byte	52
+ 508 01df 10       		.byte	16
+ 509 01e0 35       		.byte	53
+ 510 01e1 01       		.byte	1
+ 511 01e2 36       		.byte	54
+ 512 01e3 03       		.byte	3
+ 513 01e4 37       		.byte	55
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 10
+
+
+ 514 01e5 04       		.byte	4
+ 515 01e6 3E       		.byte	62
+ 516 01e7 11       		.byte	17
+ 517 01e8 3F       		.byte	63
+ 518 01e9 15       		.byte	21
+ 519 01ea 40       		.byte	64
+ 520 01eb 34       		.byte	52
+ 521 01ec 41       		.byte	65
+ 522 01ed 05       		.byte	5
+ 523 01ee 42       		.byte	66
+ 524 01ef 02       		.byte	2
+ 525 01f0 44       		.byte	68
+ 526 01f1 06       		.byte	6
+ 527 01f2 46       		.byte	70
+ 528 01f3 0C       		.byte	12
+ 529 01f4 47       		.byte	71
+ 530 01f5 0E       		.byte	14
+ 531 01f6 48       		.byte	72
+ 532 01f7 14       		.byte	20
+ 533 01f8 49       		.byte	73
+ 534 01f9 FF       		.byte	-1
+ 535 01fa 4A       		.byte	74
+ 536 01fb FF       		.byte	-1
+ 537 01fc 4B       		.byte	75
+ 538 01fd FF       		.byte	-1
+ 539 01fe 4C       		.byte	76
+ 540 01ff 62       		.byte	98
+ 541 0200 4D       		.byte	77
+ 542 0201 A0       		.byte	-96
+ 543 0202 4E       		.byte	78
+ 544 0203 F0       		.byte	-16
+ 545 0204 4F       		.byte	79
+ 546 0205 41       		.byte	65
+ 547 0206 50       		.byte	80
+ 548 0207 0C       		.byte	12
+ 549 0208 54       		.byte	84
+ 550 0209 01       		.byte	1
+ 551 020a 58       		.byte	88
+ 552 020b 04       		.byte	4
+ 553 020c 59       		.byte	89
+ 554 020d 04       		.byte	4
+ 555 020e 5A       		.byte	90
+ 556 020f 04       		.byte	4
+ 557 0210 5B       		.byte	91
+ 558 0211 04       		.byte	4
+ 559 0212 5C       		.byte	92
+ 560 0213 11       		.byte	17
+ 561 0214 5D       		.byte	93
+ 562 0215 11       		.byte	17
+ 563 0216 5F       		.byte	95
+ 564 0217 01       		.byte	1
+ 565 0218 66       		.byte	102
+ 566 0219 40       		.byte	64
+ 567 021a 67       		.byte	103
+ 568 021b 02       		.byte	2
+ 569 021c 69       		.byte	105
+ 570 021d 10       		.byte	16
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 11
+
+
+ 571 021e 6A       		.byte	106
+ 572 021f 30       		.byte	48
+ 573 0220 6B       		.byte	107
+ 574 0221 10       		.byte	16
+ 575 0222 6D       		.byte	109
+ 576 0223 10       		.byte	16
+ 577 0224 6E       		.byte	110
+ 578 0225 10       		.byte	16
+ 579 0226 6F       		.byte	111
+ 580 0227 12       		.byte	18
+ 581 0228 82       		.byte	-126
+ 582 0229 04       		.byte	4
+ 583 022a 86       		.byte	-122
+ 584 022b 19       		.byte	25
+ 585 022c 8A       		.byte	-118
+ 586 022d 02       		.byte	2
+ 587 022e 94       		.byte	-108
+ 588 022f 11       		.byte	17
+ 589 0230 95       		.byte	-107
+ 590 0231 01       		.byte	1
+ 591 0232 96       		.byte	-106
+ 592 0233 08       		.byte	8
+ 593 0234 9E       		.byte	-98
+ 594 0235 04       		.byte	4
+ 595 0236 A4       		.byte	-92
+ 596 0237 08       		.byte	8
+ 597 0238 A6       		.byte	-90
+ 598 0239 11       		.byte	17
+ 599 023a AC       		.byte	-84
+ 600 023b 18       		.byte	24
+ 601 023c AE       		.byte	-82
+ 602 023d 01       		.byte	1
+ 603 023e B0       		.byte	-80
+ 604 023f 08       		.byte	8
+ 605 0240 B2       		.byte	-78
+ 606 0241 10       		.byte	16
+ 607 0242 B4       		.byte	-76
+ 608 0243 06       		.byte	6
+ 609 0244 B5       		.byte	-75
+ 610 0245 01       		.byte	1
+ 611 0246 B6       		.byte	-74
+ 612 0247 01       		.byte	1
+ 613 0248 BE       		.byte	-66
+ 614 0249 55       		.byte	85
+ 615 024a BF       		.byte	-65
+ 616 024b 10       		.byte	16
+ 617 024c D8       		.byte	-40
+ 618 024d 04       		.byte	4
+ 619 024e D9       		.byte	-39
+ 620 024f 04       		.byte	4
+ 621 0250 DB       		.byte	-37
+ 622 0251 04       		.byte	4
+ 623 0252 DF       		.byte	-33
+ 624 0253 01       		.byte	1
+ 625 0254 00       		.byte	0
+ 626 0255 12       		.byte	18
+ 627 0256 01       		.byte	1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 12
+
+
+ 628 0257 0A       		.byte	10
+ 629 0258 04       		.byte	4
+ 630 0259 28       		.byte	40
+ 631 025a 05       		.byte	5
+ 632 025b 02       		.byte	2
+ 633 025c 06       		.byte	6
+ 634 025d 28       		.byte	40
+ 635 025e 0A       		.byte	10
+ 636 025f 11       		.byte	17
+ 637 0260 0E       		.byte	14
+ 638 0261 01       		.byte	1
+ 639 0262 0F       		.byte	15
+ 640 0263 80       		.byte	-128
+ 641 0264 10       		.byte	16
+ 642 0265 22       		.byte	34
+ 643 0266 14       		.byte	20
+ 644 0267 10       		.byte	16
+ 645 0268 16       		.byte	22
+ 646 0269 10       		.byte	16
+ 647 026a 17       		.byte	23
+ 648 026b 10       		.byte	16
+ 649 026c 19       		.byte	25
+ 650 026d 01       		.byte	1
+ 651 026e 1A       		.byte	26
+ 652 026f 02       		.byte	2
+ 653 0270 1B       		.byte	27
+ 654 0271 18       		.byte	24
+ 655 0272 1C       		.byte	28
+ 656 0273 20       		.byte	32
+ 657 0274 1E       		.byte	30
+ 658 0275 09       		.byte	9
+ 659 0276 1F       		.byte	31
+ 660 0277 01       		.byte	1
+ 661 0278 20       		.byte	32
+ 662 0279 04       		.byte	4
+ 663 027a 24       		.byte	36
+ 664 027b 80       		.byte	-128
+ 665 027c 26       		.byte	38
+ 666 027d 20       		.byte	32
+ 667 027e 27       		.byte	39
+ 668 027f 21       		.byte	33
+ 669 0280 2C       		.byte	44
+ 670 0281 02       		.byte	2
+ 671 0282 2E       		.byte	46
+ 672 0283 28       		.byte	40
+ 673 0284 33       		.byte	51
+ 674 0285 04       		.byte	4
+ 675 0286 35       		.byte	53
+ 676 0287 08       		.byte	8
+ 677 0288 37       		.byte	55
+ 678 0289 04       		.byte	4
+ 679 028a 3D       		.byte	61
+ 680 028b 40       		.byte	64
+ 681 028c 3E       		.byte	62
+ 682 028d 14       		.byte	20
+ 683 028e 45       		.byte	69
+ 684 028f 0C       		.byte	12
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 13
+
+
+ 685 0290 47       		.byte	71
+ 686 0291 11       		.byte	17
+ 687 0292 4D       		.byte	77
+ 688 0293 80       		.byte	-128
+ 689 0294 4F       		.byte	79
+ 690 0295 60       		.byte	96
+ 691 0296 56       		.byte	86
+ 692 0297 04       		.byte	4
+ 693 0298 57       		.byte	87
+ 694 0299 40       		.byte	64
+ 695 029a 5C       		.byte	92
+ 696 029b 42       		.byte	66
+ 697 029c 5D       		.byte	93
+ 698 029d 10       		.byte	16
+ 699 029e 5E       		.byte	94
+ 700 029f 08       		.byte	8
+ 701 02a0 68       		.byte	104
+ 702 02a1 22       		.byte	34
+ 703 02a2 6A       		.byte	106
+ 704 02a3 14       		.byte	20
+ 705 02a4 90       		.byte	-112
+ 706 02a5 40       		.byte	64
+ 707 02a6 91       		.byte	-111
+ 708 02a7 10       		.byte	16
+ 709 02a8 93       		.byte	-109
+ 710 02a9 10       		.byte	16
+ 711 02aa 94       		.byte	-108
+ 712 02ab 01       		.byte	1
+ 713 02ac 96       		.byte	-106
+ 714 02ad 82       		.byte	-126
+ 715 02ae 97       		.byte	-105
+ 716 02af 02       		.byte	2
+ 717 02b0 9A       		.byte	-102
+ 718 02b1 10       		.byte	16
+ 719 02b2 9D       		.byte	-99
+ 720 02b3 80       		.byte	-128
+ 721 02b4 9E       		.byte	-98
+ 722 02b5 05       		.byte	5
+ 723 02b6 A2       		.byte	-94
+ 724 02b7 80       		.byte	-128
+ 725 02b8 A4       		.byte	-92
+ 726 02b9 08       		.byte	8
+ 727 02ba A5       		.byte	-91
+ 728 02bb 04       		.byte	4
+ 729 02bc A6       		.byte	-90
+ 730 02bd 01       		.byte	1
+ 731 02be A7       		.byte	-89
+ 732 02bf 08       		.byte	8
+ 733 02c0 AF       		.byte	-81
+ 734 02c1 08       		.byte	8
+ 735 02c2 C0       		.byte	-64
+ 736 02c3 7E       		.byte	126
+ 737 02c4 C2       		.byte	-62
+ 738 02c5 95       		.byte	-107
+ 739 02c6 C4       		.byte	-60
+ 740 02c7 65       		.byte	101
+ 741 02c8 CA       		.byte	-54
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 14
+
+
+ 742 02c9 70       		.byte	112
+ 743 02ca CC       		.byte	-52
+ 744 02cb 42       		.byte	66
+ 745 02cc CE       		.byte	-50
+ 746 02cd 70       		.byte	112
+ 747 02ce D0       		.byte	-48
+ 748 02cf E0       		.byte	-32
+ 749 02d0 D2       		.byte	-46
+ 750 02d1 30       		.byte	48
+ 751 02d2 D6       		.byte	-42
+ 752 02d3 F0       		.byte	-16
+ 753 02d4 EC       		.byte	-20
+ 754 02d5 02       		.byte	2
+ 755 02d6 01       		.byte	1
+ 756 02d7 20       		.byte	32
+ 757 02d8 03       		.byte	3
+ 758 02d9 03       		.byte	3
+ 759 02da 06       		.byte	6
+ 760 02db 03       		.byte	3
+ 761 02dc 08       		.byte	8
+ 762 02dd 06       		.byte	6
+ 763 02de 09       		.byte	9
+ 764 02df 0C       		.byte	12
+ 765 02e0 0A       		.byte	10
+ 766 02e1 01       		.byte	1
+ 767 02e2 0B       		.byte	11
+ 768 02e3 13       		.byte	19
+ 769 02e4 0E       		.byte	14
+ 770 02e5 01       		.byte	1
+ 771 02e6 12       		.byte	18
+ 772 02e7 02       		.byte	2
+ 773 02e8 15       		.byte	21
+ 774 02e9 11       		.byte	17
+ 775 02ea 17       		.byte	23
+ 776 02eb 0E       		.byte	14
+ 777 02ec 1B       		.byte	27
+ 778 02ed 0C       		.byte	12
+ 779 02ee 1D       		.byte	29
+ 780 02ef 11       		.byte	17
+ 781 02f0 1E       		.byte	30
+ 782 02f1 05       		.byte	5
+ 783 02f2 1F       		.byte	31
+ 784 02f3 06       		.byte	6
+ 785 02f4 26       		.byte	38
+ 786 02f5 06       		.byte	6
+ 787 02f6 2F       		.byte	47
+ 788 02f7 08       		.byte	8
+ 789 02f8 32       		.byte	50
+ 790 02f9 07       		.byte	7
+ 791 02fa 33       		.byte	51
+ 792 02fb 0F       		.byte	15
+ 793 02fc 35       		.byte	53
+ 794 02fd 30       		.byte	48
+ 795 02fe 39       		.byte	57
+ 796 02ff 20       		.byte	32
+ 797 0300 3A       		.byte	58
+ 798 0301 08       		.byte	8
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 15
+
+
+ 799 0302 3B       		.byte	59
+ 800 0303 08       		.byte	8
+ 801 0304 58       		.byte	88
+ 802 0305 04       		.byte	4
+ 803 0306 59       		.byte	89
+ 804 0307 04       		.byte	4
+ 805 0308 5C       		.byte	92
+ 806 0309 11       		.byte	17
+ 807 030a 5F       		.byte	95
+ 808 030b 01       		.byte	1
+ 809 030c 81       		.byte	-127
+ 810 030d 20       		.byte	32
+ 811 030e 84       		.byte	-124
+ 812 030f 3E       		.byte	62
+ 813 0310 85       		.byte	-123
+ 814 0311 01       		.byte	1
+ 815 0312 86       		.byte	-122
+ 816 0313 40       		.byte	64
+ 817 0314 89       		.byte	-119
+ 818 0315 38       		.byte	56
+ 819 0316 8A       		.byte	-118
+ 820 0317 01       		.byte	1
+ 821 0318 8B       		.byte	-117
+ 822 0319 04       		.byte	4
+ 823 031a 8D       		.byte	-115
+ 824 031b 28       		.byte	40
+ 825 031c 8E       		.byte	-114
+ 826 031d 5A       		.byte	90
+ 827 031e 93       		.byte	-109
+ 828 031f 01       		.byte	1
+ 829 0320 95       		.byte	-107
+ 830 0321 18       		.byte	24
+ 831 0322 96       		.byte	-106
+ 832 0323 01       		.byte	1
+ 833 0324 97       		.byte	-105
+ 834 0325 22       		.byte	34
+ 835 0326 99       		.byte	-103
+ 836 0327 12       		.byte	18
+ 837 0328 9A       		.byte	-102
+ 838 0329 80       		.byte	-128
+ 839 032a 9B       		.byte	-101
+ 840 032b 20       		.byte	32
+ 841 032c 9C       		.byte	-100
+ 842 032d 3E       		.byte	62
+ 843 032e 9E       		.byte	-98
+ 844 032f C0       		.byte	-64
+ 845 0330 9F       		.byte	-97
+ 846 0331 06       		.byte	6
+ 847 0332 A1       		.byte	-95
+ 848 0333 20       		.byte	32
+ 849 0334 A3       		.byte	-93
+ 850 0335 18       		.byte	24
+ 851 0336 A4       		.byte	-92
+ 852 0337 A4       		.byte	-92
+ 853 0338 A6       		.byte	-90
+ 854 0339 48       		.byte	72
+ 855 033a A8       		.byte	-88
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 16
+
+
+ 856 033b 30       		.byte	48
+ 857 033c AA       		.byte	-86
+ 858 033d 48       		.byte	72
+ 859 033e AB       		.byte	-85
+ 860 033f 01       		.byte	1
+ 861 0340 AD       		.byte	-83
+ 862 0341 01       		.byte	1
+ 863 0342 B0       		.byte	-80
+ 864 0343 08       		.byte	8
+ 865 0344 B2       		.byte	-78
+ 866 0345 01       		.byte	1
+ 867 0346 B3       		.byte	-77
+ 868 0347 01       		.byte	1
+ 869 0348 B4       		.byte	-76
+ 870 0349 06       		.byte	6
+ 871 034a B6       		.byte	-74
+ 872 034b F0       		.byte	-16
+ 873 034c B7       		.byte	-73
+ 874 034d 3E       		.byte	62
+ 875 034e B8       		.byte	-72
+ 876 034f 20       		.byte	32
+ 877 0350 B9       		.byte	-71
+ 878 0351 08       		.byte	8
+ 879 0352 BA       		.byte	-70
+ 880 0353 80       		.byte	-128
+ 881 0354 BE       		.byte	-66
+ 882 0355 15       		.byte	21
+ 883 0356 C0       		.byte	-64
+ 884 0357 14       		.byte	20
+ 885 0358 C1       		.byte	-63
+ 886 0359 02       		.byte	2
+ 887 035a C6       		.byte	-58
+ 888 035b EB       		.byte	-21
+ 889 035c C7       		.byte	-57
+ 890 035d 0C       		.byte	12
+ 891 035e C8       		.byte	-56
+ 892 035f 1C       		.byte	28
+ 893 0360 C9       		.byte	-55
+ 894 0361 FF       		.byte	-1
+ 895 0362 CA       		.byte	-54
+ 896 0363 FF       		.byte	-1
+ 897 0364 CB       		.byte	-53
+ 898 0365 FF       		.byte	-1
+ 899 0366 CE       		.byte	-50
+ 900 0367 F0       		.byte	-16
+ 901 0368 CF       		.byte	-49
+ 902 0369 44       		.byte	68
+ 903 036a D0       		.byte	-48
+ 904 036b 0C       		.byte	12
+ 905 036c D4       		.byte	-44
+ 906 036d 18       		.byte	24
+ 907 036e D8       		.byte	-40
+ 908 036f 04       		.byte	4
+ 909 0370 D9       		.byte	-39
+ 910 0371 04       		.byte	4
+ 911 0372 DA       		.byte	-38
+ 912 0373 04       		.byte	4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 17
+
+
+ 913 0374 DB       		.byte	-37
+ 914 0375 04       		.byte	4
+ 915 0376 DC       		.byte	-36
+ 916 0377 11       		.byte	17
+ 917 0378 DD       		.byte	-35
+ 918 0379 11       		.byte	17
+ 919 037a DF       		.byte	-33
+ 920 037b 01       		.byte	1
+ 921 037c E6       		.byte	-26
+ 922 037d C0       		.byte	-64
+ 923 037e EA       		.byte	-22
+ 924 037f 40       		.byte	64
+ 925 0380 EB       		.byte	-21
+ 926 0381 02       		.byte	2
+ 927 0382 00       		.byte	0
+ 928 0383 10       		.byte	16
+ 929 0384 02       		.byte	2
+ 930 0385 01       		.byte	1
+ 931 0386 03       		.byte	3
+ 932 0387 10       		.byte	16
+ 933 0388 05       		.byte	5
+ 934 0389 04       		.byte	4
+ 935 038a 06       		.byte	6
+ 936 038b 05       		.byte	5
+ 937 038c 07       		.byte	7
+ 938 038d 11       		.byte	17
+ 939 038e 08       		.byte	8
+ 940 038f 01       		.byte	1
+ 941 0390 09       		.byte	9
+ 942 0391 81       		.byte	-127
+ 943 0392 0A       		.byte	10
+ 944 0393 80       		.byte	-128
+ 945 0394 0B       		.byte	11
+ 946 0395 30       		.byte	48
+ 947 0396 0D       		.byte	13
+ 948 0397 08       		.byte	8
+ 949 0398 0E       		.byte	14
+ 950 0399 01       		.byte	1
+ 951 039a 0F       		.byte	15
+ 952 039b 04       		.byte	4
+ 953 039c 12       		.byte	18
+ 954 039d 20       		.byte	32
+ 955 039e 15       		.byte	21
+ 956 039f 18       		.byte	24
+ 957 03a0 16       		.byte	22
+ 958 03a1 08       		.byte	8
+ 959 03a2 19       		.byte	25
+ 960 03a3 04       		.byte	4
+ 961 03a4 1C       		.byte	28
+ 962 03a5 40       		.byte	64
+ 963 03a6 1D       		.byte	29
+ 964 03a7 80       		.byte	-128
+ 965 03a8 1E       		.byte	30
+ 966 03a9 01       		.byte	1
+ 967 03aa 1F       		.byte	31
+ 968 03ab 14       		.byte	20
+ 969 03ac 20       		.byte	32
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 18
+
+
+ 970 03ad 10       		.byte	16
+ 971 03ae 21       		.byte	33
+ 972 03af 04       		.byte	4
+ 973 03b0 22       		.byte	34
+ 974 03b1 20       		.byte	32
+ 975 03b2 23       		.byte	35
+ 976 03b3 04       		.byte	4
+ 977 03b4 25       		.byte	37
+ 978 03b5 08       		.byte	8
+ 979 03b6 26       		.byte	38
+ 980 03b7 80       		.byte	-128
+ 981 03b8 28       		.byte	40
+ 982 03b9 01       		.byte	1
+ 983 03ba 2C       		.byte	44
+ 984 03bb 08       		.byte	8
+ 985 03bc 2D       		.byte	45
+ 986 03bd 80       		.byte	-128
+ 987 03be 2E       		.byte	46
+ 988 03bf 01       		.byte	1
+ 989 03c0 31       		.byte	49
+ 990 03c1 84       		.byte	-124
+ 991 03c2 32       		.byte	50
+ 992 03c3 20       		.byte	32
+ 993 03c4 35       		.byte	53
+ 994 03c5 04       		.byte	4
+ 995 03c6 36       		.byte	54
+ 996 03c7 A1       		.byte	-95
+ 997 03c8 38       		.byte	56
+ 998 03c9 10       		.byte	16
+ 999 03ca 3A       		.byte	58
+ 1000 03cb 01       		.byte	1
+ 1001 03cc 3C       		.byte	60
+ 1002 03cd 10       		.byte	16
+ 1003 03ce 3D       		.byte	61
+ 1004 03cf 0A       		.byte	10
+ 1005 03d0 3F       		.byte	63
+ 1006 03d1 80       		.byte	-128
+ 1007 03d2 45       		.byte	69
+ 1008 03d3 80       		.byte	-128
+ 1009 03d4 47       		.byte	71
+ 1010 03d5 11       		.byte	17
+ 1011 03d6 56       		.byte	86
+ 1012 03d7 18       		.byte	24
+ 1013 03d8 57       		.byte	87
+ 1014 03d9 40       		.byte	64
+ 1015 03da 5C       		.byte	92
+ 1016 03db 01       		.byte	1
+ 1017 03dc 67       		.byte	103
+ 1018 03dd 0A       		.byte	10
+ 1019 03de 8A       		.byte	-118
+ 1020 03df 01       		.byte	1
+ 1021 03e0 C0       		.byte	-64
+ 1022 03e1 E7       		.byte	-25
+ 1023 03e2 C2       		.byte	-62
+ 1024 03e3 E9       		.byte	-23
+ 1025 03e4 C4       		.byte	-60
+ 1026 03e5 64       		.byte	100
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 19
+
+
+ 1027 03e6 CA       		.byte	-54
+ 1028 03e7 B8       		.byte	-72
+ 1029 03e8 CC       		.byte	-52
+ 1030 03e9 FE       		.byte	-2
+ 1031 03ea CE       		.byte	-50
+ 1032 03eb F5       		.byte	-11
+ 1033 03ec D0       		.byte	-48
+ 1034 03ed B0       		.byte	-80
+ 1035 03ee D6       		.byte	-42
+ 1036 03ef 80       		.byte	-128
+ 1037 03f0 D8       		.byte	-40
+ 1038 03f1 30       		.byte	48
+ 1039 03f2 E8       		.byte	-24
+ 1040 03f3 01       		.byte	1
+ 1041 03f4 EC       		.byte	-20
+ 1042 03f5 10       		.byte	16
+ 1043 03f6 9D       		.byte	-99
+ 1044 03f7 08       		.byte	8
+ 1045 03f8 9F       		.byte	-97
+ 1046 03f9 04       		.byte	4
+ 1047 03fa A4       		.byte	-92
+ 1048 03fb 01       		.byte	1
+ 1049 03fc 88       		.byte	-120
+ 1050 03fd 01       		.byte	1
+ 1051 03fe 89       		.byte	-119
+ 1052 03ff 08       		.byte	8
+ 1053 0400 9D       		.byte	-99
+ 1054 0401 08       		.byte	8
+ 1055 0402 A4       		.byte	-92
+ 1056 0403 01       		.byte	1
+ 1057 0404 AB       		.byte	-85
+ 1058 0405 04       		.byte	4
+ 1059 0406 EC       		.byte	-20
+ 1060 0407 10       		.byte	16
+ 1061 0408 33       		.byte	51
+ 1062 0409 80       		.byte	-128
+ 1063 040a CC       		.byte	-52
+ 1064 040b 10       		.byte	16
+ 1065 040c 11       		.byte	17
+ 1066 040d 40       		.byte	64
+ 1067 040e A7       		.byte	-89
+ 1068 040f 80       		.byte	-128
+ 1069 0410 C4       		.byte	-60
+ 1070 0411 40       		.byte	64
+ 1071 0412 4F       		.byte	79
+ 1072 0413 40       		.byte	64
+ 1073 0414 50       		.byte	80
+ 1074 0415 08       		.byte	8
+ 1075 0416 57       		.byte	87
+ 1076 0417 08       		.byte	8
+ 1077 0418 9B       		.byte	-101
+ 1078 0419 20       		.byte	32
+ 1079 041a A0       		.byte	-96
+ 1080 041b 08       		.byte	8
+ 1081 041c A8       		.byte	-88
+ 1082 041d 08       		.byte	8
+ 1083 041e A9       		.byte	-87
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 20
+
+
+ 1084 041f 40       		.byte	64
+ 1085 0420 AB       		.byte	-85
+ 1086 0421 80       		.byte	-128
+ 1087 0422 AF       		.byte	-81
+ 1088 0423 20       		.byte	32
+ 1089 0424 D2       		.byte	-46
+ 1090 0425 20       		.byte	32
+ 1091 0426 D4       		.byte	-44
+ 1092 0427 60       		.byte	96
+ 1093 0428 EA       		.byte	-22
+ 1094 0429 C0       		.byte	-64
+ 1095 042a 13       		.byte	19
+ 1096 042b 40       		.byte	64
+ 1097 042c 97       		.byte	-105
+ 1098 042d 40       		.byte	64
+ 1099 042e 9B       		.byte	-101
+ 1100 042f 30       		.byte	48
+ 1101 0430 AB       		.byte	-85
+ 1102 0431 18       		.byte	24
+ 1103 0432 C4       		.byte	-60
+ 1104 0433 40       		.byte	64
+ 1105 0434 EA       		.byte	-22
+ 1106 0435 20       		.byte	32
+ 1107 0436 EE       		.byte	-18
+ 1108 0437 80       		.byte	-128
+ 1109 0438 74       		.byte	116
+ 1110 0439 04       		.byte	4
+ 1111 043a 78       		.byte	120
+ 1112 043b 80       		.byte	-128
+ 1113 043c 7D       		.byte	125
+ 1114 043d 20       		.byte	32
+ 1115 043e 88       		.byte	-120
+ 1116 043f 80       		.byte	-128
+ 1117 0440 DC       		.byte	-36
+ 1118 0441 01       		.byte	1
+ 1119 0442 DE       		.byte	-34
+ 1120 0443 05       		.byte	5
+ 1121 0444 E0       		.byte	-32
+ 1122 0445 04       		.byte	4
+ 1123 0446 A5       		.byte	-91
+ 1124 0447 10       		.byte	16
+ 1125 0448 AC       		.byte	-84
+ 1126 0449 04       		.byte	4
+ 1127 044a 45       		.byte	69
+ 1128 044b 08       		.byte	8
+ 1129 044c 65       		.byte	101
+ 1130 044d 80       		.byte	-128
+ 1131 044e 83       		.byte	-125
+ 1132 044f 40       		.byte	64
+ 1133 0450 8D       		.byte	-115
+ 1134 0451 10       		.byte	16
+ 1135 0452 99       		.byte	-103
+ 1136 0453 80       		.byte	-128
+ 1137 0454 A5       		.byte	-91
+ 1138 0455 10       		.byte	16
+ 1139 0456 B5       		.byte	-75
+ 1140 0457 80       		.byte	-128
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 21
+
+
+ 1141 0458 D0       		.byte	-48
+ 1142 0459 01       		.byte	1
+ 1143 045a D6       		.byte	-42
+ 1144 045b 01       		.byte	1
+ 1145 045c E4       		.byte	-28
+ 1146 045d 08       		.byte	8
+ 1147 045e EC       		.byte	-20
+ 1148 045f 02       		.byte	2
+ 1149 0460 9B       		.byte	-101
+ 1150 0461 40       		.byte	64
+ 1151 0462 A5       		.byte	-91
+ 1152 0463 08       		.byte	8
+ 1153 0464 25       		.byte	37
+ 1154 0465 10       		.byte	16
+ 1155 0466 27       		.byte	39
+ 1156 0467 80       		.byte	-128
+ 1157 0468 9B       		.byte	-101
+ 1158 0469 30       		.byte	48
+ 1159 046a C8       		.byte	-56
+ 1160 046b A0       		.byte	-96
+ 1161 046c 73       		.byte	115
+ 1162 046d 20       		.byte	32
+ 1163 046e 77       		.byte	119
+ 1164 046f 10       		.byte	16
+ 1165 0470 9B       		.byte	-101
+ 1166 0471 30       		.byte	48
+ 1167 0472 AB       		.byte	-85
+ 1168 0473 80       		.byte	-128
+ 1169 0474 B5       		.byte	-75
+ 1170 0475 10       		.byte	16
+ 1171 0476 DC       		.byte	-36
+ 1172 0477 80       		.byte	-128
+ 1173 0478 DE       		.byte	-34
+ 1174 0479 20       		.byte	32
+ 1175 047a E8       		.byte	-24
+ 1176 047b 80       		.byte	-128
+ 1177 047c 9B       		.byte	-101
+ 1178 047d 40       		.byte	64
+ 1179 047e A5       		.byte	-91
+ 1180 047f 08       		.byte	8
+ 1181 0480 10       		.byte	16
+ 1182 0481 40       		.byte	64
+ 1183 0482 77       		.byte	119
+ 1184 0483 40       		.byte	64
+ 1185 0484 88       		.byte	-120
+ 1186 0485 40       		.byte	64
+ 1187 0486 9B       		.byte	-101
+ 1188 0487 40       		.byte	64
+ 1189 0488 B5       		.byte	-75
+ 1190 0489 08       		.byte	8
+ 1191 048a C4       		.byte	-60
+ 1192 048b 08       		.byte	8
+ 1193 048c DE       		.byte	-34
+ 1194 048d 04       		.byte	4
+ 1195 048e E2       		.byte	-30
+ 1196 048f 01       		.byte	1
+ 1197 0490 EC       		.byte	-20
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 22
+
+
+ 1198 0491 08       		.byte	8
+ 1199 0492 00       		.byte	0
+ 1200 0493 02       		.byte	2
+ 1201 0494 0C       		.byte	12
+ 1202 0495 02       		.byte	2
+ 1203 0496 0E       		.byte	14
+ 1204 0497 02       		.byte	2
+ 1205 0498 00       		.byte	0
+ 1206 0499 03       		.byte	3
+ 1207 049a 12       		.byte	18
+ 1208 049b 20       		.byte	32
+ 1209 049c 9C       		.byte	-100
+ 1210 049d 8A       		.byte	-118
+ 1211 049e 00       		.byte	0
+ 1212 049f 00       		.byte	0
+ 1213 04a0 40       		.byte	64
+ 1214 04a1 00       		.byte	0
+ 1215 04a2 00       		.byte	0
+ 1216 04a3 00       		.byte	0
+ 1217 04a4 00       		.byte	0
+ 1218 04a5 00       		.byte	0
+ 1219 04a6 00       		.byte	0
+ 1220 04a7 00       		.byte	0
+ 1221 04a8 00       		.byte	0
+ 1222 04a9 00       		.byte	0
+ 1223 04aa 0A       		.byte	10
+ 1224 04ab 00       		.byte	0
+ 1225 04ac 80       		.byte	-128
+ 1226 04ad 00       		.byte	0
+ 1227 04ae 40       		.byte	64
+ 1228 04af BF       		.byte	-65
+ 1229 04b0 BF       		.byte	-65
+ 1230 04b1 00       		.byte	0
+ 1231 04b2 BF       		.byte	-65
+ 1232 04b3 00       		.byte	0
+ 1233 04b4 00       		.byte	0
+ 1234 04b5 00       		.byte	0
+ 1235 04b6 00       		.byte	0
+ 1236 04b7 00       		.byte	0
+ 1237 04b8 00       		.byte	0
+ 1238 04b9 0B       		.byte	11
+ 1239 04ba 0B       		.byte	11
+ 1240 04bb 00       		.byte	0
+ 1241 04bc 00       		.byte	0
+ 1242 04bd 00       		.byte	0
+ 1243 04be 00       		.byte	0
+ 1244 04bf 00       		.byte	0
+ 1245 04c0 00       		.byte	0
+ 1246 04c1 78       		.byte	120
+ 1247 04c2 78       		.byte	120
+ 1248 04c3 00       		.byte	0
+ 1249 04c4 00       		.byte	0
+ 1250 04c5 00       		.byte	0
+ 1251 04c6 00       		.byte	0
+ 1252 04c7 00       		.byte	0
+ 1253 04c8 00       		.byte	0
+ 1254 04c9 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 23
+
+
+ 1255 04ca 00       		.byte	0
+ 1256 04cb 00       		.byte	0
+ 1257 04cc 00       		.byte	0
+ 1258 04cd 00       		.byte	0
+ 1259 04ce 01       		.byte	1
+ 1260 04cf 00       		.byte	0
+ 1261 04d0 95       		.byte	-107
+ 1262 04d1 00       		.byte	0
+ 1263 04d2 18       		.byte	24
+ 1264 04d3 01       		.byte	1
+ 1265 04d4 00       		.byte	0
+ 1266 04d5 0A       		.byte	10
+ 1267 04d6 00       		.byte	0
+ 1268 04d7 00       		.byte	0
+ 1269              		.section	.cywolatch,"a",%progbits
+ 1270              		.align	2
+ 1271              		.type	cy_meta_wonvl, %object
+ 1272              		.size	cy_meta_wonvl, 4
+ 1273              	cy_meta_wonvl:
+ 1274 0000 BC       		.byte	-68
+ 1275 0001 90       		.byte	-112
+ 1276 0002 AC       		.byte	-84
+ 1277 0003 AF       		.byte	-81
+ 1278              		.section	.cycustnvl,"a",%progbits
+ 1279              		.align	2
+ 1280              		.type	cy_meta_custnvl, %object
+ 1281              		.size	cy_meta_custnvl, 4
+ 1282              	cy_meta_custnvl:
+ 1283 0000 00       		.byte	0
+ 1284 0001 00       		.byte	0
+ 1285 0002 40       		.byte	64
+ 1286 0003 05       		.byte	5
+ 1287              		.section	.cymeta,"a",%progbits
+ 1288              		.align	2
+ 1289              		.type	cy_metadata, %object
+ 1290              		.size	cy_metadata, 12
+ 1291              	cy_metadata:
+ 1292 0000 00       		.byte	0
+ 1293 0001 01       		.byte	1
+ 1294 0002 2E       		.byte	46
+ 1295 0003 16       		.byte	22
+ 1296 0004 10       		.byte	16
+ 1297 0005 69       		.byte	105
+ 1298 0006 00       		.byte	0
+ 1299 0007 01       		.byte	1
+ 1300 0008 00       		.byte	0
+ 1301 0009 00       		.byte	0
+ 1302 000a 00       		.byte	0
+ 1303 000b 00       		.byte	0
+ 1304              		.section	.cyflashprotect,"a",%progbits
+ 1305              		.align	2
+ 1306              		.type	cy_meta_flashprotect, %object
+ 1307              		.size	cy_meta_flashprotect, 256
+ 1308              	cy_meta_flashprotect:
+ 1309 0000 00000000 		.space	256
+ 1309      00000000 
+ 1309      00000000 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 24
+
+
+ 1309      00000000 
+ 1309      00000000 
+ 1310              		.text
+ 1311              	.Letext0:
+ 1312              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1313              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1314              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 1315              		.section	.debug_info,"",%progbits
+ 1316              	.Ldebug_info0:
+ 1317 0000 32010000 		.4byte	0x132
+ 1318 0004 0400     		.2byte	0x4
+ 1319 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1320 000a 04       		.byte	0x4
+ 1321 000b 01       		.uleb128 0x1
+ 1322 000c 82000000 		.4byte	.LASF17
+ 1323 0010 0C       		.byte	0xc
+ 1324 0011 DC010000 		.4byte	.LASF18
+ 1325 0015 0A000000 		.4byte	.LASF19
+ 1326 0019 00000000 		.4byte	.Ldebug_line0
+ 1327 001d 02       		.uleb128 0x2
+ 1328 001e 01       		.byte	0x1
+ 1329 001f 06       		.byte	0x6
+ 1330 0020 D0010000 		.4byte	.LASF0
+ 1331 0024 03       		.uleb128 0x3
+ 1332 0025 00000000 		.4byte	.LASF9
+ 1333 0029 01       		.byte	0x1
+ 1334 002a 1D       		.byte	0x1d
+ 1335 002b 2F000000 		.4byte	0x2f
+ 1336 002f 02       		.uleb128 0x2
+ 1337 0030 01       		.byte	0x1
+ 1338 0031 08       		.byte	0x8
+ 1339 0032 74000000 		.4byte	.LASF1
+ 1340 0036 02       		.uleb128 0x2
+ 1341 0037 02       		.byte	0x2
+ 1342 0038 05       		.byte	0x5
+ 1343 0039 BD010000 		.4byte	.LASF2
+ 1344 003d 02       		.uleb128 0x2
+ 1345 003e 02       		.byte	0x2
+ 1346 003f 07       		.byte	0x7
+ 1347 0040 22010000 		.4byte	.LASF3
+ 1348 0044 02       		.uleb128 0x2
+ 1349 0045 04       		.byte	0x4
+ 1350 0046 05       		.byte	0x5
+ 1351 0047 C7010000 		.4byte	.LASF4
+ 1352 004b 02       		.uleb128 0x2
+ 1353 004c 04       		.byte	0x4
+ 1354 004d 07       		.byte	0x7
+ 1355 004e 10010000 		.4byte	.LASF5
+ 1356 0052 02       		.uleb128 0x2
+ 1357 0053 08       		.byte	0x8
+ 1358 0054 05       		.byte	0x5
+ 1359 0055 AF010000 		.4byte	.LASF6
+ 1360 0059 02       		.uleb128 0x2
+ 1361 005a 08       		.byte	0x8
+ 1362 005b 07       		.byte	0x7
+ 1363 005c 64010000 		.4byte	.LASF7
+ 1364 0060 04       		.uleb128 0x4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 25
+
+
+ 1365 0061 04       		.byte	0x4
+ 1366 0062 05       		.byte	0x5
+ 1367 0063 696E7400 		.ascii	"int\000"
+ 1368 0067 02       		.uleb128 0x2
+ 1369 0068 04       		.byte	0x4
+ 1370 0069 07       		.byte	0x7
+ 1371 006a 57010000 		.4byte	.LASF8
+ 1372 006e 03       		.uleb128 0x3
+ 1373 006f 7B010000 		.4byte	.LASF10
+ 1374 0073 02       		.byte	0x2
+ 1375 0074 18       		.byte	0x18
+ 1376 0075 24000000 		.4byte	0x24
+ 1377 0079 05       		.uleb128 0x5
+ 1378 007a 91000000 		.4byte	0x91
+ 1379 007e 8A000000 		.4byte	0x8a
+ 1380 0082 06       		.uleb128 0x6
+ 1381 0083 8A000000 		.4byte	0x8a
+ 1382 0087 D704     		.2byte	0x4d7
+ 1383 0089 00       		.byte	0
+ 1384 008a 02       		.uleb128 0x2
+ 1385 008b 04       		.byte	0x4
+ 1386 008c 07       		.byte	0x7
+ 1387 008d A6010000 		.4byte	.LASF11
+ 1388 0091 07       		.uleb128 0x7
+ 1389 0092 6E000000 		.4byte	0x6e
+ 1390 0096 08       		.uleb128 0x8
+ 1391 0097 45010000 		.4byte	.LASF12
+ 1392 009b 03       		.byte	0x3
+ 1393 009c 1F       		.byte	0x1f
+ 1394 009d A7000000 		.4byte	0xa7
+ 1395 00a1 05       		.uleb128 0x5
+ 1396 00a2 03       		.byte	0x3
+ 1397 00a3 00000000 		.4byte	cy_meta_configecc
+ 1398 00a7 07       		.uleb128 0x7
+ 1399 00a8 79000000 		.4byte	0x79
+ 1400 00ac 05       		.uleb128 0x5
+ 1401 00ad 91000000 		.4byte	0x91
+ 1402 00b1 BC000000 		.4byte	0xbc
+ 1403 00b5 09       		.uleb128 0x9
+ 1404 00b6 8A000000 		.4byte	0x8a
+ 1405 00ba 03       		.byte	0x3
+ 1406 00bb 00       		.byte	0
+ 1407 00bc 08       		.uleb128 0x8
+ 1408 00bd 35010000 		.4byte	.LASF13
+ 1409 00c1 03       		.byte	0x3
+ 1410 00c2 C7       		.byte	0xc7
+ 1411 00c3 CD000000 		.4byte	0xcd
+ 1412 00c7 05       		.uleb128 0x5
+ 1413 00c8 03       		.byte	0x3
+ 1414 00c9 00000000 		.4byte	cy_meta_custnvl
+ 1415 00cd 07       		.uleb128 0x7
+ 1416 00ce AC000000 		.4byte	0xac
+ 1417 00d2 08       		.uleb128 0x8
+ 1418 00d3 98010000 		.4byte	.LASF14
+ 1419 00d7 03       		.byte	0x3
+ 1420 00d8 D5       		.byte	0xd5
+ 1421 00d9 E3000000 		.4byte	0xe3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 26
+
+
+ 1422 00dd 05       		.uleb128 0x5
+ 1423 00de 03       		.byte	0x3
+ 1424 00df 00000000 		.4byte	cy_meta_wonvl
+ 1425 00e3 07       		.uleb128 0x7
+ 1426 00e4 AC000000 		.4byte	0xac
+ 1427 00e8 05       		.uleb128 0x5
+ 1428 00e9 91000000 		.4byte	0x91
+ 1429 00ed F8000000 		.4byte	0xf8
+ 1430 00f1 09       		.uleb128 0x9
+ 1431 00f2 8A000000 		.4byte	0x8a
+ 1432 00f6 FF       		.byte	0xff
+ 1433 00f7 00       		.byte	0
+ 1434 00f8 08       		.uleb128 0x8
+ 1435 00f9 83010000 		.4byte	.LASF15
+ 1436 00fd 03       		.byte	0x3
+ 1437 00fe E3       		.byte	0xe3
+ 1438 00ff 09010000 		.4byte	0x109
+ 1439 0103 05       		.uleb128 0x5
+ 1440 0104 03       		.byte	0x3
+ 1441 0105 00000000 		.4byte	cy_meta_flashprotect
+ 1442 0109 07       		.uleb128 0x7
+ 1443 010a E8000000 		.4byte	0xe8
+ 1444 010e 05       		.uleb128 0x5
+ 1445 010f 91000000 		.4byte	0x91
+ 1446 0113 1E010000 		.4byte	0x11e
+ 1447 0117 09       		.uleb128 0x9
+ 1448 0118 8A000000 		.4byte	0x8a
+ 1449 011c 0B       		.byte	0xb
+ 1450 011d 00       		.byte	0
+ 1451 011e 0A       		.uleb128 0xa
+ 1452 011f 68000000 		.4byte	.LASF16
+ 1453 0123 03       		.byte	0x3
+ 1454 0124 1001     		.2byte	0x110
+ 1455 0126 30010000 		.4byte	0x130
+ 1456 012a 05       		.uleb128 0x5
+ 1457 012b 03       		.byte	0x3
+ 1458 012c 00000000 		.4byte	cy_metadata
+ 1459 0130 07       		.uleb128 0x7
+ 1460 0131 0E010000 		.4byte	0x10e
+ 1461 0135 00       		.byte	0
+ 1462              		.section	.debug_abbrev,"",%progbits
+ 1463              	.Ldebug_abbrev0:
+ 1464 0000 01       		.uleb128 0x1
+ 1465 0001 11       		.uleb128 0x11
+ 1466 0002 01       		.byte	0x1
+ 1467 0003 25       		.uleb128 0x25
+ 1468 0004 0E       		.uleb128 0xe
+ 1469 0005 13       		.uleb128 0x13
+ 1470 0006 0B       		.uleb128 0xb
+ 1471 0007 03       		.uleb128 0x3
+ 1472 0008 0E       		.uleb128 0xe
+ 1473 0009 1B       		.uleb128 0x1b
+ 1474 000a 0E       		.uleb128 0xe
+ 1475 000b 10       		.uleb128 0x10
+ 1476 000c 17       		.uleb128 0x17
+ 1477 000d 00       		.byte	0
+ 1478 000e 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 27
+
+
+ 1479 000f 02       		.uleb128 0x2
+ 1480 0010 24       		.uleb128 0x24
+ 1481 0011 00       		.byte	0
+ 1482 0012 0B       		.uleb128 0xb
+ 1483 0013 0B       		.uleb128 0xb
+ 1484 0014 3E       		.uleb128 0x3e
+ 1485 0015 0B       		.uleb128 0xb
+ 1486 0016 03       		.uleb128 0x3
+ 1487 0017 0E       		.uleb128 0xe
+ 1488 0018 00       		.byte	0
+ 1489 0019 00       		.byte	0
+ 1490 001a 03       		.uleb128 0x3
+ 1491 001b 16       		.uleb128 0x16
+ 1492 001c 00       		.byte	0
+ 1493 001d 03       		.uleb128 0x3
+ 1494 001e 0E       		.uleb128 0xe
+ 1495 001f 3A       		.uleb128 0x3a
+ 1496 0020 0B       		.uleb128 0xb
+ 1497 0021 3B       		.uleb128 0x3b
+ 1498 0022 0B       		.uleb128 0xb
+ 1499 0023 49       		.uleb128 0x49
+ 1500 0024 13       		.uleb128 0x13
+ 1501 0025 00       		.byte	0
+ 1502 0026 00       		.byte	0
+ 1503 0027 04       		.uleb128 0x4
+ 1504 0028 24       		.uleb128 0x24
+ 1505 0029 00       		.byte	0
+ 1506 002a 0B       		.uleb128 0xb
+ 1507 002b 0B       		.uleb128 0xb
+ 1508 002c 3E       		.uleb128 0x3e
+ 1509 002d 0B       		.uleb128 0xb
+ 1510 002e 03       		.uleb128 0x3
+ 1511 002f 08       		.uleb128 0x8
+ 1512 0030 00       		.byte	0
+ 1513 0031 00       		.byte	0
+ 1514 0032 05       		.uleb128 0x5
+ 1515 0033 01       		.uleb128 0x1
+ 1516 0034 01       		.byte	0x1
+ 1517 0035 49       		.uleb128 0x49
+ 1518 0036 13       		.uleb128 0x13
+ 1519 0037 01       		.uleb128 0x1
+ 1520 0038 13       		.uleb128 0x13
+ 1521 0039 00       		.byte	0
+ 1522 003a 00       		.byte	0
+ 1523 003b 06       		.uleb128 0x6
+ 1524 003c 21       		.uleb128 0x21
+ 1525 003d 00       		.byte	0
+ 1526 003e 49       		.uleb128 0x49
+ 1527 003f 13       		.uleb128 0x13
+ 1528 0040 2F       		.uleb128 0x2f
+ 1529 0041 05       		.uleb128 0x5
+ 1530 0042 00       		.byte	0
+ 1531 0043 00       		.byte	0
+ 1532 0044 07       		.uleb128 0x7
+ 1533 0045 26       		.uleb128 0x26
+ 1534 0046 00       		.byte	0
+ 1535 0047 49       		.uleb128 0x49
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 28
+
+
+ 1536 0048 13       		.uleb128 0x13
+ 1537 0049 00       		.byte	0
+ 1538 004a 00       		.byte	0
+ 1539 004b 08       		.uleb128 0x8
+ 1540 004c 34       		.uleb128 0x34
+ 1541 004d 00       		.byte	0
+ 1542 004e 03       		.uleb128 0x3
+ 1543 004f 0E       		.uleb128 0xe
+ 1544 0050 3A       		.uleb128 0x3a
+ 1545 0051 0B       		.uleb128 0xb
+ 1546 0052 3B       		.uleb128 0x3b
+ 1547 0053 0B       		.uleb128 0xb
+ 1548 0054 49       		.uleb128 0x49
+ 1549 0055 13       		.uleb128 0x13
+ 1550 0056 3F       		.uleb128 0x3f
+ 1551 0057 19       		.uleb128 0x19
+ 1552 0058 02       		.uleb128 0x2
+ 1553 0059 18       		.uleb128 0x18
+ 1554 005a 00       		.byte	0
+ 1555 005b 00       		.byte	0
+ 1556 005c 09       		.uleb128 0x9
+ 1557 005d 21       		.uleb128 0x21
+ 1558 005e 00       		.byte	0
+ 1559 005f 49       		.uleb128 0x49
+ 1560 0060 13       		.uleb128 0x13
+ 1561 0061 2F       		.uleb128 0x2f
+ 1562 0062 0B       		.uleb128 0xb
+ 1563 0063 00       		.byte	0
+ 1564 0064 00       		.byte	0
+ 1565 0065 0A       		.uleb128 0xa
+ 1566 0066 34       		.uleb128 0x34
+ 1567 0067 00       		.byte	0
+ 1568 0068 03       		.uleb128 0x3
+ 1569 0069 0E       		.uleb128 0xe
+ 1570 006a 3A       		.uleb128 0x3a
+ 1571 006b 0B       		.uleb128 0xb
+ 1572 006c 3B       		.uleb128 0x3b
+ 1573 006d 05       		.uleb128 0x5
+ 1574 006e 49       		.uleb128 0x49
+ 1575 006f 13       		.uleb128 0x13
+ 1576 0070 3F       		.uleb128 0x3f
+ 1577 0071 19       		.uleb128 0x19
+ 1578 0072 02       		.uleb128 0x2
+ 1579 0073 18       		.uleb128 0x18
+ 1580 0074 00       		.byte	0
+ 1581 0075 00       		.byte	0
+ 1582 0076 00       		.byte	0
+ 1583              		.section	.debug_aranges,"",%progbits
+ 1584 0000 14000000 		.4byte	0x14
+ 1585 0004 0200     		.2byte	0x2
+ 1586 0006 00000000 		.4byte	.Ldebug_info0
+ 1587 000a 04       		.byte	0x4
+ 1588 000b 00       		.byte	0
+ 1589 000c 0000     		.2byte	0
+ 1590 000e 0000     		.2byte	0
+ 1591 0010 00000000 		.4byte	0
+ 1592 0014 00000000 		.4byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 29
+
+
+ 1593              		.section	.debug_line,"",%progbits
+ 1594              	.Ldebug_line0:
+ 1595 0000 3D010000 		.section	.debug_str,"MS",%progbits,1
+ 1595      02003701 
+ 1595      00000201 
+ 1595      FB0E0D00 
+ 1595      01010101 
+ 1596              	.LASF9:
+ 1597 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1597      6E74385F 
+ 1597      7400
+ 1598              	.LASF19:
+ 1599 000a 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 1599      73657273 
+ 1599      5C6E696B 
+ 1599      6F6C5C44 
+ 1599      6F63756D 
+ 1600 0037 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CupSensor_IF.cydsn"
+ 1600      7965725F 
+ 1600      73696465 
+ 1600      5F617070 
+ 1600      5C437570 
+ 1601 0067 00       		.ascii	"\000"
+ 1602              	.LASF16:
+ 1603 0068 63795F6D 		.ascii	"cy_metadata\000"
+ 1603      65746164 
+ 1603      61746100 
+ 1604              	.LASF1:
+ 1605 0074 756E7369 		.ascii	"unsigned char\000"
+ 1605      676E6564 
+ 1605      20636861 
+ 1605      7200
+ 1606              	.LASF17:
+ 1607 0082 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1607      43313120 
+ 1607      352E342E 
+ 1607      31203230 
+ 1607      31363036 
+ 1608 00b5 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1608      20726576 
+ 1608      6973696F 
+ 1608      6E203233 
+ 1608      37373135 
+ 1609 00e8 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1609      66756E63 
+ 1609      74696F6E 
+ 1609      2D736563 
+ 1609      74696F6E 
+ 1610              	.LASF5:
+ 1611 0110 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1611      20756E73 
+ 1611      69676E65 
+ 1611      6420696E 
+ 1611      7400
+ 1612              	.LASF3:
+ 1613 0122 73686F72 		.ascii	"short unsigned int\000"
+ 1613      7420756E 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 30
+
+
+ 1613      7369676E 
+ 1613      65642069 
+ 1613      6E7400
+ 1614              	.LASF13:
+ 1615 0135 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 1615      6574615F 
+ 1615      63757374 
+ 1615      6E766C00 
+ 1616              	.LASF12:
+ 1617 0145 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 1617      6574615F 
+ 1617      636F6E66 
+ 1617      69676563 
+ 1617      6300
+ 1618              	.LASF8:
+ 1619 0157 756E7369 		.ascii	"unsigned int\000"
+ 1619      676E6564 
+ 1619      20696E74 
+ 1619      00
+ 1620              	.LASF7:
+ 1621 0164 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1621      206C6F6E 
+ 1621      6720756E 
+ 1621      7369676E 
+ 1621      65642069 
+ 1622              	.LASF10:
+ 1623 017b 75696E74 		.ascii	"uint8_t\000"
+ 1623      385F7400 
+ 1624              	.LASF15:
+ 1625 0183 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 1625      6574615F 
+ 1625      666C6173 
+ 1625      6870726F 
+ 1625      74656374 
+ 1626              	.LASF14:
+ 1627 0198 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 1627      6574615F 
+ 1627      776F6E76 
+ 1627      6C00
+ 1628              	.LASF11:
+ 1629 01a6 73697A65 		.ascii	"sizetype\000"
+ 1629      74797065 
+ 1629      00
+ 1630              	.LASF6:
+ 1631 01af 6C6F6E67 		.ascii	"long long int\000"
+ 1631      206C6F6E 
+ 1631      6720696E 
+ 1631      7400
+ 1632              	.LASF2:
+ 1633 01bd 73686F72 		.ascii	"short int\000"
+ 1633      7420696E 
+ 1633      7400
+ 1634              	.LASF4:
+ 1635 01c7 6C6F6E67 		.ascii	"long int\000"
+ 1635      20696E74 
+ 1635      00
+ 1636              	.LASF0:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccjW57So.s 			page 31
+
+
+ 1637 01d0 7369676E 		.ascii	"signed char\000"
+ 1637      65642063 
+ 1637      68617200 
+ 1638              	.LASF18:
+ 1639 01dc 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 1639      72617465 
+ 1639      645F536F 
+ 1639      75726365 
+ 1639      5C50536F 
+ 1640              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

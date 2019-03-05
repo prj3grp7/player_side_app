@@ -1,0 +1,1387 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CapSense_CSD_TunerHelper.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	CapSense_CSD_mailboxesComm,21,4
+  20              		.section	.text.CapSense_CSD_TunerStart,"ax",%progbits
+  21              		.align	2
+  22              		.global	CapSense_CSD_TunerStart
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	CapSense_CSD_TunerStart, %function
+  26              	CapSense_CSD_TunerStart:
+  27              	.LFB0:
+  28              		.file 1 "Generated_Source\\PSoC5\\CapSense_CSD_TunerHelper.c"
+   1:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * File Name: CapSense_CSD_TunerHelper.c
+   3:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Version 3.50
+   4:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+   5:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Description:
+   6:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  This file provides the source code of Tuner helper APIs for the CapSense CSD 
+   7:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  component.
+   8:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+   9:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Note:
+  10:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  11:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** ********************************************************************************
+  12:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * the software package with which this file was provided.
+  16:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *******************************************************************************/
+  17:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  18:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** #include "CapSense_CSD_TunerHelper.h"
+  19:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  20:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** #if (CapSense_CSD_TUNER_API_GENERATE)
+  21:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     volatile CapSense_CSD_MAILBOXES CapSense_CSD_mailboxesComm;
+  22:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** #endif  /* (CapSense_CSD_TUNER_API_GENERATE) */
+  23:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  24:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  25:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** /*******************************************************************************
+  26:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Function Name: CapSense_CSD_TunerStart
+  27:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** ********************************************************************************
+  28:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  29:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Summary:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 2
+
+
+  30:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  Initializes CapSense CSD component and EzI2C communication componenet to use
+  31:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  mailbox data structure for communication with Tuner GUI.
+  32:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  Start the scanning, after initialization complete.
+  33:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  34:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Parameters:
+  35:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  None
+  36:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  37:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Return:
+  38:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  None
+  39:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  40:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Reentrant:
+  41:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  No
+  42:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  43:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Note:
+  44:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  All widgets are enabled by default except proximity widgets. Proximity widgets 
+  45:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  must be manually enabled as their long scan time is incompatible 
+  46:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  with the fast response required of other widget types. 
+  47:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  48:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *******************************************************************************/
+  49:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** void CapSense_CSD_TunerStart(void) 
+  50:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** {
+  29              		.loc 1 50 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+  51:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     #if (CapSense_CSD_TUNER_API_GENERATE)
+  52:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+  53:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Init mbx and quick check */
+  54:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_InitMailbox(&CapSense_CSD_mailboxesComm.csdMailbox);
+  39              		.loc 1 54 0
+  40 0004 0B48     		ldr	r0, .L2
+  41 0006 FFF7FEFF 		bl	CapSense_CSD_InitMailbox
+  55:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_mailboxesComm.numMailBoxes = CapSense_CSD_DEFAULT_MAILBOXES_NUMBER;
+  42              		.loc 1 55 0
+  43 000a 0B4B     		ldr	r3, .L2+4
+  44 000c 0122     		movs	r2, #1
+  45 000e 1A70     		strb	r2, [r3]
+  56:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+  57:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Start CapSense and baselines */
+  58:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_Start();
+  46              		.loc 1 58 0
+  47 0010 FFF7FEFF 		bl	CapSense_CSD_Start
+  59:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+  60:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Initialize baselines */ 
+  61:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_InitializeAllBaselines();
+  48              		.loc 1 61 0
+  49 0014 FFF7FEFF 		bl	CapSense_CSD_InitializeAllBaselines
+  62:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_InitializeAllBaselines();
+  50              		.loc 1 62 0
+  51 0018 FFF7FEFF 		bl	CapSense_CSD_InitializeAllBaselines
+  63:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 3
+
+
+  64:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Start EzI2C, clears buf pointers */
+  65:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         EZI2C_1_Start();
+  52              		.loc 1 65 0
+  53 001c FFF7FEFF 		bl	EZI2C_1_Start
+  66:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+  67:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Setup EzI2C buffers */
+  68:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         EZI2C_1_SetBuffer1(sizeof(CapSense_CSD_mailboxesComm), sizeof(CapSense_CSD_mailboxesComm),
+  54              		.loc 1 68 0
+  55 0020 054A     		ldr	r2, .L2+4
+  56 0022 1521     		movs	r1, #21
+  57 0024 1520     		movs	r0, #21
+  58 0026 FFF7FEFF 		bl	EZI2C_1_SetBuffer1
+  69:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                                         (void *) &CapSense_CSD_mailboxesComm);
+  70:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+  71:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Starts scan all enabled sensors */
+  72:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         CapSense_CSD_ScanEnabledWidgets();
+  59              		.loc 1 72 0
+  60 002a FFF7FEFF 		bl	CapSense_CSD_ScanEnabledWidgets
+  73:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     
+  74:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     #endif  /* (CapSense_CSD_TUNER_API_GENERATE) */
+  75:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** }
+  61              		.loc 1 75 0
+  62 002e 00BF     		nop
+  63 0030 80BD     		pop	{r7, pc}
+  64              	.L3:
+  65 0032 00BF     		.align	2
+  66              	.L2:
+  67 0034 01000000 		.word	CapSense_CSD_mailboxesComm+1
+  68 0038 00000000 		.word	CapSense_CSD_mailboxesComm
+  69              		.cfi_endproc
+  70              	.LFE0:
+  71              		.size	CapSense_CSD_TunerStart, .-CapSense_CSD_TunerStart
+  72              		.section	.text.CapSense_CSD_TunerComm,"ax",%progbits
+  73              		.align	2
+  74              		.global	CapSense_CSD_TunerComm
+  75              		.thumb
+  76              		.thumb_func
+  77              		.type	CapSense_CSD_TunerComm, %function
+  78              	CapSense_CSD_TunerComm:
+  79              	.LFB1:
+  76:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  77:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+  78:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** /*******************************************************************************
+  79:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Function Name: CapSense_CSD_TunerComm
+  80:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** ********************************************************************************
+  81:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  82:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Summary:
+  83:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  This function is blocking. It waits till scaning loop is completed and apply
+  84:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  new parameters from Tuner GUI if available (manual tuning mode only). Updates
+  85:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  enabled baselines and state of widgets. Waits while Tuner GUI reports that 
+  86:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  content of mailbox could be modified. Then loads the report data into outbox 
+  87:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  and sets the busy flag. Starts new scanning loop.
+  88:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  
+  89:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Parameters:
+  90:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  None
+  91:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  92:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Return:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 4
+
+
+  93:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  None
+  94:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  95:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** * Reentrant:
+  96:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *  No
+  97:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *
+  98:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** *******************************************************************************/
+  99:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** void CapSense_CSD_TunerComm(void) 
+ 100:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** {
+  80              		.loc 1 100 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 1, uses_anonymous_args = 0
+  84 0000 80B5     		push	{r7, lr}
+  85              		.cfi_def_cfa_offset 8
+  86              		.cfi_offset 7, -8
+  87              		.cfi_offset 14, -4
+  88 0002 00AF     		add	r7, sp, #0
+  89              		.cfi_def_cfa_register 7
+ 101:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     #if (CapSense_CSD_TUNER_API_GENERATE)
+ 102:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         if (0u == CapSense_CSD_IsBusy())
+  90              		.loc 1 102 0
+  91 0004 FFF7FEFF 		bl	CapSense_CSD_IsBusy
+  92 0008 0346     		mov	r3, r0
+  93 000a 002B     		cmp	r3, #0
+  94 000c 21D1     		bne	.L7
+ 103:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         {   
+ 104:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             /* Apply new settings */
+ 105:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             #if (CapSense_CSD_TUNING_METHOD == CapSense_CSD_MANUAL_TUNING)
+ 106:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 CapSense_CSD_ReadMessage(&CapSense_CSD_mailboxesComm.csdMailbox);
+  95              		.loc 1 106 0
+  96 000e 1248     		ldr	r0, .L8
+  97 0010 FFF7FEFF 		bl	CapSense_CSD_ReadMessage
+ 107:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             #endif  /* (CapSense_CSD_TUNING_METHOD == CapSense_CSD_MANUAL_TUNING) */
+ 108:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 109:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             /* Update all baselines and process all widgets */
+ 110:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             CapSense_CSD_UpdateEnabledBaselines();
+  98              		.loc 1 110 0
+  99 0014 FFF7FEFF 		bl	CapSense_CSD_UpdateEnabledBaselines
+ 111:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             CapSense_CSD_ProcessAllWidgets(&CapSense_CSD_mailboxesComm.csdMailbox.outbox);
+ 100              		.loc 1 111 0
+ 101 0018 1048     		ldr	r0, .L8+4
+ 102 001a FFF7FEFF 		bl	CapSense_CSD_ProcessAllWidgets
+ 112:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             CapSense_CSD_PostMessage(&CapSense_CSD_mailboxesComm.csdMailbox);
+ 103              		.loc 1 112 0
+ 104 001e 0E48     		ldr	r0, .L8
+ 105 0020 FFF7FEFF 		bl	CapSense_CSD_PostMessage
+ 113:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 114:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             /* Enable EZI2C interrupts, after scan complete */
+ 115:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             EZI2C_1_EnableInt();
+ 106              		.loc 1 115 0
+ 107 0024 0E4B     		ldr	r3, .L8+8
+ 108 0026 4FF40042 		mov	r2, #32768
+ 109 002a 1A60     		str	r2, [r3]
+ 116:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 117:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             while((CapSense_CSD_mailboxesComm.csdMailbox.type != CapSense_CSD_TYPE_ID) || \
+ 110              		.loc 1 117 0
+ 111 002c 00BF     		nop
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 5
+
+
+ 112              	.L6:
+ 113              		.loc 1 117 0 is_stmt 0 discriminator 3
+ 114 002e 0D4B     		ldr	r3, .L8+12
+ 115 0030 5B78     		ldrb	r3, [r3, #1]
+ 116 0032 DBB2     		uxtb	r3, r3
+ 117 0034 042B     		cmp	r3, #4
+ 118 0036 FAD1     		bne	.L6
+ 118:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                   ((EZI2C_1_GetActivity() & EZI2C_1_STATUS_BUSY) != 0u)){}
+ 119              		.loc 1 118 0 is_stmt 1 discriminator 2
+ 120 0038 FFF7FEFF 		bl	EZI2C_1_GetActivity
+ 121 003c 0346     		mov	r3, r0
+ 122 003e 03F01003 		and	r3, r3, #16
+ 117:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                   ((EZI2C_1_GetActivity() & EZI2C_1_STATUS_BUSY) != 0u)){}
+ 123              		.loc 1 117 0 discriminator 2
+ 124 0042 002B     		cmp	r3, #0
+ 125 0044 F3D1     		bne	.L6
+ 119:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             
+ 120:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             /* Disable EZI2C interrupts, while scanning */
+ 121:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             EZI2C_1_DisableInt();
+ 126              		.loc 1 121 0
+ 127 0046 084B     		ldr	r3, .L8+16
+ 128 0048 4FF40042 		mov	r2, #32768
+ 129 004c 1A60     		str	r2, [r3]
+ 122:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             
+ 123:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             /* Start scan all sensors */
+ 124:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             CapSense_CSD_ScanEnabledWidgets();
+ 130              		.loc 1 124 0
+ 131 004e FFF7FEFF 		bl	CapSense_CSD_ScanEnabledWidgets
+ 132              	.L7:
+ 125:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         }
+ 126:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     #endif /* (CapSense_CSD_TUNER_API_GENERATE) */
+ 127:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** }
+ 133              		.loc 1 127 0
+ 134 0052 00BF     		nop
+ 135 0054 80BD     		pop	{r7, pc}
+ 136              	.L9:
+ 137 0056 00BF     		.align	2
+ 138              	.L8:
+ 139 0058 01000000 		.word	CapSense_CSD_mailboxesComm+1
+ 140 005c 04000000 		.word	CapSense_CSD_mailboxesComm+4
+ 141 0060 00E100E0 		.word	-536813312
+ 142 0064 00000000 		.word	CapSense_CSD_mailboxesComm
+ 143 0068 80E100E0 		.word	-536813184
+ 144              		.cfi_endproc
+ 145              	.LFE1:
+ 146              		.size	CapSense_CSD_TunerComm, .-CapSense_CSD_TunerComm
+ 147              		.section	.text.CapSense_CSD_ProcessAllWidgets,"ax",%progbits
+ 148              		.align	2
+ 149              		.global	CapSense_CSD_ProcessAllWidgets
+ 150              		.thumb
+ 151              		.thumb_func
+ 152              		.type	CapSense_CSD_ProcessAllWidgets, %function
+ 153              	CapSense_CSD_ProcessAllWidgets:
+ 154              	.LFB2:
+ 128:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 129:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 130:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** #if (CapSense_CSD_TUNER_API_GENERATE)
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 6
+
+
+ 131:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     /*******************************************************************************
+ 132:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Function Name: CapSense_CSD_ProcessAllWidgets
+ 133:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     ********************************************************************************
+ 134:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *
+ 135:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Summary:
+ 136:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  Call required functions to update all widgets state:
+ 137:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *   - CapSense_CSD_GetCentroidPos() - calls only if linear sliders 
+ 138:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *     available.
+ 139:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *   - CapSense_CSD_GetRadialCentroidPos() - calls only if radial slider 
+ 140:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *     available.
+ 141:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *   - CapSense_CSD_GetTouchCentroidPos() - calls only if touch pad slider 
+ 142:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *     available.
+ 143:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *   - CapSense_CSD_CheckIsAnyWidgetActive();
+ 144:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  The results of opeartions are copied to OUTBOX.
+ 145:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *   
+ 146:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Parameters:
+ 147:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  None
+ 148:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *
+ 149:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Return:
+ 150:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  None
+ 151:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *
+ 152:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Global Variables:
+ 153:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  CapSense_CSD_OUTBOX outbox - structure which is used as ouput 
+ 154:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  buffer for report data to Tuner GUI.
+ 155:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  Update fields:
+ 156:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *    - position[];
+ 157:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *    - OnMask[];
+ 158:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *
+ 159:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     * Reentrant:
+ 160:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *  No
+ 161:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *
+ 162:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     *******************************************************************************/
+ 163:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     void CapSense_CSD_ProcessAllWidgets(volatile CapSense_CSD_OUTBOX *outbox)
+ 164:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 	                                        
+ 165:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     {
+ 155              		.loc 1 165 0
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 16
+ 158              		@ frame_needed = 1, uses_anonymous_args = 0
+ 159 0000 80B5     		push	{r7, lr}
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 7, -8
+ 162              		.cfi_offset 14, -4
+ 163 0002 84B0     		sub	sp, sp, #16
+ 164              		.cfi_def_cfa_offset 24
+ 165 0004 00AF     		add	r7, sp, #0
+ 166              		.cfi_def_cfa_register 7
+ 167 0006 7860     		str	r0, [r7, #4]
+ 166:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         uint8 i = 0u;
+ 168              		.loc 1 166 0
+ 169 0008 0023     		movs	r3, #0
+ 170 000a FB73     		strb	r3, [r7, #15]
+ 167:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 		#if (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT)
+ 168:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         	volatile uint8 *mbPositionAddr;
+ 169:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 		#endif /* (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) */
+ 170:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 171:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT)
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 7
+
+
+ 172:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             uint16 pos[2];
+ 173:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif  /* (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT) */
+ 174:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+ 175:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if ( (CapSense_CSD_TOTAL_RADIAL_SLIDERS_COUNT) || (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT) ||
+ 176:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****               (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) )
+ 177:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             uint8 widgetCnt;
+ 178:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif  /* ((CapSense_CSD_TOTAL_RADIAL_SLIDERS_COUNT) || (CapSense_CSD_TOTAL_TOUCH_PADS_COU
+ 179:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 *   (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT)
+ 180:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 */
+ 181:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+ 182:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Calculate widget with centroids */
+ 183:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if (CapSense_CSD_TOTAL_LINEAR_SLIDERS_COUNT)
+ 184:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             for(; i < CapSense_CSD_TOTAL_LINEAR_SLIDERS_COUNT; i++)
+ 185:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             {
+ 186:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 outbox->position[i] = CapSense_CSD_SWAP_ENDIAN16(CapSense_CSD_GetCentroidPos(i));
+ 187:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             }
+ 188:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif /* (CapSense_CSD_TOTAL_LINEAR_SLIDERS_COUNT) */
+ 189:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+ 190:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if (CapSense_CSD_TOTAL_RADIAL_SLIDERS_COUNT)
+ 191:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             widgetCnt = i;
+ 192:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             for(; i < (widgetCnt + CapSense_CSD_TOTAL_RADIAL_SLIDERS_COUNT); i++)
+ 193:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             {
+ 194:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 outbox->position[i] = CapSense_CSD_SWAP_ENDIAN16(CapSense_CSD_GetRadialCentroidPos(
+ 195:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             }
+ 196:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif /* (CapSense_CSD_TOTAL_RADIAL_SLIDERS_COUNT) */
+ 197:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         
+ 198:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT)
+ 199:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             widgetCnt = i;
+ 200:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             for(; i < (widgetCnt + (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT * 2u)); i = (i+2u))
+ 201:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             {
+ 202:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 if(CapSense_CSD_GetTouchCentroidPos(i, pos) == 0u)
+ 203:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 {
+ 204:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->position[i] = 0xFFFFu;
+ 205:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->position[i+1u] = 0xFFFFu;
+ 206:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 }
+ 207:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 else
+ 208:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 {
+ 209:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->position[i] = CapSense_CSD_SWAP_ENDIAN16( (uint16) pos[0u]);
+ 210:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->position[i+1u] = CapSense_CSD_SWAP_ENDIAN16( (uint16) pos[1u]);
+ 211:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 }
+ 212:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             }
+ 213:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif /* (CapSense_CSD_TOTAL_TOUCH_PADS_COUNT) */
+ 214:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 215:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #if (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT)
+ 216:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             i += CapSense_CSD_TOTAL_BUTTONS_COUNT;
+ 217:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             widgetCnt = 0u;
+ 218:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             for(; widgetCnt < (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT * 2u); widgetCnt += 2u)
+ 219:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             {
+ 220:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 mbPositionAddr = &outbox->mbPosition[widgetCnt];
+ 221:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 if(CapSense_CSD_GetMatrixButtonPos(i, ((uint8*) mbPositionAddr)) == 0u)
+ 222:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 {
+ 223:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->mbPosition[widgetCnt] = 0xFFu;
+ 224:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                     outbox->mbPosition[widgetCnt+1u] = 0xFFu;
+ 225:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 }
+ 226:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****                 i += 2u;
+ 227:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             }
+ 228:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         #endif /* (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) */
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 8
+
+
+ 229:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 230:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Update On/Off State */
+ 231:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         (void)CapSense_CSD_CheckIsAnyWidgetActive();
+ 171              		.loc 1 231 0
+ 172 000c FFF7FEFF 		bl	CapSense_CSD_CheckIsAnyWidgetActive
+ 232:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c **** 
+ 233:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         /* Copy OnMask */
+ 234:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         for(i = 0u; i < CapSense_CSD_TOTAL_SENSOR_MASK_COUNT; i++)
+ 173              		.loc 1 234 0
+ 174 0010 0023     		movs	r3, #0
+ 175 0012 FB73     		strb	r3, [r7, #15]
+ 176 0014 0AE0     		b	.L11
+ 177              	.L12:
+ 235:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         {
+ 236:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****             outbox->onMask[i]  = CapSense_CSD_sensorOnMask[i];
+ 178              		.loc 1 236 0 discriminator 3
+ 179 0016 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 180 0018 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 181 001a 0849     		ldr	r1, .L13
+ 182 001c 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 183 001e 7A68     		ldr	r2, [r7, #4]
+ 184 0020 1344     		add	r3, r3, r2
+ 185 0022 0A46     		mov	r2, r1
+ 186 0024 5A71     		strb	r2, [r3, #5]
+ 234:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         {
+ 187              		.loc 1 234 0 discriminator 3
+ 188 0026 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 189 0028 0133     		adds	r3, r3, #1
+ 190 002a FB73     		strb	r3, [r7, #15]
+ 191              	.L11:
+ 234:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         {
+ 192              		.loc 1 234 0 is_stmt 0 discriminator 1
+ 193 002c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 194 002e 002B     		cmp	r3, #0
+ 195 0030 F1D0     		beq	.L12
+ 237:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****         }
+ 238:Generated_Source\PSoC5/CapSense_CSD_TunerHelper.c ****     }
+ 196              		.loc 1 238 0 is_stmt 1
+ 197 0032 00BF     		nop
+ 198 0034 1037     		adds	r7, r7, #16
+ 199              		.cfi_def_cfa_offset 8
+ 200 0036 BD46     		mov	sp, r7
+ 201              		.cfi_def_cfa_register 13
+ 202              		@ sp needed
+ 203 0038 80BD     		pop	{r7, pc}
+ 204              	.L14:
+ 205 003a 00BF     		.align	2
+ 206              	.L13:
+ 207 003c 00000000 		.word	CapSense_CSD_sensorOnMask
+ 208              		.cfi_endproc
+ 209              	.LFE2:
+ 210              		.size	CapSense_CSD_ProcessAllWidgets, .-CapSense_CSD_ProcessAllWidgets
+ 211              		.text
+ 212              	.Letext0:
+ 213              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 214              		.file 3 "Generated_Source\\PSoC5\\CapSense_CSD_MBX.h"
+ 215              		.file 4 "Generated_Source\\PSoC5\\CapSense_CSD_CSHL.h"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 9
+
+
+ 216              		.section	.debug_info,"",%progbits
+ 217              	.Ldebug_info0:
+ 218 0000 9F020000 		.4byte	0x29f
+ 219 0004 0400     		.2byte	0x4
+ 220 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 221 000a 04       		.byte	0x4
+ 222 000b 01       		.uleb128 0x1
+ 223 000c 06000000 		.4byte	.LASF46
+ 224 0010 0C       		.byte	0xc
+ 225 0011 30010000 		.4byte	.LASF47
+ 226 0015 AE010000 		.4byte	.LASF48
+ 227 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 228 001d 00000000 		.4byte	0
+ 229 0021 00000000 		.4byte	.Ldebug_line0
+ 230 0025 02       		.uleb128 0x2
+ 231 0026 01       		.byte	0x1
+ 232 0027 06       		.byte	0x6
+ 233 0028 4B030000 		.4byte	.LASF0
+ 234 002c 02       		.uleb128 0x2
+ 235 002d 01       		.byte	0x1
+ 236 002e 08       		.byte	0x8
+ 237 002f 15020000 		.4byte	.LASF1
+ 238 0033 02       		.uleb128 0x2
+ 239 0034 02       		.byte	0x2
+ 240 0035 05       		.byte	0x5
+ 241 0036 F5020000 		.4byte	.LASF2
+ 242 003a 02       		.uleb128 0x2
+ 243 003b 02       		.byte	0x2
+ 244 003c 07       		.byte	0x7
+ 245 003d D3000000 		.4byte	.LASF3
+ 246 0041 02       		.uleb128 0x2
+ 247 0042 04       		.byte	0x4
+ 248 0043 05       		.byte	0x5
+ 249 0044 19030000 		.4byte	.LASF4
+ 250 0048 02       		.uleb128 0x2
+ 251 0049 04       		.byte	0x4
+ 252 004a 07       		.byte	0x7
+ 253 004b 7C010000 		.4byte	.LASF5
+ 254 004f 02       		.uleb128 0x2
+ 255 0050 08       		.byte	0x8
+ 256 0051 05       		.byte	0x5
+ 257 0052 C7020000 		.4byte	.LASF6
+ 258 0056 02       		.uleb128 0x2
+ 259 0057 08       		.byte	0x8
+ 260 0058 07       		.byte	0x7
+ 261 0059 14010000 		.4byte	.LASF7
+ 262 005d 03       		.uleb128 0x3
+ 263 005e 04       		.byte	0x4
+ 264 005f 05       		.byte	0x5
+ 265 0060 696E7400 		.ascii	"int\000"
+ 266 0064 02       		.uleb128 0x2
+ 267 0065 04       		.byte	0x4
+ 268 0066 07       		.byte	0x7
+ 269 0067 7A020000 		.4byte	.LASF8
+ 270 006b 04       		.uleb128 0x4
+ 271 006c A8010000 		.4byte	.LASF9
+ 272 0070 02       		.byte	0x2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 10
+
+
+ 273 0071 9201     		.2byte	0x192
+ 274 0073 2C000000 		.4byte	0x2c
+ 275 0077 04       		.uleb128 0x4
+ 276 0078 46020000 		.4byte	.LASF10
+ 277 007c 02       		.byte	0x2
+ 278 007d 9301     		.2byte	0x193
+ 279 007f 3A000000 		.4byte	0x3a
+ 280 0083 04       		.uleb128 0x4
+ 281 0084 64020000 		.4byte	.LASF11
+ 282 0088 02       		.byte	0x2
+ 283 0089 9401     		.2byte	0x194
+ 284 008b 48000000 		.4byte	0x48
+ 285 008f 02       		.uleb128 0x2
+ 286 0090 04       		.byte	0x4
+ 287 0091 04       		.byte	0x4
+ 288 0092 0E010000 		.4byte	.LASF12
+ 289 0096 02       		.uleb128 0x2
+ 290 0097 08       		.byte	0x8
+ 291 0098 04       		.byte	0x4
+ 292 0099 38020000 		.4byte	.LASF13
+ 293 009d 02       		.uleb128 0x2
+ 294 009e 01       		.byte	0x1
+ 295 009f 08       		.byte	0x8
+ 296 00a0 22030000 		.4byte	.LASF14
+ 297 00a4 04       		.uleb128 0x4
+ 298 00a5 00000000 		.4byte	.LASF15
+ 299 00a9 02       		.byte	0x2
+ 300 00aa 3E02     		.2byte	0x23e
+ 301 00ac B0000000 		.4byte	0xb0
+ 302 00b0 05       		.uleb128 0x5
+ 303 00b1 83000000 		.4byte	0x83
+ 304 00b5 02       		.uleb128 0x2
+ 305 00b6 08       		.byte	0x8
+ 306 00b7 04       		.byte	0x4
+ 307 00b8 27030000 		.4byte	.LASF16
+ 308 00bc 02       		.uleb128 0x2
+ 309 00bd 04       		.byte	0x4
+ 310 00be 07       		.byte	0x7
+ 311 00bf BE020000 		.4byte	.LASF17
+ 312 00c3 06       		.uleb128 0x6
+ 313 00c4 09       		.byte	0x9
+ 314 00c5 03       		.byte	0x3
+ 315 00c6 3C       		.byte	0x3c
+ 316 00c7 14010000 		.4byte	0x114
+ 317 00cb 07       		.uleb128 0x7
+ 318 00cc 11030000 		.4byte	.LASF18
+ 319 00d0 03       		.byte	0x3
+ 320 00d1 46       		.byte	0x46
+ 321 00d2 14010000 		.4byte	0x114
+ 322 00d6 00       		.byte	0
+ 323 00d7 07       		.uleb128 0x7
+ 324 00d8 57030000 		.4byte	.LASF19
+ 325 00dc 03       		.byte	0x3
+ 326 00dd 47       		.byte	0x47
+ 327 00de 14010000 		.4byte	0x114
+ 328 00e2 02       		.byte	0x2
+ 329 00e3 07       		.uleb128 0x7
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 11
+
+
+ 330 00e4 B8000000 		.4byte	.LASF20
+ 331 00e8 03       		.byte	0x3
+ 332 00e9 48       		.byte	0x48
+ 333 00ea 24010000 		.4byte	0x124
+ 334 00ee 04       		.byte	0x4
+ 335 00ef 07       		.uleb128 0x7
+ 336 00f0 3F020000 		.4byte	.LASF21
+ 337 00f4 03       		.byte	0x3
+ 338 00f5 49       		.byte	0x49
+ 339 00f6 24010000 		.4byte	0x124
+ 340 00fa 05       		.byte	0x5
+ 341 00fb 07       		.uleb128 0x7
+ 342 00fc 87020000 		.4byte	.LASF22
+ 343 0100 03       		.byte	0x3
+ 344 0101 54       		.byte	0x54
+ 345 0102 6B000000 		.4byte	0x6b
+ 346 0106 06       		.byte	0x6
+ 347 0107 07       		.uleb128 0x7
+ 348 0108 E6000000 		.4byte	.LASF23
+ 349 010c 03       		.byte	0x3
+ 350 010d 56       		.byte	0x56
+ 351 010e 77000000 		.4byte	0x77
+ 352 0112 07       		.byte	0x7
+ 353 0113 00       		.byte	0
+ 354 0114 08       		.uleb128 0x8
+ 355 0115 77000000 		.4byte	0x77
+ 356 0119 24010000 		.4byte	0x124
+ 357 011d 09       		.uleb128 0x9
+ 358 011e BC000000 		.4byte	0xbc
+ 359 0122 00       		.byte	0
+ 360 0123 00       		.byte	0
+ 361 0124 08       		.uleb128 0x8
+ 362 0125 6B000000 		.4byte	0x6b
+ 363 0129 34010000 		.4byte	0x134
+ 364 012d 09       		.uleb128 0x9
+ 365 012e BC000000 		.4byte	0xbc
+ 366 0132 00       		.byte	0
+ 367 0133 00       		.byte	0
+ 368 0134 0A       		.uleb128 0xa
+ 369 0135 BF000000 		.4byte	.LASF24
+ 370 0139 03       		.byte	0x3
+ 371 013a 58       		.byte	0x58
+ 372 013b C3000000 		.4byte	0xc3
+ 373 013f 06       		.uleb128 0x6
+ 374 0140 08       		.byte	0x8
+ 375 0141 03       		.byte	0x3
+ 376 0142 5C       		.byte	0x5c
+ 377 0143 A8010000 		.4byte	0x1a8
+ 378 0147 07       		.uleb128 0x7
+ 379 0148 91020000 		.4byte	.LASF25
+ 380 014c 03       		.byte	0x3
+ 381 014d 5E       		.byte	0x5e
+ 382 014e 6B000000 		.4byte	0x6b
+ 383 0152 00       		.byte	0
+ 384 0153 07       		.uleb128 0x7
+ 385 0154 9D020000 		.4byte	.LASF26
+ 386 0158 03       		.byte	0x3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 12
+
+
+ 387 0159 60       		.byte	0x60
+ 388 015a 6B000000 		.4byte	0x6b
+ 389 015e 01       		.byte	0x1
+ 390 015f 07       		.uleb128 0x7
+ 391 0160 D5020000 		.4byte	.LASF27
+ 392 0164 03       		.byte	0x3
+ 393 0165 62       		.byte	0x62
+ 394 0166 6B000000 		.4byte	0x6b
+ 395 016a 02       		.byte	0x2
+ 396 016b 07       		.uleb128 0x7
+ 397 016c E0020000 		.4byte	.LASF28
+ 398 0170 03       		.byte	0x3
+ 399 0171 63       		.byte	0x63
+ 400 0172 6B000000 		.4byte	0x6b
+ 401 0176 03       		.byte	0x3
+ 402 0177 07       		.uleb128 0x7
+ 403 0178 6B020000 		.4byte	.LASF29
+ 404 017c 03       		.byte	0x3
+ 405 017d 64       		.byte	0x64
+ 406 017e 6B000000 		.4byte	0x6b
+ 407 0182 04       		.byte	0x4
+ 408 0183 07       		.uleb128 0x7
+ 409 0184 B3020000 		.4byte	.LASF30
+ 410 0188 03       		.byte	0x3
+ 411 0189 65       		.byte	0x65
+ 412 018a 6B000000 		.4byte	0x6b
+ 413 018e 05       		.byte	0x5
+ 414 018f 07       		.uleb128 0x7
+ 415 0190 AA020000 		.4byte	.LASF31
+ 416 0194 03       		.byte	0x3
+ 417 0195 66       		.byte	0x66
+ 418 0196 6B000000 		.4byte	0x6b
+ 419 019a 06       		.byte	0x6
+ 420 019b 07       		.uleb128 0x7
+ 421 019c 62010000 		.4byte	.LASF32
+ 422 01a0 03       		.byte	0x3
+ 423 01a1 67       		.byte	0x67
+ 424 01a2 6B000000 		.4byte	0x6b
+ 425 01a6 07       		.byte	0x7
+ 426 01a7 00       		.byte	0
+ 427 01a8 0A       		.uleb128 0xa
+ 428 01a9 7B030000 		.4byte	.LASF33
+ 429 01ad 03       		.byte	0x3
+ 430 01ae 68       		.byte	0x68
+ 431 01af 3F010000 		.4byte	0x13f
+ 432 01b3 06       		.uleb128 0x6
+ 433 01b4 14       		.byte	0x14
+ 434 01b5 03       		.byte	0x3
+ 435 01b6 6D       		.byte	0x6d
+ 436 01b7 EC010000 		.4byte	0x1ec
+ 437 01bb 07       		.uleb128 0x7
+ 438 01bc F0020000 		.4byte	.LASF34
+ 439 01c0 03       		.byte	0x3
+ 440 01c1 6F       		.byte	0x6f
+ 441 01c2 6B000000 		.4byte	0x6b
+ 442 01c6 00       		.byte	0
+ 443 01c7 07       		.uleb128 0x7
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 13
+
+
+ 444 01c8 2B010000 		.4byte	.LASF35
+ 445 01cc 03       		.byte	0x3
+ 446 01cd 70       		.byte	0x70
+ 447 01ce 77000000 		.4byte	0x77
+ 448 01d2 01       		.byte	0x1
+ 449 01d3 07       		.uleb128 0x7
+ 450 01d4 FF020000 		.4byte	.LASF36
+ 451 01d8 03       		.byte	0x3
+ 452 01d9 71       		.byte	0x71
+ 453 01da 34010000 		.4byte	0x134
+ 454 01de 03       		.byte	0x3
+ 455 01df 07       		.uleb128 0x7
+ 456 01e0 76010000 		.4byte	.LASF37
+ 457 01e4 03       		.byte	0x3
+ 458 01e5 73       		.byte	0x73
+ 459 01e6 A8010000 		.4byte	0x1a8
+ 460 01ea 0C       		.byte	0xc
+ 461 01eb 00       		.byte	0
+ 462 01ec 0A       		.uleb128 0xa
+ 463 01ed 23020000 		.4byte	.LASF38
+ 464 01f1 03       		.byte	0x3
+ 465 01f2 76       		.byte	0x76
+ 466 01f3 B3010000 		.4byte	0x1b3
+ 467 01f7 06       		.uleb128 0x6
+ 468 01f8 15       		.byte	0x15
+ 469 01f9 03       		.byte	0x3
+ 470 01fa 7A       		.byte	0x7a
+ 471 01fb 18020000 		.4byte	0x218
+ 472 01ff 07       		.uleb128 0x7
+ 473 0200 AB000000 		.4byte	.LASF39
+ 474 0204 03       		.byte	0x3
+ 475 0205 7C       		.byte	0x7c
+ 476 0206 6B000000 		.4byte	0x6b
+ 477 020a 00       		.byte	0
+ 478 020b 07       		.uleb128 0x7
+ 479 020c 06030000 		.4byte	.LASF40
+ 480 0210 03       		.byte	0x3
+ 481 0211 7D       		.byte	0x7d
+ 482 0212 EC010000 		.4byte	0x1ec
+ 483 0216 01       		.byte	0x1
+ 484 0217 00       		.byte	0
+ 485 0218 0A       		.uleb128 0xa
+ 486 0219 94000000 		.4byte	.LASF41
+ 487 021d 03       		.byte	0x3
+ 488 021e 7E       		.byte	0x7e
+ 489 021f F7010000 		.4byte	0x1f7
+ 490 0223 0B       		.uleb128 0xb
+ 491 0224 33030000 		.4byte	.LASF42
+ 492 0228 01       		.byte	0x1
+ 493 0229 31       		.byte	0x31
+ 494 022a 00000000 		.4byte	.LFB0
+ 495 022e 3C000000 		.4byte	.LFE0-.LFB0
+ 496 0232 01       		.uleb128 0x1
+ 497 0233 9C       		.byte	0x9c
+ 498 0234 0B       		.uleb128 0xb
+ 499 0235 4D020000 		.4byte	.LASF43
+ 500 0239 01       		.byte	0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 14
+
+
+ 501 023a 63       		.byte	0x63
+ 502 023b 00000000 		.4byte	.LFB1
+ 503 023f 6C000000 		.4byte	.LFE1-.LFB1
+ 504 0243 01       		.uleb128 0x1
+ 505 0244 9C       		.byte	0x9c
+ 506 0245 0C       		.uleb128 0xc
+ 507 0246 EF000000 		.4byte	.LASF49
+ 508 024a 01       		.byte	0x1
+ 509 024b A3       		.byte	0xa3
+ 510 024c 00000000 		.4byte	.LFB2
+ 511 0250 40000000 		.4byte	.LFE2-.LFB2
+ 512 0254 01       		.uleb128 0x1
+ 513 0255 9C       		.byte	0x9c
+ 514 0256 75020000 		.4byte	0x275
+ 515 025a 0D       		.uleb128 0xd
+ 516 025b FF020000 		.4byte	.LASF36
+ 517 025f 01       		.byte	0x1
+ 518 0260 A3       		.byte	0xa3
+ 519 0261 75020000 		.4byte	0x275
+ 520 0265 02       		.uleb128 0x2
+ 521 0266 91       		.byte	0x91
+ 522 0267 6C       		.sleb128 -20
+ 523 0268 0E       		.uleb128 0xe
+ 524 0269 6900     		.ascii	"i\000"
+ 525 026b 01       		.byte	0x1
+ 526 026c A6       		.byte	0xa6
+ 527 026d 6B000000 		.4byte	0x6b
+ 528 0271 02       		.uleb128 0x2
+ 529 0272 91       		.byte	0x91
+ 530 0273 77       		.sleb128 -9
+ 531 0274 00       		.byte	0
+ 532 0275 0F       		.uleb128 0xf
+ 533 0276 04       		.byte	0x4
+ 534 0277 7B020000 		.4byte	0x27b
+ 535 027b 05       		.uleb128 0x5
+ 536 027c 34010000 		.4byte	0x134
+ 537 0280 10       		.uleb128 0x10
+ 538 0281 8E010000 		.4byte	.LASF44
+ 539 0285 04       		.byte	0x4
+ 540 0286 0901     		.2byte	0x109
+ 541 0288 24010000 		.4byte	0x124
+ 542 028c 11       		.uleb128 0x11
+ 543 028d 60030000 		.4byte	.LASF45
+ 544 0291 01       		.byte	0x1
+ 545 0292 15       		.byte	0x15
+ 546 0293 9D020000 		.4byte	0x29d
+ 547 0297 05       		.uleb128 0x5
+ 548 0298 03       		.byte	0x3
+ 549 0299 00000000 		.4byte	CapSense_CSD_mailboxesComm
+ 550 029d 05       		.uleb128 0x5
+ 551 029e 18020000 		.4byte	0x218
+ 552 02a2 00       		.byte	0
+ 553              		.section	.debug_abbrev,"",%progbits
+ 554              	.Ldebug_abbrev0:
+ 555 0000 01       		.uleb128 0x1
+ 556 0001 11       		.uleb128 0x11
+ 557 0002 01       		.byte	0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 15
+
+
+ 558 0003 25       		.uleb128 0x25
+ 559 0004 0E       		.uleb128 0xe
+ 560 0005 13       		.uleb128 0x13
+ 561 0006 0B       		.uleb128 0xb
+ 562 0007 03       		.uleb128 0x3
+ 563 0008 0E       		.uleb128 0xe
+ 564 0009 1B       		.uleb128 0x1b
+ 565 000a 0E       		.uleb128 0xe
+ 566 000b 55       		.uleb128 0x55
+ 567 000c 17       		.uleb128 0x17
+ 568 000d 11       		.uleb128 0x11
+ 569 000e 01       		.uleb128 0x1
+ 570 000f 10       		.uleb128 0x10
+ 571 0010 17       		.uleb128 0x17
+ 572 0011 00       		.byte	0
+ 573 0012 00       		.byte	0
+ 574 0013 02       		.uleb128 0x2
+ 575 0014 24       		.uleb128 0x24
+ 576 0015 00       		.byte	0
+ 577 0016 0B       		.uleb128 0xb
+ 578 0017 0B       		.uleb128 0xb
+ 579 0018 3E       		.uleb128 0x3e
+ 580 0019 0B       		.uleb128 0xb
+ 581 001a 03       		.uleb128 0x3
+ 582 001b 0E       		.uleb128 0xe
+ 583 001c 00       		.byte	0
+ 584 001d 00       		.byte	0
+ 585 001e 03       		.uleb128 0x3
+ 586 001f 24       		.uleb128 0x24
+ 587 0020 00       		.byte	0
+ 588 0021 0B       		.uleb128 0xb
+ 589 0022 0B       		.uleb128 0xb
+ 590 0023 3E       		.uleb128 0x3e
+ 591 0024 0B       		.uleb128 0xb
+ 592 0025 03       		.uleb128 0x3
+ 593 0026 08       		.uleb128 0x8
+ 594 0027 00       		.byte	0
+ 595 0028 00       		.byte	0
+ 596 0029 04       		.uleb128 0x4
+ 597 002a 16       		.uleb128 0x16
+ 598 002b 00       		.byte	0
+ 599 002c 03       		.uleb128 0x3
+ 600 002d 0E       		.uleb128 0xe
+ 601 002e 3A       		.uleb128 0x3a
+ 602 002f 0B       		.uleb128 0xb
+ 603 0030 3B       		.uleb128 0x3b
+ 604 0031 05       		.uleb128 0x5
+ 605 0032 49       		.uleb128 0x49
+ 606 0033 13       		.uleb128 0x13
+ 607 0034 00       		.byte	0
+ 608 0035 00       		.byte	0
+ 609 0036 05       		.uleb128 0x5
+ 610 0037 35       		.uleb128 0x35
+ 611 0038 00       		.byte	0
+ 612 0039 49       		.uleb128 0x49
+ 613 003a 13       		.uleb128 0x13
+ 614 003b 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 16
+
+
+ 615 003c 00       		.byte	0
+ 616 003d 06       		.uleb128 0x6
+ 617 003e 13       		.uleb128 0x13
+ 618 003f 01       		.byte	0x1
+ 619 0040 0B       		.uleb128 0xb
+ 620 0041 0B       		.uleb128 0xb
+ 621 0042 3A       		.uleb128 0x3a
+ 622 0043 0B       		.uleb128 0xb
+ 623 0044 3B       		.uleb128 0x3b
+ 624 0045 0B       		.uleb128 0xb
+ 625 0046 01       		.uleb128 0x1
+ 626 0047 13       		.uleb128 0x13
+ 627 0048 00       		.byte	0
+ 628 0049 00       		.byte	0
+ 629 004a 07       		.uleb128 0x7
+ 630 004b 0D       		.uleb128 0xd
+ 631 004c 00       		.byte	0
+ 632 004d 03       		.uleb128 0x3
+ 633 004e 0E       		.uleb128 0xe
+ 634 004f 3A       		.uleb128 0x3a
+ 635 0050 0B       		.uleb128 0xb
+ 636 0051 3B       		.uleb128 0x3b
+ 637 0052 0B       		.uleb128 0xb
+ 638 0053 49       		.uleb128 0x49
+ 639 0054 13       		.uleb128 0x13
+ 640 0055 38       		.uleb128 0x38
+ 641 0056 0B       		.uleb128 0xb
+ 642 0057 00       		.byte	0
+ 643 0058 00       		.byte	0
+ 644 0059 08       		.uleb128 0x8
+ 645 005a 01       		.uleb128 0x1
+ 646 005b 01       		.byte	0x1
+ 647 005c 49       		.uleb128 0x49
+ 648 005d 13       		.uleb128 0x13
+ 649 005e 01       		.uleb128 0x1
+ 650 005f 13       		.uleb128 0x13
+ 651 0060 00       		.byte	0
+ 652 0061 00       		.byte	0
+ 653 0062 09       		.uleb128 0x9
+ 654 0063 21       		.uleb128 0x21
+ 655 0064 00       		.byte	0
+ 656 0065 49       		.uleb128 0x49
+ 657 0066 13       		.uleb128 0x13
+ 658 0067 2F       		.uleb128 0x2f
+ 659 0068 0B       		.uleb128 0xb
+ 660 0069 00       		.byte	0
+ 661 006a 00       		.byte	0
+ 662 006b 0A       		.uleb128 0xa
+ 663 006c 16       		.uleb128 0x16
+ 664 006d 00       		.byte	0
+ 665 006e 03       		.uleb128 0x3
+ 666 006f 0E       		.uleb128 0xe
+ 667 0070 3A       		.uleb128 0x3a
+ 668 0071 0B       		.uleb128 0xb
+ 669 0072 3B       		.uleb128 0x3b
+ 670 0073 0B       		.uleb128 0xb
+ 671 0074 49       		.uleb128 0x49
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 17
+
+
+ 672 0075 13       		.uleb128 0x13
+ 673 0076 00       		.byte	0
+ 674 0077 00       		.byte	0
+ 675 0078 0B       		.uleb128 0xb
+ 676 0079 2E       		.uleb128 0x2e
+ 677 007a 00       		.byte	0
+ 678 007b 3F       		.uleb128 0x3f
+ 679 007c 19       		.uleb128 0x19
+ 680 007d 03       		.uleb128 0x3
+ 681 007e 0E       		.uleb128 0xe
+ 682 007f 3A       		.uleb128 0x3a
+ 683 0080 0B       		.uleb128 0xb
+ 684 0081 3B       		.uleb128 0x3b
+ 685 0082 0B       		.uleb128 0xb
+ 686 0083 27       		.uleb128 0x27
+ 687 0084 19       		.uleb128 0x19
+ 688 0085 11       		.uleb128 0x11
+ 689 0086 01       		.uleb128 0x1
+ 690 0087 12       		.uleb128 0x12
+ 691 0088 06       		.uleb128 0x6
+ 692 0089 40       		.uleb128 0x40
+ 693 008a 18       		.uleb128 0x18
+ 694 008b 9642     		.uleb128 0x2116
+ 695 008d 19       		.uleb128 0x19
+ 696 008e 00       		.byte	0
+ 697 008f 00       		.byte	0
+ 698 0090 0C       		.uleb128 0xc
+ 699 0091 2E       		.uleb128 0x2e
+ 700 0092 01       		.byte	0x1
+ 701 0093 3F       		.uleb128 0x3f
+ 702 0094 19       		.uleb128 0x19
+ 703 0095 03       		.uleb128 0x3
+ 704 0096 0E       		.uleb128 0xe
+ 705 0097 3A       		.uleb128 0x3a
+ 706 0098 0B       		.uleb128 0xb
+ 707 0099 3B       		.uleb128 0x3b
+ 708 009a 0B       		.uleb128 0xb
+ 709 009b 27       		.uleb128 0x27
+ 710 009c 19       		.uleb128 0x19
+ 711 009d 11       		.uleb128 0x11
+ 712 009e 01       		.uleb128 0x1
+ 713 009f 12       		.uleb128 0x12
+ 714 00a0 06       		.uleb128 0x6
+ 715 00a1 40       		.uleb128 0x40
+ 716 00a2 18       		.uleb128 0x18
+ 717 00a3 9642     		.uleb128 0x2116
+ 718 00a5 19       		.uleb128 0x19
+ 719 00a6 01       		.uleb128 0x1
+ 720 00a7 13       		.uleb128 0x13
+ 721 00a8 00       		.byte	0
+ 722 00a9 00       		.byte	0
+ 723 00aa 0D       		.uleb128 0xd
+ 724 00ab 05       		.uleb128 0x5
+ 725 00ac 00       		.byte	0
+ 726 00ad 03       		.uleb128 0x3
+ 727 00ae 0E       		.uleb128 0xe
+ 728 00af 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 18
+
+
+ 729 00b0 0B       		.uleb128 0xb
+ 730 00b1 3B       		.uleb128 0x3b
+ 731 00b2 0B       		.uleb128 0xb
+ 732 00b3 49       		.uleb128 0x49
+ 733 00b4 13       		.uleb128 0x13
+ 734 00b5 02       		.uleb128 0x2
+ 735 00b6 18       		.uleb128 0x18
+ 736 00b7 00       		.byte	0
+ 737 00b8 00       		.byte	0
+ 738 00b9 0E       		.uleb128 0xe
+ 739 00ba 34       		.uleb128 0x34
+ 740 00bb 00       		.byte	0
+ 741 00bc 03       		.uleb128 0x3
+ 742 00bd 08       		.uleb128 0x8
+ 743 00be 3A       		.uleb128 0x3a
+ 744 00bf 0B       		.uleb128 0xb
+ 745 00c0 3B       		.uleb128 0x3b
+ 746 00c1 0B       		.uleb128 0xb
+ 747 00c2 49       		.uleb128 0x49
+ 748 00c3 13       		.uleb128 0x13
+ 749 00c4 02       		.uleb128 0x2
+ 750 00c5 18       		.uleb128 0x18
+ 751 00c6 00       		.byte	0
+ 752 00c7 00       		.byte	0
+ 753 00c8 0F       		.uleb128 0xf
+ 754 00c9 0F       		.uleb128 0xf
+ 755 00ca 00       		.byte	0
+ 756 00cb 0B       		.uleb128 0xb
+ 757 00cc 0B       		.uleb128 0xb
+ 758 00cd 49       		.uleb128 0x49
+ 759 00ce 13       		.uleb128 0x13
+ 760 00cf 00       		.byte	0
+ 761 00d0 00       		.byte	0
+ 762 00d1 10       		.uleb128 0x10
+ 763 00d2 34       		.uleb128 0x34
+ 764 00d3 00       		.byte	0
+ 765 00d4 03       		.uleb128 0x3
+ 766 00d5 0E       		.uleb128 0xe
+ 767 00d6 3A       		.uleb128 0x3a
+ 768 00d7 0B       		.uleb128 0xb
+ 769 00d8 3B       		.uleb128 0x3b
+ 770 00d9 05       		.uleb128 0x5
+ 771 00da 49       		.uleb128 0x49
+ 772 00db 13       		.uleb128 0x13
+ 773 00dc 3F       		.uleb128 0x3f
+ 774 00dd 19       		.uleb128 0x19
+ 775 00de 3C       		.uleb128 0x3c
+ 776 00df 19       		.uleb128 0x19
+ 777 00e0 00       		.byte	0
+ 778 00e1 00       		.byte	0
+ 779 00e2 11       		.uleb128 0x11
+ 780 00e3 34       		.uleb128 0x34
+ 781 00e4 00       		.byte	0
+ 782 00e5 03       		.uleb128 0x3
+ 783 00e6 0E       		.uleb128 0xe
+ 784 00e7 3A       		.uleb128 0x3a
+ 785 00e8 0B       		.uleb128 0xb
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 19
+
+
+ 786 00e9 3B       		.uleb128 0x3b
+ 787 00ea 0B       		.uleb128 0xb
+ 788 00eb 49       		.uleb128 0x49
+ 789 00ec 13       		.uleb128 0x13
+ 790 00ed 3F       		.uleb128 0x3f
+ 791 00ee 19       		.uleb128 0x19
+ 792 00ef 02       		.uleb128 0x2
+ 793 00f0 18       		.uleb128 0x18
+ 794 00f1 00       		.byte	0
+ 795 00f2 00       		.byte	0
+ 796 00f3 00       		.byte	0
+ 797              		.section	.debug_aranges,"",%progbits
+ 798 0000 2C000000 		.4byte	0x2c
+ 799 0004 0200     		.2byte	0x2
+ 800 0006 00000000 		.4byte	.Ldebug_info0
+ 801 000a 04       		.byte	0x4
+ 802 000b 00       		.byte	0
+ 803 000c 0000     		.2byte	0
+ 804 000e 0000     		.2byte	0
+ 805 0010 00000000 		.4byte	.LFB0
+ 806 0014 3C000000 		.4byte	.LFE0-.LFB0
+ 807 0018 00000000 		.4byte	.LFB1
+ 808 001c 6C000000 		.4byte	.LFE1-.LFB1
+ 809 0020 00000000 		.4byte	.LFB2
+ 810 0024 40000000 		.4byte	.LFE2-.LFB2
+ 811 0028 00000000 		.4byte	0
+ 812 002c 00000000 		.4byte	0
+ 813              		.section	.debug_ranges,"",%progbits
+ 814              	.Ldebug_ranges0:
+ 815 0000 00000000 		.4byte	.LFB0
+ 816 0004 3C000000 		.4byte	.LFE0
+ 817 0008 00000000 		.4byte	.LFB1
+ 818 000c 6C000000 		.4byte	.LFE1
+ 819 0010 00000000 		.4byte	.LFB2
+ 820 0014 40000000 		.4byte	.LFE2
+ 821 0018 00000000 		.4byte	0
+ 822 001c 00000000 		.4byte	0
+ 823              		.section	.debug_line,"",%progbits
+ 824              	.Ldebug_line0:
+ 825 0000 F3000000 		.section	.debug_str,"MS",%progbits,1
+ 825      02008200 
+ 825      00000201 
+ 825      FB0E0D00 
+ 825      01010101 
+ 826              	.LASF15:
+ 827 0000 72656733 		.ascii	"reg32\000"
+ 827      3200
+ 828              	.LASF46:
+ 829 0006 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 829      43313120 
+ 829      352E342E 
+ 829      31203230 
+ 829      31363036 
+ 830 0039 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 830      20726576 
+ 830      6973696F 
+ 830      6E203233 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 20
+
+
+ 830      37373135 
+ 831 006c 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 831      66756E63 
+ 831      74696F6E 
+ 831      2D736563 
+ 831      74696F6E 
+ 832              	.LASF41:
+ 833 0094 43617053 		.ascii	"CapSense_CSD_MAILBOXES\000"
+ 833      656E7365 
+ 833      5F435344 
+ 833      5F4D4149 
+ 833      4C424F58 
+ 834              	.LASF39:
+ 835 00ab 6E756D4D 		.ascii	"numMailBoxes\000"
+ 835      61696C42 
+ 835      6F786573 
+ 835      00
+ 836              	.LASF20:
+ 837 00b8 7369676E 		.ascii	"signal\000"
+ 837      616C00
+ 838              	.LASF24:
+ 839 00bf 43617053 		.ascii	"CapSense_CSD_OUTBOX\000"
+ 839      656E7365 
+ 839      5F435344 
+ 839      5F4F5554 
+ 839      424F5800 
+ 840              	.LASF3:
+ 841 00d3 73686F72 		.ascii	"short unsigned int\000"
+ 841      7420756E 
+ 841      7369676E 
+ 841      65642069 
+ 841      6E7400
+ 842              	.LASF23:
+ 843 00e6 63686563 		.ascii	"checkSum\000"
+ 843      6B53756D 
+ 843      00
+ 844              	.LASF49:
+ 845 00ef 43617053 		.ascii	"CapSense_CSD_ProcessAllWidgets\000"
+ 845      656E7365 
+ 845      5F435344 
+ 845      5F50726F 
+ 845      63657373 
+ 846              	.LASF12:
+ 847 010e 666C6F61 		.ascii	"float\000"
+ 847      7400
+ 848              	.LASF7:
+ 849 0114 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 849      206C6F6E 
+ 849      6720756E 
+ 849      7369676E 
+ 849      65642069 
+ 850              	.LASF35:
+ 851 012b 73697A65 		.ascii	"size\000"
+ 851      00
+ 852              	.LASF47:
+ 853 0130 47656E65 		.ascii	"Generated_Source\\PSoC5\\CapSense_CSD_TunerHelper.c"
+ 853      72617465 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 21
+
+
+ 853      645F536F 
+ 853      75726365 
+ 853      5C50536F 
+ 854 0161 00       		.ascii	"\000"
+ 855              	.LASF32:
+ 856 0162 616E616C 		.ascii	"analogSwitchDivider\000"
+ 856      6F675377 
+ 856      69746368 
+ 856      44697669 
+ 856      64657200 
+ 857              	.LASF37:
+ 858 0176 696E626F 		.ascii	"inbox\000"
+ 858      7800
+ 859              	.LASF5:
+ 860 017c 6C6F6E67 		.ascii	"long unsigned int\000"
+ 860      20756E73 
+ 860      69676E65 
+ 860      6420696E 
+ 860      7400
+ 861              	.LASF44:
+ 862 018e 43617053 		.ascii	"CapSense_CSD_sensorOnMask\000"
+ 862      656E7365 
+ 862      5F435344 
+ 862      5F73656E 
+ 862      736F724F 
+ 863              	.LASF9:
+ 864 01a8 75696E74 		.ascii	"uint8\000"
+ 864      3800
+ 865              	.LASF48:
+ 866 01ae 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 866      73657273 
+ 866      5C6E696B 
+ 866      6F6C5C44 
+ 866      6F63756D 
+ 867 01db 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CapSense_CSD_Desig"
+ 867      7965725F 
+ 867      73696465 
+ 867      5F617070 
+ 867      5C437570 
+ 868 020b 6E30312E 		.ascii	"n01.cydsn\000"
+ 868      63796473 
+ 868      6E00
+ 869              	.LASF1:
+ 870 0215 756E7369 		.ascii	"unsigned char\000"
+ 870      676E6564 
+ 870      20636861 
+ 870      7200
+ 871              	.LASF38:
+ 872 0223 43617053 		.ascii	"CapSense_CSD_MAILBOX\000"
+ 872      656E7365 
+ 872      5F435344 
+ 872      5F4D4149 
+ 872      4C424F58 
+ 873              	.LASF13:
+ 874 0238 646F7562 		.ascii	"double\000"
+ 874      6C6500
+ 875              	.LASF21:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 22
+
+
+ 876 023f 6F6E4D61 		.ascii	"onMask\000"
+ 876      736B00
+ 877              	.LASF10:
+ 878 0246 75696E74 		.ascii	"uint16\000"
+ 878      313600
+ 879              	.LASF43:
+ 880 024d 43617053 		.ascii	"CapSense_CSD_TunerComm\000"
+ 880      656E7365 
+ 880      5F435344 
+ 880      5F54756E 
+ 880      6572436F 
+ 881              	.LASF11:
+ 882 0264 75696E74 		.ascii	"uint32\000"
+ 882      333200
+ 883              	.LASF29:
+ 884 026b 6E6F6973 		.ascii	"noiseThreshold\000"
+ 884      65546872 
+ 884      6573686F 
+ 884      6C6400
+ 885              	.LASF8:
+ 886 027a 756E7369 		.ascii	"unsigned int\000"
+ 886      676E6564 
+ 886      20696E74 
+ 886      00
+ 887              	.LASF22:
+ 888 0287 6E6F5265 		.ascii	"noReadMsg\000"
+ 888      61644D73 
+ 888      6700
+ 889              	.LASF25:
+ 890 0291 73656E73 		.ascii	"sensorIndex\000"
+ 890      6F72496E 
+ 890      64657800 
+ 891              	.LASF26:
+ 892 029d 69646163 		.ascii	"idacSettings\000"
+ 892      53657474 
+ 892      696E6773 
+ 892      00
+ 893              	.LASF31:
+ 894 02aa 6465626F 		.ascii	"debounce\000"
+ 894      756E6365 
+ 894      00
+ 895              	.LASF30:
+ 896 02b3 68797374 		.ascii	"hysteresis\000"
+ 896      65726573 
+ 896      697300
+ 897              	.LASF17:
+ 898 02be 73697A65 		.ascii	"sizetype\000"
+ 898      74797065 
+ 898      00
+ 899              	.LASF6:
+ 900 02c7 6C6F6E67 		.ascii	"long long int\000"
+ 900      206C6F6E 
+ 900      6720696E 
+ 900      7400
+ 901              	.LASF27:
+ 902 02d5 7265736F 		.ascii	"resolution\000"
+ 902      6C757469 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 23
+
+
+ 902      6F6E00
+ 903              	.LASF28:
+ 904 02e0 66696E67 		.ascii	"fingerThreshold\000"
+ 904      65725468 
+ 904      72657368 
+ 904      6F6C6400 
+ 905              	.LASF34:
+ 906 02f0 74797065 		.ascii	"type\000"
+ 906      00
+ 907              	.LASF2:
+ 908 02f5 73686F72 		.ascii	"short int\000"
+ 908      7420696E 
+ 908      7400
+ 909              	.LASF36:
+ 910 02ff 6F757462 		.ascii	"outbox\000"
+ 910      6F7800
+ 911              	.LASF40:
+ 912 0306 6373644D 		.ascii	"csdMailbox\000"
+ 912      61696C62 
+ 912      6F7800
+ 913              	.LASF18:
+ 914 0311 72617744 		.ascii	"rawData\000"
+ 914      61746100 
+ 915              	.LASF4:
+ 916 0319 6C6F6E67 		.ascii	"long int\000"
+ 916      20696E74 
+ 916      00
+ 917              	.LASF14:
+ 918 0322 63686172 		.ascii	"char\000"
+ 918      00
+ 919              	.LASF16:
+ 920 0327 6C6F6E67 		.ascii	"long double\000"
+ 920      20646F75 
+ 920      626C6500 
+ 921              	.LASF42:
+ 922 0333 43617053 		.ascii	"CapSense_CSD_TunerStart\000"
+ 922      656E7365 
+ 922      5F435344 
+ 922      5F54756E 
+ 922      65725374 
+ 923              	.LASF0:
+ 924 034b 7369676E 		.ascii	"signed char\000"
+ 924      65642063 
+ 924      68617200 
+ 925              	.LASF19:
+ 926 0357 62617365 		.ascii	"baseLine\000"
+ 926      4C696E65 
+ 926      00
+ 927              	.LASF45:
+ 928 0360 43617053 		.ascii	"CapSense_CSD_mailboxesComm\000"
+ 928      656E7365 
+ 928      5F435344 
+ 928      5F6D6169 
+ 928      6C626F78 
+ 929              	.LASF33:
+ 930 037b 43617053 		.ascii	"CapSense_CSD_INBOX\000"
+ 930      656E7365 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc1KNWqq.s 			page 24
+
+
+ 930      5F435344 
+ 930      5F494E42 
+ 930      4F5800
+ 931              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

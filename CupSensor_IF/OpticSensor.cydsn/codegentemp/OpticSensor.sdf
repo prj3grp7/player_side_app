@@ -1,0 +1,23 @@
+(DELAYFILE
+ (SDFVERSION "IEEE 1497 4.0")
+ (DATE "2018-10-30T17:36:47Z")
+ (DESIGN "OpticSensor")
+ (VENDOR "Cypress Semiconductor")
+ (PROGRAM "PSoC Creator")
+ (VERSION " 4.2")
+ (DIVIDER .)
+ (TIMESCALE 1 ns)
+ (CELL
+  (CELLTYPE "OpticSensor")
+  (INSTANCE *)
+  (DELAY
+   (ABSOLUTE
+    (INTERCONNECT Led\(0\).pad_out Led\(0\).pad_in (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.dclk_0 Led\(0\).pin_input (8.390:8.390:8.390))
+    (INTERCONNECT ClockBlock.dclk_0 \\Mixer_1\:SC\\.clk_udb (9.877:9.877:9.877))
+    (INTERCONNECT Led\(0\).pad_out Led\(0\)_PAD (0.000:0.000:0.000))
+    (INTERCONNECT Led\(0\)_PAD Led\(0\).pad_in (0.000:0.000:0.000))
+   )
+  )
+ )
+)

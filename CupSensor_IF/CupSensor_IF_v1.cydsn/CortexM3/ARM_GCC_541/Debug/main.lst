@@ -1,0 +1,632 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB63:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** 
+  14:main.c        **** int main(void)
+  15:main.c        **** {
+  28              		.loc 1 15 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  16:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  36              		.loc 1 16 0
+  37              		.syntax unified
+  38              	@ 16 "main.c" 1
+  39 0002 62B6     		CPSIE   i
+  40              	@ 0 "" 2
+  17:main.c        **** 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 2
+
+
+  18:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  19:main.c        **** 
+  20:main.c        ****     CapSense_Start();
+  41              		.loc 1 20 0
+  42              		.thumb
+  43              		.syntax unified
+  44 0004 FFF7FEFF 		bl	CapSense_Start
+  45              	.LVL0:
+  46              	.L2:
+  47              	.LBB2:
+  21:main.c        ****     for(;;)
+  22:main.c        ****     {
+  23:main.c        ****         uint8_t value  = CapSense_ReadSensorRaw(0);
+  48              		.loc 1 23 0 discriminator 1
+  49 0008 0020     		movs	r0, #0
+  50 000a FFF7FEFF 		bl	CapSense_ReadSensorRaw
+  51              	.LVL1:
+  24:main.c        ****         CyDelay(1000);
+  52              		.loc 1 24 0 discriminator 1
+  53 000e 4FF47A70 		mov	r0, #1000
+  54 0012 FFF7FEFF 		bl	CyDelay
+  55              	.LVL2:
+  56 0016 F7E7     		b	.L2
+  57              	.LBE2:
+  58              		.cfi_endproc
+  59              	.LFE63:
+  60              		.size	main, .-main
+  61              		.text
+  62              	.Letext0:
+  63              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  64              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  65              		.file 4 "Generated_Source\\PSoC5/CapSense.h"
+  66              		.file 5 "Generated_Source\\PSoC5/CyLib.h"
+  67              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+  68              		.section	.debug_info,"",%progbits
+  69              	.Ldebug_info0:
+  70 0000 49010000 		.4byte	0x149
+  71 0004 0400     		.2byte	0x4
+  72 0006 00000000 		.4byte	.Ldebug_abbrev0
+  73 000a 04       		.byte	0x4
+  74 000b 01       		.uleb128 0x1
+  75 000c 2D000000 		.4byte	.LASF21
+  76 0010 0C       		.byte	0xc
+  77 0011 21000000 		.4byte	.LASF22
+  78 0015 2D010000 		.4byte	.LASF23
+  79 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  80 001d 00000000 		.4byte	0
+  81 0021 00000000 		.4byte	.Ldebug_line0
+  82 0025 02       		.uleb128 0x2
+  83 0026 01       		.byte	0x1
+  84 0027 06       		.byte	0x6
+  85 0028 B9010000 		.4byte	.LASF0
+  86 002c 03       		.uleb128 0x3
+  87 002d EC000000 		.4byte	.LASF4
+  88 0031 02       		.byte	0x2
+  89 0032 1D       		.byte	0x1d
+  90 0033 37000000 		.4byte	0x37
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 3
+
+
+  91 0037 02       		.uleb128 0x2
+  92 0038 01       		.byte	0x1
+  93 0039 08       		.byte	0x8
+  94 003a 11010000 		.4byte	.LASF1
+  95 003e 02       		.uleb128 0x2
+  96 003f 02       		.byte	0x2
+  97 0040 05       		.byte	0x5
+  98 0041 F0010000 		.4byte	.LASF2
+  99 0045 02       		.uleb128 0x2
+ 100 0046 02       		.byte	0x2
+ 101 0047 07       		.byte	0x7
+ 102 0048 F6000000 		.4byte	.LASF3
+ 103 004c 03       		.uleb128 0x3
+ 104 004d D1010000 		.4byte	.LASF5
+ 105 0051 02       		.byte	0x2
+ 106 0052 3F       		.byte	0x3f
+ 107 0053 57000000 		.4byte	0x57
+ 108 0057 02       		.uleb128 0x2
+ 109 0058 04       		.byte	0x4
+ 110 0059 05       		.byte	0x5
+ 111 005a 24010000 		.4byte	.LASF6
+ 112 005e 02       		.uleb128 0x2
+ 113 005f 04       		.byte	0x4
+ 114 0060 07       		.byte	0x7
+ 115 0061 C3000000 		.4byte	.LASF7
+ 116 0065 02       		.uleb128 0x2
+ 117 0066 08       		.byte	0x8
+ 118 0067 05       		.byte	0x5
+ 119 0068 00000000 		.4byte	.LASF8
+ 120 006c 02       		.uleb128 0x2
+ 121 006d 08       		.byte	0x8
+ 122 006e 07       		.byte	0x7
+ 123 006f D5000000 		.4byte	.LASF9
+ 124 0073 04       		.uleb128 0x4
+ 125 0074 04       		.byte	0x4
+ 126 0075 05       		.byte	0x5
+ 127 0076 696E7400 		.ascii	"int\000"
+ 128 007a 02       		.uleb128 0x2
+ 129 007b 04       		.byte	0x4
+ 130 007c 07       		.byte	0x7
+ 131 007d 14000000 		.4byte	.LASF10
+ 132 0081 03       		.uleb128 0x3
+ 133 0082 09010000 		.4byte	.LASF11
+ 134 0086 03       		.byte	0x3
+ 135 0087 18       		.byte	0x18
+ 136 0088 2C000000 		.4byte	0x2c
+ 137 008c 03       		.uleb128 0x3
+ 138 008d FA010000 		.4byte	.LASF12
+ 139 0091 03       		.byte	0x3
+ 140 0092 2C       		.byte	0x2c
+ 141 0093 4C000000 		.4byte	0x4c
+ 142 0097 02       		.uleb128 0x2
+ 143 0098 04       		.byte	0x4
+ 144 0099 04       		.byte	0x4
+ 145 009a EA010000 		.4byte	.LASF13
+ 146 009e 02       		.uleb128 0x2
+ 147 009f 08       		.byte	0x8
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 4
+
+
+ 148 00a0 04       		.byte	0x4
+ 149 00a1 8E010000 		.4byte	.LASF14
+ 150 00a5 02       		.uleb128 0x2
+ 151 00a6 01       		.byte	0x1
+ 152 00a7 08       		.byte	0x8
+ 153 00a8 1F010000 		.4byte	.LASF15
+ 154 00ac 02       		.uleb128 0x2
+ 155 00ad 08       		.byte	0x8
+ 156 00ae 04       		.byte	0x4
+ 157 00af C5010000 		.4byte	.LASF16
+ 158 00b3 02       		.uleb128 0x2
+ 159 00b4 04       		.byte	0x4
+ 160 00b5 07       		.byte	0x7
+ 161 00b6 02020000 		.4byte	.LASF17
+ 162 00ba 05       		.uleb128 0x5
+ 163 00bb 28000000 		.4byte	.LASF24
+ 164 00bf 01       		.byte	0x1
+ 165 00c0 0E       		.byte	0xe
+ 166 00c1 73000000 		.4byte	0x73
+ 167 00c5 00000000 		.4byte	.LFB63
+ 168 00c9 18000000 		.4byte	.LFE63-.LFB63
+ 169 00cd 01       		.uleb128 0x1
+ 170 00ce 9C       		.byte	0x9c
+ 171 00cf 1A010000 		.4byte	0x11a
+ 172 00d3 06       		.uleb128 0x6
+ 173 00d4 08000000 		.4byte	.LBB2
+ 174 00d8 10000000 		.4byte	.LBE2-.LBB2
+ 175 00dc 10010000 		.4byte	0x110
+ 176 00e0 07       		.uleb128 0x7
+ 177 00e1 0E000000 		.4byte	.LASF25
+ 178 00e5 01       		.byte	0x1
+ 179 00e6 17       		.byte	0x17
+ 180 00e7 81000000 		.4byte	0x81
+ 181 00eb 08       		.uleb128 0x8
+ 182 00ec 0E000000 		.4byte	.LVL1
+ 183 00f0 2B010000 		.4byte	0x12b
+ 184 00f4 FE000000 		.4byte	0xfe
+ 185 00f8 09       		.uleb128 0x9
+ 186 00f9 01       		.uleb128 0x1
+ 187 00fa 50       		.byte	0x50
+ 188 00fb 01       		.uleb128 0x1
+ 189 00fc 30       		.byte	0x30
+ 190 00fd 00       		.byte	0
+ 191 00fe 0A       		.uleb128 0xa
+ 192 00ff 16000000 		.4byte	.LVL2
+ 193 0103 36010000 		.4byte	0x136
+ 194 0107 09       		.uleb128 0x9
+ 195 0108 01       		.uleb128 0x1
+ 196 0109 50       		.byte	0x50
+ 197 010a 03       		.uleb128 0x3
+ 198 010b 0A       		.byte	0xa
+ 199 010c E803     		.2byte	0x3e8
+ 200 010e 00       		.byte	0
+ 201 010f 00       		.byte	0
+ 202 0110 0B       		.uleb128 0xb
+ 203 0111 08000000 		.4byte	.LVL0
+ 204 0115 41010000 		.4byte	0x141
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 5
+
+
+ 205 0119 00       		.byte	0
+ 206 011a 0C       		.uleb128 0xc
+ 207 011b AC010000 		.4byte	.LASF26
+ 208 011f 06       		.byte	0x6
+ 209 0120 1207     		.2byte	0x712
+ 210 0122 26010000 		.4byte	0x126
+ 211 0126 0D       		.uleb128 0xd
+ 212 0127 8C000000 		.4byte	0x8c
+ 213 012b 0E       		.uleb128 0xe
+ 214 012c 95010000 		.4byte	.LASF18
+ 215 0130 95010000 		.4byte	.LASF18
+ 216 0134 04       		.byte	0x4
+ 217 0135 9D       		.byte	0x9d
+ 218 0136 0E       		.uleb128 0xe
+ 219 0137 BB000000 		.4byte	.LASF19
+ 220 013b BB000000 		.4byte	.LASF19
+ 221 013f 05       		.byte	0x5
+ 222 0140 76       		.byte	0x76
+ 223 0141 0E       		.uleb128 0xe
+ 224 0142 DB010000 		.4byte	.LASF20
+ 225 0146 DB010000 		.4byte	.LASF20
+ 226 014a 04       		.byte	0x4
+ 227 014b 93       		.byte	0x93
+ 228 014c 00       		.byte	0
+ 229              		.section	.debug_abbrev,"",%progbits
+ 230              	.Ldebug_abbrev0:
+ 231 0000 01       		.uleb128 0x1
+ 232 0001 11       		.uleb128 0x11
+ 233 0002 01       		.byte	0x1
+ 234 0003 25       		.uleb128 0x25
+ 235 0004 0E       		.uleb128 0xe
+ 236 0005 13       		.uleb128 0x13
+ 237 0006 0B       		.uleb128 0xb
+ 238 0007 03       		.uleb128 0x3
+ 239 0008 0E       		.uleb128 0xe
+ 240 0009 1B       		.uleb128 0x1b
+ 241 000a 0E       		.uleb128 0xe
+ 242 000b 55       		.uleb128 0x55
+ 243 000c 17       		.uleb128 0x17
+ 244 000d 11       		.uleb128 0x11
+ 245 000e 01       		.uleb128 0x1
+ 246 000f 10       		.uleb128 0x10
+ 247 0010 17       		.uleb128 0x17
+ 248 0011 00       		.byte	0
+ 249 0012 00       		.byte	0
+ 250 0013 02       		.uleb128 0x2
+ 251 0014 24       		.uleb128 0x24
+ 252 0015 00       		.byte	0
+ 253 0016 0B       		.uleb128 0xb
+ 254 0017 0B       		.uleb128 0xb
+ 255 0018 3E       		.uleb128 0x3e
+ 256 0019 0B       		.uleb128 0xb
+ 257 001a 03       		.uleb128 0x3
+ 258 001b 0E       		.uleb128 0xe
+ 259 001c 00       		.byte	0
+ 260 001d 00       		.byte	0
+ 261 001e 03       		.uleb128 0x3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 6
+
+
+ 262 001f 16       		.uleb128 0x16
+ 263 0020 00       		.byte	0
+ 264 0021 03       		.uleb128 0x3
+ 265 0022 0E       		.uleb128 0xe
+ 266 0023 3A       		.uleb128 0x3a
+ 267 0024 0B       		.uleb128 0xb
+ 268 0025 3B       		.uleb128 0x3b
+ 269 0026 0B       		.uleb128 0xb
+ 270 0027 49       		.uleb128 0x49
+ 271 0028 13       		.uleb128 0x13
+ 272 0029 00       		.byte	0
+ 273 002a 00       		.byte	0
+ 274 002b 04       		.uleb128 0x4
+ 275 002c 24       		.uleb128 0x24
+ 276 002d 00       		.byte	0
+ 277 002e 0B       		.uleb128 0xb
+ 278 002f 0B       		.uleb128 0xb
+ 279 0030 3E       		.uleb128 0x3e
+ 280 0031 0B       		.uleb128 0xb
+ 281 0032 03       		.uleb128 0x3
+ 282 0033 08       		.uleb128 0x8
+ 283 0034 00       		.byte	0
+ 284 0035 00       		.byte	0
+ 285 0036 05       		.uleb128 0x5
+ 286 0037 2E       		.uleb128 0x2e
+ 287 0038 01       		.byte	0x1
+ 288 0039 3F       		.uleb128 0x3f
+ 289 003a 19       		.uleb128 0x19
+ 290 003b 03       		.uleb128 0x3
+ 291 003c 0E       		.uleb128 0xe
+ 292 003d 3A       		.uleb128 0x3a
+ 293 003e 0B       		.uleb128 0xb
+ 294 003f 3B       		.uleb128 0x3b
+ 295 0040 0B       		.uleb128 0xb
+ 296 0041 27       		.uleb128 0x27
+ 297 0042 19       		.uleb128 0x19
+ 298 0043 49       		.uleb128 0x49
+ 299 0044 13       		.uleb128 0x13
+ 300 0045 8701     		.uleb128 0x87
+ 301 0047 19       		.uleb128 0x19
+ 302 0048 11       		.uleb128 0x11
+ 303 0049 01       		.uleb128 0x1
+ 304 004a 12       		.uleb128 0x12
+ 305 004b 06       		.uleb128 0x6
+ 306 004c 40       		.uleb128 0x40
+ 307 004d 18       		.uleb128 0x18
+ 308 004e 9742     		.uleb128 0x2117
+ 309 0050 19       		.uleb128 0x19
+ 310 0051 01       		.uleb128 0x1
+ 311 0052 13       		.uleb128 0x13
+ 312 0053 00       		.byte	0
+ 313 0054 00       		.byte	0
+ 314 0055 06       		.uleb128 0x6
+ 315 0056 0B       		.uleb128 0xb
+ 316 0057 01       		.byte	0x1
+ 317 0058 11       		.uleb128 0x11
+ 318 0059 01       		.uleb128 0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 7
+
+
+ 319 005a 12       		.uleb128 0x12
+ 320 005b 06       		.uleb128 0x6
+ 321 005c 01       		.uleb128 0x1
+ 322 005d 13       		.uleb128 0x13
+ 323 005e 00       		.byte	0
+ 324 005f 00       		.byte	0
+ 325 0060 07       		.uleb128 0x7
+ 326 0061 34       		.uleb128 0x34
+ 327 0062 00       		.byte	0
+ 328 0063 03       		.uleb128 0x3
+ 329 0064 0E       		.uleb128 0xe
+ 330 0065 3A       		.uleb128 0x3a
+ 331 0066 0B       		.uleb128 0xb
+ 332 0067 3B       		.uleb128 0x3b
+ 333 0068 0B       		.uleb128 0xb
+ 334 0069 49       		.uleb128 0x49
+ 335 006a 13       		.uleb128 0x13
+ 336 006b 00       		.byte	0
+ 337 006c 00       		.byte	0
+ 338 006d 08       		.uleb128 0x8
+ 339 006e 898201   		.uleb128 0x4109
+ 340 0071 01       		.byte	0x1
+ 341 0072 11       		.uleb128 0x11
+ 342 0073 01       		.uleb128 0x1
+ 343 0074 31       		.uleb128 0x31
+ 344 0075 13       		.uleb128 0x13
+ 345 0076 01       		.uleb128 0x1
+ 346 0077 13       		.uleb128 0x13
+ 347 0078 00       		.byte	0
+ 348 0079 00       		.byte	0
+ 349 007a 09       		.uleb128 0x9
+ 350 007b 8A8201   		.uleb128 0x410a
+ 351 007e 00       		.byte	0
+ 352 007f 02       		.uleb128 0x2
+ 353 0080 18       		.uleb128 0x18
+ 354 0081 9142     		.uleb128 0x2111
+ 355 0083 18       		.uleb128 0x18
+ 356 0084 00       		.byte	0
+ 357 0085 00       		.byte	0
+ 358 0086 0A       		.uleb128 0xa
+ 359 0087 898201   		.uleb128 0x4109
+ 360 008a 01       		.byte	0x1
+ 361 008b 11       		.uleb128 0x11
+ 362 008c 01       		.uleb128 0x1
+ 363 008d 31       		.uleb128 0x31
+ 364 008e 13       		.uleb128 0x13
+ 365 008f 00       		.byte	0
+ 366 0090 00       		.byte	0
+ 367 0091 0B       		.uleb128 0xb
+ 368 0092 898201   		.uleb128 0x4109
+ 369 0095 00       		.byte	0
+ 370 0096 11       		.uleb128 0x11
+ 371 0097 01       		.uleb128 0x1
+ 372 0098 31       		.uleb128 0x31
+ 373 0099 13       		.uleb128 0x13
+ 374 009a 00       		.byte	0
+ 375 009b 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 8
+
+
+ 376 009c 0C       		.uleb128 0xc
+ 377 009d 34       		.uleb128 0x34
+ 378 009e 00       		.byte	0
+ 379 009f 03       		.uleb128 0x3
+ 380 00a0 0E       		.uleb128 0xe
+ 381 00a1 3A       		.uleb128 0x3a
+ 382 00a2 0B       		.uleb128 0xb
+ 383 00a3 3B       		.uleb128 0x3b
+ 384 00a4 05       		.uleb128 0x5
+ 385 00a5 49       		.uleb128 0x49
+ 386 00a6 13       		.uleb128 0x13
+ 387 00a7 3F       		.uleb128 0x3f
+ 388 00a8 19       		.uleb128 0x19
+ 389 00a9 3C       		.uleb128 0x3c
+ 390 00aa 19       		.uleb128 0x19
+ 391 00ab 00       		.byte	0
+ 392 00ac 00       		.byte	0
+ 393 00ad 0D       		.uleb128 0xd
+ 394 00ae 35       		.uleb128 0x35
+ 395 00af 00       		.byte	0
+ 396 00b0 49       		.uleb128 0x49
+ 397 00b1 13       		.uleb128 0x13
+ 398 00b2 00       		.byte	0
+ 399 00b3 00       		.byte	0
+ 400 00b4 0E       		.uleb128 0xe
+ 401 00b5 2E       		.uleb128 0x2e
+ 402 00b6 00       		.byte	0
+ 403 00b7 3F       		.uleb128 0x3f
+ 404 00b8 19       		.uleb128 0x19
+ 405 00b9 3C       		.uleb128 0x3c
+ 406 00ba 19       		.uleb128 0x19
+ 407 00bb 6E       		.uleb128 0x6e
+ 408 00bc 0E       		.uleb128 0xe
+ 409 00bd 03       		.uleb128 0x3
+ 410 00be 0E       		.uleb128 0xe
+ 411 00bf 3A       		.uleb128 0x3a
+ 412 00c0 0B       		.uleb128 0xb
+ 413 00c1 3B       		.uleb128 0x3b
+ 414 00c2 0B       		.uleb128 0xb
+ 415 00c3 00       		.byte	0
+ 416 00c4 00       		.byte	0
+ 417 00c5 00       		.byte	0
+ 418              		.section	.debug_aranges,"",%progbits
+ 419 0000 1C000000 		.4byte	0x1c
+ 420 0004 0200     		.2byte	0x2
+ 421 0006 00000000 		.4byte	.Ldebug_info0
+ 422 000a 04       		.byte	0x4
+ 423 000b 00       		.byte	0
+ 424 000c 0000     		.2byte	0
+ 425 000e 0000     		.2byte	0
+ 426 0010 00000000 		.4byte	.LFB63
+ 427 0014 18000000 		.4byte	.LFE63-.LFB63
+ 428 0018 00000000 		.4byte	0
+ 429 001c 00000000 		.4byte	0
+ 430              		.section	.debug_ranges,"",%progbits
+ 431              	.Ldebug_ranges0:
+ 432 0000 00000000 		.4byte	.LFB63
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 9
+
+
+ 433 0004 18000000 		.4byte	.LFE63
+ 434 0008 00000000 		.4byte	0
+ 435 000c 00000000 		.4byte	0
+ 436              		.section	.debug_line,"",%progbits
+ 437              	.Ldebug_line0:
+ 438 0000 79010000 		.section	.debug_str,"MS",%progbits,1
+ 438      02005801 
+ 438      00000201 
+ 438      FB0E0D00 
+ 438      01010101 
+ 439              	.LASF8:
+ 440 0000 6C6F6E67 		.ascii	"long long int\000"
+ 440      206C6F6E 
+ 440      6720696E 
+ 440      7400
+ 441              	.LASF25:
+ 442 000e 76616C75 		.ascii	"value\000"
+ 442      6500
+ 443              	.LASF10:
+ 444 0014 756E7369 		.ascii	"unsigned int\000"
+ 444      676E6564 
+ 444      20696E74 
+ 444      00
+ 445              	.LASF22:
+ 446 0021 6D61696E 		.ascii	"main.c\000"
+ 446      2E6300
+ 447              	.LASF24:
+ 448 0028 6D61696E 		.ascii	"main\000"
+ 448      00
+ 449              	.LASF21:
+ 450 002d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 450      43313120 
+ 450      352E342E 
+ 450      31203230 
+ 450      31363036 
+ 451 0060 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 451      20726576 
+ 451      6973696F 
+ 451      6E203233 
+ 451      37373135 
+ 452 0093 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 452      66756E63 
+ 452      74696F6E 
+ 452      2D736563 
+ 452      74696F6E 
+ 453              	.LASF19:
+ 454 00bb 43794465 		.ascii	"CyDelay\000"
+ 454      6C617900 
+ 455              	.LASF7:
+ 456 00c3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 456      20756E73 
+ 456      69676E65 
+ 456      6420696E 
+ 456      7400
+ 457              	.LASF9:
+ 458 00d5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 458      206C6F6E 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 10
+
+
+ 458      6720756E 
+ 458      7369676E 
+ 458      65642069 
+ 459              	.LASF4:
+ 460 00ec 5F5F7569 		.ascii	"__uint8_t\000"
+ 460      6E74385F 
+ 460      7400
+ 461              	.LASF3:
+ 462 00f6 73686F72 		.ascii	"short unsigned int\000"
+ 462      7420756E 
+ 462      7369676E 
+ 462      65642069 
+ 462      6E7400
+ 463              	.LASF11:
+ 464 0109 75696E74 		.ascii	"uint8_t\000"
+ 464      385F7400 
+ 465              	.LASF1:
+ 466 0111 756E7369 		.ascii	"unsigned char\000"
+ 466      676E6564 
+ 466      20636861 
+ 466      7200
+ 467              	.LASF15:
+ 468 011f 63686172 		.ascii	"char\000"
+ 468      00
+ 469              	.LASF6:
+ 470 0124 6C6F6E67 		.ascii	"long int\000"
+ 470      20696E74 
+ 470      00
+ 471              	.LASF23:
+ 472 012d 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 472      73657273 
+ 472      5C6E696B 
+ 472      6F6C5C44 
+ 472      6F63756D 
+ 473 015a 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CupSensor_IF_v1.cy"
+ 473      7965725F 
+ 473      73696465 
+ 473      5F617070 
+ 473      5C437570 
+ 474 018a 64736E00 		.ascii	"dsn\000"
+ 475              	.LASF14:
+ 476 018e 646F7562 		.ascii	"double\000"
+ 476      6C6500
+ 477              	.LASF18:
+ 478 0195 43617053 		.ascii	"CapSense_ReadSensorRaw\000"
+ 478      656E7365 
+ 478      5F526561 
+ 478      6453656E 
+ 478      736F7252 
+ 479              	.LASF26:
+ 480 01ac 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 480      52784275 
+ 480      66666572 
+ 480      00
+ 481              	.LASF0:
+ 482 01b9 7369676E 		.ascii	"signed char\000"
+ 482      65642063 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccKjdsxe.s 			page 11
+
+
+ 482      68617200 
+ 483              	.LASF16:
+ 484 01c5 6C6F6E67 		.ascii	"long double\000"
+ 484      20646F75 
+ 484      626C6500 
+ 485              	.LASF5:
+ 486 01d1 5F5F696E 		.ascii	"__int32_t\000"
+ 486      7433325F 
+ 486      7400
+ 487              	.LASF20:
+ 488 01db 43617053 		.ascii	"CapSense_Start\000"
+ 488      656E7365 
+ 488      5F537461 
+ 488      727400
+ 489              	.LASF13:
+ 490 01ea 666C6F61 		.ascii	"float\000"
+ 490      7400
+ 491              	.LASF2:
+ 492 01f0 73686F72 		.ascii	"short int\000"
+ 492      7420696E 
+ 492      7400
+ 493              	.LASF12:
+ 494 01fa 696E7433 		.ascii	"int32_t\000"
+ 494      325F7400 
+ 495              	.LASF17:
+ 496 0202 73697A65 		.ascii	"sizetype\000"
+ 496      74797065 
+ 496      00
+ 497              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

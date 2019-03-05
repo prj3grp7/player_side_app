@@ -1,0 +1,627 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CapSense_CSD_Pins.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CapSense_CSD_SetAllSensorsDriveMode,"ax",%progbits
+  20              		.align	2
+  21              		.global	CapSense_CSD_SetAllSensorsDriveMode
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	CapSense_CSD_SetAllSensorsDriveMode, %function
+  25              	CapSense_CSD_SetAllSensorsDriveMode:
+  26              	.LFB0:
+  27              		.file 1 "Generated_Source\\PSoC5\\CapSense_CSD_Pins.c"
+   1:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * File Name: CapSense_CSD_Pins.c
+   3:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Version 3.50
+   4:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+   5:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Description:
+   6:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  This file contains API to enable firmware control of a Pins component.
+   7:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+   8:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Note:
+   9:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  10:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** ********************************************************************************
+  11:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  12:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * You may use this file only in accordance with the license, terms, conditions,
+  13:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  14:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * the software package with which this file was provided.
+  15:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *******************************************************************************/
+  16:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  17:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** #include "CapSense_CSD_Pins.h"
+  18:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  19:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  20:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** /*******************************************************************************
+  21:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Function Name: CapSense_CSD_SetAllSensorsDriveMode
+  22:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** ********************************************************************************
+  23:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  24:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Summary:
+  25:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  Sets the drive mode for the all pins used by capacitive sensors within 
+  26:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  CapSense component.
+  27:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * 
+  28:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Parameters:  
+  29:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  mode: Desired drive mode.
+  30:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 2
+
+
+  31:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Return: 
+  32:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  None
+  33:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  34:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *******************************************************************************/
+  35:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** void CapSense_CSD_SetAllSensorsDriveMode(uint8 mode) 
+  36:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** {
+  28              		.loc 1 36 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+  40 0006 0346     		mov	r3, r0
+  41 0008 FB71     		strb	r3, [r7, #7]
+  37:Generated_Source\PSoC5/CapSense_CSD_Pins.c ****     /* Set pins drive mode */
+  38:Generated_Source\PSoC5/CapSense_CSD_Pins.c ****     CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__Button0__BTN, mode);
+  42              		.loc 1 38 0
+  43 000a 0B49     		ldr	r1, .L2
+  44 000c 0A4B     		ldr	r3, .L2
+  45 000e 1B78     		ldrb	r3, [r3]
+  46 0010 DBB2     		uxtb	r3, r3
+  47 0012 5BB2     		sxtb	r3, r3
+  48 0014 23F00E03 		bic	r3, r3, #14
+  49 0018 5AB2     		sxtb	r2, r3
+  50 001a 97F90730 		ldrsb	r3, [r7, #7]
+  51 001e 03F00E03 		and	r3, r3, #14
+  52 0022 5BB2     		sxtb	r3, r3
+  53 0024 1343     		orrs	r3, r3, r2
+  54 0026 5BB2     		sxtb	r3, r3
+  55 0028 DBB2     		uxtb	r3, r3
+  56 002a 0B70     		strb	r3, [r1]
+  39:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  40:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** }
+  57              		.loc 1 40 0
+  58 002c 00BF     		nop
+  59 002e 0C37     		adds	r7, r7, #12
+  60              		.cfi_def_cfa_offset 4
+  61 0030 BD46     		mov	sp, r7
+  62              		.cfi_def_cfa_register 13
+  63              		@ sp needed
+  64 0032 80BC     		pop	{r7}
+  65              		.cfi_restore 7
+  66              		.cfi_def_cfa_offset 0
+  67 0034 7047     		bx	lr
+  68              	.L3:
+  69 0036 00BF     		.align	2
+  70              	.L2:
+  71 0038 10500040 		.word	1073762320
+  72              		.cfi_endproc
+  73              	.LFE0:
+  74              		.size	CapSense_CSD_SetAllSensorsDriveMode, .-CapSense_CSD_SetAllSensorsDriveMode
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 3
+
+
+  75              		.section	.text.CapSense_CSD_SetAllCmodsDriveMode,"ax",%progbits
+  76              		.align	2
+  77              		.global	CapSense_CSD_SetAllCmodsDriveMode
+  78              		.thumb
+  79              		.thumb_func
+  80              		.type	CapSense_CSD_SetAllCmodsDriveMode, %function
+  81              	CapSense_CSD_SetAllCmodsDriveMode:
+  82              	.LFB1:
+  41:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  42:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  43:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  44:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** /*******************************************************************************
+  45:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Function Name: CapSense_CSD_SetAllCmodsDriveMode
+  46:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** ********************************************************************************
+  47:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  48:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Summary:
+  49:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  Sets the drive mode for the all pins used by Cmod capacitors within CapSense 
+  50:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  component.
+  51:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * 
+  52:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Parameters:  
+  53:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  mode: Desired drive mode.
+  54:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  55:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** * Return: 
+  56:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *  None
+  57:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *
+  58:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** *******************************************************************************/
+  59:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** void CapSense_CSD_SetAllCmodsDriveMode(uint8 mode) 
+  60:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** {
+  83              		.loc 1 60 0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 8
+  86              		@ frame_needed = 1, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88 0000 80B4     		push	{r7}
+  89              		.cfi_def_cfa_offset 4
+  90              		.cfi_offset 7, -4
+  91 0002 83B0     		sub	sp, sp, #12
+  92              		.cfi_def_cfa_offset 16
+  93 0004 00AF     		add	r7, sp, #0
+  94              		.cfi_def_cfa_register 7
+  95 0006 0346     		mov	r3, r0
+  96 0008 FB71     		strb	r3, [r7, #7]
+  61:Generated_Source\PSoC5/CapSense_CSD_Pins.c ****    /* Set pins drive mode */
+  62:Generated_Source\PSoC5/CapSense_CSD_Pins.c ****     CyPins_SetPinDriveMode(CapSense_CSD_CmodCH0_Cmod_CH0, mode);
+  97              		.loc 1 62 0
+  98 000a 0B49     		ldr	r1, .L5
+  99 000c 0A4B     		ldr	r3, .L5
+ 100 000e 1B78     		ldrb	r3, [r3]
+ 101 0010 DBB2     		uxtb	r3, r3
+ 102 0012 5BB2     		sxtb	r3, r3
+ 103 0014 23F00E03 		bic	r3, r3, #14
+ 104 0018 5AB2     		sxtb	r2, r3
+ 105 001a 97F90730 		ldrsb	r3, [r7, #7]
+ 106 001e 03F00E03 		and	r3, r3, #14
+ 107 0022 5BB2     		sxtb	r3, r3
+ 108 0024 1343     		orrs	r3, r3, r2
+ 109 0026 5BB2     		sxtb	r3, r3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 4
+
+
+ 110 0028 DBB2     		uxtb	r3, r3
+ 111 002a 0B70     		strb	r3, [r1]
+  63:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** 
+  64:Generated_Source\PSoC5/CapSense_CSD_Pins.c **** }
+ 112              		.loc 1 64 0
+ 113 002c 00BF     		nop
+ 114 002e 0C37     		adds	r7, r7, #12
+ 115              		.cfi_def_cfa_offset 4
+ 116 0030 BD46     		mov	sp, r7
+ 117              		.cfi_def_cfa_register 13
+ 118              		@ sp needed
+ 119 0032 80BC     		pop	{r7}
+ 120              		.cfi_restore 7
+ 121              		.cfi_def_cfa_offset 0
+ 122 0034 7047     		bx	lr
+ 123              	.L6:
+ 124 0036 00BF     		.align	2
+ 125              	.L5:
+ 126 0038 7C500040 		.word	1073762428
+ 127              		.cfi_endproc
+ 128              	.LFE1:
+ 129              		.size	CapSense_CSD_SetAllCmodsDriveMode, .-CapSense_CSD_SetAllCmodsDriveMode
+ 130              		.text
+ 131              	.Letext0:
+ 132              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 133              		.section	.debug_info,"",%progbits
+ 134              	.Ldebug_info0:
+ 135 0000 EC000000 		.4byte	0xec
+ 136 0004 0400     		.2byte	0x4
+ 137 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 138 000a 04       		.byte	0x4
+ 139 000b 01       		.uleb128 0x1
+ 140 000c 7C000000 		.4byte	.LASF17
+ 141 0010 0C       		.byte	0xc
+ 142 0011 ED010000 		.4byte	.LASF18
+ 143 0015 51010000 		.4byte	.LASF19
+ 144 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 145 001d 00000000 		.4byte	0
+ 146 0021 00000000 		.4byte	.Ldebug_line0
+ 147 0025 02       		.uleb128 0x2
+ 148 0026 01       		.byte	0x1
+ 149 0027 06       		.byte	0x6
+ 150 0028 CB010000 		.4byte	.LASF0
+ 151 002c 02       		.uleb128 0x2
+ 152 002d 01       		.byte	0x1
+ 153 002e 08       		.byte	0x8
+ 154 002f 0A010000 		.4byte	.LASF1
+ 155 0033 02       		.uleb128 0x2
+ 156 0034 02       		.byte	0x2
+ 157 0035 05       		.byte	0x5
+ 158 0036 E3010000 		.4byte	.LASF2
+ 159 003a 02       		.uleb128 0x2
+ 160 003b 02       		.byte	0x2
+ 161 003c 07       		.byte	0x7
+ 162 003d B8010000 		.4byte	.LASF3
+ 163 0041 02       		.uleb128 0x2
+ 164 0042 04       		.byte	0x4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 5
+
+
+ 165 0043 05       		.byte	0x5
+ 166 0044 1D010000 		.4byte	.LASF4
+ 167 0048 02       		.uleb128 0x2
+ 168 0049 04       		.byte	0x4
+ 169 004a 07       		.byte	0x7
+ 170 004b 2B000000 		.4byte	.LASF5
+ 171 004f 02       		.uleb128 0x2
+ 172 0050 08       		.byte	0x8
+ 173 0051 05       		.byte	0x5
+ 174 0052 00000000 		.4byte	.LASF6
+ 175 0056 02       		.uleb128 0x2
+ 176 0057 08       		.byte	0x8
+ 177 0058 07       		.byte	0x7
+ 178 0059 5F000000 		.4byte	.LASF7
+ 179 005d 03       		.uleb128 0x3
+ 180 005e 04       		.byte	0x4
+ 181 005f 05       		.byte	0x5
+ 182 0060 696E7400 		.ascii	"int\000"
+ 183 0064 02       		.uleb128 0x2
+ 184 0065 04       		.byte	0x4
+ 185 0066 07       		.byte	0x7
+ 186 0067 0E000000 		.4byte	.LASF8
+ 187 006b 04       		.uleb128 0x4
+ 188 006c 25000000 		.4byte	.LASF12
+ 189 0070 02       		.byte	0x2
+ 190 0071 9201     		.2byte	0x192
+ 191 0073 2C000000 		.4byte	0x2c
+ 192 0077 02       		.uleb128 0x2
+ 193 0078 04       		.byte	0x4
+ 194 0079 04       		.byte	0x4
+ 195 007a 76000000 		.4byte	.LASF9
+ 196 007e 02       		.uleb128 0x2
+ 197 007f 08       		.byte	0x8
+ 198 0080 04       		.byte	0x4
+ 199 0081 4A010000 		.4byte	.LASF10
+ 200 0085 02       		.uleb128 0x2
+ 201 0086 01       		.byte	0x1
+ 202 0087 08       		.byte	0x8
+ 203 0088 18010000 		.4byte	.LASF11
+ 204 008c 04       		.uleb128 0x4
+ 205 008d 20000000 		.4byte	.LASF13
+ 206 0091 02       		.byte	0x2
+ 207 0092 3C02     		.2byte	0x23c
+ 208 0094 98000000 		.4byte	0x98
+ 209 0098 05       		.uleb128 0x5
+ 210 0099 6B000000 		.4byte	0x6b
+ 211 009d 02       		.uleb128 0x2
+ 212 009e 08       		.byte	0x8
+ 213 009f 04       		.byte	0x4
+ 214 00a0 D7010000 		.4byte	.LASF14
+ 215 00a4 02       		.uleb128 0x2
+ 216 00a5 04       		.byte	0x4
+ 217 00a6 07       		.byte	0x7
+ 218 00a7 18020000 		.4byte	.LASF15
+ 219 00ab 06       		.uleb128 0x6
+ 220 00ac 26010000 		.4byte	.LASF20
+ 221 00b0 01       		.byte	0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 6
+
+
+ 222 00b1 23       		.byte	0x23
+ 223 00b2 00000000 		.4byte	.LFB0
+ 224 00b6 3C000000 		.4byte	.LFE0-.LFB0
+ 225 00ba 01       		.uleb128 0x1
+ 226 00bb 9C       		.byte	0x9c
+ 227 00bc CF000000 		.4byte	0xcf
+ 228 00c0 07       		.uleb128 0x7
+ 229 00c1 1B000000 		.4byte	.LASF16
+ 230 00c5 01       		.byte	0x1
+ 231 00c6 23       		.byte	0x23
+ 232 00c7 6B000000 		.4byte	0x6b
+ 233 00cb 02       		.uleb128 0x2
+ 234 00cc 91       		.byte	0x91
+ 235 00cd 77       		.sleb128 -9
+ 236 00ce 00       		.byte	0
+ 237 00cf 08       		.uleb128 0x8
+ 238 00d0 3D000000 		.4byte	.LASF21
+ 239 00d4 01       		.byte	0x1
+ 240 00d5 3B       		.byte	0x3b
+ 241 00d6 00000000 		.4byte	.LFB1
+ 242 00da 3C000000 		.4byte	.LFE1-.LFB1
+ 243 00de 01       		.uleb128 0x1
+ 244 00df 9C       		.byte	0x9c
+ 245 00e0 07       		.uleb128 0x7
+ 246 00e1 1B000000 		.4byte	.LASF16
+ 247 00e5 01       		.byte	0x1
+ 248 00e6 3B       		.byte	0x3b
+ 249 00e7 6B000000 		.4byte	0x6b
+ 250 00eb 02       		.uleb128 0x2
+ 251 00ec 91       		.byte	0x91
+ 252 00ed 77       		.sleb128 -9
+ 253 00ee 00       		.byte	0
+ 254 00ef 00       		.byte	0
+ 255              		.section	.debug_abbrev,"",%progbits
+ 256              	.Ldebug_abbrev0:
+ 257 0000 01       		.uleb128 0x1
+ 258 0001 11       		.uleb128 0x11
+ 259 0002 01       		.byte	0x1
+ 260 0003 25       		.uleb128 0x25
+ 261 0004 0E       		.uleb128 0xe
+ 262 0005 13       		.uleb128 0x13
+ 263 0006 0B       		.uleb128 0xb
+ 264 0007 03       		.uleb128 0x3
+ 265 0008 0E       		.uleb128 0xe
+ 266 0009 1B       		.uleb128 0x1b
+ 267 000a 0E       		.uleb128 0xe
+ 268 000b 55       		.uleb128 0x55
+ 269 000c 17       		.uleb128 0x17
+ 270 000d 11       		.uleb128 0x11
+ 271 000e 01       		.uleb128 0x1
+ 272 000f 10       		.uleb128 0x10
+ 273 0010 17       		.uleb128 0x17
+ 274 0011 00       		.byte	0
+ 275 0012 00       		.byte	0
+ 276 0013 02       		.uleb128 0x2
+ 277 0014 24       		.uleb128 0x24
+ 278 0015 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 7
+
+
+ 279 0016 0B       		.uleb128 0xb
+ 280 0017 0B       		.uleb128 0xb
+ 281 0018 3E       		.uleb128 0x3e
+ 282 0019 0B       		.uleb128 0xb
+ 283 001a 03       		.uleb128 0x3
+ 284 001b 0E       		.uleb128 0xe
+ 285 001c 00       		.byte	0
+ 286 001d 00       		.byte	0
+ 287 001e 03       		.uleb128 0x3
+ 288 001f 24       		.uleb128 0x24
+ 289 0020 00       		.byte	0
+ 290 0021 0B       		.uleb128 0xb
+ 291 0022 0B       		.uleb128 0xb
+ 292 0023 3E       		.uleb128 0x3e
+ 293 0024 0B       		.uleb128 0xb
+ 294 0025 03       		.uleb128 0x3
+ 295 0026 08       		.uleb128 0x8
+ 296 0027 00       		.byte	0
+ 297 0028 00       		.byte	0
+ 298 0029 04       		.uleb128 0x4
+ 299 002a 16       		.uleb128 0x16
+ 300 002b 00       		.byte	0
+ 301 002c 03       		.uleb128 0x3
+ 302 002d 0E       		.uleb128 0xe
+ 303 002e 3A       		.uleb128 0x3a
+ 304 002f 0B       		.uleb128 0xb
+ 305 0030 3B       		.uleb128 0x3b
+ 306 0031 05       		.uleb128 0x5
+ 307 0032 49       		.uleb128 0x49
+ 308 0033 13       		.uleb128 0x13
+ 309 0034 00       		.byte	0
+ 310 0035 00       		.byte	0
+ 311 0036 05       		.uleb128 0x5
+ 312 0037 35       		.uleb128 0x35
+ 313 0038 00       		.byte	0
+ 314 0039 49       		.uleb128 0x49
+ 315 003a 13       		.uleb128 0x13
+ 316 003b 00       		.byte	0
+ 317 003c 00       		.byte	0
+ 318 003d 06       		.uleb128 0x6
+ 319 003e 2E       		.uleb128 0x2e
+ 320 003f 01       		.byte	0x1
+ 321 0040 3F       		.uleb128 0x3f
+ 322 0041 19       		.uleb128 0x19
+ 323 0042 03       		.uleb128 0x3
+ 324 0043 0E       		.uleb128 0xe
+ 325 0044 3A       		.uleb128 0x3a
+ 326 0045 0B       		.uleb128 0xb
+ 327 0046 3B       		.uleb128 0x3b
+ 328 0047 0B       		.uleb128 0xb
+ 329 0048 27       		.uleb128 0x27
+ 330 0049 19       		.uleb128 0x19
+ 331 004a 11       		.uleb128 0x11
+ 332 004b 01       		.uleb128 0x1
+ 333 004c 12       		.uleb128 0x12
+ 334 004d 06       		.uleb128 0x6
+ 335 004e 40       		.uleb128 0x40
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 8
+
+
+ 336 004f 18       		.uleb128 0x18
+ 337 0050 9742     		.uleb128 0x2117
+ 338 0052 19       		.uleb128 0x19
+ 339 0053 01       		.uleb128 0x1
+ 340 0054 13       		.uleb128 0x13
+ 341 0055 00       		.byte	0
+ 342 0056 00       		.byte	0
+ 343 0057 07       		.uleb128 0x7
+ 344 0058 05       		.uleb128 0x5
+ 345 0059 00       		.byte	0
+ 346 005a 03       		.uleb128 0x3
+ 347 005b 0E       		.uleb128 0xe
+ 348 005c 3A       		.uleb128 0x3a
+ 349 005d 0B       		.uleb128 0xb
+ 350 005e 3B       		.uleb128 0x3b
+ 351 005f 0B       		.uleb128 0xb
+ 352 0060 49       		.uleb128 0x49
+ 353 0061 13       		.uleb128 0x13
+ 354 0062 02       		.uleb128 0x2
+ 355 0063 18       		.uleb128 0x18
+ 356 0064 00       		.byte	0
+ 357 0065 00       		.byte	0
+ 358 0066 08       		.uleb128 0x8
+ 359 0067 2E       		.uleb128 0x2e
+ 360 0068 01       		.byte	0x1
+ 361 0069 3F       		.uleb128 0x3f
+ 362 006a 19       		.uleb128 0x19
+ 363 006b 03       		.uleb128 0x3
+ 364 006c 0E       		.uleb128 0xe
+ 365 006d 3A       		.uleb128 0x3a
+ 366 006e 0B       		.uleb128 0xb
+ 367 006f 3B       		.uleb128 0x3b
+ 368 0070 0B       		.uleb128 0xb
+ 369 0071 27       		.uleb128 0x27
+ 370 0072 19       		.uleb128 0x19
+ 371 0073 11       		.uleb128 0x11
+ 372 0074 01       		.uleb128 0x1
+ 373 0075 12       		.uleb128 0x12
+ 374 0076 06       		.uleb128 0x6
+ 375 0077 40       		.uleb128 0x40
+ 376 0078 18       		.uleb128 0x18
+ 377 0079 9742     		.uleb128 0x2117
+ 378 007b 19       		.uleb128 0x19
+ 379 007c 00       		.byte	0
+ 380 007d 00       		.byte	0
+ 381 007e 00       		.byte	0
+ 382              		.section	.debug_aranges,"",%progbits
+ 383 0000 24000000 		.4byte	0x24
+ 384 0004 0200     		.2byte	0x2
+ 385 0006 00000000 		.4byte	.Ldebug_info0
+ 386 000a 04       		.byte	0x4
+ 387 000b 00       		.byte	0
+ 388 000c 0000     		.2byte	0
+ 389 000e 0000     		.2byte	0
+ 390 0010 00000000 		.4byte	.LFB0
+ 391 0014 3C000000 		.4byte	.LFE0-.LFB0
+ 392 0018 00000000 		.4byte	.LFB1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 9
+
+
+ 393 001c 3C000000 		.4byte	.LFE1-.LFB1
+ 394 0020 00000000 		.4byte	0
+ 395 0024 00000000 		.4byte	0
+ 396              		.section	.debug_ranges,"",%progbits
+ 397              	.Ldebug_ranges0:
+ 398 0000 00000000 		.4byte	.LFB0
+ 399 0004 3C000000 		.4byte	.LFE0
+ 400 0008 00000000 		.4byte	.LFB1
+ 401 000c 3C000000 		.4byte	.LFE1
+ 402 0010 00000000 		.4byte	0
+ 403 0014 00000000 		.4byte	0
+ 404              		.section	.debug_line,"",%progbits
+ 405              	.Ldebug_line0:
+ 406 0000 78000000 		.section	.debug_str,"MS",%progbits,1
+ 406      02004E00 
+ 406      00000201 
+ 406      FB0E0D00 
+ 406      01010101 
+ 407              	.LASF6:
+ 408 0000 6C6F6E67 		.ascii	"long long int\000"
+ 408      206C6F6E 
+ 408      6720696E 
+ 408      7400
+ 409              	.LASF8:
+ 410 000e 756E7369 		.ascii	"unsigned int\000"
+ 410      676E6564 
+ 410      20696E74 
+ 410      00
+ 411              	.LASF16:
+ 412 001b 6D6F6465 		.ascii	"mode\000"
+ 412      00
+ 413              	.LASF13:
+ 414 0020 72656738 		.ascii	"reg8\000"
+ 414      00
+ 415              	.LASF12:
+ 416 0025 75696E74 		.ascii	"uint8\000"
+ 416      3800
+ 417              	.LASF5:
+ 418 002b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 418      20756E73 
+ 418      69676E65 
+ 418      6420696E 
+ 418      7400
+ 419              	.LASF21:
+ 420 003d 43617053 		.ascii	"CapSense_CSD_SetAllCmodsDriveMode\000"
+ 420      656E7365 
+ 420      5F435344 
+ 420      5F536574 
+ 420      416C6C43 
+ 421              	.LASF7:
+ 422 005f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 422      206C6F6E 
+ 422      6720756E 
+ 422      7369676E 
+ 422      65642069 
+ 423              	.LASF9:
+ 424 0076 666C6F61 		.ascii	"float\000"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 10
+
+
+ 424      7400
+ 425              	.LASF17:
+ 426 007c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 426      43313120 
+ 426      352E342E 
+ 426      31203230 
+ 426      31363036 
+ 427 00af 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 427      20726576 
+ 427      6973696F 
+ 427      6E203233 
+ 427      37373135 
+ 428 00e2 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 428      66756E63 
+ 428      74696F6E 
+ 428      2D736563 
+ 428      74696F6E 
+ 429              	.LASF1:
+ 430 010a 756E7369 		.ascii	"unsigned char\000"
+ 430      676E6564 
+ 430      20636861 
+ 430      7200
+ 431              	.LASF11:
+ 432 0118 63686172 		.ascii	"char\000"
+ 432      00
+ 433              	.LASF4:
+ 434 011d 6C6F6E67 		.ascii	"long int\000"
+ 434      20696E74 
+ 434      00
+ 435              	.LASF20:
+ 436 0126 43617053 		.ascii	"CapSense_CSD_SetAllSensorsDriveMode\000"
+ 436      656E7365 
+ 436      5F435344 
+ 436      5F536574 
+ 436      416C6C53 
+ 437              	.LASF10:
+ 438 014a 646F7562 		.ascii	"double\000"
+ 438      6C6500
+ 439              	.LASF19:
+ 440 0151 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 440      73657273 
+ 440      5C6E696B 
+ 440      6F6C5C44 
+ 440      6F63756D 
+ 441 017e 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CapSense_CSD_Desig"
+ 441      7965725F 
+ 441      73696465 
+ 441      5F617070 
+ 441      5C437570 
+ 442 01ae 6E30312E 		.ascii	"n01.cydsn\000"
+ 442      63796473 
+ 442      6E00
+ 443              	.LASF3:
+ 444 01b8 73686F72 		.ascii	"short unsigned int\000"
+ 444      7420756E 
+ 444      7369676E 
+ 444      65642069 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccSmwdI7.s 			page 11
+
+
+ 444      6E7400
+ 445              	.LASF0:
+ 446 01cb 7369676E 		.ascii	"signed char\000"
+ 446      65642063 
+ 446      68617200 
+ 447              	.LASF14:
+ 448 01d7 6C6F6E67 		.ascii	"long double\000"
+ 448      20646F75 
+ 448      626C6500 
+ 449              	.LASF2:
+ 450 01e3 73686F72 		.ascii	"short int\000"
+ 450      7420696E 
+ 450      7400
+ 451              	.LASF18:
+ 452 01ed 47656E65 		.ascii	"Generated_Source\\PSoC5\\CapSense_CSD_Pins.c\000"
+ 452      72617465 
+ 452      645F536F 
+ 452      75726365 
+ 452      5C50536F 
+ 453              	.LASF15:
+ 454 0218 73697A65 		.ascii	"sizetype\000"
+ 454      74797065 
+ 454      00
+ 455              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

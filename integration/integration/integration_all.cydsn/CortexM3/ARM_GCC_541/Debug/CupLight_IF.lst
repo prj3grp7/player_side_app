@@ -1,0 +1,1036 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CupLight_IF.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.controlLight,"ax",%progbits
+  20              		.align	2
+  21              		.global	controlLight
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	controlLight, %function
+  25              	controlLight:
+  26              	.LFB64:
+  27              		.file 1 "CupLight_IF.c"
+   1:CupLight_IF.c **** /* ========================================
+   2:CupLight_IF.c ****  *
+   3:CupLight_IF.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:CupLight_IF.c ****  * All Rights Reserved
+   5:CupLight_IF.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:CupLight_IF.c ****  *
+   7:CupLight_IF.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:CupLight_IF.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:CupLight_IF.c ****  *
+  10:CupLight_IF.c ****  * ========================================
+  11:CupLight_IF.c **** */
+  12:CupLight_IF.c **** #include "CupLight_IF.h"
+  13:CupLight_IF.c **** 
+  14:CupLight_IF.c **** volatile uint8_t NUMLEDS = 8*SHIFT_REGISTERS/3;
+  15:CupLight_IF.c **** 
+  16:CupLight_IF.c **** void controlLight(uint8_t nr, color_t color)
+  17:CupLight_IF.c **** {
+  28              		.loc 1 17 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37 0002 82B0     		sub	sp, sp, #8
+  38              		.cfi_def_cfa_offset 16
+  39 0004 0191     		str	r1, [sp, #4]
+  18:CupLight_IF.c ****     if (nr < NUMLEDS)
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 2
+
+
+  40              		.loc 1 18 0
+  41 0006 104B     		ldr	r3, .L4
+  42 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  43 000a DBB2     		uxtb	r3, r3
+  44 000c 8342     		cmp	r3, r0
+  45 000e 19D9     		bls	.L1
+  46              	.LBB2:
+  19:CupLight_IF.c ****     {
+  20:CupLight_IF.c ****         uint8_t shiftRegPos = 3*nr;
+  47              		.loc 1 20 0
+  48 0010 00EB4000 		add	r0, r0, r0, lsl #1
+  49              	.LVL1:
+  50 0014 C4B2     		uxtb	r4, r0
+  51              	.LVL2:
+  21:CupLight_IF.c ****         setPin(shiftRegPos,~color.Red);
+  52              		.loc 1 21 0
+  53 0016 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+  54 001a C943     		mvns	r1, r1
+  55 001c C9B2     		uxtb	r1, r1
+  56 001e 2046     		mov	r0, r4
+  57 0020 FFF7FEFF 		bl	setPin
+  58              	.LVL3:
+  22:CupLight_IF.c ****         setPin(shiftRegPos+1,~color.Green);
+  59              		.loc 1 22 0
+  60 0024 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
+  61 0028 C943     		mvns	r1, r1
+  62 002a 601C     		adds	r0, r4, #1
+  63 002c C9B2     		uxtb	r1, r1
+  64 002e C0B2     		uxtb	r0, r0
+  65 0030 FFF7FEFF 		bl	setPin
+  66              	.LVL4:
+  23:CupLight_IF.c ****         setPin(shiftRegPos+2,~color.Blue);
+  67              		.loc 1 23 0
+  68 0034 9DF80610 		ldrb	r1, [sp, #6]	@ zero_extendqisi2
+  69 0038 C943     		mvns	r1, r1
+  70 003a A01C     		adds	r0, r4, #2
+  71 003c C9B2     		uxtb	r1, r1
+  72 003e C0B2     		uxtb	r0, r0
+  73 0040 FFF7FEFF 		bl	setPin
+  74              	.LVL5:
+  75              	.L1:
+  76              	.LBE2:
+  24:CupLight_IF.c ****     }
+  25:CupLight_IF.c **** }
+  77              		.loc 1 25 0
+  78 0044 02B0     		add	sp, sp, #8
+  79              		.cfi_def_cfa_offset 8
+  80              		@ sp needed
+  81 0046 10BD     		pop	{r4, pc}
+  82              	.L5:
+  83              		.align	2
+  84              	.L4:
+  85 0048 00000000 		.word	.LANCHOR0
+  86              		.cfi_endproc
+  87              	.LFE64:
+  88              		.size	controlLight, .-controlLight
+  89              		.section	.text.controlAllLights,"ax",%progbits
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 3
+
+
+  90              		.align	2
+  91              		.global	controlAllLights
+  92              		.thumb
+  93              		.thumb_func
+  94              		.type	controlAllLights, %function
+  95              	controlAllLights:
+  96              	.LFB65:
+  26:CupLight_IF.c **** 
+  27:CupLight_IF.c **** void controlAllLights(color_t color)
+  28:CupLight_IF.c **** {
+  97              		.loc 1 28 0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 8
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 0000 10B5     		push	{r4, lr}
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 4, -8
+ 104              		.cfi_offset 14, -4
+ 105 0002 82B0     		sub	sp, sp, #8
+ 106              		.cfi_def_cfa_offset 16
+ 107 0004 0190     		str	r0, [sp, #4]
+ 108              	.LVL6:
+ 109              	.LBB3:
+  29:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 110              		.loc 1 29 0
+ 111 0006 0024     		movs	r4, #0
+ 112 0008 05E0     		b	.L7
+ 113              	.LVL7:
+ 114              	.L8:
+  30:CupLight_IF.c ****          controlLight(i,color);
+ 115              		.loc 1 30 0 discriminator 3
+ 116 000a 0199     		ldr	r1, [sp, #4]
+ 117 000c 2046     		mov	r0, r4
+ 118 000e FFF7FEFF 		bl	controlLight
+ 119              	.LVL8:
+  29:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 120              		.loc 1 29 0 discriminator 3
+ 121 0012 0134     		adds	r4, r4, #1
+ 122              	.LVL9:
+ 123 0014 E4B2     		uxtb	r4, r4
+ 124              	.LVL10:
+ 125              	.L7:
+  29:CupLight_IF.c ****     for (uint8_t i = 0; i < NUMLEDS; i++){
+ 126              		.loc 1 29 0 is_stmt 0 discriminator 1
+ 127 0016 034B     		ldr	r3, .L10
+ 128 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 129 001a DBB2     		uxtb	r3, r3
+ 130 001c 9C42     		cmp	r4, r3
+ 131 001e F4D3     		bcc	.L8
+ 132              	.LBE3:
+  31:CupLight_IF.c ****     }
+  32:CupLight_IF.c **** }
+ 133              		.loc 1 32 0 is_stmt 1
+ 134 0020 02B0     		add	sp, sp, #8
+ 135              		.cfi_def_cfa_offset 8
+ 136              		@ sp needed
+ 137 0022 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 4
+
+
+ 138              	.LVL11:
+ 139              	.L11:
+ 140              		.align	2
+ 141              	.L10:
+ 142 0024 00000000 		.word	.LANCHOR0
+ 143              		.cfi_endproc
+ 144              	.LFE65:
+ 145              		.size	controlAllLights, .-controlAllLights
+ 146              		.global	NUMLEDS
+ 147              		.data
+ 148              		.set	.LANCHOR0,. + 0
+ 149              		.type	NUMLEDS, %object
+ 150              		.size	NUMLEDS, 1
+ 151              	NUMLEDS:
+ 152 0000 08       		.byte	8
+ 153              		.text
+ 154              	.Letext0:
+ 155              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 156              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 157              		.file 4 "CupLight_IF.h"
+ 158              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 159              		.file 6 "ShiftRegPWM.h"
+ 160              		.section	.debug_info,"",%progbits
+ 161              	.Ldebug_info0:
+ 162 0000 17020000 		.4byte	0x217
+ 163 0004 0400     		.2byte	0x4
+ 164 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 165 000a 04       		.byte	0x4
+ 166 000b 01       		.uleb128 0x1
+ 167 000c 35000000 		.4byte	.LASF27
+ 168 0010 0C       		.byte	0xc
+ 169 0011 F5010000 		.4byte	.LASF28
+ 170 0015 4D010000 		.4byte	.LASF29
+ 171 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 172 001d 00000000 		.4byte	0
+ 173 0021 00000000 		.4byte	.Ldebug_line0
+ 174 0025 02       		.uleb128 0x2
+ 175 0026 01       		.byte	0x1
+ 176 0027 06       		.byte	0x6
+ 177 0028 2A020000 		.4byte	.LASF0
+ 178 002c 03       		.uleb128 0x3
+ 179 002d 00000000 		.4byte	.LASF4
+ 180 0031 02       		.byte	0x2
+ 181 0032 1D       		.byte	0x1d
+ 182 0033 37000000 		.4byte	0x37
+ 183 0037 02       		.uleb128 0x2
+ 184 0038 01       		.byte	0x1
+ 185 0039 08       		.byte	0x8
+ 186 003a 27000000 		.4byte	.LASF1
+ 187 003e 02       		.uleb128 0x2
+ 188 003f 02       		.byte	0x2
+ 189 0040 05       		.byte	0x5
+ 190 0041 03020000 		.4byte	.LASF2
+ 191 0045 02       		.uleb128 0x2
+ 192 0046 02       		.byte	0x2
+ 193 0047 07       		.byte	0x7
+ 194 0048 D5000000 		.4byte	.LASF3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 5
+
+
+ 195 004c 03       		.uleb128 0x3
+ 196 004d 0A000000 		.4byte	.LASF5
+ 197 0051 02       		.byte	0x2
+ 198 0052 3F       		.byte	0x3f
+ 199 0053 57000000 		.4byte	0x57
+ 200 0057 02       		.uleb128 0x2
+ 201 0058 04       		.byte	0x4
+ 202 0059 05       		.byte	0x5
+ 203 005a 15020000 		.4byte	.LASF6
+ 204 005e 02       		.uleb128 0x2
+ 205 005f 04       		.byte	0x4
+ 206 0060 07       		.byte	0x7
+ 207 0061 C3000000 		.4byte	.LASF7
+ 208 0065 02       		.uleb128 0x2
+ 209 0066 08       		.byte	0x8
+ 210 0067 05       		.byte	0x5
+ 211 0068 DB010000 		.4byte	.LASF8
+ 212 006c 02       		.uleb128 0x2
+ 213 006d 08       		.byte	0x8
+ 214 006e 07       		.byte	0x7
+ 215 006f 22010000 		.4byte	.LASF9
+ 216 0073 04       		.uleb128 0x4
+ 217 0074 04       		.byte	0x4
+ 218 0075 05       		.byte	0x5
+ 219 0076 696E7400 		.ascii	"int\000"
+ 220 007a 02       		.uleb128 0x2
+ 221 007b 04       		.byte	0x4
+ 222 007c 07       		.byte	0x7
+ 223 007d 0F010000 		.4byte	.LASF10
+ 224 0081 03       		.uleb128 0x3
+ 225 0082 39010000 		.4byte	.LASF11
+ 226 0086 03       		.byte	0x3
+ 227 0087 18       		.byte	0x18
+ 228 0088 2C000000 		.4byte	0x2c
+ 229 008c 03       		.uleb128 0x3
+ 230 008d B9010000 		.4byte	.LASF12
+ 231 0091 03       		.byte	0x3
+ 232 0092 2C       		.byte	0x2c
+ 233 0093 4C000000 		.4byte	0x4c
+ 234 0097 02       		.uleb128 0x2
+ 235 0098 04       		.byte	0x4
+ 236 0099 04       		.byte	0x4
+ 237 009a 21000000 		.4byte	.LASF13
+ 238 009e 02       		.uleb128 0x2
+ 239 009f 08       		.byte	0x8
+ 240 00a0 04       		.byte	0x4
+ 241 00a1 02010000 		.4byte	.LASF14
+ 242 00a5 02       		.uleb128 0x2
+ 243 00a6 01       		.byte	0x1
+ 244 00a7 08       		.byte	0x8
+ 245 00a8 E9010000 		.4byte	.LASF15
+ 246 00ac 02       		.uleb128 0x2
+ 247 00ad 08       		.byte	0x8
+ 248 00ae 04       		.byte	0x4
+ 249 00af 1E020000 		.4byte	.LASF16
+ 250 00b3 02       		.uleb128 0x2
+ 251 00b4 04       		.byte	0x4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 6
+
+
+ 252 00b5 07       		.byte	0x7
+ 253 00b6 C1010000 		.4byte	.LASF17
+ 254 00ba 05       		.uleb128 0x5
+ 255 00bb 81000000 		.4byte	0x81
+ 256 00bf 06       		.uleb128 0x6
+ 257 00c0 09010000 		.4byte	.LASF21
+ 258 00c4 03       		.byte	0x3
+ 259 00c5 04       		.byte	0x4
+ 260 00c6 12       		.byte	0x12
+ 261 00c7 F0000000 		.4byte	0xf0
+ 262 00cb 07       		.uleb128 0x7
+ 263 00cc 52656400 		.ascii	"Red\000"
+ 264 00d0 04       		.byte	0x4
+ 265 00d1 14       		.byte	0x14
+ 266 00d2 81000000 		.4byte	0x81
+ 267 00d6 00       		.byte	0
+ 268 00d7 08       		.uleb128 0x8
+ 269 00d8 1C010000 		.4byte	.LASF18
+ 270 00dc 04       		.byte	0x4
+ 271 00dd 15       		.byte	0x15
+ 272 00de 81000000 		.4byte	0x81
+ 273 00e2 01       		.byte	0x1
+ 274 00e3 08       		.uleb128 0x8
+ 275 00e4 F5000000 		.4byte	.LASF19
+ 276 00e8 04       		.byte	0x4
+ 277 00e9 16       		.byte	0x16
+ 278 00ea 81000000 		.4byte	0x81
+ 279 00ee 02       		.byte	0x2
+ 280 00ef 00       		.byte	0
+ 281 00f0 03       		.uleb128 0x3
+ 282 00f1 FA000000 		.4byte	.LASF20
+ 283 00f5 04       		.byte	0x4
+ 284 00f6 17       		.byte	0x17
+ 285 00f7 BF000000 		.4byte	0xbf
+ 286 00fb 09       		.uleb128 0x9
+ 287 00fc 14000000 		.4byte	.LASF22
+ 288 0100 01       		.byte	0x1
+ 289 0101 10       		.byte	0x10
+ 290 0102 00000000 		.4byte	.LFB64
+ 291 0106 4C000000 		.4byte	.LFE64-.LFB64
+ 292 010a 01       		.uleb128 0x1
+ 293 010b 9C       		.byte	0x9c
+ 294 010c A2010000 		.4byte	0x1a2
+ 295 0110 0A       		.uleb128 0xa
+ 296 0111 6E7200   		.ascii	"nr\000"
+ 297 0114 01       		.byte	0x1
+ 298 0115 10       		.byte	0x10
+ 299 0116 81000000 		.4byte	0x81
+ 300 011a 00000000 		.4byte	.LLST0
+ 301 011e 0B       		.uleb128 0xb
+ 302 011f 09010000 		.4byte	.LASF21
+ 303 0123 01       		.byte	0x1
+ 304 0124 10       		.byte	0x10
+ 305 0125 F0000000 		.4byte	0xf0
+ 306 0129 02       		.uleb128 0x2
+ 307 012a 91       		.byte	0x91
+ 308 012b 74       		.sleb128 -12
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 7
+
+
+ 309 012c 0C       		.uleb128 0xc
+ 310 012d 10000000 		.4byte	.LBB2
+ 311 0131 34000000 		.4byte	.LBE2-.LBB2
+ 312 0135 0D       		.uleb128 0xd
+ 313 0136 41010000 		.4byte	.LASF24
+ 314 013a 01       		.byte	0x1
+ 315 013b 14       		.byte	0x14
+ 316 013c 81000000 		.4byte	0x81
+ 317 0140 21000000 		.4byte	.LLST1
+ 318 0144 0E       		.uleb128 0xe
+ 319 0145 24000000 		.4byte	.LVL3
+ 320 0149 0F020000 		.4byte	0x20f
+ 321 014d 64010000 		.4byte	0x164
+ 322 0151 0F       		.uleb128 0xf
+ 323 0152 01       		.uleb128 0x1
+ 324 0153 50       		.byte	0x50
+ 325 0154 02       		.uleb128 0x2
+ 326 0155 74       		.byte	0x74
+ 327 0156 00       		.sleb128 0
+ 328 0157 0F       		.uleb128 0xf
+ 329 0158 01       		.uleb128 0x1
+ 330 0159 51       		.byte	0x51
+ 331 015a 08       		.uleb128 0x8
+ 332 015b 91       		.byte	0x91
+ 333 015c 74       		.sleb128 -12
+ 334 015d 94       		.byte	0x94
+ 335 015e 01       		.byte	0x1
+ 336 015f 08       		.byte	0x8
+ 337 0160 FF       		.byte	0xff
+ 338 0161 1A       		.byte	0x1a
+ 339 0162 20       		.byte	0x20
+ 340 0163 00       		.byte	0
+ 341 0164 0E       		.uleb128 0xe
+ 342 0165 34000000 		.4byte	.LVL4
+ 343 0169 0F020000 		.4byte	0x20f
+ 344 016d 84010000 		.4byte	0x184
+ 345 0171 0F       		.uleb128 0xf
+ 346 0172 01       		.uleb128 0x1
+ 347 0173 50       		.byte	0x50
+ 348 0174 02       		.uleb128 0x2
+ 349 0175 74       		.byte	0x74
+ 350 0176 01       		.sleb128 1
+ 351 0177 0F       		.uleb128 0xf
+ 352 0178 01       		.uleb128 0x1
+ 353 0179 51       		.byte	0x51
+ 354 017a 08       		.uleb128 0x8
+ 355 017b 91       		.byte	0x91
+ 356 017c 75       		.sleb128 -11
+ 357 017d 94       		.byte	0x94
+ 358 017e 01       		.byte	0x1
+ 359 017f 08       		.byte	0x8
+ 360 0180 FF       		.byte	0xff
+ 361 0181 1A       		.byte	0x1a
+ 362 0182 20       		.byte	0x20
+ 363 0183 00       		.byte	0
+ 364 0184 10       		.uleb128 0x10
+ 365 0185 44000000 		.4byte	.LVL5
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 8
+
+
+ 366 0189 0F020000 		.4byte	0x20f
+ 367 018d 0F       		.uleb128 0xf
+ 368 018e 01       		.uleb128 0x1
+ 369 018f 50       		.byte	0x50
+ 370 0190 02       		.uleb128 0x2
+ 371 0191 74       		.byte	0x74
+ 372 0192 02       		.sleb128 2
+ 373 0193 0F       		.uleb128 0xf
+ 374 0194 01       		.uleb128 0x1
+ 375 0195 51       		.byte	0x51
+ 376 0196 08       		.uleb128 0x8
+ 377 0197 91       		.byte	0x91
+ 378 0198 76       		.sleb128 -10
+ 379 0199 94       		.byte	0x94
+ 380 019a 01       		.byte	0x1
+ 381 019b 08       		.byte	0x8
+ 382 019c FF       		.byte	0xff
+ 383 019d 1A       		.byte	0x1a
+ 384 019e 20       		.byte	0x20
+ 385 019f 00       		.byte	0
+ 386 01a0 00       		.byte	0
+ 387 01a1 00       		.byte	0
+ 388 01a2 09       		.uleb128 0x9
+ 389 01a3 CA010000 		.4byte	.LASF23
+ 390 01a7 01       		.byte	0x1
+ 391 01a8 1B       		.byte	0x1b
+ 392 01a9 00000000 		.4byte	.LFB65
+ 393 01ad 28000000 		.4byte	.LFE65-.LFB65
+ 394 01b1 01       		.uleb128 0x1
+ 395 01b2 9C       		.byte	0x9c
+ 396 01b3 ED010000 		.4byte	0x1ed
+ 397 01b7 0B       		.uleb128 0xb
+ 398 01b8 09010000 		.4byte	.LASF21
+ 399 01bc 01       		.byte	0x1
+ 400 01bd 1B       		.byte	0x1b
+ 401 01be F0000000 		.4byte	0xf0
+ 402 01c2 02       		.uleb128 0x2
+ 403 01c3 91       		.byte	0x91
+ 404 01c4 74       		.sleb128 -12
+ 405 01c5 0C       		.uleb128 0xc
+ 406 01c6 06000000 		.4byte	.LBB3
+ 407 01ca 1A000000 		.4byte	.LBE3-.LBB3
+ 408 01ce 11       		.uleb128 0x11
+ 409 01cf 6900     		.ascii	"i\000"
+ 410 01d1 01       		.byte	0x1
+ 411 01d2 1D       		.byte	0x1d
+ 412 01d3 81000000 		.4byte	0x81
+ 413 01d7 34000000 		.4byte	.LLST2
+ 414 01db 10       		.uleb128 0x10
+ 415 01dc 12000000 		.4byte	.LVL8
+ 416 01e0 FB000000 		.4byte	0xfb
+ 417 01e4 0F       		.uleb128 0xf
+ 418 01e5 01       		.uleb128 0x1
+ 419 01e6 50       		.byte	0x50
+ 420 01e7 02       		.uleb128 0x2
+ 421 01e8 74       		.byte	0x74
+ 422 01e9 00       		.sleb128 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 9
+
+
+ 423 01ea 00       		.byte	0
+ 424 01eb 00       		.byte	0
+ 425 01ec 00       		.byte	0
+ 426 01ed 12       		.uleb128 0x12
+ 427 01ee E8000000 		.4byte	.LASF25
+ 428 01f2 05       		.byte	0x5
+ 429 01f3 1207     		.2byte	0x712
+ 430 01f5 F9010000 		.4byte	0x1f9
+ 431 01f9 05       		.uleb128 0x5
+ 432 01fa 8C000000 		.4byte	0x8c
+ 433 01fe 13       		.uleb128 0x13
+ 434 01ff 0D020000 		.4byte	.LASF26
+ 435 0203 01       		.byte	0x1
+ 436 0204 0E       		.byte	0xe
+ 437 0205 BA000000 		.4byte	0xba
+ 438 0209 05       		.uleb128 0x5
+ 439 020a 03       		.byte	0x3
+ 440 020b 00000000 		.4byte	NUMLEDS
+ 441 020f 14       		.uleb128 0x14
+ 442 0210 EE010000 		.4byte	.LASF30
+ 443 0214 EE010000 		.4byte	.LASF30
+ 444 0218 06       		.byte	0x6
+ 445 0219 1F       		.byte	0x1f
+ 446 021a 00       		.byte	0
+ 447              		.section	.debug_abbrev,"",%progbits
+ 448              	.Ldebug_abbrev0:
+ 449 0000 01       		.uleb128 0x1
+ 450 0001 11       		.uleb128 0x11
+ 451 0002 01       		.byte	0x1
+ 452 0003 25       		.uleb128 0x25
+ 453 0004 0E       		.uleb128 0xe
+ 454 0005 13       		.uleb128 0x13
+ 455 0006 0B       		.uleb128 0xb
+ 456 0007 03       		.uleb128 0x3
+ 457 0008 0E       		.uleb128 0xe
+ 458 0009 1B       		.uleb128 0x1b
+ 459 000a 0E       		.uleb128 0xe
+ 460 000b 55       		.uleb128 0x55
+ 461 000c 17       		.uleb128 0x17
+ 462 000d 11       		.uleb128 0x11
+ 463 000e 01       		.uleb128 0x1
+ 464 000f 10       		.uleb128 0x10
+ 465 0010 17       		.uleb128 0x17
+ 466 0011 00       		.byte	0
+ 467 0012 00       		.byte	0
+ 468 0013 02       		.uleb128 0x2
+ 469 0014 24       		.uleb128 0x24
+ 470 0015 00       		.byte	0
+ 471 0016 0B       		.uleb128 0xb
+ 472 0017 0B       		.uleb128 0xb
+ 473 0018 3E       		.uleb128 0x3e
+ 474 0019 0B       		.uleb128 0xb
+ 475 001a 03       		.uleb128 0x3
+ 476 001b 0E       		.uleb128 0xe
+ 477 001c 00       		.byte	0
+ 478 001d 00       		.byte	0
+ 479 001e 03       		.uleb128 0x3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 10
+
+
+ 480 001f 16       		.uleb128 0x16
+ 481 0020 00       		.byte	0
+ 482 0021 03       		.uleb128 0x3
+ 483 0022 0E       		.uleb128 0xe
+ 484 0023 3A       		.uleb128 0x3a
+ 485 0024 0B       		.uleb128 0xb
+ 486 0025 3B       		.uleb128 0x3b
+ 487 0026 0B       		.uleb128 0xb
+ 488 0027 49       		.uleb128 0x49
+ 489 0028 13       		.uleb128 0x13
+ 490 0029 00       		.byte	0
+ 491 002a 00       		.byte	0
+ 492 002b 04       		.uleb128 0x4
+ 493 002c 24       		.uleb128 0x24
+ 494 002d 00       		.byte	0
+ 495 002e 0B       		.uleb128 0xb
+ 496 002f 0B       		.uleb128 0xb
+ 497 0030 3E       		.uleb128 0x3e
+ 498 0031 0B       		.uleb128 0xb
+ 499 0032 03       		.uleb128 0x3
+ 500 0033 08       		.uleb128 0x8
+ 501 0034 00       		.byte	0
+ 502 0035 00       		.byte	0
+ 503 0036 05       		.uleb128 0x5
+ 504 0037 35       		.uleb128 0x35
+ 505 0038 00       		.byte	0
+ 506 0039 49       		.uleb128 0x49
+ 507 003a 13       		.uleb128 0x13
+ 508 003b 00       		.byte	0
+ 509 003c 00       		.byte	0
+ 510 003d 06       		.uleb128 0x6
+ 511 003e 13       		.uleb128 0x13
+ 512 003f 01       		.byte	0x1
+ 513 0040 03       		.uleb128 0x3
+ 514 0041 0E       		.uleb128 0xe
+ 515 0042 0B       		.uleb128 0xb
+ 516 0043 0B       		.uleb128 0xb
+ 517 0044 3A       		.uleb128 0x3a
+ 518 0045 0B       		.uleb128 0xb
+ 519 0046 3B       		.uleb128 0x3b
+ 520 0047 0B       		.uleb128 0xb
+ 521 0048 01       		.uleb128 0x1
+ 522 0049 13       		.uleb128 0x13
+ 523 004a 00       		.byte	0
+ 524 004b 00       		.byte	0
+ 525 004c 07       		.uleb128 0x7
+ 526 004d 0D       		.uleb128 0xd
+ 527 004e 00       		.byte	0
+ 528 004f 03       		.uleb128 0x3
+ 529 0050 08       		.uleb128 0x8
+ 530 0051 3A       		.uleb128 0x3a
+ 531 0052 0B       		.uleb128 0xb
+ 532 0053 3B       		.uleb128 0x3b
+ 533 0054 0B       		.uleb128 0xb
+ 534 0055 49       		.uleb128 0x49
+ 535 0056 13       		.uleb128 0x13
+ 536 0057 38       		.uleb128 0x38
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 11
+
+
+ 537 0058 0B       		.uleb128 0xb
+ 538 0059 00       		.byte	0
+ 539 005a 00       		.byte	0
+ 540 005b 08       		.uleb128 0x8
+ 541 005c 0D       		.uleb128 0xd
+ 542 005d 00       		.byte	0
+ 543 005e 03       		.uleb128 0x3
+ 544 005f 0E       		.uleb128 0xe
+ 545 0060 3A       		.uleb128 0x3a
+ 546 0061 0B       		.uleb128 0xb
+ 547 0062 3B       		.uleb128 0x3b
+ 548 0063 0B       		.uleb128 0xb
+ 549 0064 49       		.uleb128 0x49
+ 550 0065 13       		.uleb128 0x13
+ 551 0066 38       		.uleb128 0x38
+ 552 0067 0B       		.uleb128 0xb
+ 553 0068 00       		.byte	0
+ 554 0069 00       		.byte	0
+ 555 006a 09       		.uleb128 0x9
+ 556 006b 2E       		.uleb128 0x2e
+ 557 006c 01       		.byte	0x1
+ 558 006d 3F       		.uleb128 0x3f
+ 559 006e 19       		.uleb128 0x19
+ 560 006f 03       		.uleb128 0x3
+ 561 0070 0E       		.uleb128 0xe
+ 562 0071 3A       		.uleb128 0x3a
+ 563 0072 0B       		.uleb128 0xb
+ 564 0073 3B       		.uleb128 0x3b
+ 565 0074 0B       		.uleb128 0xb
+ 566 0075 27       		.uleb128 0x27
+ 567 0076 19       		.uleb128 0x19
+ 568 0077 11       		.uleb128 0x11
+ 569 0078 01       		.uleb128 0x1
+ 570 0079 12       		.uleb128 0x12
+ 571 007a 06       		.uleb128 0x6
+ 572 007b 40       		.uleb128 0x40
+ 573 007c 18       		.uleb128 0x18
+ 574 007d 9742     		.uleb128 0x2117
+ 575 007f 19       		.uleb128 0x19
+ 576 0080 01       		.uleb128 0x1
+ 577 0081 13       		.uleb128 0x13
+ 578 0082 00       		.byte	0
+ 579 0083 00       		.byte	0
+ 580 0084 0A       		.uleb128 0xa
+ 581 0085 05       		.uleb128 0x5
+ 582 0086 00       		.byte	0
+ 583 0087 03       		.uleb128 0x3
+ 584 0088 08       		.uleb128 0x8
+ 585 0089 3A       		.uleb128 0x3a
+ 586 008a 0B       		.uleb128 0xb
+ 587 008b 3B       		.uleb128 0x3b
+ 588 008c 0B       		.uleb128 0xb
+ 589 008d 49       		.uleb128 0x49
+ 590 008e 13       		.uleb128 0x13
+ 591 008f 02       		.uleb128 0x2
+ 592 0090 17       		.uleb128 0x17
+ 593 0091 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 12
+
+
+ 594 0092 00       		.byte	0
+ 595 0093 0B       		.uleb128 0xb
+ 596 0094 05       		.uleb128 0x5
+ 597 0095 00       		.byte	0
+ 598 0096 03       		.uleb128 0x3
+ 599 0097 0E       		.uleb128 0xe
+ 600 0098 3A       		.uleb128 0x3a
+ 601 0099 0B       		.uleb128 0xb
+ 602 009a 3B       		.uleb128 0x3b
+ 603 009b 0B       		.uleb128 0xb
+ 604 009c 49       		.uleb128 0x49
+ 605 009d 13       		.uleb128 0x13
+ 606 009e 02       		.uleb128 0x2
+ 607 009f 18       		.uleb128 0x18
+ 608 00a0 00       		.byte	0
+ 609 00a1 00       		.byte	0
+ 610 00a2 0C       		.uleb128 0xc
+ 611 00a3 0B       		.uleb128 0xb
+ 612 00a4 01       		.byte	0x1
+ 613 00a5 11       		.uleb128 0x11
+ 614 00a6 01       		.uleb128 0x1
+ 615 00a7 12       		.uleb128 0x12
+ 616 00a8 06       		.uleb128 0x6
+ 617 00a9 00       		.byte	0
+ 618 00aa 00       		.byte	0
+ 619 00ab 0D       		.uleb128 0xd
+ 620 00ac 34       		.uleb128 0x34
+ 621 00ad 00       		.byte	0
+ 622 00ae 03       		.uleb128 0x3
+ 623 00af 0E       		.uleb128 0xe
+ 624 00b0 3A       		.uleb128 0x3a
+ 625 00b1 0B       		.uleb128 0xb
+ 626 00b2 3B       		.uleb128 0x3b
+ 627 00b3 0B       		.uleb128 0xb
+ 628 00b4 49       		.uleb128 0x49
+ 629 00b5 13       		.uleb128 0x13
+ 630 00b6 02       		.uleb128 0x2
+ 631 00b7 17       		.uleb128 0x17
+ 632 00b8 00       		.byte	0
+ 633 00b9 00       		.byte	0
+ 634 00ba 0E       		.uleb128 0xe
+ 635 00bb 898201   		.uleb128 0x4109
+ 636 00be 01       		.byte	0x1
+ 637 00bf 11       		.uleb128 0x11
+ 638 00c0 01       		.uleb128 0x1
+ 639 00c1 31       		.uleb128 0x31
+ 640 00c2 13       		.uleb128 0x13
+ 641 00c3 01       		.uleb128 0x1
+ 642 00c4 13       		.uleb128 0x13
+ 643 00c5 00       		.byte	0
+ 644 00c6 00       		.byte	0
+ 645 00c7 0F       		.uleb128 0xf
+ 646 00c8 8A8201   		.uleb128 0x410a
+ 647 00cb 00       		.byte	0
+ 648 00cc 02       		.uleb128 0x2
+ 649 00cd 18       		.uleb128 0x18
+ 650 00ce 9142     		.uleb128 0x2111
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 13
+
+
+ 651 00d0 18       		.uleb128 0x18
+ 652 00d1 00       		.byte	0
+ 653 00d2 00       		.byte	0
+ 654 00d3 10       		.uleb128 0x10
+ 655 00d4 898201   		.uleb128 0x4109
+ 656 00d7 01       		.byte	0x1
+ 657 00d8 11       		.uleb128 0x11
+ 658 00d9 01       		.uleb128 0x1
+ 659 00da 31       		.uleb128 0x31
+ 660 00db 13       		.uleb128 0x13
+ 661 00dc 00       		.byte	0
+ 662 00dd 00       		.byte	0
+ 663 00de 11       		.uleb128 0x11
+ 664 00df 34       		.uleb128 0x34
+ 665 00e0 00       		.byte	0
+ 666 00e1 03       		.uleb128 0x3
+ 667 00e2 08       		.uleb128 0x8
+ 668 00e3 3A       		.uleb128 0x3a
+ 669 00e4 0B       		.uleb128 0xb
+ 670 00e5 3B       		.uleb128 0x3b
+ 671 00e6 0B       		.uleb128 0xb
+ 672 00e7 49       		.uleb128 0x49
+ 673 00e8 13       		.uleb128 0x13
+ 674 00e9 02       		.uleb128 0x2
+ 675 00ea 17       		.uleb128 0x17
+ 676 00eb 00       		.byte	0
+ 677 00ec 00       		.byte	0
+ 678 00ed 12       		.uleb128 0x12
+ 679 00ee 34       		.uleb128 0x34
+ 680 00ef 00       		.byte	0
+ 681 00f0 03       		.uleb128 0x3
+ 682 00f1 0E       		.uleb128 0xe
+ 683 00f2 3A       		.uleb128 0x3a
+ 684 00f3 0B       		.uleb128 0xb
+ 685 00f4 3B       		.uleb128 0x3b
+ 686 00f5 05       		.uleb128 0x5
+ 687 00f6 49       		.uleb128 0x49
+ 688 00f7 13       		.uleb128 0x13
+ 689 00f8 3F       		.uleb128 0x3f
+ 690 00f9 19       		.uleb128 0x19
+ 691 00fa 3C       		.uleb128 0x3c
+ 692 00fb 19       		.uleb128 0x19
+ 693 00fc 00       		.byte	0
+ 694 00fd 00       		.byte	0
+ 695 00fe 13       		.uleb128 0x13
+ 696 00ff 34       		.uleb128 0x34
+ 697 0100 00       		.byte	0
+ 698 0101 03       		.uleb128 0x3
+ 699 0102 0E       		.uleb128 0xe
+ 700 0103 3A       		.uleb128 0x3a
+ 701 0104 0B       		.uleb128 0xb
+ 702 0105 3B       		.uleb128 0x3b
+ 703 0106 0B       		.uleb128 0xb
+ 704 0107 49       		.uleb128 0x49
+ 705 0108 13       		.uleb128 0x13
+ 706 0109 3F       		.uleb128 0x3f
+ 707 010a 19       		.uleb128 0x19
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 14
+
+
+ 708 010b 02       		.uleb128 0x2
+ 709 010c 18       		.uleb128 0x18
+ 710 010d 00       		.byte	0
+ 711 010e 00       		.byte	0
+ 712 010f 14       		.uleb128 0x14
+ 713 0110 2E       		.uleb128 0x2e
+ 714 0111 00       		.byte	0
+ 715 0112 3F       		.uleb128 0x3f
+ 716 0113 19       		.uleb128 0x19
+ 717 0114 3C       		.uleb128 0x3c
+ 718 0115 19       		.uleb128 0x19
+ 719 0116 6E       		.uleb128 0x6e
+ 720 0117 0E       		.uleb128 0xe
+ 721 0118 03       		.uleb128 0x3
+ 722 0119 0E       		.uleb128 0xe
+ 723 011a 3A       		.uleb128 0x3a
+ 724 011b 0B       		.uleb128 0xb
+ 725 011c 3B       		.uleb128 0x3b
+ 726 011d 0B       		.uleb128 0xb
+ 727 011e 00       		.byte	0
+ 728 011f 00       		.byte	0
+ 729 0120 00       		.byte	0
+ 730              		.section	.debug_loc,"",%progbits
+ 731              	.Ldebug_loc0:
+ 732              	.LLST0:
+ 733 0000 00000000 		.4byte	.LVL0
+ 734 0004 14000000 		.4byte	.LVL1
+ 735 0008 0100     		.2byte	0x1
+ 736 000a 50       		.byte	0x50
+ 737 000b 14000000 		.4byte	.LVL1
+ 738 000f 4C000000 		.4byte	.LFE64
+ 739 0013 0400     		.2byte	0x4
+ 740 0015 F3       		.byte	0xf3
+ 741 0016 01       		.uleb128 0x1
+ 742 0017 50       		.byte	0x50
+ 743 0018 9F       		.byte	0x9f
+ 744 0019 00000000 		.4byte	0
+ 745 001d 00000000 		.4byte	0
+ 746              	.LLST1:
+ 747 0021 16000000 		.4byte	.LVL2
+ 748 0025 44000000 		.4byte	.LVL5
+ 749 0029 0100     		.2byte	0x1
+ 750 002b 54       		.byte	0x54
+ 751 002c 00000000 		.4byte	0
+ 752 0030 00000000 		.4byte	0
+ 753              	.LLST2:
+ 754 0034 06000000 		.4byte	.LVL6
+ 755 0038 0A000000 		.4byte	.LVL7
+ 756 003c 0200     		.2byte	0x2
+ 757 003e 30       		.byte	0x30
+ 758 003f 9F       		.byte	0x9f
+ 759 0040 0A000000 		.4byte	.LVL7
+ 760 0044 14000000 		.4byte	.LVL9
+ 761 0048 0100     		.2byte	0x1
+ 762 004a 54       		.byte	0x54
+ 763 004b 16000000 		.4byte	.LVL10
+ 764 004f 24000000 		.4byte	.LVL11
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 15
+
+
+ 765 0053 0100     		.2byte	0x1
+ 766 0055 54       		.byte	0x54
+ 767 0056 00000000 		.4byte	0
+ 768 005a 00000000 		.4byte	0
+ 769              		.section	.debug_aranges,"",%progbits
+ 770 0000 24000000 		.4byte	0x24
+ 771 0004 0200     		.2byte	0x2
+ 772 0006 00000000 		.4byte	.Ldebug_info0
+ 773 000a 04       		.byte	0x4
+ 774 000b 00       		.byte	0
+ 775 000c 0000     		.2byte	0
+ 776 000e 0000     		.2byte	0
+ 777 0010 00000000 		.4byte	.LFB64
+ 778 0014 4C000000 		.4byte	.LFE64-.LFB64
+ 779 0018 00000000 		.4byte	.LFB65
+ 780 001c 28000000 		.4byte	.LFE65-.LFB65
+ 781 0020 00000000 		.4byte	0
+ 782 0024 00000000 		.4byte	0
+ 783              		.section	.debug_ranges,"",%progbits
+ 784              	.Ldebug_ranges0:
+ 785 0000 00000000 		.4byte	.LFB64
+ 786 0004 4C000000 		.4byte	.LFE64
+ 787 0008 00000000 		.4byte	.LFB65
+ 788 000c 28000000 		.4byte	.LFE65
+ 789 0010 00000000 		.4byte	0
+ 790 0014 00000000 		.4byte	0
+ 791              		.section	.debug_line,"",%progbits
+ 792              	.Ldebug_line0:
+ 793 0000 A5010000 		.section	.debug_str,"MS",%progbits,1
+ 793      02006801 
+ 793      00000201 
+ 793      FB0E0D00 
+ 793      01010101 
+ 794              	.LASF4:
+ 795 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 795      6E74385F 
+ 795      7400
+ 796              	.LASF5:
+ 797 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 797      7433325F 
+ 797      7400
+ 798              	.LASF22:
+ 799 0014 636F6E74 		.ascii	"controlLight\000"
+ 799      726F6C4C 
+ 799      69676874 
+ 799      00
+ 800              	.LASF13:
+ 801 0021 666C6F61 		.ascii	"float\000"
+ 801      7400
+ 802              	.LASF1:
+ 803 0027 756E7369 		.ascii	"unsigned char\000"
+ 803      676E6564 
+ 803      20636861 
+ 803      7200
+ 804              	.LASF27:
+ 805 0035 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 805      43313120 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 16
+
+
+ 805      352E342E 
+ 805      31203230 
+ 805      31363036 
+ 806 0068 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 806      20726576 
+ 806      6973696F 
+ 806      6E203233 
+ 806      37373135 
+ 807 009b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 807      66756E63 
+ 807      74696F6E 
+ 807      2D736563 
+ 807      74696F6E 
+ 808              	.LASF7:
+ 809 00c3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 809      20756E73 
+ 809      69676E65 
+ 809      6420696E 
+ 809      7400
+ 810              	.LASF3:
+ 811 00d5 73686F72 		.ascii	"short unsigned int\000"
+ 811      7420756E 
+ 811      7369676E 
+ 811      65642069 
+ 811      6E7400
+ 812              	.LASF25:
+ 813 00e8 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 813      52784275 
+ 813      66666572 
+ 813      00
+ 814              	.LASF19:
+ 815 00f5 426C7565 		.ascii	"Blue\000"
+ 815      00
+ 816              	.LASF20:
+ 817 00fa 636F6C6F 		.ascii	"color_t\000"
+ 817      725F7400 
+ 818              	.LASF14:
+ 819 0102 646F7562 		.ascii	"double\000"
+ 819      6C6500
+ 820              	.LASF21:
+ 821 0109 636F6C6F 		.ascii	"color\000"
+ 821      7200
+ 822              	.LASF10:
+ 823 010f 756E7369 		.ascii	"unsigned int\000"
+ 823      676E6564 
+ 823      20696E74 
+ 823      00
+ 824              	.LASF18:
+ 825 011c 47726565 		.ascii	"Green\000"
+ 825      6E00
+ 826              	.LASF9:
+ 827 0122 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 827      206C6F6E 
+ 827      6720756E 
+ 827      7369676E 
+ 827      65642069 
+ 828              	.LASF11:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 17
+
+
+ 829 0139 75696E74 		.ascii	"uint8_t\000"
+ 829      385F7400 
+ 830              	.LASF24:
+ 831 0141 73686966 		.ascii	"shiftRegPos\000"
+ 831      74526567 
+ 831      506F7300 
+ 832              	.LASF29:
+ 833 014d 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 833      73657273 
+ 833      5C6E696B 
+ 833      6F6C5C44 
+ 833      6F63756D 
+ 834 017a 5C706C61 		.ascii	"\\player_side_app\\integration\\integration\\integr"
+ 834      7965725F 
+ 834      73696465 
+ 834      5F617070 
+ 834      5C696E74 
+ 835 01a9 6174696F 		.ascii	"ation_all.cydsn\000"
+ 835      6E5F616C 
+ 835      6C2E6379 
+ 835      64736E00 
+ 836              	.LASF12:
+ 837 01b9 696E7433 		.ascii	"int32_t\000"
+ 837      325F7400 
+ 838              	.LASF17:
+ 839 01c1 73697A65 		.ascii	"sizetype\000"
+ 839      74797065 
+ 839      00
+ 840              	.LASF23:
+ 841 01ca 636F6E74 		.ascii	"controlAllLights\000"
+ 841      726F6C41 
+ 841      6C6C4C69 
+ 841      67687473 
+ 841      00
+ 842              	.LASF8:
+ 843 01db 6C6F6E67 		.ascii	"long long int\000"
+ 843      206C6F6E 
+ 843      6720696E 
+ 843      7400
+ 844              	.LASF15:
+ 845 01e9 63686172 		.ascii	"char\000"
+ 845      00
+ 846              	.LASF30:
+ 847 01ee 73657450 		.ascii	"setPin\000"
+ 847      696E00
+ 848              	.LASF28:
+ 849 01f5 4375704C 		.ascii	"CupLight_IF.c\000"
+ 849      69676874 
+ 849      5F49462E 
+ 849      6300
+ 850              	.LASF2:
+ 851 0203 73686F72 		.ascii	"short int\000"
+ 851      7420696E 
+ 851      7400
+ 852              	.LASF26:
+ 853 020d 4E554D4C 		.ascii	"NUMLEDS\000"
+ 853      45445300 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccJpIITQ.s 			page 18
+
+
+ 854              	.LASF6:
+ 855 0215 6C6F6E67 		.ascii	"long int\000"
+ 855      20696E74 
+ 855      00
+ 856              	.LASF16:
+ 857 021e 6C6F6E67 		.ascii	"long double\000"
+ 857      20646F75 
+ 857      626C6500 
+ 858              	.LASF0:
+ 859 022a 7369676E 		.ascii	"signed char\000"
+ 859      65642063 
+ 859      68617200 
+ 860              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

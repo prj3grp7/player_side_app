@@ -1,0 +1,1391 @@
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"rgb_led.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.initRGBLED,"ax",%progbits
+  20              		.align	2
+  21              		.global	initRGBLED
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	initRGBLED, %function
+  25              	initRGBLED:
+  26              	.LFB63:
+  27              		.file 1 "rgb_led.c"
+   1:rgb_led.c     ****               /* ========================================
+   2:rgb_led.c     ****  *
+   3:rgb_led.c     ****  * Copyright YOUR COMPANY, THE YEAR
+   4:rgb_led.c     ****  * All Rights Reserved
+   5:rgb_led.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:rgb_led.c     ****  *
+   7:rgb_led.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:rgb_led.c     ****  * WHICH IS THE PROPERTY OF your company.
+   9:rgb_led.c     ****  *
+  10:rgb_led.c     ****  * ========================================
+  11:rgb_led.c     **** */
+  12:rgb_led.c     **** #include "rgb_led.h"
+  13:rgb_led.c     **** 
+  14:rgb_led.c     **** void initRGBLED()
+  15:rgb_led.c     **** {
+  28              		.loc 1 15 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  16:rgb_led.c     ****     //Init colors and brightness pwm
+  17:rgb_led.c     ****     PWM_RED_Start();
+  36              		.loc 1 17 0
+  37 0002 FFF7FEFF 		bl	PWM_RED_Start
+  38              	.LVL0:
+  18:rgb_led.c     ****     PWM_GREEN_Start();
+  39              		.loc 1 18 0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 2
+
+
+  40 0006 FFF7FEFF 		bl	PWM_GREEN_Start
+  41              	.LVL1:
+  19:rgb_led.c     ****     PWM_BLUE_Start();
+  42              		.loc 1 19 0
+  43 000a FFF7FEFF 		bl	PWM_BLUE_Start
+  44              	.LVL2:
+  45 000e 08BD     		pop	{r3, pc}
+  46              		.cfi_endproc
+  47              	.LFE63:
+  48              		.size	initRGBLED, .-initRGBLED
+  49              		.section	.text.setRed,"ax",%progbits
+  50              		.align	2
+  51              		.global	setRed
+  52              		.thumb
+  53              		.thumb_func
+  54              		.type	setRed, %function
+  55              	setRed:
+  56              	.LFB65:
+  20:rgb_led.c     **** }
+  21:rgb_led.c     **** 
+  22:rgb_led.c     **** 
+  23:rgb_led.c     **** void setColor(color_t color)
+  24:rgb_led.c     **** {
+  25:rgb_led.c     ****     setRed(color.red);
+  26:rgb_led.c     ****     setGreen(color.green);
+  27:rgb_led.c     ****     setBlue(color.blue);
+  28:rgb_led.c     **** }
+  29:rgb_led.c     **** 
+  30:rgb_led.c     **** void setRed(uint8_t R)
+  31:rgb_led.c     **** {
+  57              		.loc 1 31 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              	.LVL3:
+  62 0000 08B5     		push	{r3, lr}
+  63              		.cfi_def_cfa_offset 8
+  64              		.cfi_offset 3, -8
+  65              		.cfi_offset 14, -4
+  66              	.LVL4:
+  32:rgb_led.c     ****     uint8_t red = R>=0 && R<=255 ? R : getRed(); //Bound Check
+  33:rgb_led.c     ****     PWM_RED_WriteCompare(red);
+  67              		.loc 1 33 0
+  68 0002 FFF7FEFF 		bl	PWM_RED_WriteCompare
+  69              	.LVL5:
+  70 0006 08BD     		pop	{r3, pc}
+  71              		.cfi_endproc
+  72              	.LFE65:
+  73              		.size	setRed, .-setRed
+  74              		.section	.text.setGreen,"ax",%progbits
+  75              		.align	2
+  76              		.global	setGreen
+  77              		.thumb
+  78              		.thumb_func
+  79              		.type	setGreen, %function
+  80              	setGreen:
+  81              	.LFB66:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 3
+
+
+  34:rgb_led.c     **** }
+  35:rgb_led.c     **** 
+  36:rgb_led.c     **** void setGreen(uint8_t G)
+  37:rgb_led.c     **** {
+  82              		.loc 1 37 0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              	.LVL6:
+  87 0000 08B5     		push	{r3, lr}
+  88              		.cfi_def_cfa_offset 8
+  89              		.cfi_offset 3, -8
+  90              		.cfi_offset 14, -4
+  91              	.LVL7:
+  38:rgb_led.c     ****     uint8_t green = G>=0 && G<=255 ? G : getGreen(); //Bound Check
+  39:rgb_led.c     ****     PWM_GREEN_WriteCompare(green);
+  92              		.loc 1 39 0
+  93 0002 FFF7FEFF 		bl	PWM_GREEN_WriteCompare
+  94              	.LVL8:
+  95 0006 08BD     		pop	{r3, pc}
+  96              		.cfi_endproc
+  97              	.LFE66:
+  98              		.size	setGreen, .-setGreen
+  99              		.section	.text.setBlue,"ax",%progbits
+ 100              		.align	2
+ 101              		.global	setBlue
+ 102              		.thumb
+ 103              		.thumb_func
+ 104              		.type	setBlue, %function
+ 105              	setBlue:
+ 106              	.LFB67:
+  40:rgb_led.c     **** }
+  41:rgb_led.c     **** 
+  42:rgb_led.c     **** void setBlue(uint8_t B)
+  43:rgb_led.c     **** {
+ 107              		.loc 1 43 0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              	.LVL9:
+ 112 0000 08B5     		push	{r3, lr}
+ 113              		.cfi_def_cfa_offset 8
+ 114              		.cfi_offset 3, -8
+ 115              		.cfi_offset 14, -4
+ 116              	.LVL10:
+  44:rgb_led.c     ****     uint8_t blue = B>=0 && B<=255 ? B : getBlue(); //Bound Check
+  45:rgb_led.c     ****     PWM_BLUE_WriteCompare(blue);
+ 117              		.loc 1 45 0
+ 118 0002 FFF7FEFF 		bl	PWM_BLUE_WriteCompare
+ 119              	.LVL11:
+ 120 0006 08BD     		pop	{r3, pc}
+ 121              		.cfi_endproc
+ 122              	.LFE67:
+ 123              		.size	setBlue, .-setBlue
+ 124              		.section	.text.setColor,"ax",%progbits
+ 125              		.align	2
+ 126              		.global	setColor
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 4
+
+
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.type	setColor, %function
+ 130              	setColor:
+ 131              	.LFB64:
+  24:rgb_led.c     ****     setRed(color.red);
+ 132              		.loc 1 24 0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 8
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136 0000 00B5     		push	{lr}
+ 137              		.cfi_def_cfa_offset 4
+ 138              		.cfi_offset 14, -4
+ 139 0002 83B0     		sub	sp, sp, #12
+ 140              		.cfi_def_cfa_offset 16
+ 141 0004 0190     		str	r0, [sp, #4]
+  25:rgb_led.c     ****     setGreen(color.green);
+ 142              		.loc 1 25 0
+ 143 0006 C0B2     		uxtb	r0, r0
+ 144 0008 FFF7FEFF 		bl	setRed
+ 145              	.LVL12:
+  26:rgb_led.c     ****     setBlue(color.blue);
+ 146              		.loc 1 26 0
+ 147 000c 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
+ 148 0010 FFF7FEFF 		bl	setGreen
+ 149              	.LVL13:
+  27:rgb_led.c     **** }
+ 150              		.loc 1 27 0
+ 151 0014 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+ 152 0018 FFF7FEFF 		bl	setBlue
+ 153              	.LVL14:
+  28:rgb_led.c     **** 
+ 154              		.loc 1 28 0
+ 155 001c 03B0     		add	sp, sp, #12
+ 156              		.cfi_def_cfa_offset 4
+ 157              		@ sp needed
+ 158 001e 5DF804FB 		ldr	pc, [sp], #4
+ 159              		.cfi_endproc
+ 160              	.LFE64:
+ 161              		.size	setColor, .-setColor
+ 162 0022 00BF     		.section	.text.getRed,"ax",%progbits
+ 163              		.align	2
+ 164              		.global	getRed
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.type	getRed, %function
+ 168              	getRed:
+ 169              	.LFB68:
+  46:rgb_led.c     **** }
+  47:rgb_led.c     **** 
+  48:rgb_led.c     **** uint8_t getRed(void)
+  49:rgb_led.c     **** {
+ 170              		.loc 1 49 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 5
+
+
+ 175              		.cfi_def_cfa_offset 8
+ 176              		.cfi_offset 3, -8
+ 177              		.cfi_offset 14, -4
+  50:rgb_led.c     ****     return PWM_RED_ReadCompare();
+ 178              		.loc 1 50 0
+ 179 0002 FFF7FEFF 		bl	PWM_RED_ReadCompare
+ 180              	.LVL15:
+  51:rgb_led.c     **** }
+ 181              		.loc 1 51 0
+ 182 0006 08BD     		pop	{r3, pc}
+ 183              		.cfi_endproc
+ 184              	.LFE68:
+ 185              		.size	getRed, .-getRed
+ 186              		.section	.text.getGreen,"ax",%progbits
+ 187              		.align	2
+ 188              		.global	getGreen
+ 189              		.thumb
+ 190              		.thumb_func
+ 191              		.type	getGreen, %function
+ 192              	getGreen:
+ 193              	.LFB69:
+  52:rgb_led.c     **** 
+  53:rgb_led.c     **** uint8_t getGreen(void)
+  54:rgb_led.c     **** {
+ 194              		.loc 1 54 0
+ 195              		.cfi_startproc
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198 0000 08B5     		push	{r3, lr}
+ 199              		.cfi_def_cfa_offset 8
+ 200              		.cfi_offset 3, -8
+ 201              		.cfi_offset 14, -4
+  55:rgb_led.c     ****     return PWM_GREEN_ReadCompare();
+ 202              		.loc 1 55 0
+ 203 0002 FFF7FEFF 		bl	PWM_GREEN_ReadCompare
+ 204              	.LVL16:
+  56:rgb_led.c     **** }
+ 205              		.loc 1 56 0
+ 206 0006 08BD     		pop	{r3, pc}
+ 207              		.cfi_endproc
+ 208              	.LFE69:
+ 209              		.size	getGreen, .-getGreen
+ 210              		.section	.text.getBlue,"ax",%progbits
+ 211              		.align	2
+ 212              		.global	getBlue
+ 213              		.thumb
+ 214              		.thumb_func
+ 215              		.type	getBlue, %function
+ 216              	getBlue:
+ 217              	.LFB70:
+  57:rgb_led.c     **** uint8_t getBlue(void)
+  58:rgb_led.c     **** {
+ 218              		.loc 1 58 0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 6
+
+
+ 223              		.cfi_def_cfa_offset 8
+ 224              		.cfi_offset 3, -8
+ 225              		.cfi_offset 14, -4
+  59:rgb_led.c     ****     return PWM_BLUE_ReadCompare();
+ 226              		.loc 1 59 0
+ 227 0002 FFF7FEFF 		bl	PWM_BLUE_ReadCompare
+ 228              	.LVL17:
+  60:rgb_led.c     **** }
+ 229              		.loc 1 60 0
+ 230 0006 08BD     		pop	{r3, pc}
+ 231              		.cfi_endproc
+ 232              	.LFE70:
+ 233              		.size	getBlue, .-getBlue
+ 234              		.text
+ 235              	.Letext0:
+ 236              		.file 2 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 237              		.file 3 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 238              		.file 4 "rgb_led.h"
+ 239              		.file 5 "Generated_Source\\PSoC5/PWM_RED.h"
+ 240              		.file 6 "Generated_Source\\PSoC5/PWM_GREEN.h"
+ 241              		.file 7 "Generated_Source\\PSoC5/PWM_BLUE.h"
+ 242              		.file 8 "Generated_Source\\PSoC5/core_cm3.h"
+ 243              		.section	.debug_info,"",%progbits
+ 244              	.Ldebug_info0:
+ 245 0000 14030000 		.4byte	0x314
+ 246 0004 0400     		.2byte	0x4
+ 247 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 248 000a 04       		.byte	0x4
+ 249 000b 01       		.uleb128 0x1
+ 250 000c 87000000 		.4byte	.LASF38
+ 251 0010 0C       		.byte	0xc
+ 252 0011 14000000 		.4byte	.LASF39
+ 253 0015 96010000 		.4byte	.LASF40
+ 254 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 255 001d 00000000 		.4byte	0
+ 256 0021 00000000 		.4byte	.Ldebug_line0
+ 257 0025 02       		.uleb128 0x2
+ 258 0026 01       		.byte	0x1
+ 259 0027 06       		.byte	0x6
+ 260 0028 5A020000 		.4byte	.LASF0
+ 261 002c 03       		.uleb128 0x3
+ 262 002d 27000000 		.4byte	.LASF4
+ 263 0031 02       		.byte	0x2
+ 264 0032 1D       		.byte	0x1d
+ 265 0033 37000000 		.4byte	0x37
+ 266 0037 02       		.uleb128 0x2
+ 267 0038 01       		.byte	0x1
+ 268 0039 08       		.byte	0x8
+ 269 003a 79000000 		.4byte	.LASF1
+ 270 003e 02       		.uleb128 0x2
+ 271 003f 02       		.byte	0x2
+ 272 0040 05       		.byte	0x5
+ 273 0041 98020000 		.4byte	.LASF2
+ 274 0045 02       		.uleb128 0x2
+ 275 0046 02       		.byte	0x2
+ 276 0047 07       		.byte	0x7
+ 277 0048 30010000 		.4byte	.LASF3
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 7
+
+
+ 278 004c 03       		.uleb128 0x3
+ 279 004d 31000000 		.4byte	.LASF5
+ 280 0051 02       		.byte	0x2
+ 281 0052 3F       		.byte	0x3f
+ 282 0053 57000000 		.4byte	0x57
+ 283 0057 02       		.uleb128 0x2
+ 284 0058 04       		.byte	0x4
+ 285 0059 05       		.byte	0x5
+ 286 005a CE020000 		.4byte	.LASF6
+ 287 005e 02       		.uleb128 0x2
+ 288 005f 04       		.byte	0x4
+ 289 0060 07       		.byte	0x7
+ 290 0061 15010000 		.4byte	.LASF7
+ 291 0065 02       		.uleb128 0x2
+ 292 0066 08       		.byte	0x8
+ 293 0067 05       		.byte	0x5
+ 294 0068 85020000 		.4byte	.LASF8
+ 295 006c 02       		.uleb128 0x2
+ 296 006d 08       		.byte	0x8
+ 297 006e 07       		.byte	0x7
+ 298 006f 16020000 		.4byte	.LASF9
+ 299 0073 04       		.uleb128 0x4
+ 300 0074 04       		.byte	0x4
+ 301 0075 05       		.byte	0x5
+ 302 0076 696E7400 		.ascii	"int\000"
+ 303 007a 02       		.uleb128 0x2
+ 304 007b 04       		.byte	0x4
+ 305 007c 07       		.byte	0x7
+ 306 007d 09020000 		.4byte	.LASF10
+ 307 0081 03       		.uleb128 0x3
+ 308 0082 2D020000 		.4byte	.LASF11
+ 309 0086 03       		.byte	0x3
+ 310 0087 18       		.byte	0x18
+ 311 0088 2C000000 		.4byte	0x2c
+ 312 008c 03       		.uleb128 0x3
+ 313 008d 66020000 		.4byte	.LASF12
+ 314 0091 03       		.byte	0x3
+ 315 0092 2C       		.byte	0x2c
+ 316 0093 4C000000 		.4byte	0x4c
+ 317 0097 02       		.uleb128 0x2
+ 318 0098 04       		.byte	0x4
+ 319 0099 04       		.byte	0x4
+ 320 009a 6C000000 		.4byte	.LASF13
+ 321 009e 02       		.uleb128 0x2
+ 322 009f 08       		.byte	0x8
+ 323 00a0 04       		.byte	0x4
+ 324 00a1 59000000 		.4byte	.LASF14
+ 325 00a5 02       		.uleb128 0x2
+ 326 00a6 01       		.byte	0x1
+ 327 00a7 08       		.byte	0x8
+ 328 00a8 93020000 		.4byte	.LASF15
+ 329 00ac 02       		.uleb128 0x2
+ 330 00ad 08       		.byte	0x8
+ 331 00ae 04       		.byte	0x4
+ 332 00af D7020000 		.4byte	.LASF16
+ 333 00b3 02       		.uleb128 0x2
+ 334 00b4 04       		.byte	0x4
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 8
+
+
+ 335 00b5 07       		.byte	0x7
+ 336 00b6 6E020000 		.4byte	.LASF17
+ 337 00ba 05       		.uleb128 0x5
+ 338 00bb 90010000 		.4byte	.LASF25
+ 339 00bf 03       		.byte	0x3
+ 340 00c0 04       		.byte	0x4
+ 341 00c1 18       		.byte	0x18
+ 342 00c2 EB000000 		.4byte	0xeb
+ 343 00c6 06       		.uleb128 0x6
+ 344 00c7 72656400 		.ascii	"red\000"
+ 345 00cb 04       		.byte	0x4
+ 346 00cc 1A       		.byte	0x1a
+ 347 00cd 81000000 		.4byte	0x81
+ 348 00d1 00       		.byte	0
+ 349 00d2 07       		.uleb128 0x7
+ 350 00d3 43010000 		.4byte	.LASF18
+ 351 00d7 04       		.byte	0x4
+ 352 00d8 1B       		.byte	0x1b
+ 353 00d9 81000000 		.4byte	0x81
+ 354 00dd 01       		.byte	0x1
+ 355 00de 07       		.uleb128 0x7
+ 356 00df 60000000 		.4byte	.LASF19
+ 357 00e3 04       		.byte	0x4
+ 358 00e4 1C       		.byte	0x1c
+ 359 00e5 81000000 		.4byte	0x81
+ 360 00e9 02       		.byte	0x2
+ 361 00ea 00       		.byte	0
+ 362 00eb 03       		.uleb128 0x3
+ 363 00ec 56010000 		.4byte	.LASF20
+ 364 00f0 04       		.byte	0x4
+ 365 00f1 1D       		.byte	0x1d
+ 366 00f2 BA000000 		.4byte	0xba
+ 367 00f6 08       		.uleb128 0x8
+ 368 00f7 6E010000 		.4byte	.LASF41
+ 369 00fb 01       		.byte	0x1
+ 370 00fc 0E       		.byte	0xe
+ 371 00fd 00000000 		.4byte	.LFB63
+ 372 0101 10000000 		.4byte	.LFE63-.LFB63
+ 373 0105 01       		.uleb128 0x1
+ 374 0106 9C       		.byte	0x9c
+ 375 0107 27010000 		.4byte	0x127
+ 376 010b 09       		.uleb128 0x9
+ 377 010c 06000000 		.4byte	.LVL0
+ 378 0110 B4020000 		.4byte	0x2b4
+ 379 0114 09       		.uleb128 0x9
+ 380 0115 0A000000 		.4byte	.LVL1
+ 381 0119 BF020000 		.4byte	0x2bf
+ 382 011d 09       		.uleb128 0x9
+ 383 011e 0E000000 		.4byte	.LVL2
+ 384 0122 CA020000 		.4byte	0x2ca
+ 385 0126 00       		.byte	0
+ 386 0127 0A       		.uleb128 0xa
+ 387 0128 65000000 		.4byte	.LASF21
+ 388 012c 01       		.byte	0x1
+ 389 012d 1E       		.byte	0x1e
+ 390 012e 00000000 		.4byte	.LFB65
+ 391 0132 08000000 		.4byte	.LFE65-.LFB65
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 9
+
+
+ 392 0136 01       		.uleb128 0x1
+ 393 0137 9C       		.byte	0x9c
+ 394 0138 62010000 		.4byte	0x162
+ 395 013c 0B       		.uleb128 0xb
+ 396 013d 5200     		.ascii	"R\000"
+ 397 013f 01       		.byte	0x1
+ 398 0140 1E       		.byte	0x1e
+ 399 0141 81000000 		.4byte	0x81
+ 400 0145 00000000 		.4byte	.LLST0
+ 401 0149 0C       		.uleb128 0xc
+ 402 014a 72656400 		.ascii	"red\000"
+ 403 014e 01       		.byte	0x1
+ 404 014f 20       		.byte	0x20
+ 405 0150 81000000 		.4byte	0x81
+ 406 0154 21000000 		.4byte	.LLST1
+ 407 0158 09       		.uleb128 0x9
+ 408 0159 06000000 		.4byte	.LVL5
+ 409 015d D5020000 		.4byte	0x2d5
+ 410 0161 00       		.byte	0
+ 411 0162 0A       		.uleb128 0xa
+ 412 0163 1E000000 		.4byte	.LASF22
+ 413 0167 01       		.byte	0x1
+ 414 0168 24       		.byte	0x24
+ 415 0169 00000000 		.4byte	.LFB66
+ 416 016d 08000000 		.4byte	.LFE66-.LFB66
+ 417 0171 01       		.uleb128 0x1
+ 418 0172 9C       		.byte	0x9c
+ 419 0173 9D010000 		.4byte	0x19d
+ 420 0177 0B       		.uleb128 0xb
+ 421 0178 4700     		.ascii	"G\000"
+ 422 017a 01       		.byte	0x1
+ 423 017b 24       		.byte	0x24
+ 424 017c 81000000 		.4byte	0x81
+ 425 0180 34000000 		.4byte	.LLST2
+ 426 0184 0D       		.uleb128 0xd
+ 427 0185 43010000 		.4byte	.LASF18
+ 428 0189 01       		.byte	0x1
+ 429 018a 26       		.byte	0x26
+ 430 018b 81000000 		.4byte	0x81
+ 431 018f 55000000 		.4byte	.LLST3
+ 432 0193 09       		.uleb128 0x9
+ 433 0194 06000000 		.4byte	.LVL8
+ 434 0198 E0020000 		.4byte	0x2e0
+ 435 019c 00       		.byte	0
+ 436 019d 0A       		.uleb128 0xa
+ 437 019e 66010000 		.4byte	.LASF23
+ 438 01a2 01       		.byte	0x1
+ 439 01a3 2A       		.byte	0x2a
+ 440 01a4 00000000 		.4byte	.LFB67
+ 441 01a8 08000000 		.4byte	.LFE67-.LFB67
+ 442 01ac 01       		.uleb128 0x1
+ 443 01ad 9C       		.byte	0x9c
+ 444 01ae D8010000 		.4byte	0x1d8
+ 445 01b2 0B       		.uleb128 0xb
+ 446 01b3 4200     		.ascii	"B\000"
+ 447 01b5 01       		.byte	0x1
+ 448 01b6 2A       		.byte	0x2a
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 10
+
+
+ 449 01b7 81000000 		.4byte	0x81
+ 450 01bb 68000000 		.4byte	.LLST4
+ 451 01bf 0D       		.uleb128 0xd
+ 452 01c0 60000000 		.4byte	.LASF19
+ 453 01c4 01       		.byte	0x1
+ 454 01c5 2C       		.byte	0x2c
+ 455 01c6 81000000 		.4byte	0x81
+ 456 01ca 89000000 		.4byte	.LLST5
+ 457 01ce 09       		.uleb128 0x9
+ 458 01cf 06000000 		.4byte	.LVL11
+ 459 01d3 EB020000 		.4byte	0x2eb
+ 460 01d7 00       		.byte	0
+ 461 01d8 0A       		.uleb128 0xa
+ 462 01d9 3B000000 		.4byte	.LASF24
+ 463 01dd 01       		.byte	0x1
+ 464 01de 17       		.byte	0x17
+ 465 01df 00000000 		.4byte	.LFB64
+ 466 01e3 22000000 		.4byte	.LFE64-.LFB64
+ 467 01e7 01       		.uleb128 0x1
+ 468 01e8 9C       		.byte	0x9c
+ 469 01e9 3A020000 		.4byte	0x23a
+ 470 01ed 0E       		.uleb128 0xe
+ 471 01ee 90010000 		.4byte	.LASF25
+ 472 01f2 01       		.byte	0x1
+ 473 01f3 17       		.byte	0x17
+ 474 01f4 EB000000 		.4byte	0xeb
+ 475 01f8 02       		.uleb128 0x2
+ 476 01f9 91       		.byte	0x91
+ 477 01fa 74       		.sleb128 -12
+ 478 01fb 0F       		.uleb128 0xf
+ 479 01fc 0C000000 		.4byte	.LVL12
+ 480 0200 27010000 		.4byte	0x127
+ 481 0204 11020000 		.4byte	0x211
+ 482 0208 10       		.uleb128 0x10
+ 483 0209 01       		.uleb128 0x1
+ 484 020a 50       		.byte	0x50
+ 485 020b 04       		.uleb128 0x4
+ 486 020c 91       		.byte	0x91
+ 487 020d 74       		.sleb128 -12
+ 488 020e 94       		.byte	0x94
+ 489 020f 01       		.byte	0x1
+ 490 0210 00       		.byte	0
+ 491 0211 0F       		.uleb128 0xf
+ 492 0212 14000000 		.4byte	.LVL13
+ 493 0216 62010000 		.4byte	0x162
+ 494 021a 27020000 		.4byte	0x227
+ 495 021e 10       		.uleb128 0x10
+ 496 021f 01       		.uleb128 0x1
+ 497 0220 50       		.byte	0x50
+ 498 0221 04       		.uleb128 0x4
+ 499 0222 91       		.byte	0x91
+ 500 0223 75       		.sleb128 -11
+ 501 0224 94       		.byte	0x94
+ 502 0225 01       		.byte	0x1
+ 503 0226 00       		.byte	0
+ 504 0227 11       		.uleb128 0x11
+ 505 0228 1C000000 		.4byte	.LVL14
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 11
+
+
+ 506 022c 9D010000 		.4byte	0x19d
+ 507 0230 10       		.uleb128 0x10
+ 508 0231 01       		.uleb128 0x1
+ 509 0232 50       		.byte	0x50
+ 510 0233 04       		.uleb128 0x4
+ 511 0234 91       		.byte	0x91
+ 512 0235 76       		.sleb128 -10
+ 513 0236 94       		.byte	0x94
+ 514 0237 01       		.byte	0x1
+ 515 0238 00       		.byte	0
+ 516 0239 00       		.byte	0
+ 517 023a 12       		.uleb128 0x12
+ 518 023b 72000000 		.4byte	.LASF26
+ 519 023f 01       		.byte	0x1
+ 520 0240 30       		.byte	0x30
+ 521 0241 81000000 		.4byte	0x81
+ 522 0245 00000000 		.4byte	.LFB68
+ 523 0249 08000000 		.4byte	.LFE68-.LFB68
+ 524 024d 01       		.uleb128 0x1
+ 525 024e 9C       		.byte	0x9c
+ 526 024f 5D020000 		.4byte	0x25d
+ 527 0253 09       		.uleb128 0x9
+ 528 0254 06000000 		.4byte	.LVL15
+ 529 0258 F6020000 		.4byte	0x2f6
+ 530 025c 00       		.byte	0
+ 531 025d 12       		.uleb128 0x12
+ 532 025e 27010000 		.4byte	.LASF27
+ 533 0262 01       		.byte	0x1
+ 534 0263 35       		.byte	0x35
+ 535 0264 81000000 		.4byte	0x81
+ 536 0268 00000000 		.4byte	.LFB69
+ 537 026c 08000000 		.4byte	.LFE69-.LFB69
+ 538 0270 01       		.uleb128 0x1
+ 539 0271 9C       		.byte	0x9c
+ 540 0272 80020000 		.4byte	0x280
+ 541 0276 09       		.uleb128 0x9
+ 542 0277 06000000 		.4byte	.LVL16
+ 543 027b 01030000 		.4byte	0x301
+ 544 027f 00       		.byte	0
+ 545 0280 12       		.uleb128 0x12
+ 546 0281 5E010000 		.4byte	.LASF28
+ 547 0285 01       		.byte	0x1
+ 548 0286 39       		.byte	0x39
+ 549 0287 81000000 		.4byte	0x81
+ 550 028b 00000000 		.4byte	.LFB70
+ 551 028f 08000000 		.4byte	.LFE70-.LFB70
+ 552 0293 01       		.uleb128 0x1
+ 553 0294 9C       		.byte	0x9c
+ 554 0295 A3020000 		.4byte	0x2a3
+ 555 0299 09       		.uleb128 0x9
+ 556 029a 06000000 		.4byte	.LVL17
+ 557 029e 0C030000 		.4byte	0x30c
+ 558 02a2 00       		.byte	0
+ 559 02a3 13       		.uleb128 0x13
+ 560 02a4 49010000 		.4byte	.LASF42
+ 561 02a8 08       		.byte	0x8
+ 562 02a9 1207     		.2byte	0x712
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 12
+
+
+ 563 02ab AF020000 		.4byte	0x2af
+ 564 02af 14       		.uleb128 0x14
+ 565 02b0 8C000000 		.4byte	0x8c
+ 566 02b4 15       		.uleb128 0x15
+ 567 02b5 77020000 		.4byte	.LASF29
+ 568 02b9 77020000 		.4byte	.LASF29
+ 569 02bd 05       		.byte	0x5
+ 570 02be 92       		.byte	0x92
+ 571 02bf 15       		.uleb128 0x15
+ 572 02c0 35020000 		.4byte	.LASF30
+ 573 02c4 35020000 		.4byte	.LASF30
+ 574 02c8 06       		.byte	0x6
+ 575 02c9 92       		.byte	0x92
+ 576 02ca 15       		.uleb128 0x15
+ 577 02cb E3020000 		.4byte	.LASF31
+ 578 02cf E3020000 		.4byte	.LASF31
+ 579 02d3 07       		.byte	0x7
+ 580 02d4 92       		.byte	0x92
+ 581 02d5 15       		.uleb128 0x15
+ 582 02d6 44000000 		.4byte	.LASF32
+ 583 02da 44000000 		.4byte	.LASF32
+ 584 02de 05       		.byte	0x5
+ 585 02df C3       		.byte	0xc3
+ 586 02e0 15       		.uleb128 0x15
+ 587 02e1 79010000 		.4byte	.LASF33
+ 588 02e5 79010000 		.4byte	.LASF33
+ 589 02e9 06       		.byte	0x6
+ 590 02ea C3       		.byte	0xc3
+ 591 02eb 15       		.uleb128 0x15
+ 592 02ec B8020000 		.4byte	.LASF34
+ 593 02f0 B8020000 		.4byte	.LASF34
+ 594 02f4 07       		.byte	0x7
+ 595 02f5 C3       		.byte	0xc3
+ 596 02f6 15       		.uleb128 0x15
+ 597 02f7 00000000 		.4byte	.LASF35
+ 598 02fb 00000000 		.4byte	.LASF35
+ 599 02ff 05       		.byte	0x5
+ 600 0300 C5       		.byte	0xc5
+ 601 0301 15       		.uleb128 0x15
+ 602 0302 A2020000 		.4byte	.LASF36
+ 603 0306 A2020000 		.4byte	.LASF36
+ 604 030a 06       		.byte	0x6
+ 605 030b C5       		.byte	0xc5
+ 606 030c 15       		.uleb128 0x15
+ 607 030d 45020000 		.4byte	.LASF37
+ 608 0311 45020000 		.4byte	.LASF37
+ 609 0315 07       		.byte	0x7
+ 610 0316 C5       		.byte	0xc5
+ 611 0317 00       		.byte	0
+ 612              		.section	.debug_abbrev,"",%progbits
+ 613              	.Ldebug_abbrev0:
+ 614 0000 01       		.uleb128 0x1
+ 615 0001 11       		.uleb128 0x11
+ 616 0002 01       		.byte	0x1
+ 617 0003 25       		.uleb128 0x25
+ 618 0004 0E       		.uleb128 0xe
+ 619 0005 13       		.uleb128 0x13
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 13
+
+
+ 620 0006 0B       		.uleb128 0xb
+ 621 0007 03       		.uleb128 0x3
+ 622 0008 0E       		.uleb128 0xe
+ 623 0009 1B       		.uleb128 0x1b
+ 624 000a 0E       		.uleb128 0xe
+ 625 000b 55       		.uleb128 0x55
+ 626 000c 17       		.uleb128 0x17
+ 627 000d 11       		.uleb128 0x11
+ 628 000e 01       		.uleb128 0x1
+ 629 000f 10       		.uleb128 0x10
+ 630 0010 17       		.uleb128 0x17
+ 631 0011 00       		.byte	0
+ 632 0012 00       		.byte	0
+ 633 0013 02       		.uleb128 0x2
+ 634 0014 24       		.uleb128 0x24
+ 635 0015 00       		.byte	0
+ 636 0016 0B       		.uleb128 0xb
+ 637 0017 0B       		.uleb128 0xb
+ 638 0018 3E       		.uleb128 0x3e
+ 639 0019 0B       		.uleb128 0xb
+ 640 001a 03       		.uleb128 0x3
+ 641 001b 0E       		.uleb128 0xe
+ 642 001c 00       		.byte	0
+ 643 001d 00       		.byte	0
+ 644 001e 03       		.uleb128 0x3
+ 645 001f 16       		.uleb128 0x16
+ 646 0020 00       		.byte	0
+ 647 0021 03       		.uleb128 0x3
+ 648 0022 0E       		.uleb128 0xe
+ 649 0023 3A       		.uleb128 0x3a
+ 650 0024 0B       		.uleb128 0xb
+ 651 0025 3B       		.uleb128 0x3b
+ 652 0026 0B       		.uleb128 0xb
+ 653 0027 49       		.uleb128 0x49
+ 654 0028 13       		.uleb128 0x13
+ 655 0029 00       		.byte	0
+ 656 002a 00       		.byte	0
+ 657 002b 04       		.uleb128 0x4
+ 658 002c 24       		.uleb128 0x24
+ 659 002d 00       		.byte	0
+ 660 002e 0B       		.uleb128 0xb
+ 661 002f 0B       		.uleb128 0xb
+ 662 0030 3E       		.uleb128 0x3e
+ 663 0031 0B       		.uleb128 0xb
+ 664 0032 03       		.uleb128 0x3
+ 665 0033 08       		.uleb128 0x8
+ 666 0034 00       		.byte	0
+ 667 0035 00       		.byte	0
+ 668 0036 05       		.uleb128 0x5
+ 669 0037 13       		.uleb128 0x13
+ 670 0038 01       		.byte	0x1
+ 671 0039 03       		.uleb128 0x3
+ 672 003a 0E       		.uleb128 0xe
+ 673 003b 0B       		.uleb128 0xb
+ 674 003c 0B       		.uleb128 0xb
+ 675 003d 3A       		.uleb128 0x3a
+ 676 003e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 14
+
+
+ 677 003f 3B       		.uleb128 0x3b
+ 678 0040 0B       		.uleb128 0xb
+ 679 0041 01       		.uleb128 0x1
+ 680 0042 13       		.uleb128 0x13
+ 681 0043 00       		.byte	0
+ 682 0044 00       		.byte	0
+ 683 0045 06       		.uleb128 0x6
+ 684 0046 0D       		.uleb128 0xd
+ 685 0047 00       		.byte	0
+ 686 0048 03       		.uleb128 0x3
+ 687 0049 08       		.uleb128 0x8
+ 688 004a 3A       		.uleb128 0x3a
+ 689 004b 0B       		.uleb128 0xb
+ 690 004c 3B       		.uleb128 0x3b
+ 691 004d 0B       		.uleb128 0xb
+ 692 004e 49       		.uleb128 0x49
+ 693 004f 13       		.uleb128 0x13
+ 694 0050 38       		.uleb128 0x38
+ 695 0051 0B       		.uleb128 0xb
+ 696 0052 00       		.byte	0
+ 697 0053 00       		.byte	0
+ 698 0054 07       		.uleb128 0x7
+ 699 0055 0D       		.uleb128 0xd
+ 700 0056 00       		.byte	0
+ 701 0057 03       		.uleb128 0x3
+ 702 0058 0E       		.uleb128 0xe
+ 703 0059 3A       		.uleb128 0x3a
+ 704 005a 0B       		.uleb128 0xb
+ 705 005b 3B       		.uleb128 0x3b
+ 706 005c 0B       		.uleb128 0xb
+ 707 005d 49       		.uleb128 0x49
+ 708 005e 13       		.uleb128 0x13
+ 709 005f 38       		.uleb128 0x38
+ 710 0060 0B       		.uleb128 0xb
+ 711 0061 00       		.byte	0
+ 712 0062 00       		.byte	0
+ 713 0063 08       		.uleb128 0x8
+ 714 0064 2E       		.uleb128 0x2e
+ 715 0065 01       		.byte	0x1
+ 716 0066 3F       		.uleb128 0x3f
+ 717 0067 19       		.uleb128 0x19
+ 718 0068 03       		.uleb128 0x3
+ 719 0069 0E       		.uleb128 0xe
+ 720 006a 3A       		.uleb128 0x3a
+ 721 006b 0B       		.uleb128 0xb
+ 722 006c 3B       		.uleb128 0x3b
+ 723 006d 0B       		.uleb128 0xb
+ 724 006e 11       		.uleb128 0x11
+ 725 006f 01       		.uleb128 0x1
+ 726 0070 12       		.uleb128 0x12
+ 727 0071 06       		.uleb128 0x6
+ 728 0072 40       		.uleb128 0x40
+ 729 0073 18       		.uleb128 0x18
+ 730 0074 9742     		.uleb128 0x2117
+ 731 0076 19       		.uleb128 0x19
+ 732 0077 01       		.uleb128 0x1
+ 733 0078 13       		.uleb128 0x13
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 15
+
+
+ 734 0079 00       		.byte	0
+ 735 007a 00       		.byte	0
+ 736 007b 09       		.uleb128 0x9
+ 737 007c 898201   		.uleb128 0x4109
+ 738 007f 00       		.byte	0
+ 739 0080 11       		.uleb128 0x11
+ 740 0081 01       		.uleb128 0x1
+ 741 0082 31       		.uleb128 0x31
+ 742 0083 13       		.uleb128 0x13
+ 743 0084 00       		.byte	0
+ 744 0085 00       		.byte	0
+ 745 0086 0A       		.uleb128 0xa
+ 746 0087 2E       		.uleb128 0x2e
+ 747 0088 01       		.byte	0x1
+ 748 0089 3F       		.uleb128 0x3f
+ 749 008a 19       		.uleb128 0x19
+ 750 008b 03       		.uleb128 0x3
+ 751 008c 0E       		.uleb128 0xe
+ 752 008d 3A       		.uleb128 0x3a
+ 753 008e 0B       		.uleb128 0xb
+ 754 008f 3B       		.uleb128 0x3b
+ 755 0090 0B       		.uleb128 0xb
+ 756 0091 27       		.uleb128 0x27
+ 757 0092 19       		.uleb128 0x19
+ 758 0093 11       		.uleb128 0x11
+ 759 0094 01       		.uleb128 0x1
+ 760 0095 12       		.uleb128 0x12
+ 761 0096 06       		.uleb128 0x6
+ 762 0097 40       		.uleb128 0x40
+ 763 0098 18       		.uleb128 0x18
+ 764 0099 9742     		.uleb128 0x2117
+ 765 009b 19       		.uleb128 0x19
+ 766 009c 01       		.uleb128 0x1
+ 767 009d 13       		.uleb128 0x13
+ 768 009e 00       		.byte	0
+ 769 009f 00       		.byte	0
+ 770 00a0 0B       		.uleb128 0xb
+ 771 00a1 05       		.uleb128 0x5
+ 772 00a2 00       		.byte	0
+ 773 00a3 03       		.uleb128 0x3
+ 774 00a4 08       		.uleb128 0x8
+ 775 00a5 3A       		.uleb128 0x3a
+ 776 00a6 0B       		.uleb128 0xb
+ 777 00a7 3B       		.uleb128 0x3b
+ 778 00a8 0B       		.uleb128 0xb
+ 779 00a9 49       		.uleb128 0x49
+ 780 00aa 13       		.uleb128 0x13
+ 781 00ab 02       		.uleb128 0x2
+ 782 00ac 17       		.uleb128 0x17
+ 783 00ad 00       		.byte	0
+ 784 00ae 00       		.byte	0
+ 785 00af 0C       		.uleb128 0xc
+ 786 00b0 34       		.uleb128 0x34
+ 787 00b1 00       		.byte	0
+ 788 00b2 03       		.uleb128 0x3
+ 789 00b3 08       		.uleb128 0x8
+ 790 00b4 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 16
+
+
+ 791 00b5 0B       		.uleb128 0xb
+ 792 00b6 3B       		.uleb128 0x3b
+ 793 00b7 0B       		.uleb128 0xb
+ 794 00b8 49       		.uleb128 0x49
+ 795 00b9 13       		.uleb128 0x13
+ 796 00ba 02       		.uleb128 0x2
+ 797 00bb 17       		.uleb128 0x17
+ 798 00bc 00       		.byte	0
+ 799 00bd 00       		.byte	0
+ 800 00be 0D       		.uleb128 0xd
+ 801 00bf 34       		.uleb128 0x34
+ 802 00c0 00       		.byte	0
+ 803 00c1 03       		.uleb128 0x3
+ 804 00c2 0E       		.uleb128 0xe
+ 805 00c3 3A       		.uleb128 0x3a
+ 806 00c4 0B       		.uleb128 0xb
+ 807 00c5 3B       		.uleb128 0x3b
+ 808 00c6 0B       		.uleb128 0xb
+ 809 00c7 49       		.uleb128 0x49
+ 810 00c8 13       		.uleb128 0x13
+ 811 00c9 02       		.uleb128 0x2
+ 812 00ca 17       		.uleb128 0x17
+ 813 00cb 00       		.byte	0
+ 814 00cc 00       		.byte	0
+ 815 00cd 0E       		.uleb128 0xe
+ 816 00ce 05       		.uleb128 0x5
+ 817 00cf 00       		.byte	0
+ 818 00d0 03       		.uleb128 0x3
+ 819 00d1 0E       		.uleb128 0xe
+ 820 00d2 3A       		.uleb128 0x3a
+ 821 00d3 0B       		.uleb128 0xb
+ 822 00d4 3B       		.uleb128 0x3b
+ 823 00d5 0B       		.uleb128 0xb
+ 824 00d6 49       		.uleb128 0x49
+ 825 00d7 13       		.uleb128 0x13
+ 826 00d8 02       		.uleb128 0x2
+ 827 00d9 18       		.uleb128 0x18
+ 828 00da 00       		.byte	0
+ 829 00db 00       		.byte	0
+ 830 00dc 0F       		.uleb128 0xf
+ 831 00dd 898201   		.uleb128 0x4109
+ 832 00e0 01       		.byte	0x1
+ 833 00e1 11       		.uleb128 0x11
+ 834 00e2 01       		.uleb128 0x1
+ 835 00e3 31       		.uleb128 0x31
+ 836 00e4 13       		.uleb128 0x13
+ 837 00e5 01       		.uleb128 0x1
+ 838 00e6 13       		.uleb128 0x13
+ 839 00e7 00       		.byte	0
+ 840 00e8 00       		.byte	0
+ 841 00e9 10       		.uleb128 0x10
+ 842 00ea 8A8201   		.uleb128 0x410a
+ 843 00ed 00       		.byte	0
+ 844 00ee 02       		.uleb128 0x2
+ 845 00ef 18       		.uleb128 0x18
+ 846 00f0 9142     		.uleb128 0x2111
+ 847 00f2 18       		.uleb128 0x18
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 17
+
+
+ 848 00f3 00       		.byte	0
+ 849 00f4 00       		.byte	0
+ 850 00f5 11       		.uleb128 0x11
+ 851 00f6 898201   		.uleb128 0x4109
+ 852 00f9 01       		.byte	0x1
+ 853 00fa 11       		.uleb128 0x11
+ 854 00fb 01       		.uleb128 0x1
+ 855 00fc 31       		.uleb128 0x31
+ 856 00fd 13       		.uleb128 0x13
+ 857 00fe 00       		.byte	0
+ 858 00ff 00       		.byte	0
+ 859 0100 12       		.uleb128 0x12
+ 860 0101 2E       		.uleb128 0x2e
+ 861 0102 01       		.byte	0x1
+ 862 0103 3F       		.uleb128 0x3f
+ 863 0104 19       		.uleb128 0x19
+ 864 0105 03       		.uleb128 0x3
+ 865 0106 0E       		.uleb128 0xe
+ 866 0107 3A       		.uleb128 0x3a
+ 867 0108 0B       		.uleb128 0xb
+ 868 0109 3B       		.uleb128 0x3b
+ 869 010a 0B       		.uleb128 0xb
+ 870 010b 27       		.uleb128 0x27
+ 871 010c 19       		.uleb128 0x19
+ 872 010d 49       		.uleb128 0x49
+ 873 010e 13       		.uleb128 0x13
+ 874 010f 11       		.uleb128 0x11
+ 875 0110 01       		.uleb128 0x1
+ 876 0111 12       		.uleb128 0x12
+ 877 0112 06       		.uleb128 0x6
+ 878 0113 40       		.uleb128 0x40
+ 879 0114 18       		.uleb128 0x18
+ 880 0115 9742     		.uleb128 0x2117
+ 881 0117 19       		.uleb128 0x19
+ 882 0118 01       		.uleb128 0x1
+ 883 0119 13       		.uleb128 0x13
+ 884 011a 00       		.byte	0
+ 885 011b 00       		.byte	0
+ 886 011c 13       		.uleb128 0x13
+ 887 011d 34       		.uleb128 0x34
+ 888 011e 00       		.byte	0
+ 889 011f 03       		.uleb128 0x3
+ 890 0120 0E       		.uleb128 0xe
+ 891 0121 3A       		.uleb128 0x3a
+ 892 0122 0B       		.uleb128 0xb
+ 893 0123 3B       		.uleb128 0x3b
+ 894 0124 05       		.uleb128 0x5
+ 895 0125 49       		.uleb128 0x49
+ 896 0126 13       		.uleb128 0x13
+ 897 0127 3F       		.uleb128 0x3f
+ 898 0128 19       		.uleb128 0x19
+ 899 0129 3C       		.uleb128 0x3c
+ 900 012a 19       		.uleb128 0x19
+ 901 012b 00       		.byte	0
+ 902 012c 00       		.byte	0
+ 903 012d 14       		.uleb128 0x14
+ 904 012e 35       		.uleb128 0x35
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 18
+
+
+ 905 012f 00       		.byte	0
+ 906 0130 49       		.uleb128 0x49
+ 907 0131 13       		.uleb128 0x13
+ 908 0132 00       		.byte	0
+ 909 0133 00       		.byte	0
+ 910 0134 15       		.uleb128 0x15
+ 911 0135 2E       		.uleb128 0x2e
+ 912 0136 00       		.byte	0
+ 913 0137 3F       		.uleb128 0x3f
+ 914 0138 19       		.uleb128 0x19
+ 915 0139 3C       		.uleb128 0x3c
+ 916 013a 19       		.uleb128 0x19
+ 917 013b 6E       		.uleb128 0x6e
+ 918 013c 0E       		.uleb128 0xe
+ 919 013d 03       		.uleb128 0x3
+ 920 013e 0E       		.uleb128 0xe
+ 921 013f 3A       		.uleb128 0x3a
+ 922 0140 0B       		.uleb128 0xb
+ 923 0141 3B       		.uleb128 0x3b
+ 924 0142 0B       		.uleb128 0xb
+ 925 0143 00       		.byte	0
+ 926 0144 00       		.byte	0
+ 927 0145 00       		.byte	0
+ 928              		.section	.debug_loc,"",%progbits
+ 929              	.Ldebug_loc0:
+ 930              	.LLST0:
+ 931 0000 00000000 		.4byte	.LVL3
+ 932 0004 05000000 		.4byte	.LVL5-1
+ 933 0008 0100     		.2byte	0x1
+ 934 000a 50       		.byte	0x50
+ 935 000b 05000000 		.4byte	.LVL5-1
+ 936 000f 08000000 		.4byte	.LFE65
+ 937 0013 0400     		.2byte	0x4
+ 938 0015 F3       		.byte	0xf3
+ 939 0016 01       		.uleb128 0x1
+ 940 0017 50       		.byte	0x50
+ 941 0018 9F       		.byte	0x9f
+ 942 0019 00000000 		.4byte	0
+ 943 001d 00000000 		.4byte	0
+ 944              	.LLST1:
+ 945 0021 02000000 		.4byte	.LVL4
+ 946 0025 05000000 		.4byte	.LVL5-1
+ 947 0029 0100     		.2byte	0x1
+ 948 002b 50       		.byte	0x50
+ 949 002c 00000000 		.4byte	0
+ 950 0030 00000000 		.4byte	0
+ 951              	.LLST2:
+ 952 0034 00000000 		.4byte	.LVL6
+ 953 0038 05000000 		.4byte	.LVL8-1
+ 954 003c 0100     		.2byte	0x1
+ 955 003e 50       		.byte	0x50
+ 956 003f 05000000 		.4byte	.LVL8-1
+ 957 0043 08000000 		.4byte	.LFE66
+ 958 0047 0400     		.2byte	0x4
+ 959 0049 F3       		.byte	0xf3
+ 960 004a 01       		.uleb128 0x1
+ 961 004b 50       		.byte	0x50
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 19
+
+
+ 962 004c 9F       		.byte	0x9f
+ 963 004d 00000000 		.4byte	0
+ 964 0051 00000000 		.4byte	0
+ 965              	.LLST3:
+ 966 0055 02000000 		.4byte	.LVL7
+ 967 0059 05000000 		.4byte	.LVL8-1
+ 968 005d 0100     		.2byte	0x1
+ 969 005f 50       		.byte	0x50
+ 970 0060 00000000 		.4byte	0
+ 971 0064 00000000 		.4byte	0
+ 972              	.LLST4:
+ 973 0068 00000000 		.4byte	.LVL9
+ 974 006c 05000000 		.4byte	.LVL11-1
+ 975 0070 0100     		.2byte	0x1
+ 976 0072 50       		.byte	0x50
+ 977 0073 05000000 		.4byte	.LVL11-1
+ 978 0077 08000000 		.4byte	.LFE67
+ 979 007b 0400     		.2byte	0x4
+ 980 007d F3       		.byte	0xf3
+ 981 007e 01       		.uleb128 0x1
+ 982 007f 50       		.byte	0x50
+ 983 0080 9F       		.byte	0x9f
+ 984 0081 00000000 		.4byte	0
+ 985 0085 00000000 		.4byte	0
+ 986              	.LLST5:
+ 987 0089 02000000 		.4byte	.LVL10
+ 988 008d 05000000 		.4byte	.LVL11-1
+ 989 0091 0100     		.2byte	0x1
+ 990 0093 50       		.byte	0x50
+ 991 0094 00000000 		.4byte	0
+ 992 0098 00000000 		.4byte	0
+ 993              		.section	.debug_aranges,"",%progbits
+ 994 0000 54000000 		.4byte	0x54
+ 995 0004 0200     		.2byte	0x2
+ 996 0006 00000000 		.4byte	.Ldebug_info0
+ 997 000a 04       		.byte	0x4
+ 998 000b 00       		.byte	0
+ 999 000c 0000     		.2byte	0
+ 1000 000e 0000     		.2byte	0
+ 1001 0010 00000000 		.4byte	.LFB63
+ 1002 0014 10000000 		.4byte	.LFE63-.LFB63
+ 1003 0018 00000000 		.4byte	.LFB65
+ 1004 001c 08000000 		.4byte	.LFE65-.LFB65
+ 1005 0020 00000000 		.4byte	.LFB66
+ 1006 0024 08000000 		.4byte	.LFE66-.LFB66
+ 1007 0028 00000000 		.4byte	.LFB67
+ 1008 002c 08000000 		.4byte	.LFE67-.LFB67
+ 1009 0030 00000000 		.4byte	.LFB64
+ 1010 0034 22000000 		.4byte	.LFE64-.LFB64
+ 1011 0038 00000000 		.4byte	.LFB68
+ 1012 003c 08000000 		.4byte	.LFE68-.LFB68
+ 1013 0040 00000000 		.4byte	.LFB69
+ 1014 0044 08000000 		.4byte	.LFE69-.LFB69
+ 1015 0048 00000000 		.4byte	.LFB70
+ 1016 004c 08000000 		.4byte	.LFE70-.LFB70
+ 1017 0050 00000000 		.4byte	0
+ 1018 0054 00000000 		.4byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 20
+
+
+ 1019              		.section	.debug_ranges,"",%progbits
+ 1020              	.Ldebug_ranges0:
+ 1021 0000 00000000 		.4byte	.LFB63
+ 1022 0004 10000000 		.4byte	.LFE63
+ 1023 0008 00000000 		.4byte	.LFB65
+ 1024 000c 08000000 		.4byte	.LFE65
+ 1025 0010 00000000 		.4byte	.LFB66
+ 1026 0014 08000000 		.4byte	.LFE66
+ 1027 0018 00000000 		.4byte	.LFB67
+ 1028 001c 08000000 		.4byte	.LFE67
+ 1029 0020 00000000 		.4byte	.LFB64
+ 1030 0024 22000000 		.4byte	.LFE64
+ 1031 0028 00000000 		.4byte	.LFB68
+ 1032 002c 08000000 		.4byte	.LFE68
+ 1033 0030 00000000 		.4byte	.LFB69
+ 1034 0034 08000000 		.4byte	.LFE69
+ 1035 0038 00000000 		.4byte	.LFB70
+ 1036 003c 08000000 		.4byte	.LFE70
+ 1037 0040 00000000 		.4byte	0
+ 1038 0044 00000000 		.4byte	0
+ 1039              		.section	.debug_line,"",%progbits
+ 1040              	.Ldebug_line0:
+ 1041 0000 EF010000 		.section	.debug_str,"MS",%progbits,1
+ 1041      02006101 
+ 1041      00000201 
+ 1041      FB0E0D00 
+ 1041      01010101 
+ 1042              	.LASF35:
+ 1043 0000 50574D5F 		.ascii	"PWM_RED_ReadCompare\000"
+ 1043      5245445F 
+ 1043      52656164 
+ 1043      436F6D70 
+ 1043      61726500 
+ 1044              	.LASF39:
+ 1045 0014 7267625F 		.ascii	"rgb_led.c\000"
+ 1045      6C65642E 
+ 1045      6300
+ 1046              	.LASF22:
+ 1047 001e 73657447 		.ascii	"setGreen\000"
+ 1047      7265656E 
+ 1047      00
+ 1048              	.LASF4:
+ 1049 0027 5F5F7569 		.ascii	"__uint8_t\000"
+ 1049      6E74385F 
+ 1049      7400
+ 1050              	.LASF5:
+ 1051 0031 5F5F696E 		.ascii	"__int32_t\000"
+ 1051      7433325F 
+ 1051      7400
+ 1052              	.LASF24:
+ 1053 003b 73657443 		.ascii	"setColor\000"
+ 1053      6F6C6F72 
+ 1053      00
+ 1054              	.LASF32:
+ 1055 0044 50574D5F 		.ascii	"PWM_RED_WriteCompare\000"
+ 1055      5245445F 
+ 1055      57726974 
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 21
+
+
+ 1055      65436F6D 
+ 1055      70617265 
+ 1056              	.LASF14:
+ 1057 0059 646F7562 		.ascii	"double\000"
+ 1057      6C6500
+ 1058              	.LASF19:
+ 1059 0060 626C7565 		.ascii	"blue\000"
+ 1059      00
+ 1060              	.LASF21:
+ 1061 0065 73657452 		.ascii	"setRed\000"
+ 1061      656400
+ 1062              	.LASF13:
+ 1063 006c 666C6F61 		.ascii	"float\000"
+ 1063      7400
+ 1064              	.LASF26:
+ 1065 0072 67657452 		.ascii	"getRed\000"
+ 1065      656400
+ 1066              	.LASF1:
+ 1067 0079 756E7369 		.ascii	"unsigned char\000"
+ 1067      676E6564 
+ 1067      20636861 
+ 1067      7200
+ 1068              	.LASF38:
+ 1069 0087 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1069      43313120 
+ 1069      352E342E 
+ 1069      31203230 
+ 1069      31363036 
+ 1070 00ba 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1070      20726576 
+ 1070      6973696F 
+ 1070      6E203233 
+ 1070      37373135 
+ 1071 00ed 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1071      66756E63 
+ 1071      74696F6E 
+ 1071      2D736563 
+ 1071      74696F6E 
+ 1072              	.LASF7:
+ 1073 0115 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1073      20756E73 
+ 1073      69676E65 
+ 1073      6420696E 
+ 1073      7400
+ 1074              	.LASF27:
+ 1075 0127 67657447 		.ascii	"getGreen\000"
+ 1075      7265656E 
+ 1075      00
+ 1076              	.LASF3:
+ 1077 0130 73686F72 		.ascii	"short unsigned int\000"
+ 1077      7420756E 
+ 1077      7369676E 
+ 1077      65642069 
+ 1077      6E7400
+ 1078              	.LASF18:
+ 1079 0143 67726565 		.ascii	"green\000"
+ 1079      6E00
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 22
+
+
+ 1080              	.LASF42:
+ 1081 0149 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1081      52784275 
+ 1081      66666572 
+ 1081      00
+ 1082              	.LASF20:
+ 1083 0156 636F6C6F 		.ascii	"color_t\000"
+ 1083      725F7400 
+ 1084              	.LASF28:
+ 1085 015e 67657442 		.ascii	"getBlue\000"
+ 1085      6C756500 
+ 1086              	.LASF23:
+ 1087 0166 73657442 		.ascii	"setBlue\000"
+ 1087      6C756500 
+ 1088              	.LASF41:
+ 1089 016e 696E6974 		.ascii	"initRGBLED\000"
+ 1089      5247424C 
+ 1089      454400
+ 1090              	.LASF33:
+ 1091 0179 50574D5F 		.ascii	"PWM_GREEN_WriteCompare\000"
+ 1091      47524545 
+ 1091      4E5F5772 
+ 1091      69746543 
+ 1091      6F6D7061 
+ 1092              	.LASF25:
+ 1093 0190 636F6C6F 		.ascii	"color\000"
+ 1093      7200
+ 1094              	.LASF40:
+ 1095 0196 433A5C55 		.ascii	"C:\\Users\\Marcus Gasberg\\Documents\\GitHub\\i3prj"
+ 1095      73657273 
+ 1095      5C4D6172 
+ 1095      63757320 
+ 1095      47617362 
+ 1096 01c4 5F70726F 		.ascii	"_projekt\\Softwaredesign\\Demoer\\BeerPongTable_LED"
+ 1096      6A656B74 
+ 1096      5C536F66 
+ 1096      74776172 
+ 1096      65646573 
+ 1097 01f4 5F44656D 		.ascii	"_Demo\\Design01.cydsn\000"
+ 1097      6F5C4465 
+ 1097      7369676E 
+ 1097      30312E63 
+ 1097      7964736E 
+ 1098              	.LASF10:
+ 1099 0209 756E7369 		.ascii	"unsigned int\000"
+ 1099      676E6564 
+ 1099      20696E74 
+ 1099      00
+ 1100              	.LASF9:
+ 1101 0216 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1101      206C6F6E 
+ 1101      6720756E 
+ 1101      7369676E 
+ 1101      65642069 
+ 1102              	.LASF11:
+ 1103 022d 75696E74 		.ascii	"uint8_t\000"
+ 1103      385F7400 
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 23
+
+
+ 1104              	.LASF30:
+ 1105 0235 50574D5F 		.ascii	"PWM_GREEN_Start\000"
+ 1105      47524545 
+ 1105      4E5F5374 
+ 1105      61727400 
+ 1106              	.LASF37:
+ 1107 0245 50574D5F 		.ascii	"PWM_BLUE_ReadCompare\000"
+ 1107      424C5545 
+ 1107      5F526561 
+ 1107      64436F6D 
+ 1107      70617265 
+ 1108              	.LASF0:
+ 1109 025a 7369676E 		.ascii	"signed char\000"
+ 1109      65642063 
+ 1109      68617200 
+ 1110              	.LASF12:
+ 1111 0266 696E7433 		.ascii	"int32_t\000"
+ 1111      325F7400 
+ 1112              	.LASF17:
+ 1113 026e 73697A65 		.ascii	"sizetype\000"
+ 1113      74797065 
+ 1113      00
+ 1114              	.LASF29:
+ 1115 0277 50574D5F 		.ascii	"PWM_RED_Start\000"
+ 1115      5245445F 
+ 1115      53746172 
+ 1115      7400
+ 1116              	.LASF8:
+ 1117 0285 6C6F6E67 		.ascii	"long long int\000"
+ 1117      206C6F6E 
+ 1117      6720696E 
+ 1117      7400
+ 1118              	.LASF15:
+ 1119 0293 63686172 		.ascii	"char\000"
+ 1119      00
+ 1120              	.LASF2:
+ 1121 0298 73686F72 		.ascii	"short int\000"
+ 1121      7420696E 
+ 1121      7400
+ 1122              	.LASF36:
+ 1123 02a2 50574D5F 		.ascii	"PWM_GREEN_ReadCompare\000"
+ 1123      47524545 
+ 1123      4E5F5265 
+ 1123      6164436F 
+ 1123      6D706172 
+ 1124              	.LASF34:
+ 1125 02b8 50574D5F 		.ascii	"PWM_BLUE_WriteCompare\000"
+ 1125      424C5545 
+ 1125      5F577269 
+ 1125      7465436F 
+ 1125      6D706172 
+ 1126              	.LASF6:
+ 1127 02ce 6C6F6E67 		.ascii	"long int\000"
+ 1127      20696E74 
+ 1127      00
+ 1128              	.LASF16:
+ 1129 02d7 6C6F6E67 		.ascii	"long double\000"
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccF55Nex.s 			page 24
+
+
+ 1129      20646F75 
+ 1129      626C6500 
+ 1130              	.LASF31:
+ 1131 02e3 50574D5F 		.ascii	"PWM_BLUE_Start\000"
+ 1131      424C5545 
+ 1131      5F537461 
+ 1131      727400
+ 1132              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

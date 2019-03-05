@@ -1,0 +1,702 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CupSensor_IF.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CupSensor_IF_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	CupSensor_IF_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	CupSensor_IF_init, %function
+  25              	CupSensor_IF_init:
+  26              	.LFB64:
+  27              		.file 1 "CupSensor_IF.c"
+   1:CupSensor_IF.c **** /* ========================================
+   2:CupSensor_IF.c ****  *
+   3:CupSensor_IF.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:CupSensor_IF.c ****  * All Rights Reserved
+   5:CupSensor_IF.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:CupSensor_IF.c ****  *
+   7:CupSensor_IF.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:CupSensor_IF.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:CupSensor_IF.c ****  *
+  10:CupSensor_IF.c ****  * ========================================
+  11:CupSensor_IF.c **** */
+  12:CupSensor_IF.c **** 
+  13:CupSensor_IF.c **** #include "CupSensor_IF.h"
+  14:CupSensor_IF.c **** 
+  15:CupSensor_IF.c **** extern void updateCupStatus(uint8_t status);
+  16:CupSensor_IF.c **** extern void updateHitStatus(uint8_t status);
+  17:CupSensor_IF.c **** 
+  18:CupSensor_IF.c **** void CupSensor_IF_init()
+  19:CupSensor_IF.c **** {
+  28              		.loc 1 19 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  20:CupSensor_IF.c ****     CupSensor_Start();
+  36              		.loc 1 20 0
+  37 0002 FFF7FEFF 		bl	CupSensor_Start
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 2
+
+
+  38              	.LVL0:
+  21:CupSensor_IF.c ****     CupSensor_statusCallback(&updateCupStatus);
+  39              		.loc 1 21 0
+  40 0006 0348     		ldr	r0, .L3
+  41 0008 FFF7FEFF 		bl	CupSensor_statusCallback
+  42              	.LVL1:
+  22:CupSensor_IF.c ****     CupSensor_hitStatusCallback(&updateHitStatus);    
+  43              		.loc 1 22 0
+  44 000c 0248     		ldr	r0, .L3+4
+  45 000e FFF7FEFF 		bl	CupSensor_hitStatusCallback
+  46              	.LVL2:
+  47 0012 08BD     		pop	{r3, pc}
+  48              	.L4:
+  49              		.align	2
+  50              	.L3:
+  51 0014 00000000 		.word	updateCupStatus
+  52 0018 00000000 		.word	updateHitStatus
+  53              		.cfi_endproc
+  54              	.LFE64:
+  55              		.size	CupSensor_IF_init, .-CupSensor_IF_init
+  56              		.section	.text.getStatus,"ax",%progbits
+  57              		.align	2
+  58              		.global	getStatus
+  59              		.thumb
+  60              		.thumb_func
+  61              		.type	getStatus, %function
+  62              	getStatus:
+  63              	.LFB65:
+  23:CupSensor_IF.c **** }
+  24:CupSensor_IF.c **** 
+  25:CupSensor_IF.c **** uint8_t getStatus()
+  26:CupSensor_IF.c **** {
+  64              		.loc 1 26 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 08B5     		push	{r3, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  27:CupSensor_IF.c ****     return CupSensor_getStatus();
+  72              		.loc 1 27 0
+  73 0002 FFF7FEFF 		bl	CupSensor_getStatus
+  74              	.LVL3:
+  28:CupSensor_IF.c **** }
+  75              		.loc 1 28 0
+  76 0006 08BD     		pop	{r3, pc}
+  77              		.cfi_endproc
+  78              	.LFE65:
+  79              		.size	getStatus, .-getStatus
+  80              		.section	.text.getHitStatus,"ax",%progbits
+  81              		.align	2
+  82              		.global	getHitStatus
+  83              		.thumb
+  84              		.thumb_func
+  85              		.type	getHitStatus, %function
+  86              	getHitStatus:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 3
+
+
+  87              	.LFB66:
+  29:CupSensor_IF.c **** 
+  30:CupSensor_IF.c **** uint8_t getHitStatus()
+  31:CupSensor_IF.c **** {
+  88              		.loc 1 31 0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92 0000 08B5     		push	{r3, lr}
+  93              		.cfi_def_cfa_offset 8
+  94              		.cfi_offset 3, -8
+  95              		.cfi_offset 14, -4
+  32:CupSensor_IF.c ****     return CupSensor_getHitStatus();
+  96              		.loc 1 32 0
+  97 0002 FFF7FEFF 		bl	CupSensor_getHitStatus
+  98              	.LVL4:
+  33:CupSensor_IF.c **** }
+  99              		.loc 1 33 0
+ 100 0006 08BD     		pop	{r3, pc}
+ 101              		.cfi_endproc
+ 102              	.LFE66:
+ 103              		.size	getHitStatus, .-getHitStatus
+ 104              		.text
+ 105              	.Letext0:
+ 106              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 107              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 108              		.file 4 "Generated_Source\\PSoC5/CupSensor_CupSensor.h"
+ 109              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 110              		.section	.debug_info,"",%progbits
+ 111              	.Ldebug_info0:
+ 112 0000 76010000 		.4byte	0x176
+ 113 0004 0400     		.2byte	0x4
+ 114 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 115 000a 04       		.byte	0x4
+ 116 000b 01       		.uleb128 0x1
+ 117 000c 90000000 		.4byte	.LASF25
+ 118 0010 0C       		.byte	0xc
+ 119 0011 00000000 		.4byte	.LASF26
+ 120 0015 90010000 		.4byte	.LASF27
+ 121 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 122 001d 00000000 		.4byte	0
+ 123 0021 00000000 		.4byte	.Ldebug_line0
+ 124 0025 02       		.uleb128 0x2
+ 125 0026 01       		.byte	0x1
+ 126 0027 06       		.byte	0x6
+ 127 0028 65020000 		.4byte	.LASF0
+ 128 002c 03       		.uleb128 0x3
+ 129 002d 0F000000 		.4byte	.LASF4
+ 130 0031 02       		.byte	0x2
+ 131 0032 1D       		.byte	0x1d
+ 132 0033 37000000 		.4byte	0x37
+ 133 0037 02       		.uleb128 0x2
+ 134 0038 01       		.byte	0x1
+ 135 0039 08       		.byte	0x8
+ 136 003a 82000000 		.4byte	.LASF1
+ 137 003e 02       		.uleb128 0x2
+ 138 003f 02       		.byte	0x2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 4
+
+
+ 139 0040 05       		.byte	0x5
+ 140 0041 2A020000 		.4byte	.LASF2
+ 141 0045 02       		.uleb128 0x2
+ 142 0046 02       		.byte	0x2
+ 143 0047 07       		.byte	0x7
+ 144 0048 30010000 		.4byte	.LASF3
+ 145 004c 03       		.uleb128 0x3
+ 146 004d 3B000000 		.4byte	.LASF5
+ 147 0051 02       		.byte	0x2
+ 148 0052 3F       		.byte	0x3f
+ 149 0053 57000000 		.4byte	0x57
+ 150 0057 02       		.uleb128 0x2
+ 151 0058 04       		.byte	0x4
+ 152 0059 05       		.byte	0x5
+ 153 005a 50020000 		.4byte	.LASF6
+ 154 005e 02       		.uleb128 0x2
+ 155 005f 04       		.byte	0x4
+ 156 0060 07       		.byte	0x7
+ 157 0061 1E010000 		.4byte	.LASF7
+ 158 0065 02       		.uleb128 0x2
+ 159 0066 08       		.byte	0x8
+ 160 0067 05       		.byte	0x5
+ 161 0068 0D020000 		.4byte	.LASF8
+ 162 006c 02       		.uleb128 0x2
+ 163 006d 08       		.byte	0x8
+ 164 006e 07       		.byte	0x7
+ 165 006f 71010000 		.4byte	.LASF9
+ 166 0073 04       		.uleb128 0x4
+ 167 0074 04       		.byte	0x4
+ 168 0075 05       		.byte	0x5
+ 169 0076 696E7400 		.ascii	"int\000"
+ 170 007a 02       		.uleb128 0x2
+ 171 007b 04       		.byte	0x4
+ 172 007c 07       		.byte	0x7
+ 173 007d 64010000 		.4byte	.LASF10
+ 174 0081 03       		.uleb128 0x3
+ 175 0082 88010000 		.4byte	.LASF11
+ 176 0086 03       		.byte	0x3
+ 177 0087 18       		.byte	0x18
+ 178 0088 2C000000 		.4byte	0x2c
+ 179 008c 03       		.uleb128 0x3
+ 180 008d FC010000 		.4byte	.LASF12
+ 181 0091 03       		.byte	0x3
+ 182 0092 2C       		.byte	0x2c
+ 183 0093 4C000000 		.4byte	0x4c
+ 184 0097 02       		.uleb128 0x2
+ 185 0098 04       		.byte	0x4
+ 186 0099 04       		.byte	0x4
+ 187 009a 7C000000 		.4byte	.LASF13
+ 188 009e 02       		.uleb128 0x2
+ 189 009f 08       		.byte	0x8
+ 190 00a0 04       		.byte	0x4
+ 191 00a1 75000000 		.4byte	.LASF14
+ 192 00a5 02       		.uleb128 0x2
+ 193 00a6 01       		.byte	0x1
+ 194 00a7 08       		.byte	0x8
+ 195 00a8 1B020000 		.4byte	.LASF15
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 5
+
+
+ 196 00ac 02       		.uleb128 0x2
+ 197 00ad 08       		.byte	0x8
+ 198 00ae 04       		.byte	0x4
+ 199 00af 59020000 		.4byte	.LASF16
+ 200 00b3 02       		.uleb128 0x2
+ 201 00b4 04       		.byte	0x4
+ 202 00b5 07       		.byte	0x7
+ 203 00b6 04020000 		.4byte	.LASF17
+ 204 00ba 05       		.uleb128 0x5
+ 205 00bb 29000000 		.4byte	.LASF28
+ 206 00bf 01       		.byte	0x1
+ 207 00c0 12       		.byte	0x12
+ 208 00c1 00000000 		.4byte	.LFB64
+ 209 00c5 1C000000 		.4byte	.LFE64-.LFB64
+ 210 00c9 01       		.uleb128 0x1
+ 211 00ca 9C       		.byte	0x9c
+ 212 00cb EB000000 		.4byte	0xeb
+ 213 00cf 06       		.uleb128 0x6
+ 214 00d0 06000000 		.4byte	.LVL0
+ 215 00d4 42010000 		.4byte	0x142
+ 216 00d8 06       		.uleb128 0x6
+ 217 00d9 0C000000 		.4byte	.LVL1
+ 218 00dd 4D010000 		.4byte	0x14d
+ 219 00e1 06       		.uleb128 0x6
+ 220 00e2 12000000 		.4byte	.LVL2
+ 221 00e6 58010000 		.4byte	0x158
+ 222 00ea 00       		.byte	0
+ 223 00eb 07       		.uleb128 0x7
+ 224 00ec 20020000 		.4byte	.LASF18
+ 225 00f0 01       		.byte	0x1
+ 226 00f1 19       		.byte	0x19
+ 227 00f2 81000000 		.4byte	0x81
+ 228 00f6 00000000 		.4byte	.LFB65
+ 229 00fa 08000000 		.4byte	.LFE65-.LFB65
+ 230 00fe 01       		.uleb128 0x1
+ 231 00ff 9C       		.byte	0x9c
+ 232 0100 0E010000 		.4byte	0x10e
+ 233 0104 06       		.uleb128 0x6
+ 234 0105 06000000 		.4byte	.LVL3
+ 235 0109 63010000 		.4byte	0x163
+ 236 010d 00       		.byte	0
+ 237 010e 07       		.uleb128 0x7
+ 238 010f 71020000 		.4byte	.LASF19
+ 239 0113 01       		.byte	0x1
+ 240 0114 1E       		.byte	0x1e
+ 241 0115 81000000 		.4byte	0x81
+ 242 0119 00000000 		.4byte	.LFB66
+ 243 011d 08000000 		.4byte	.LFE66-.LFB66
+ 244 0121 01       		.uleb128 0x1
+ 245 0122 9C       		.byte	0x9c
+ 246 0123 31010000 		.4byte	0x131
+ 247 0127 06       		.uleb128 0x6
+ 248 0128 06000000 		.4byte	.LVL4
+ 249 012c 6E010000 		.4byte	0x16e
+ 250 0130 00       		.byte	0
+ 251 0131 08       		.uleb128 0x8
+ 252 0132 43010000 		.4byte	.LASF29
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 6
+
+
+ 253 0136 05       		.byte	0x5
+ 254 0137 1207     		.2byte	0x712
+ 255 0139 3D010000 		.4byte	0x13d
+ 256 013d 09       		.uleb128 0x9
+ 257 013e 8C000000 		.4byte	0x8c
+ 258 0142 0A       		.uleb128 0xa
+ 259 0143 19000000 		.4byte	.LASF20
+ 260 0147 19000000 		.4byte	.LASF20
+ 261 014b 04       		.byte	0x4
+ 262 014c 11       		.byte	0x11
+ 263 014d 0A       		.uleb128 0xa
+ 264 014e 45000000 		.4byte	.LASF21
+ 265 0152 45000000 		.4byte	.LASF21
+ 266 0156 04       		.byte	0x4
+ 267 0157 12       		.byte	0x12
+ 268 0158 0A       		.uleb128 0xa
+ 269 0159 34020000 		.4byte	.LASF22
+ 270 015d 34020000 		.4byte	.LASF22
+ 271 0161 04       		.byte	0x4
+ 272 0162 13       		.byte	0x13
+ 273 0163 0A       		.uleb128 0xa
+ 274 0164 50010000 		.4byte	.LASF23
+ 275 0168 50010000 		.4byte	.LASF23
+ 276 016c 04       		.byte	0x4
+ 277 016d 14       		.byte	0x14
+ 278 016e 0A       		.uleb128 0xa
+ 279 016f 5E000000 		.4byte	.LASF24
+ 280 0173 5E000000 		.4byte	.LASF24
+ 281 0177 04       		.byte	0x4
+ 282 0178 15       		.byte	0x15
+ 283 0179 00       		.byte	0
+ 284              		.section	.debug_abbrev,"",%progbits
+ 285              	.Ldebug_abbrev0:
+ 286 0000 01       		.uleb128 0x1
+ 287 0001 11       		.uleb128 0x11
+ 288 0002 01       		.byte	0x1
+ 289 0003 25       		.uleb128 0x25
+ 290 0004 0E       		.uleb128 0xe
+ 291 0005 13       		.uleb128 0x13
+ 292 0006 0B       		.uleb128 0xb
+ 293 0007 03       		.uleb128 0x3
+ 294 0008 0E       		.uleb128 0xe
+ 295 0009 1B       		.uleb128 0x1b
+ 296 000a 0E       		.uleb128 0xe
+ 297 000b 55       		.uleb128 0x55
+ 298 000c 17       		.uleb128 0x17
+ 299 000d 11       		.uleb128 0x11
+ 300 000e 01       		.uleb128 0x1
+ 301 000f 10       		.uleb128 0x10
+ 302 0010 17       		.uleb128 0x17
+ 303 0011 00       		.byte	0
+ 304 0012 00       		.byte	0
+ 305 0013 02       		.uleb128 0x2
+ 306 0014 24       		.uleb128 0x24
+ 307 0015 00       		.byte	0
+ 308 0016 0B       		.uleb128 0xb
+ 309 0017 0B       		.uleb128 0xb
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 7
+
+
+ 310 0018 3E       		.uleb128 0x3e
+ 311 0019 0B       		.uleb128 0xb
+ 312 001a 03       		.uleb128 0x3
+ 313 001b 0E       		.uleb128 0xe
+ 314 001c 00       		.byte	0
+ 315 001d 00       		.byte	0
+ 316 001e 03       		.uleb128 0x3
+ 317 001f 16       		.uleb128 0x16
+ 318 0020 00       		.byte	0
+ 319 0021 03       		.uleb128 0x3
+ 320 0022 0E       		.uleb128 0xe
+ 321 0023 3A       		.uleb128 0x3a
+ 322 0024 0B       		.uleb128 0xb
+ 323 0025 3B       		.uleb128 0x3b
+ 324 0026 0B       		.uleb128 0xb
+ 325 0027 49       		.uleb128 0x49
+ 326 0028 13       		.uleb128 0x13
+ 327 0029 00       		.byte	0
+ 328 002a 00       		.byte	0
+ 329 002b 04       		.uleb128 0x4
+ 330 002c 24       		.uleb128 0x24
+ 331 002d 00       		.byte	0
+ 332 002e 0B       		.uleb128 0xb
+ 333 002f 0B       		.uleb128 0xb
+ 334 0030 3E       		.uleb128 0x3e
+ 335 0031 0B       		.uleb128 0xb
+ 336 0032 03       		.uleb128 0x3
+ 337 0033 08       		.uleb128 0x8
+ 338 0034 00       		.byte	0
+ 339 0035 00       		.byte	0
+ 340 0036 05       		.uleb128 0x5
+ 341 0037 2E       		.uleb128 0x2e
+ 342 0038 01       		.byte	0x1
+ 343 0039 3F       		.uleb128 0x3f
+ 344 003a 19       		.uleb128 0x19
+ 345 003b 03       		.uleb128 0x3
+ 346 003c 0E       		.uleb128 0xe
+ 347 003d 3A       		.uleb128 0x3a
+ 348 003e 0B       		.uleb128 0xb
+ 349 003f 3B       		.uleb128 0x3b
+ 350 0040 0B       		.uleb128 0xb
+ 351 0041 11       		.uleb128 0x11
+ 352 0042 01       		.uleb128 0x1
+ 353 0043 12       		.uleb128 0x12
+ 354 0044 06       		.uleb128 0x6
+ 355 0045 40       		.uleb128 0x40
+ 356 0046 18       		.uleb128 0x18
+ 357 0047 9742     		.uleb128 0x2117
+ 358 0049 19       		.uleb128 0x19
+ 359 004a 01       		.uleb128 0x1
+ 360 004b 13       		.uleb128 0x13
+ 361 004c 00       		.byte	0
+ 362 004d 00       		.byte	0
+ 363 004e 06       		.uleb128 0x6
+ 364 004f 898201   		.uleb128 0x4109
+ 365 0052 00       		.byte	0
+ 366 0053 11       		.uleb128 0x11
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 8
+
+
+ 367 0054 01       		.uleb128 0x1
+ 368 0055 31       		.uleb128 0x31
+ 369 0056 13       		.uleb128 0x13
+ 370 0057 00       		.byte	0
+ 371 0058 00       		.byte	0
+ 372 0059 07       		.uleb128 0x7
+ 373 005a 2E       		.uleb128 0x2e
+ 374 005b 01       		.byte	0x1
+ 375 005c 3F       		.uleb128 0x3f
+ 376 005d 19       		.uleb128 0x19
+ 377 005e 03       		.uleb128 0x3
+ 378 005f 0E       		.uleb128 0xe
+ 379 0060 3A       		.uleb128 0x3a
+ 380 0061 0B       		.uleb128 0xb
+ 381 0062 3B       		.uleb128 0x3b
+ 382 0063 0B       		.uleb128 0xb
+ 383 0064 49       		.uleb128 0x49
+ 384 0065 13       		.uleb128 0x13
+ 385 0066 11       		.uleb128 0x11
+ 386 0067 01       		.uleb128 0x1
+ 387 0068 12       		.uleb128 0x12
+ 388 0069 06       		.uleb128 0x6
+ 389 006a 40       		.uleb128 0x40
+ 390 006b 18       		.uleb128 0x18
+ 391 006c 9742     		.uleb128 0x2117
+ 392 006e 19       		.uleb128 0x19
+ 393 006f 01       		.uleb128 0x1
+ 394 0070 13       		.uleb128 0x13
+ 395 0071 00       		.byte	0
+ 396 0072 00       		.byte	0
+ 397 0073 08       		.uleb128 0x8
+ 398 0074 34       		.uleb128 0x34
+ 399 0075 00       		.byte	0
+ 400 0076 03       		.uleb128 0x3
+ 401 0077 0E       		.uleb128 0xe
+ 402 0078 3A       		.uleb128 0x3a
+ 403 0079 0B       		.uleb128 0xb
+ 404 007a 3B       		.uleb128 0x3b
+ 405 007b 05       		.uleb128 0x5
+ 406 007c 49       		.uleb128 0x49
+ 407 007d 13       		.uleb128 0x13
+ 408 007e 3F       		.uleb128 0x3f
+ 409 007f 19       		.uleb128 0x19
+ 410 0080 3C       		.uleb128 0x3c
+ 411 0081 19       		.uleb128 0x19
+ 412 0082 00       		.byte	0
+ 413 0083 00       		.byte	0
+ 414 0084 09       		.uleb128 0x9
+ 415 0085 35       		.uleb128 0x35
+ 416 0086 00       		.byte	0
+ 417 0087 49       		.uleb128 0x49
+ 418 0088 13       		.uleb128 0x13
+ 419 0089 00       		.byte	0
+ 420 008a 00       		.byte	0
+ 421 008b 0A       		.uleb128 0xa
+ 422 008c 2E       		.uleb128 0x2e
+ 423 008d 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 9
+
+
+ 424 008e 3F       		.uleb128 0x3f
+ 425 008f 19       		.uleb128 0x19
+ 426 0090 3C       		.uleb128 0x3c
+ 427 0091 19       		.uleb128 0x19
+ 428 0092 6E       		.uleb128 0x6e
+ 429 0093 0E       		.uleb128 0xe
+ 430 0094 03       		.uleb128 0x3
+ 431 0095 0E       		.uleb128 0xe
+ 432 0096 3A       		.uleb128 0x3a
+ 433 0097 0B       		.uleb128 0xb
+ 434 0098 3B       		.uleb128 0x3b
+ 435 0099 0B       		.uleb128 0xb
+ 436 009a 00       		.byte	0
+ 437 009b 00       		.byte	0
+ 438 009c 00       		.byte	0
+ 439              		.section	.debug_aranges,"",%progbits
+ 440 0000 2C000000 		.4byte	0x2c
+ 441 0004 0200     		.2byte	0x2
+ 442 0006 00000000 		.4byte	.Ldebug_info0
+ 443 000a 04       		.byte	0x4
+ 444 000b 00       		.byte	0
+ 445 000c 0000     		.2byte	0
+ 446 000e 0000     		.2byte	0
+ 447 0010 00000000 		.4byte	.LFB64
+ 448 0014 1C000000 		.4byte	.LFE64-.LFB64
+ 449 0018 00000000 		.4byte	.LFB65
+ 450 001c 08000000 		.4byte	.LFE65-.LFB65
+ 451 0020 00000000 		.4byte	.LFB66
+ 452 0024 08000000 		.4byte	.LFE66-.LFB66
+ 453 0028 00000000 		.4byte	0
+ 454 002c 00000000 		.4byte	0
+ 455              		.section	.debug_ranges,"",%progbits
+ 456              	.Ldebug_ranges0:
+ 457 0000 00000000 		.4byte	.LFB64
+ 458 0004 1C000000 		.4byte	.LFE64
+ 459 0008 00000000 		.4byte	.LFB65
+ 460 000c 08000000 		.4byte	.LFE65
+ 461 0010 00000000 		.4byte	.LFB66
+ 462 0014 08000000 		.4byte	.LFE66
+ 463 0018 00000000 		.4byte	0
+ 464 001c 00000000 		.4byte	0
+ 465              		.section	.debug_line,"",%progbits
+ 466              	.Ldebug_line0:
+ 467 0000 9A010000 		.section	.debug_str,"MS",%progbits,1
+ 467      02006001 
+ 467      00000201 
+ 467      FB0E0D00 
+ 467      01010101 
+ 468              	.LASF26:
+ 469 0000 43757053 		.ascii	"CupSensor_IF.c\000"
+ 469      656E736F 
+ 469      725F4946 
+ 469      2E6300
+ 470              	.LASF4:
+ 471 000f 5F5F7569 		.ascii	"__uint8_t\000"
+ 471      6E74385F 
+ 471      7400
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 10
+
+
+ 472              	.LASF20:
+ 473 0019 43757053 		.ascii	"CupSensor_Start\000"
+ 473      656E736F 
+ 473      725F5374 
+ 473      61727400 
+ 474              	.LASF28:
+ 475 0029 43757053 		.ascii	"CupSensor_IF_init\000"
+ 475      656E736F 
+ 475      725F4946 
+ 475      5F696E69 
+ 475      7400
+ 476              	.LASF5:
+ 477 003b 5F5F696E 		.ascii	"__int32_t\000"
+ 477      7433325F 
+ 477      7400
+ 478              	.LASF21:
+ 479 0045 43757053 		.ascii	"CupSensor_statusCallback\000"
+ 479      656E736F 
+ 479      725F7374 
+ 479      61747573 
+ 479      43616C6C 
+ 480              	.LASF24:
+ 481 005e 43757053 		.ascii	"CupSensor_getHitStatus\000"
+ 481      656E736F 
+ 481      725F6765 
+ 481      74486974 
+ 481      53746174 
+ 482              	.LASF14:
+ 483 0075 646F7562 		.ascii	"double\000"
+ 483      6C6500
+ 484              	.LASF13:
+ 485 007c 666C6F61 		.ascii	"float\000"
+ 485      7400
+ 486              	.LASF1:
+ 487 0082 756E7369 		.ascii	"unsigned char\000"
+ 487      676E6564 
+ 487      20636861 
+ 487      7200
+ 488              	.LASF25:
+ 489 0090 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 489      43313120 
+ 489      352E342E 
+ 489      31203230 
+ 489      31363036 
+ 490 00c3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 490      20726576 
+ 490      6973696F 
+ 490      6E203233 
+ 490      37373135 
+ 491 00f6 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 491      66756E63 
+ 491      74696F6E 
+ 491      2D736563 
+ 491      74696F6E 
+ 492              	.LASF7:
+ 493 011e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 493      20756E73 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 11
+
+
+ 493      69676E65 
+ 493      6420696E 
+ 493      7400
+ 494              	.LASF3:
+ 495 0130 73686F72 		.ascii	"short unsigned int\000"
+ 495      7420756E 
+ 495      7369676E 
+ 495      65642069 
+ 495      6E7400
+ 496              	.LASF29:
+ 497 0143 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 497      52784275 
+ 497      66666572 
+ 497      00
+ 498              	.LASF23:
+ 499 0150 43757053 		.ascii	"CupSensor_getStatus\000"
+ 499      656E736F 
+ 499      725F6765 
+ 499      74537461 
+ 499      74757300 
+ 500              	.LASF10:
+ 501 0164 756E7369 		.ascii	"unsigned int\000"
+ 501      676E6564 
+ 501      20696E74 
+ 501      00
+ 502              	.LASF9:
+ 503 0171 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 503      206C6F6E 
+ 503      6720756E 
+ 503      7369676E 
+ 503      65642069 
+ 504              	.LASF11:
+ 505 0188 75696E74 		.ascii	"uint8_t\000"
+ 505      385F7400 
+ 506              	.LASF27:
+ 507 0190 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 507      73657273 
+ 507      5C6E696B 
+ 507      6F6C5C44 
+ 507      6F63756D 
+ 508 01bd 5C706C61 		.ascii	"\\player_side_app\\integration\\integration\\integr"
+ 508      7965725F 
+ 508      73696465 
+ 508      5F617070 
+ 508      5C696E74 
+ 509 01ec 6174696F 		.ascii	"ation_all.cydsn\000"
+ 509      6E5F616C 
+ 509      6C2E6379 
+ 509      64736E00 
+ 510              	.LASF12:
+ 511 01fc 696E7433 		.ascii	"int32_t\000"
+ 511      325F7400 
+ 512              	.LASF17:
+ 513 0204 73697A65 		.ascii	"sizetype\000"
+ 513      74797065 
+ 513      00
+ 514              	.LASF8:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccf8Hrai.s 			page 12
+
+
+ 515 020d 6C6F6E67 		.ascii	"long long int\000"
+ 515      206C6F6E 
+ 515      6720696E 
+ 515      7400
+ 516              	.LASF15:
+ 517 021b 63686172 		.ascii	"char\000"
+ 517      00
+ 518              	.LASF18:
+ 519 0220 67657453 		.ascii	"getStatus\000"
+ 519      74617475 
+ 519      7300
+ 520              	.LASF2:
+ 521 022a 73686F72 		.ascii	"short int\000"
+ 521      7420696E 
+ 521      7400
+ 522              	.LASF22:
+ 523 0234 43757053 		.ascii	"CupSensor_hitStatusCallback\000"
+ 523      656E736F 
+ 523      725F6869 
+ 523      74537461 
+ 523      74757343 
+ 524              	.LASF6:
+ 525 0250 6C6F6E67 		.ascii	"long int\000"
+ 525      20696E74 
+ 525      00
+ 526              	.LASF16:
+ 527 0259 6C6F6E67 		.ascii	"long double\000"
+ 527      20646F75 
+ 527      626C6500 
+ 528              	.LASF0:
+ 529 0265 7369676E 		.ascii	"signed char\000"
+ 529      65642063 
+ 529      68617200 
+ 530              	.LASF19:
+ 531 0271 67657448 		.ascii	"getHitStatus\000"
+ 531      69745374 
+ 531      61747573 
+ 531      00
+ 532              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

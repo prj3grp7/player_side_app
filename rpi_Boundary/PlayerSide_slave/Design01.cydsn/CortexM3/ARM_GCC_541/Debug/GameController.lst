@@ -1,0 +1,3476 @@
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"GameController.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.setMyColor,"ax",%progbits
+  20              		.align	2
+  21              		.global	setMyColor
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	setMyColor, %function
+  25              	setMyColor:
+  26              	.LFB65:
+  27              		.file 1 "..\\..\\..\\playerSide_gamecontroller\\playerSide.cydsn\\GameController.c"
+   1:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** /* ========================================
+   2:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  *
+   3:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * All Rights Reserved
+   5:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  *
+   7:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  *
+  10:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  * ========================================
+  11:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** */
+  12:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** #include "GameController.h"
+  13:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** #include <stdint.h>
+  14:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** #include <stdio.h>
+  15:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+  16:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static int blinking =0;
+  17:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static uint8_t blink=0;
+  18:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static color_t turnedOffColor={.Red=0,.Green=0,.Blue=0,};
+  19:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static color_t myColor={.Red=0,.Green=255,.Blue=255,};
+  20:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static color_t opponentColor={.Red=255,.Green=0,.Blue=255,};
+  21:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static color_t missingCupColor={.Red=255,.Green=0,.Blue=0,};
+  22:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static color_t placedCupColor={.Red=0,.Green=0,.Blue=255,};
+  23:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static uint8_t CupStatus;
+  24:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static uint8_t hitStatus;
+  25:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static char game_buf[256];
+  26:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static int nn;
+  27:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static uint8_t LED_states[8];
+  28:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** static uint8_t CupStatus_latest=0;
+  29:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+  30:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void setState(enum GameState state)
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 2
+
+
+  31:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+  32:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****    switch(state)
+  33:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+  34:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case IDLE:
+  35:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+  36:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 currentState=state;
+  37:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("State==IDLE\n\r");
+  38:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(turnedOffColor);
+  39:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+  40:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         break;
+  41:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case STARTING:
+  42:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+  43:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 currentState=state;
+  44:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 CupStatus=getCupStatus();
+  45:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 //ControlLights(CupStatus);
+  46:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 //sendCupStatus(CupStatus);
+  47:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("State==STARTING\n\r");
+  48:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             break;
+  49:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+  50:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case PLAYING:
+  51:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+  52:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 currentState=state;
+  53:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 CupStatus=getCupStatus();
+  54:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 //ControlLights(CupStatus);
+  55:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 sendCupStatus(0x00);
+  56:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("State==PLAYING\n\r");
+  57:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+  58:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         break;
+  59:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case WON:
+  60:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+  61:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 currentState=state;
+  62:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(myColor);
+  63:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("state==WON\n\r");
+  64:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+  65:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         break;
+  66:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case LOST:
+  67:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+  68:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 currentState=state;
+  69:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(opponentColor);
+  70:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("state==LOST\n\r");
+  71:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }  
+  72:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****          break;
+  73:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+  74:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+  75:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  void setMyColor(color_t c)
+  76:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+  28              		.loc 1 76 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 82B0     		sub	sp, sp, #8
+  34              		.cfi_def_cfa_offset 8
+  77:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     myColor=c;
+  35              		.loc 1 77 0
+  36 0002 034B     		ldr	r3, .L3
+  37 0004 1880     		strh	r0, [r3]	@ movhi
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 3
+
+
+  38 0006 000C     		lsrs	r0, r0, #16
+  39 0008 9870     		strb	r0, [r3, #2]
+  78:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+  40              		.loc 1 78 0
+  41 000a 02B0     		add	sp, sp, #8
+  42              		.cfi_def_cfa_offset 0
+  43              		@ sp needed
+  44 000c 7047     		bx	lr
+  45              	.L4:
+  46 000e 00BF     		.align	2
+  47              	.L3:
+  48 0010 00000000 		.word	.LANCHOR0
+  49              		.cfi_endproc
+  50              	.LFE65:
+  51              		.size	setMyColor, .-setMyColor
+  52              		.section	.text.setOpponentColor,"ax",%progbits
+  53              		.align	2
+  54              		.global	setOpponentColor
+  55              		.thumb
+  56              		.thumb_func
+  57              		.type	setOpponentColor, %function
+  58              	setOpponentColor:
+  59              	.LFB66:
+  79:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  void setOpponentColor(color_t c)
+  80:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+  60              		.loc 1 80 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 8
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 0000 82B0     		sub	sp, sp, #8
+  66              		.cfi_def_cfa_offset 8
+  81:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     opponentColor=c;
+  67              		.loc 1 81 0
+  68 0002 034B     		ldr	r3, .L7
+  69 0004 9880     		strh	r0, [r3, #4]	@ movhi
+  70 0006 000C     		lsrs	r0, r0, #16
+  71 0008 9871     		strb	r0, [r3, #6]
+  82:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+  72              		.loc 1 82 0
+  73 000a 02B0     		add	sp, sp, #8
+  74              		.cfi_def_cfa_offset 0
+  75              		@ sp needed
+  76 000c 7047     		bx	lr
+  77              	.L8:
+  78 000e 00BF     		.align	2
+  79              	.L7:
+  80 0010 00000000 		.word	.LANCHOR0
+  81              		.cfi_endproc
+  82              	.LFE66:
+  83              		.size	setOpponentColor, .-setOpponentColor
+  84              		.section	.text.updateCupStatus,"ax",%progbits
+  85              		.align	2
+  86              		.global	updateCupStatus
+  87              		.thumb
+  88              		.thumb_func
+  89              		.type	updateCupStatus, %function
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 4
+
+
+  90              	updateCupStatus:
+  91              	.LFB67:
+  83:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  void updateCupStatus(uint8_t status)
+  84:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+  92              		.loc 1 84 0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              	.LVL0:
+  97 0000 38B5     		push	{r3, r4, r5, lr}
+  98              		.cfi_def_cfa_offset 16
+  99              		.cfi_offset 3, -16
+ 100              		.cfi_offset 4, -12
+ 101              		.cfi_offset 5, -8
+ 102              		.cfi_offset 14, -4
+  85:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     CupStatus=status;
+ 103              		.loc 1 85 0
+ 104 0002 0B4B     		ldr	r3, .L12
+ 105 0004 1870     		strb	r0, [r3]
+  86:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==STARTING || currentState==PLAYING)
+ 106              		.loc 1 86 0
+ 107 0006 0B4B     		ldr	r3, .L12+4
+ 108 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 109 000a 013B     		subs	r3, r3, #1
+ 110 000c DBB2     		uxtb	r3, r3
+ 111 000e 012B     		cmp	r3, #1
+ 112 0010 0CD8     		bhi	.L9
+ 113 0012 0246     		mov	r2, r0
+  87:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+  88:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         CupStatus=status;
+  89:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         sprintf(game_buf,"Sending cupstatus. Updating cupstatus with cupstatus:%x\n\r",CupStatus);
+ 114              		.loc 1 89 0
+ 115 0014 064C     		ldr	r4, .L12
+ 116 0016 251D     		adds	r5, r4, #4
+ 117 0018 0749     		ldr	r1, .L12+8
+ 118 001a 2846     		mov	r0, r5
+ 119              	.LVL1:
+ 120 001c FFF7FEFF 		bl	sprintf
+ 121              	.LVL2:
+  90:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString(game_buf);
+ 122              		.loc 1 90 0
+ 123 0020 2846     		mov	r0, r5
+ 124 0022 FFF7FEFF 		bl	UART_PutString
+ 125              	.LVL3:
+  91:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         sendCupStatus(CupStatus);
+ 126              		.loc 1 91 0
+ 127 0026 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 128 0028 FFF7FEFF 		bl	sendCupStatus
+ 129              	.LVL4:
+ 130              	.L9:
+ 131 002c 38BD     		pop	{r3, r4, r5, pc}
+ 132              	.L13:
+ 133 002e 00BF     		.align	2
+ 134              	.L12:
+ 135 0030 00000000 		.word	.LANCHOR1
+ 136 0034 00000000 		.word	currentState
+ 137 0038 00000000 		.word	.LC0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 5
+
+
+ 138              		.cfi_endproc
+ 139              	.LFE67:
+ 140              		.size	updateCupStatus, .-updateCupStatus
+ 141              		.section	.text.updateHitStatus,"ax",%progbits
+ 142              		.align	2
+ 143              		.global	updateHitStatus
+ 144              		.thumb
+ 145              		.thumb_func
+ 146              		.type	updateHitStatus, %function
+ 147              	updateHitStatus:
+ 148              	.LFB68:
+  92:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+  93:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     
+  94:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+  95:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****  void updateHitStatus(uint8_t status)
+  96:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+ 149              		.loc 1 96 0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              	.LVL5:
+ 154 0000 08B5     		push	{r3, lr}
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 3, -8
+ 157              		.cfi_offset 14, -4
+  97:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==PLAYING)
+ 158              		.loc 1 97 0
+ 159 0002 054B     		ldr	r3, .L17
+ 160 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 161 0006 022B     		cmp	r3, #2
+ 162 0008 05D1     		bne	.L14
+  98:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+  99:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         hitStatus=status;
+ 163              		.loc 1 99 0
+ 164 000a 044B     		ldr	r3, .L17+4
+ 165 000c 83F80401 		strb	r0, [r3, #260]
+ 100:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString("Sending Hitstatus. Updating Hitstatus\n\r");
+ 166              		.loc 1 100 0
+ 167 0010 0348     		ldr	r0, .L17+8
+ 168              	.LVL6:
+ 169 0012 FFF7FEFF 		bl	UART_PutString
+ 170              	.LVL7:
+ 171              	.L14:
+ 172 0016 08BD     		pop	{r3, pc}
+ 173              	.L18:
+ 174              		.align	2
+ 175              	.L17:
+ 176 0018 00000000 		.word	currentState
+ 177 001c 00000000 		.word	.LANCHOR1
+ 178 0020 3C000000 		.word	.LC1
+ 179              		.cfi_endproc
+ 180              	.LFE68:
+ 181              		.size	updateHitStatus, .-updateHitStatus
+ 182              		.section	.text.ControlAllColor,"ax",%progbits
+ 183              		.align	2
+ 184              		.global	ControlAllColor
+ 185              		.thumb
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 6
+
+
+ 186              		.thumb_func
+ 187              		.type	ControlAllColor, %function
+ 188              	ControlAllColor:
+ 189              	.LFB70:
+ 101:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         //sendCupStatus(hitStatus); 
+ 102:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+ 103:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ 104:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+ 105:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void ControlLights(uint8_t cupstatus)
+ 106:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+ 107:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==STARTING){
+ 108:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 109:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         for(int i=0;i<8;i++)
+ 110:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 111:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             if((~cupstatus)>>i & 1)
+ 112:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,missingCupColor);
+ 113:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             else
+ 114:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,placedCupColor);
+ 115:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 116:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }else if( currentState==PLAYING){
+ 117:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 118:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         for(int i=0;i<8;i++)
+ 119:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 120:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             if((~cupstatus)>>i & 1)
+ 121:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,opponentColor);
+ 122:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             else
+ 123:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,myColor);
+ 124:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 125:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+ 126:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ 127:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+ 128:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void ControlAllColor(color_t color)
+ 129:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+ 190              		.loc 1 129 0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 8
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194 0000 10B5     		push	{r4, lr}
+ 195              		.cfi_def_cfa_offset 8
+ 196              		.cfi_offset 4, -8
+ 197              		.cfi_offset 14, -4
+ 198 0002 84B0     		sub	sp, sp, #16
+ 199              		.cfi_def_cfa_offset 24
+ 200 0004 0390     		str	r0, [sp, #12]
+ 130:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****    
+ 131:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****        if(currentState==IDLE){
+ 201              		.loc 1 131 0
+ 202 0006 1C4B     		ldr	r3, .L24
+ 203 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 204 000a 7BB9     		cbnz	r3, .L20
+ 132:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 nn=sprintf(game_buf,"turned off colors: Red:%d Green:%d Blue:%d\n\r",
+ 133:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Red,
+ 205              		.loc 1 133 0
+ 206 000c 9DF80C20 		ldrb	r2, [sp, #12]	@ zero_extendqisi2
+ 134:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Green,
+ 207              		.loc 1 134 0
+ 208 0010 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 7
+
+
+ 135:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Blue);
+ 209              		.loc 1 135 0
+ 210 0014 9DF80E10 		ldrb	r1, [sp, #14]	@ zero_extendqisi2
+ 132:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 nn=sprintf(game_buf,"turned off colors: Red:%d Green:%d Blue:%d\n\r",
+ 211              		.loc 1 132 0
+ 212 0018 184C     		ldr	r4, .L24+4
+ 213 001a 0091     		str	r1, [sp]
+ 214 001c 1849     		ldr	r1, .L24+8
+ 215 001e 2046     		mov	r0, r4
+ 216 0020 FFF7FEFF 		bl	sprintf
+ 217              	.LVL8:
+ 136:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString(game_buf);
+ 218              		.loc 1 136 0
+ 219 0024 2046     		mov	r0, r4
+ 220 0026 FFF7FEFF 		bl	UART_PutString
+ 221              	.LVL9:
+ 222 002a 22E0     		b	.L19
+ 223              	.L20:
+ 137:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 138:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         else if (currentState==WON){
+ 224              		.loc 1 138 0
+ 225 002c 032B     		cmp	r3, #3
+ 226 002e 0FD1     		bne	.L22
+ 139:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             nn=sprintf(game_buf,"Winning lights with colors: Red:%d Green:%d Blue:%d\n\r",
+ 140:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Red,
+ 227              		.loc 1 140 0
+ 228 0030 9DF80C20 		ldrb	r2, [sp, #12]	@ zero_extendqisi2
+ 141:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Green,
+ 229              		.loc 1 141 0
+ 230 0034 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 142:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Blue);
+ 231              		.loc 1 142 0
+ 232 0038 9DF80E10 		ldrb	r1, [sp, #14]	@ zero_extendqisi2
+ 139:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             nn=sprintf(game_buf,"Winning lights with colors: Red:%d Green:%d Blue:%d\n\r",
+ 233              		.loc 1 139 0
+ 234 003c 0F4C     		ldr	r4, .L24+4
+ 235 003e 0091     		str	r1, [sp]
+ 236 0040 1049     		ldr	r1, .L24+12
+ 237 0042 2046     		mov	r0, r4
+ 238 0044 FFF7FEFF 		bl	sprintf
+ 239              	.LVL10:
+ 143:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString(game_buf);
+ 240              		.loc 1 143 0
+ 241 0048 2046     		mov	r0, r4
+ 242 004a FFF7FEFF 		bl	UART_PutString
+ 243              	.LVL11:
+ 244 004e 10E0     		b	.L19
+ 245              	.L22:
+ 144:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 145:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         else if(currentState==LOST){
+ 246              		.loc 1 145 0
+ 247 0050 042B     		cmp	r3, #4
+ 248 0052 0ED1     		bne	.L19
+ 146:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             nn=sprintf(game_buf,"Losing lights with colors: Red:%d Green:%d Blue:%d\n\r",
+ 147:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Red,
+ 249              		.loc 1 147 0
+ 250 0054 9DF80C20 		ldrb	r2, [sp, #12]	@ zero_extendqisi2
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 8
+
+
+ 148:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Green,
+ 251              		.loc 1 148 0
+ 252 0058 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 149:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                             color.Blue);
+ 253              		.loc 1 149 0
+ 254 005c 9DF80E10 		ldrb	r1, [sp, #14]	@ zero_extendqisi2
+ 146:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             nn=sprintf(game_buf,"Losing lights with colors: Red:%d Green:%d Blue:%d\n\r",
+ 255              		.loc 1 146 0
+ 256 0060 064C     		ldr	r4, .L24+4
+ 257 0062 0091     		str	r1, [sp]
+ 258 0064 0849     		ldr	r1, .L24+16
+ 259 0066 2046     		mov	r0, r4
+ 260 0068 FFF7FEFF 		bl	sprintf
+ 261              	.LVL12:
+ 150:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString(game_buf);
+ 262              		.loc 1 150 0
+ 263 006c 2046     		mov	r0, r4
+ 264 006e FFF7FEFF 		bl	UART_PutString
+ 265              	.LVL13:
+ 266              	.L19:
+ 151:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 152:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+ 153:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ 267              		.loc 1 153 0
+ 268 0072 04B0     		add	sp, sp, #16
+ 269              		.cfi_def_cfa_offset 8
+ 270              		@ sp needed
+ 271 0074 10BD     		pop	{r4, pc}
+ 272              	.L25:
+ 273 0076 00BF     		.align	2
+ 274              	.L24:
+ 275 0078 00000000 		.word	currentState
+ 276 007c 04000000 		.word	.LANCHOR1+4
+ 277 0080 64000000 		.word	.LC2
+ 278 0084 94000000 		.word	.LC3
+ 279 0088 CC000000 		.word	.LC4
+ 280              		.cfi_endproc
+ 281              	.LFE70:
+ 282              		.size	ControlAllColor, .-ControlAllColor
+ 283              		.section	.text.controlLight,"ax",%progbits
+ 284              		.align	2
+ 285              		.global	controlLight
+ 286              		.thumb
+ 287              		.thumb_func
+ 288              		.type	controlLight, %function
+ 289              	controlLight:
+ 290              	.LFB72:
+ 154:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void Controller()
+ 155:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+ 156:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==STARTING || currentState==PLAYING){
+ 157:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         if(CupStatus!=CupStatus_latest){
+ 158:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             CupStatus_latest=CupStatus;
+ 159:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             ControlLights(CupStatus);
+ 160:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             sprintf(game_buf,"Cupstatus change:%d\n\r",CupStatus);
+ 161:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             UART_PutString(game_buf);
+ 162:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 163:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==PLAYING)
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 9
+
+
+ 164:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+ 165:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         if(hitStatus && !blinking)
+ 166:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 167:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             UART_PutString("Starting timer\n\r");
+ 168:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Start();
+ 169:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=1;
+ 170:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 171:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         else if(!hitStatus && blinking)
+ 172:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 173:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             UART_PutString("Stopping timer\n\r");
+ 174:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Stop(); 
+ 175:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=0;
+ 176:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 177:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+ 178:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+ 179:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     else
+ 180:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+ 181:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         if(blinking){
+ 182:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Stop();
+ 183:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=0;
+ 184:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 185:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     }
+ 186:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ 187:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+ 188:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void controlLight(uint8_t index,color_t color)
+ 189:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** {
+ 291              		.loc 1 189 0
+ 292              		.cfi_startproc
+ 293              		@ args = 0, pretend = 0, frame = 8
+ 294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 295              	.LVL14:
+ 296 0000 10B5     		push	{r4, lr}
+ 297              		.cfi_def_cfa_offset 8
+ 298              		.cfi_offset 4, -8
+ 299              		.cfi_offset 14, -4
+ 300 0002 84B0     		sub	sp, sp, #16
+ 301              		.cfi_def_cfa_offset 24
+ 190:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     sprintf(game_buf,"light for index %d with color: Red:%d Green:%d Blue:%d\n\r",index,color.Red,c
+ 302              		.loc 1 190 0
+ 303 0004 C1F30723 		ubfx	r3, r1, #8, #8
+ 304 0008 C1F30742 		ubfx	r2, r1, #16, #8
+ 305 000c 064C     		ldr	r4, .L28
+ 306 000e 0192     		str	r2, [sp, #4]
+ 307 0010 0093     		str	r3, [sp]
+ 308 0012 CBB2     		uxtb	r3, r1
+ 309 0014 0246     		mov	r2, r0
+ 310 0016 0549     		ldr	r1, .L28+4
+ 311 0018 2046     		mov	r0, r4
+ 312              	.LVL15:
+ 313 001a FFF7FEFF 		bl	sprintf
+ 314              	.LVL16:
+ 191:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     UART_PutString(game_buf);
+ 315              		.loc 1 191 0
+ 316 001e 2046     		mov	r0, r4
+ 317 0020 FFF7FEFF 		bl	UART_PutString
+ 318              	.LVL17:
+ 192:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 10
+
+
+ 319              		.loc 1 192 0
+ 320 0024 04B0     		add	sp, sp, #16
+ 321              		.cfi_def_cfa_offset 8
+ 322              		@ sp needed
+ 323 0026 10BD     		pop	{r4, pc}
+ 324              	.L29:
+ 325              		.align	2
+ 326              	.L28:
+ 327 0028 04000000 		.word	.LANCHOR1+4
+ 328 002c 04010000 		.word	.LC5
+ 329              		.cfi_endproc
+ 330              	.LFE72:
+ 331              		.size	controlLight, .-controlLight
+ 332              		.section	.text.ControlLights,"ax",%progbits
+ 333              		.align	2
+ 334              		.global	ControlLights
+ 335              		.thumb
+ 336              		.thumb_func
+ 337              		.type	ControlLights, %function
+ 338              	ControlLights:
+ 339              	.LFB69:
+ 106:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==STARTING){
+ 340              		.loc 1 106 0
+ 341              		.cfi_startproc
+ 342              		@ args = 0, pretend = 0, frame = 0
+ 343              		@ frame_needed = 0, uses_anonymous_args = 0
+ 344              	.LVL18:
+ 345 0000 38B5     		push	{r3, r4, r5, lr}
+ 346              		.cfi_def_cfa_offset 16
+ 347              		.cfi_offset 3, -16
+ 348              		.cfi_offset 4, -12
+ 349              		.cfi_offset 5, -8
+ 350              		.cfi_offset 14, -4
+ 351 0002 0546     		mov	r5, r0
+ 107:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 352              		.loc 1 107 0
+ 353 0004 1B4B     		ldr	r3, .L42
+ 354 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 355 0008 012B     		cmp	r3, #1
+ 356 000a 18D1     		bne	.L31
+ 108:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         for(int i=0;i<8;i++)
+ 357              		.loc 1 108 0
+ 358 000c 1A48     		ldr	r0, .L42+4
+ 359              	.LVL19:
+ 360 000e FFF7FEFF 		bl	UART_PutString
+ 361              	.LVL20:
+ 362              	.LBB2:
+ 109:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 363              		.loc 1 109 0
+ 364 0012 0024     		movs	r4, #0
+ 365 0014 10E0     		b	.L32
+ 366              	.LVL21:
+ 367              	.L35:
+ 111:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,missingCupColor);
+ 368              		.loc 1 111 0
+ 369 0016 EB43     		mvns	r3, r5
+ 370 0018 2341     		asrs	r3, r3, r4
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 11
+
+
+ 371 001a 13F0010F 		tst	r3, #1
+ 372 001e 05D0     		beq	.L33
+ 112:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             else
+ 373              		.loc 1 112 0
+ 374 0020 164B     		ldr	r3, .L42+8
+ 375 0022 1968     		ldr	r1, [r3]
+ 376 0024 E0B2     		uxtb	r0, r4
+ 377 0026 FFF7FEFF 		bl	controlLight
+ 378              	.LVL22:
+ 379 002a 04E0     		b	.L34
+ 380              	.L33:
+ 114:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 381              		.loc 1 114 0
+ 382 002c 134B     		ldr	r3, .L42+8
+ 383 002e 5968     		ldr	r1, [r3, #4]
+ 384 0030 E0B2     		uxtb	r0, r4
+ 385 0032 FFF7FEFF 		bl	controlLight
+ 386              	.LVL23:
+ 387              	.L34:
+ 109:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 388              		.loc 1 109 0 discriminator 2
+ 389 0036 0134     		adds	r4, r4, #1
+ 390              	.LVL24:
+ 391              	.L32:
+ 109:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 392              		.loc 1 109 0 is_stmt 0 discriminator 1
+ 393 0038 072C     		cmp	r4, #7
+ 394 003a ECDD     		ble	.L35
+ 395 003c 38BD     		pop	{r3, r4, r5, pc}
+ 396              	.LVL25:
+ 397              	.L31:
+ 398              	.LBE2:
+ 116:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 399              		.loc 1 116 0 is_stmt 1
+ 400 003e 022B     		cmp	r3, #2
+ 401 0040 17D1     		bne	.L30
+ 117:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         for(int i=0;i<8;i++)
+ 402              		.loc 1 117 0
+ 403 0042 0D48     		ldr	r0, .L42+4
+ 404              	.LVL26:
+ 405 0044 FFF7FEFF 		bl	UART_PutString
+ 406              	.LVL27:
+ 407              	.LBB3:
+ 118:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 408              		.loc 1 118 0
+ 409 0048 0024     		movs	r4, #0
+ 410 004a 10E0     		b	.L37
+ 411              	.LVL28:
+ 412              	.L40:
+ 120:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 controlLight(i,opponentColor);
+ 413              		.loc 1 120 0
+ 414 004c EB43     		mvns	r3, r5
+ 415 004e 2341     		asrs	r3, r3, r4
+ 416 0050 13F0010F 		tst	r3, #1
+ 417 0054 05D0     		beq	.L38
+ 121:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             else
+ 418              		.loc 1 121 0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 12
+
+
+ 419 0056 0A4B     		ldr	r3, .L42+12
+ 420 0058 5968     		ldr	r1, [r3, #4]
+ 421 005a E0B2     		uxtb	r0, r4
+ 422 005c FFF7FEFF 		bl	controlLight
+ 423              	.LVL29:
+ 424 0060 04E0     		b	.L39
+ 425              	.L38:
+ 123:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 426              		.loc 1 123 0
+ 427 0062 074B     		ldr	r3, .L42+12
+ 428 0064 1968     		ldr	r1, [r3]
+ 429 0066 E0B2     		uxtb	r0, r4
+ 430 0068 FFF7FEFF 		bl	controlLight
+ 431              	.LVL30:
+ 432              	.L39:
+ 118:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 433              		.loc 1 118 0 discriminator 2
+ 434 006c 0134     		adds	r4, r4, #1
+ 435              	.LVL31:
+ 436              	.L37:
+ 118:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 437              		.loc 1 118 0 is_stmt 0 discriminator 1
+ 438 006e 072C     		cmp	r4, #7
+ 439 0070 ECDD     		ble	.L40
+ 440              	.LVL32:
+ 441              	.L30:
+ 442 0072 38BD     		pop	{r3, r4, r5, pc}
+ 443              	.L43:
+ 444              		.align	2
+ 445              	.L42:
+ 446 0074 00000000 		.word	currentState
+ 447 0078 40010000 		.word	.LC6
+ 448 007c 00000000 		.word	.LANCHOR2
+ 449 0080 00000000 		.word	.LANCHOR0
+ 450              	.LBE3:
+ 451              		.cfi_endproc
+ 452              	.LFE69:
+ 453              		.size	ControlLights, .-ControlLights
+ 454              		.section	.text.Controller,"ax",%progbits
+ 455              		.align	2
+ 456              		.global	Controller
+ 457              		.thumb
+ 458              		.thumb_func
+ 459              		.type	Controller, %function
+ 460              	Controller:
+ 461              	.LFB71:
+ 155:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==STARTING || currentState==PLAYING){
+ 462              		.loc 1 155 0 is_stmt 1
+ 463              		.cfi_startproc
+ 464              		@ args = 0, pretend = 0, frame = 0
+ 465              		@ frame_needed = 0, uses_anonymous_args = 0
+ 466 0000 10B5     		push	{r4, lr}
+ 467              		.cfi_def_cfa_offset 8
+ 468              		.cfi_offset 4, -8
+ 469              		.cfi_offset 14, -4
+ 156:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         if(CupStatus!=CupStatus_latest){
+ 470              		.loc 1 156 0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 13
+
+
+ 471 0002 254B     		ldr	r3, .L50
+ 472 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 473 0006 013B     		subs	r3, r3, #1
+ 474 0008 DBB2     		uxtb	r3, r3
+ 475 000a 012B     		cmp	r3, #1
+ 476 000c 38D8     		bhi	.L45
+ 157:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             CupStatus_latest=CupStatus;
+ 477              		.loc 1 157 0
+ 478 000e 234B     		ldr	r3, .L50+4
+ 479 0010 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 480 0012 93F80531 		ldrb	r3, [r3, #261]	@ zero_extendqisi2
+ 481 0016 9842     		cmp	r0, r3
+ 482 0018 0DD0     		beq	.L46
+ 158:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             ControlLights(CupStatus);
+ 483              		.loc 1 158 0
+ 484 001a 204C     		ldr	r4, .L50+4
+ 485 001c 84F80501 		strb	r0, [r4, #261]
+ 159:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             sprintf(game_buf,"Cupstatus change:%d\n\r",CupStatus);
+ 486              		.loc 1 159 0
+ 487 0020 FFF7FEFF 		bl	ControlLights
+ 488              	.LVL33:
+ 160:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             UART_PutString(game_buf);
+ 489              		.loc 1 160 0
+ 490 0024 14F8042B 		ldrb	r2, [r4], #4	@ zero_extendqisi2
+ 491 0028 1D49     		ldr	r1, .L50+8
+ 492 002a 2046     		mov	r0, r4
+ 493 002c FFF7FEFF 		bl	sprintf
+ 494              	.LVL34:
+ 161:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 495              		.loc 1 161 0
+ 496 0030 2046     		mov	r0, r4
+ 497 0032 FFF7FEFF 		bl	UART_PutString
+ 498              	.LVL35:
+ 499              	.L46:
+ 163:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+ 500              		.loc 1 163 0
+ 501 0036 184B     		ldr	r3, .L50
+ 502 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 503 003a 022B     		cmp	r3, #2
+ 504 003c 2AD1     		bne	.L44
+ 165:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 505              		.loc 1 165 0
+ 506 003e 174B     		ldr	r3, .L50+4
+ 507 0040 93F80431 		ldrb	r3, [r3, #260]	@ zero_extendqisi2
+ 508 0044 6BB1     		cbz	r3, .L48
+ 165:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 509              		.loc 1 165 0 is_stmt 0 discriminator 1
+ 510 0046 154A     		ldr	r2, .L50+4
+ 511 0048 D2F80821 		ldr	r2, [r2, #264]
+ 512 004c 4AB9     		cbnz	r2, .L48
+ 167:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Start();
+ 513              		.loc 1 167 0 is_stmt 1
+ 514 004e 1548     		ldr	r0, .L50+12
+ 515 0050 FFF7FEFF 		bl	UART_PutString
+ 516              	.LVL36:
+ 168:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=1;
+ 517              		.loc 1 168 0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 14
+
+
+ 518 0054 FFF7FEFF 		bl	Timer_Start
+ 519              	.LVL37:
+ 169:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 520              		.loc 1 169 0
+ 521 0058 0122     		movs	r2, #1
+ 522 005a 104B     		ldr	r3, .L50+4
+ 523 005c C3F80821 		str	r2, [r3, #264]
+ 524 0060 10BD     		pop	{r4, pc}
+ 525              	.L48:
+ 171:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 526              		.loc 1 171 0
+ 527 0062 BBB9     		cbnz	r3, .L44
+ 171:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 528              		.loc 1 171 0 is_stmt 0 discriminator 1
+ 529 0064 0D4B     		ldr	r3, .L50+4
+ 530 0066 D3F80831 		ldr	r3, [r3, #264]
+ 531 006a 9BB1     		cbz	r3, .L44
+ 173:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Stop(); 
+ 532              		.loc 1 173 0 is_stmt 1
+ 533 006c 0E48     		ldr	r0, .L50+16
+ 534 006e FFF7FEFF 		bl	UART_PutString
+ 535              	.LVL38:
+ 174:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=0;
+ 536              		.loc 1 174 0
+ 537 0072 FFF7FEFF 		bl	Timer_Stop
+ 538              	.LVL39:
+ 175:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 539              		.loc 1 175 0
+ 540 0076 0022     		movs	r2, #0
+ 541 0078 084B     		ldr	r3, .L50+4
+ 542 007a C3F80821 		str	r2, [r3, #264]
+ 543 007e 10BD     		pop	{r4, pc}
+ 544              	.L45:
+ 181:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             Timer_Stop();
+ 545              		.loc 1 181 0
+ 546 0080 064B     		ldr	r3, .L50+4
+ 547 0082 D3F80831 		ldr	r3, [r3, #264]
+ 548 0086 2BB1     		cbz	r3, .L44
+ 182:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             blinking=0;
+ 549              		.loc 1 182 0
+ 550 0088 FFF7FEFF 		bl	Timer_Stop
+ 551              	.LVL40:
+ 183:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 552              		.loc 1 183 0
+ 553 008c 0022     		movs	r2, #0
+ 554 008e 034B     		ldr	r3, .L50+4
+ 555 0090 C3F80821 		str	r2, [r3, #264]
+ 556              	.L44:
+ 557 0094 10BD     		pop	{r4, pc}
+ 558              	.L51:
+ 559 0096 00BF     		.align	2
+ 560              	.L50:
+ 561 0098 00000000 		.word	currentState
+ 562 009c 00000000 		.word	.LANCHOR1
+ 563 00a0 58010000 		.word	.LC7
+ 564 00a4 70010000 		.word	.LC8
+ 565 00a8 84010000 		.word	.LC9
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 15
+
+
+ 566              		.cfi_endproc
+ 567              	.LFE71:
+ 568              		.size	Controller, .-Controller
+ 569              		.section	.text.getCupStatus,"ax",%progbits
+ 570              		.align	2
+ 571              		.global	getCupStatus
+ 572              		.thumb
+ 573              		.thumb_func
+ 574              		.type	getCupStatus, %function
+ 575              	getCupStatus:
+ 576              	.LFB73:
+ 193:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** uint8_t getCupStatus(){
+ 577              		.loc 1 193 0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 0
+ 580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 581 0000 08B5     		push	{r3, lr}
+ 582              		.cfi_def_cfa_offset 8
+ 583              		.cfi_offset 3, -8
+ 584              		.cfi_offset 14, -4
+ 194:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     UART_PutString("get cupstatus\n\r");
+ 585              		.loc 1 194 0
+ 586 0002 0348     		ldr	r0, .L54
+ 587 0004 FFF7FEFF 		bl	UART_PutString
+ 588              	.LVL41:
+ 195:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     return CupStatus;
+ 196:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** }
+ 589              		.loc 1 196 0
+ 590 0008 024B     		ldr	r3, .L54+4
+ 591 000a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 592 000c 08BD     		pop	{r3, pc}
+ 593              	.L55:
+ 594 000e 00BF     		.align	2
+ 595              	.L54:
+ 596 0010 98010000 		.word	.LC10
+ 597 0014 00000000 		.word	.LANCHOR1
+ 598              		.cfi_endproc
+ 599              	.LFE73:
+ 600              		.size	getCupStatus, .-getCupStatus
+ 601              		.section	.text.setState,"ax",%progbits
+ 602              		.align	2
+ 603              		.global	setState
+ 604              		.thumb
+ 605              		.thumb_func
+ 606              		.type	setState, %function
+ 607              	setState:
+ 608              	.LFB64:
+  31:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****    switch(state)
+ 609              		.loc 1 31 0
+ 610              		.cfi_startproc
+ 611              		@ args = 0, pretend = 0, frame = 0
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613              	.LVL42:
+ 614 0000 08B5     		push	{r3, lr}
+ 615              		.cfi_def_cfa_offset 8
+ 616              		.cfi_offset 3, -8
+ 617              		.cfi_offset 14, -4
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 16
+
+
+  32:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     {
+ 618              		.loc 1 32 0
+ 619 0002 0428     		cmp	r0, #4
+ 620 0004 38D8     		bhi	.L56
+ 621 0006 DFE800F0 		tbb	[pc, r0]
+ 622              	.L59:
+ 623 000a 03       		.byte	(.L58-.L59)/2
+ 624 000b 0D       		.byte	(.L60-.L59)/2
+ 625 000c 17       		.byte	(.L61-.L59)/2
+ 626 000d 24       		.byte	(.L62-.L59)/2
+ 627 000e 2E       		.byte	(.L63-.L59)/2
+ 628 000f 00       		.p2align 1
+ 629              	.L58:
+  36:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("State==IDLE\n\r");
+ 630              		.loc 1 36 0
+ 631 0010 1A4B     		ldr	r3, .L65
+ 632 0012 1870     		strb	r0, [r3]
+  37:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(turnedOffColor);
+ 633              		.loc 1 37 0
+ 634 0014 1A48     		ldr	r0, .L65+4
+ 635              	.LVL43:
+ 636 0016 FFF7FEFF 		bl	UART_PutString
+ 637              	.LVL44:
+  38:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 638              		.loc 1 38 0
+ 639 001a 1A4B     		ldr	r3, .L65+8
+ 640 001c 9868     		ldr	r0, [r3, #8]
+ 641 001e FFF7FEFF 		bl	ControlAllColor
+ 642              	.LVL45:
+  40:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case STARTING:
+ 643              		.loc 1 40 0
+ 644 0022 08BD     		pop	{r3, pc}
+ 645              	.LVL46:
+ 646              	.L60:
+  43:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 CupStatus=getCupStatus();
+ 647              		.loc 1 43 0
+ 648 0024 154B     		ldr	r3, .L65
+ 649 0026 1870     		strb	r0, [r3]
+  44:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 //ControlLights(CupStatus);
+ 650              		.loc 1 44 0
+ 651 0028 FFF7FEFF 		bl	getCupStatus
+ 652              	.LVL47:
+ 653 002c 164B     		ldr	r3, .L65+12
+ 654 002e 1870     		strb	r0, [r3]
+  47:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             break;
+ 655              		.loc 1 47 0
+ 656 0030 1648     		ldr	r0, .L65+16
+ 657 0032 FFF7FEFF 		bl	UART_PutString
+ 658              	.LVL48:
+  48:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 659              		.loc 1 48 0
+ 660 0036 08BD     		pop	{r3, pc}
+ 661              	.LVL49:
+ 662              	.L61:
+  52:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 CupStatus=getCupStatus();
+ 663              		.loc 1 52 0
+ 664 0038 104B     		ldr	r3, .L65
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 17
+
+
+ 665 003a 1870     		strb	r0, [r3]
+  53:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 //ControlLights(CupStatus);
+ 666              		.loc 1 53 0
+ 667 003c FFF7FEFF 		bl	getCupStatus
+ 668              	.LVL50:
+ 669 0040 114B     		ldr	r3, .L65+12
+ 670 0042 1870     		strb	r0, [r3]
+  55:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("State==PLAYING\n\r");
+ 671              		.loc 1 55 0
+ 672 0044 0020     		movs	r0, #0
+ 673 0046 FFF7FEFF 		bl	sendCupStatus
+ 674              	.LVL51:
+  56:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 675              		.loc 1 56 0
+ 676 004a 1148     		ldr	r0, .L65+20
+ 677 004c FFF7FEFF 		bl	UART_PutString
+ 678              	.LVL52:
+  58:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case WON:
+ 679              		.loc 1 58 0
+ 680 0050 08BD     		pop	{r3, pc}
+ 681              	.LVL53:
+ 682              	.L62:
+  61:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(myColor);
+ 683              		.loc 1 61 0
+ 684 0052 0A4B     		ldr	r3, .L65
+ 685 0054 1870     		strb	r0, [r3]
+  62:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("state==WON\n\r");
+ 686              		.loc 1 62 0
+ 687 0056 0F4B     		ldr	r3, .L65+24
+ 688 0058 1868     		ldr	r0, [r3]
+ 689              	.LVL54:
+ 690 005a FFF7FEFF 		bl	ControlAllColor
+ 691              	.LVL55:
+  63:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }
+ 692              		.loc 1 63 0
+ 693 005e 0E48     		ldr	r0, .L65+28
+ 694 0060 FFF7FEFF 		bl	UART_PutString
+ 695              	.LVL56:
+  65:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         case LOST:
+ 696              		.loc 1 65 0
+ 697 0064 08BD     		pop	{r3, pc}
+ 698              	.LVL57:
+ 699              	.L63:
+  68:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 ControlAllColor(opponentColor);
+ 700              		.loc 1 68 0
+ 701 0066 054B     		ldr	r3, .L65
+ 702 0068 1870     		strb	r0, [r3]
+  69:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 UART_PutString("state==LOST\n\r");
+ 703              		.loc 1 69 0
+ 704 006a 0A4B     		ldr	r3, .L65+24
+ 705 006c 5868     		ldr	r0, [r3, #4]
+ 706              	.LVL58:
+ 707 006e FFF7FEFF 		bl	ControlAllColor
+ 708              	.LVL59:
+  70:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         }  
+ 709              		.loc 1 70 0
+ 710 0072 0A48     		ldr	r0, .L65+32
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 18
+
+
+ 711 0074 FFF7FEFF 		bl	UART_PutString
+ 712              	.LVL60:
+ 713              	.L56:
+ 714 0078 08BD     		pop	{r3, pc}
+ 715              	.L66:
+ 716 007a 00BF     		.align	2
+ 717              	.L65:
+ 718 007c 00000000 		.word	currentState
+ 719 0080 A8010000 		.word	.LC11
+ 720 0084 00000000 		.word	.LANCHOR2
+ 721 0088 00000000 		.word	.LANCHOR1
+ 722 008c B8010000 		.word	.LC12
+ 723 0090 CC010000 		.word	.LC13
+ 724 0094 00000000 		.word	.LANCHOR0
+ 725 0098 E0010000 		.word	.LC14
+ 726 009c F0010000 		.word	.LC15
+ 727              		.cfi_endproc
+ 728              	.LFE64:
+ 729              		.size	setState, .-setState
+ 730              		.section	.text.Interrupt_LED,"ax",%progbits
+ 731              		.align	2
+ 732              		.global	Interrupt_LED
+ 733              		.thumb
+ 734              		.thumb_func
+ 735              		.type	Interrupt_LED, %function
+ 736              	Interrupt_LED:
+ 737              	.LFB74:
+ 197:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** 
+ 198:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** void Interrupt_LED()
+ 199:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c **** { 
+ 738              		.loc 1 199 0
+ 739              		.cfi_startproc
+ 740              		@ args = 0, pretend = 0, frame = 0
+ 741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 742 0000 38B5     		push	{r3, r4, r5, lr}
+ 743              		.cfi_def_cfa_offset 16
+ 744              		.cfi_offset 3, -16
+ 745              		.cfi_offset 4, -12
+ 746              		.cfi_offset 5, -8
+ 747              		.cfi_offset 14, -4
+ 200:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****     if(currentState==PLAYING)
+ 748              		.loc 1 200 0
+ 749 0002 174B     		ldr	r3, .L75
+ 750 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 751 0006 022B     		cmp	r3, #2
+ 752 0008 28D1     		bne	.L67
+ 753 000a 24E0     		b	.L73
+ 754              	.LVL61:
+ 755              	.L72:
+ 756              	.LBB4:
+ 201:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         for(uint8_t i=0;i<8;i++)
+ 202:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 203:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****             if((hitStatus>>i) & 1){
+ 757              		.loc 1 203 0
+ 758 000c 2546     		mov	r5, r4
+ 759 000e 154B     		ldr	r3, .L75+4
+ 760 0010 93F80431 		ldrb	r3, [r3, #260]	@ zero_extendqisi2
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 19
+
+
+ 761 0014 2341     		asrs	r3, r3, r4
+ 762 0016 13F0010F 		tst	r3, #1
+ 763 001a 19D0     		beq	.L70
+ 204:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 if(LED_states[i]){
+ 764              		.loc 1 204 0
+ 765 001c 114B     		ldr	r3, .L75+4
+ 766 001e 2344     		add	r3, r3, r4
+ 767 0020 93F80C31 		ldrb	r3, [r3, #268]	@ zero_extendqisi2
+ 768 0024 53B1     		cbz	r3, .L71
+ 205:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                     controlLight(i,myColor);
+ 769              		.loc 1 205 0
+ 770 0026 104B     		ldr	r3, .L75+8
+ 771 0028 1968     		ldr	r1, [r3]
+ 772 002a 2046     		mov	r0, r4
+ 773 002c FFF7FEFF 		bl	controlLight
+ 774              	.LVL62:
+ 206:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                     LED_states[i]=0;}
+ 775              		.loc 1 206 0
+ 776 0030 0C4B     		ldr	r3, .L75+4
+ 777 0032 1D44     		add	r5, r5, r3
+ 778 0034 0023     		movs	r3, #0
+ 779 0036 85F80C31 		strb	r3, [r5, #268]
+ 780 003a 09E0     		b	.L70
+ 781              	.L71:
+ 207:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                 else{
+ 208:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                     controlLight(i,opponentColor);
+ 782              		.loc 1 208 0
+ 783 003c 0A4B     		ldr	r3, .L75+8
+ 784 003e 5968     		ldr	r1, [r3, #4]
+ 785 0040 2046     		mov	r0, r4
+ 786 0042 FFF7FEFF 		bl	controlLight
+ 787              	.LVL63:
+ 209:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****                     LED_states[i]=1;}
+ 788              		.loc 1 209 0
+ 789 0046 074B     		ldr	r3, .L75+4
+ 790 0048 1D44     		add	r5, r5, r3
+ 791 004a 0123     		movs	r3, #1
+ 792 004c 85F80C31 		strb	r3, [r5, #268]
+ 793              	.L70:
+ 201:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 794              		.loc 1 201 0 discriminator 2
+ 795 0050 0134     		adds	r4, r4, #1
+ 796              	.LVL64:
+ 797 0052 E4B2     		uxtb	r4, r4
+ 798              	.LVL65:
+ 799 0054 00E0     		b	.L68
+ 800              	.LVL66:
+ 801              	.L73:
+ 802              	.LBE4:
+ 803 0056 0024     		movs	r4, #0
+ 804              	.L68:
+ 805              	.LVL67:
+ 806              	.LBB5:
+ 201:..\..\..\playerSide_gamecontroller\playerSide.cydsn/GameController.c ****         {
+ 807              		.loc 1 201 0 is_stmt 0 discriminator 1
+ 808 0058 072C     		cmp	r4, #7
+ 809 005a D7D9     		bls	.L72
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 20
+
+
+ 810              	.LVL68:
+ 811              	.L67:
+ 812 005c 38BD     		pop	{r3, r4, r5, pc}
+ 813              	.L76:
+ 814 005e 00BF     		.align	2
+ 815              	.L75:
+ 816 0060 00000000 		.word	currentState
+ 817 0064 00000000 		.word	.LANCHOR1
+ 818 0068 00000000 		.word	.LANCHOR0
+ 819              	.LBE5:
+ 820              		.cfi_endproc
+ 821              	.LFE74:
+ 822              		.size	Interrupt_LED, .-Interrupt_LED
+ 823              		.comm	currentState,1,1
+ 824              		.section	.rodata
+ 825              		.align	2
+ 826              		.set	.LANCHOR2,. + 0
+ 827              		.type	missingCupColor, %object
+ 828              		.size	missingCupColor, 3
+ 829              	missingCupColor:
+ 830 0000 FF       		.byte	-1
+ 831 0001 00       		.byte	0
+ 832 0002 00       		.byte	0
+ 833 0003 00       		.space	1
+ 834              		.type	placedCupColor, %object
+ 835              		.size	placedCupColor, 3
+ 836              	placedCupColor:
+ 837 0004 00       		.byte	0
+ 838 0005 00       		.byte	0
+ 839 0006 FF       		.byte	-1
+ 840 0007 00       		.space	1
+ 841              		.type	turnedOffColor, %object
+ 842              		.size	turnedOffColor, 3
+ 843              	turnedOffColor:
+ 844 0008 000000   		.space	3
+ 845              		.data
+ 846              		.align	2
+ 847              		.set	.LANCHOR0,. + 0
+ 848              		.type	myColor, %object
+ 849              		.size	myColor, 3
+ 850              	myColor:
+ 851 0000 00       		.byte	0
+ 852 0001 FF       		.byte	-1
+ 853 0002 FF       		.byte	-1
+ 854 0003 00       		.space	1
+ 855              		.type	opponentColor, %object
+ 856              		.size	opponentColor, 3
+ 857              	opponentColor:
+ 858 0004 FF       		.byte	-1
+ 859 0005 00       		.byte	0
+ 860 0006 FF       		.byte	-1
+ 861              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 862              		.align	2
+ 863              	.LC0:
+ 864 0000 53656E64 		.ascii	"Sending cupstatus. Updating cupstatus with cupstatu"
+ 864      696E6720 
+ 864      63757073 
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 21
+
+
+ 864      74617475 
+ 864      732E2055 
+ 865 0033 733A2578 		.ascii	"s:%x\012\015\000"
+ 865      0A0D00
+ 866 003a 0000     		.space	2
+ 867              	.LC1:
+ 868 003c 53656E64 		.ascii	"Sending Hitstatus. Updating Hitstatus\012\015\000"
+ 868      696E6720 
+ 868      48697473 
+ 868      74617475 
+ 868      732E2055 
+ 869              	.LC2:
+ 870 0064 7475726E 		.ascii	"turned off colors: Red:%d Green:%d Blue:%d\012\015\000"
+ 870      6564206F 
+ 870      66662063 
+ 870      6F6C6F72 
+ 870      733A2052 
+ 871 0091 000000   		.space	3
+ 872              	.LC3:
+ 873 0094 57696E6E 		.ascii	"Winning lights with colors: Red:%d Green:%d Blue:%d"
+ 873      696E6720 
+ 873      6C696768 
+ 873      74732077 
+ 873      69746820 
+ 874 00c7 0A0D00   		.ascii	"\012\015\000"
+ 875 00ca 0000     		.space	2
+ 876              	.LC4:
+ 877 00cc 4C6F7369 		.ascii	"Losing lights with colors: Red:%d Green:%d Blue:%d\012"
+ 877      6E67206C 
+ 877      69676874 
+ 877      73207769 
+ 877      74682063 
+ 878 00ff 0D00     		.ascii	"\015\000"
+ 879 0101 000000   		.space	3
+ 880              	.LC5:
+ 881 0104 6C696768 		.ascii	"light for index %d with color: Red:%d Green:%d Blue"
+ 881      7420666F 
+ 881      7220696E 
+ 881      64657820 
+ 881      25642077 
+ 882 0137 3A25640A 		.ascii	":%d\012\015\000"
+ 882      0D00
+ 883 013d 000000   		.space	3
+ 884              	.LC6:
+ 885 0140 436F6E74 		.ascii	"Controlling lights\012\015\000"
+ 885      726F6C6C 
+ 885      696E6720 
+ 885      6C696768 
+ 885      74730A0D 
+ 886 0155 000000   		.space	3
+ 887              	.LC7:
+ 888 0158 43757073 		.ascii	"Cupstatus change:%d\012\015\000"
+ 888      74617475 
+ 888      73206368 
+ 888      616E6765 
+ 888      3A25640A 
+ 889 016e 0000     		.space	2
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 22
+
+
+ 890              	.LC8:
+ 891 0170 53746172 		.ascii	"Starting timer\012\015\000"
+ 891      74696E67 
+ 891      2074696D 
+ 891      65720A0D 
+ 891      00
+ 892 0181 000000   		.space	3
+ 893              	.LC9:
+ 894 0184 53746F70 		.ascii	"Stopping timer\012\015\000"
+ 894      70696E67 
+ 894      2074696D 
+ 894      65720A0D 
+ 894      00
+ 895 0195 000000   		.space	3
+ 896              	.LC10:
+ 897 0198 67657420 		.ascii	"get cupstatus\012\015\000"
+ 897      63757073 
+ 897      74617475 
+ 897      730A0D00 
+ 898              	.LC11:
+ 899 01a8 53746174 		.ascii	"State==IDLE\012\015\000"
+ 899      653D3D49 
+ 899      444C450A 
+ 899      0D00
+ 900 01b6 0000     		.space	2
+ 901              	.LC12:
+ 902 01b8 53746174 		.ascii	"State==STARTING\012\015\000"
+ 902      653D3D53 
+ 902      54415254 
+ 902      494E470A 
+ 902      0D00
+ 903 01ca 0000     		.space	2
+ 904              	.LC13:
+ 905 01cc 53746174 		.ascii	"State==PLAYING\012\015\000"
+ 905      653D3D50 
+ 905      4C415949 
+ 905      4E470A0D 
+ 905      00
+ 906 01dd 000000   		.space	3
+ 907              	.LC14:
+ 908 01e0 73746174 		.ascii	"state==WON\012\015\000"
+ 908      653D3D57 
+ 908      4F4E0A0D 
+ 908      00
+ 909 01ed 000000   		.space	3
+ 910              	.LC15:
+ 911 01f0 73746174 		.ascii	"state==LOST\012\015\000"
+ 911      653D3D4C 
+ 911      4F53540A 
+ 911      0D00
+ 912              		.bss
+ 913              		.align	2
+ 914              		.set	.LANCHOR1,. + 0
+ 915              		.type	CupStatus, %object
+ 916              		.size	CupStatus, 1
+ 917              	CupStatus:
+ 918 0000 00       		.space	1
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 23
+
+
+ 919 0001 000000   		.space	3
+ 920              		.type	game_buf, %object
+ 921              		.size	game_buf, 256
+ 922              	game_buf:
+ 923 0004 00000000 		.space	256
+ 923      00000000 
+ 923      00000000 
+ 923      00000000 
+ 923      00000000 
+ 924              		.type	hitStatus, %object
+ 925              		.size	hitStatus, 1
+ 926              	hitStatus:
+ 927 0104 00       		.space	1
+ 928              		.type	CupStatus_latest, %object
+ 929              		.size	CupStatus_latest, 1
+ 930              	CupStatus_latest:
+ 931 0105 00       		.space	1
+ 932 0106 0000     		.space	2
+ 933              		.type	blinking, %object
+ 934              		.size	blinking, 4
+ 935              	blinking:
+ 936 0108 00000000 		.space	4
+ 937              		.type	LED_states, %object
+ 938              		.size	LED_states, 8
+ 939              	LED_states:
+ 940 010c 00000000 		.space	8
+ 940      00000000 
+ 941              		.text
+ 942              	.Letext0:
+ 943              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 944              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 945              		.file 4 "./GameController.h"
+ 946              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 947              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 948              		.file 7 "Generated_Source\\PSoC5/UART.h"
+ 949              		.file 8 "./RPI_IF.h"
+ 950              		.file 9 "Generated_Source\\PSoC5/Timer.h"
+ 951              		.section	.debug_info,"",%progbits
+ 952              	.Ldebug_info0:
+ 953 0000 83070000 		.4byte	0x783
+ 954 0004 0400     		.2byte	0x4
+ 955 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 956 000a 04       		.byte	0x4
+ 957 000b 01       		.uleb128 0x1
+ 958 000c 31030000 		.4byte	.LASF60
+ 959 0010 0C       		.byte	0xc
+ 960 0011 B6010000 		.4byte	.LASF61
+ 961 0015 1C020000 		.4byte	.LASF62
+ 962 0019 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 963 001d 00000000 		.4byte	0
+ 964 0021 00000000 		.4byte	.Ldebug_line0
+ 965 0025 02       		.uleb128 0x2
+ 966 0026 01       		.byte	0x1
+ 967 0027 06       		.byte	0x6
+ 968 0028 55010000 		.4byte	.LASF0
+ 969 002c 03       		.uleb128 0x3
+ 970 002d FD000000 		.4byte	.LASF4
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 24
+
+
+ 971 0031 02       		.byte	0x2
+ 972 0032 1D       		.byte	0x1d
+ 973 0033 37000000 		.4byte	0x37
+ 974 0037 02       		.uleb128 0x2
+ 975 0038 01       		.byte	0x1
+ 976 0039 08       		.byte	0x8
+ 977 003a 1D010000 		.4byte	.LASF1
+ 978 003e 02       		.uleb128 0x2
+ 979 003f 02       		.byte	0x2
+ 980 0040 05       		.byte	0x5
+ 981 0041 2A000000 		.4byte	.LASF2
+ 982 0045 02       		.uleb128 0x2
+ 983 0046 02       		.byte	0x2
+ 984 0047 07       		.byte	0x7
+ 985 0048 8D020000 		.4byte	.LASF3
+ 986 004c 03       		.uleb128 0x3
+ 987 004d DB020000 		.4byte	.LASF5
+ 988 0051 02       		.byte	0x2
+ 989 0052 3F       		.byte	0x3f
+ 990 0053 57000000 		.4byte	0x57
+ 991 0057 02       		.uleb128 0x2
+ 992 0058 04       		.byte	0x4
+ 993 0059 05       		.byte	0x5
+ 994 005a F4000000 		.4byte	.LASF6
+ 995 005e 02       		.uleb128 0x2
+ 996 005f 04       		.byte	0x4
+ 997 0060 07       		.byte	0x7
+ 998 0061 B3020000 		.4byte	.LASF7
+ 999 0065 02       		.uleb128 0x2
+ 1000 0066 08       		.byte	0x8
+ 1001 0067 05       		.byte	0x5
+ 1002 0068 DA000000 		.4byte	.LASF8
+ 1003 006c 02       		.uleb128 0x2
+ 1004 006d 08       		.byte	0x8
+ 1005 006e 07       		.byte	0x7
+ 1006 006f 6B010000 		.4byte	.LASF9
+ 1007 0073 04       		.uleb128 0x4
+ 1008 0074 04       		.byte	0x4
+ 1009 0075 05       		.byte	0x5
+ 1010 0076 696E7400 		.ascii	"int\000"
+ 1011 007a 02       		.uleb128 0x2
+ 1012 007b 04       		.byte	0x4
+ 1013 007c 07       		.byte	0x7
+ 1014 007d BF030000 		.4byte	.LASF10
+ 1015 0081 03       		.uleb128 0x3
+ 1016 0082 E5020000 		.4byte	.LASF11
+ 1017 0086 03       		.byte	0x3
+ 1018 0087 18       		.byte	0x18
+ 1019 0088 2C000000 		.4byte	0x2c
+ 1020 008c 03       		.uleb128 0x3
+ 1021 008d 07020000 		.4byte	.LASF12
+ 1022 0091 03       		.byte	0x3
+ 1023 0092 2C       		.byte	0x2c
+ 1024 0093 4C000000 		.4byte	0x4c
+ 1025 0097 02       		.uleb128 0x2
+ 1026 0098 04       		.byte	0x4
+ 1027 0099 04       		.byte	0x4
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 25
+
+
+ 1028 009a D4000000 		.4byte	.LASF13
+ 1029 009e 02       		.uleb128 0x2
+ 1030 009f 08       		.byte	0x8
+ 1031 00a0 04       		.byte	0x4
+ 1032 00a1 C5020000 		.4byte	.LASF14
+ 1033 00a5 02       		.uleb128 0x2
+ 1034 00a6 01       		.byte	0x1
+ 1035 00a7 08       		.byte	0x8
+ 1036 00a8 02020000 		.4byte	.LASF15
+ 1037 00ac 02       		.uleb128 0x2
+ 1038 00ad 08       		.byte	0x8
+ 1039 00ae 04       		.byte	0x4
+ 1040 00af 11010000 		.4byte	.LASF16
+ 1041 00b3 02       		.uleb128 0x2
+ 1042 00b4 04       		.byte	0x4
+ 1043 00b5 07       		.byte	0x7
+ 1044 00b6 ED020000 		.4byte	.LASF17
+ 1045 00ba 05       		.uleb128 0x5
+ 1046 00bb BA000000 		.4byte	.LASF63
+ 1047 00bf 01       		.byte	0x1
+ 1048 00c0 37000000 		.4byte	0x37
+ 1049 00c4 04       		.byte	0x4
+ 1050 00c5 11       		.byte	0x11
+ 1051 00c6 E9000000 		.4byte	0xe9
+ 1052 00ca 06       		.uleb128 0x6
+ 1053 00cb 25000000 		.4byte	.LASF18
+ 1054 00cf 00       		.byte	0
+ 1055 00d0 06       		.uleb128 0x6
+ 1056 00d1 43010000 		.4byte	.LASF19
+ 1057 00d5 01       		.byte	0x1
+ 1058 00d6 06       		.uleb128 0x6
+ 1059 00d7 8F010000 		.4byte	.LASF20
+ 1060 00db 02       		.byte	0x2
+ 1061 00dc 07       		.uleb128 0x7
+ 1062 00dd 574F4E00 		.ascii	"WON\000"
+ 1063 00e1 03       		.byte	0x3
+ 1064 00e2 06       		.uleb128 0x6
+ 1065 00e3 A0020000 		.4byte	.LASF21
+ 1066 00e7 04       		.byte	0x4
+ 1067 00e8 00       		.byte	0
+ 1068 00e9 08       		.uleb128 0x8
+ 1069 00ea 34000000 		.4byte	.LASF31
+ 1070 00ee 03       		.byte	0x3
+ 1071 00ef 04       		.byte	0x4
+ 1072 00f0 13       		.byte	0x13
+ 1073 00f1 1A010000 		.4byte	0x11a
+ 1074 00f5 09       		.uleb128 0x9
+ 1075 00f6 52656400 		.ascii	"Red\000"
+ 1076 00fa 04       		.byte	0x4
+ 1077 00fb 15       		.byte	0x15
+ 1078 00fc 81000000 		.4byte	0x81
+ 1079 0100 00       		.byte	0
+ 1080 0101 0A       		.uleb128 0xa
+ 1081 0102 71000000 		.4byte	.LASF22
+ 1082 0106 04       		.byte	0x4
+ 1083 0107 16       		.byte	0x16
+ 1084 0108 81000000 		.4byte	0x81
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 26
+
+
+ 1085 010c 01       		.byte	0x1
+ 1086 010d 0A       		.uleb128 0xa
+ 1087 010e 11030000 		.4byte	.LASF23
+ 1088 0112 04       		.byte	0x4
+ 1089 0113 17       		.byte	0x17
+ 1090 0114 81000000 		.4byte	0x81
+ 1091 0118 02       		.byte	0x2
+ 1092 0119 00       		.byte	0
+ 1093 011a 03       		.uleb128 0x3
+ 1094 011b AC000000 		.4byte	.LASF24
+ 1095 011f 04       		.byte	0x4
+ 1096 0120 18       		.byte	0x18
+ 1097 0121 E9000000 		.4byte	0xe9
+ 1098 0125 0B       		.uleb128 0xb
+ 1099 0126 A1000000 		.4byte	.LASF25
+ 1100 012a 01       		.byte	0x1
+ 1101 012b 4B       		.byte	0x4b
+ 1102 012c 00000000 		.4byte	.LFB65
+ 1103 0130 14000000 		.4byte	.LFE65-.LFB65
+ 1104 0134 01       		.uleb128 0x1
+ 1105 0135 9C       		.byte	0x9c
+ 1106 0136 47010000 		.4byte	0x147
+ 1107 013a 0C       		.uleb128 0xc
+ 1108 013b 6300     		.ascii	"c\000"
+ 1109 013d 01       		.byte	0x1
+ 1110 013e 4B       		.byte	0x4b
+ 1111 013f 1A010000 		.4byte	0x11a
+ 1112 0143 02       		.uleb128 0x2
+ 1113 0144 91       		.byte	0x91
+ 1114 0145 7C       		.sleb128 -4
+ 1115 0146 00       		.byte	0
+ 1116 0147 0B       		.uleb128 0xb
+ 1117 0148 00030000 		.4byte	.LASF26
+ 1118 014c 01       		.byte	0x1
+ 1119 014d 4F       		.byte	0x4f
+ 1120 014e 00000000 		.4byte	.LFB66
+ 1121 0152 14000000 		.4byte	.LFE66-.LFB66
+ 1122 0156 01       		.uleb128 0x1
+ 1123 0157 9C       		.byte	0x9c
+ 1124 0158 69010000 		.4byte	0x169
+ 1125 015c 0C       		.uleb128 0xc
+ 1126 015d 6300     		.ascii	"c\000"
+ 1127 015f 01       		.byte	0x1
+ 1128 0160 4F       		.byte	0x4f
+ 1129 0161 1A010000 		.4byte	0x11a
+ 1130 0165 02       		.uleb128 0x2
+ 1131 0166 91       		.byte	0x91
+ 1132 0167 7C       		.sleb128 -4
+ 1133 0168 00       		.byte	0
+ 1134 0169 0B       		.uleb128 0xb
+ 1135 016a 97010000 		.4byte	.LASF27
+ 1136 016e 01       		.byte	0x1
+ 1137 016f 53       		.byte	0x53
+ 1138 0170 00000000 		.4byte	.LFB67
+ 1139 0174 3C000000 		.4byte	.LFE67-.LFB67
+ 1140 0178 01       		.uleb128 0x1
+ 1141 0179 9C       		.byte	0x9c
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 27
+
+
+ 1142 017a C8010000 		.4byte	0x1c8
+ 1143 017e 0D       		.uleb128 0xd
+ 1144 017f FB010000 		.4byte	.LASF28
+ 1145 0183 01       		.byte	0x1
+ 1146 0184 53       		.byte	0x53
+ 1147 0185 81000000 		.4byte	0x81
+ 1148 0189 00000000 		.4byte	.LLST0
+ 1149 018d 0E       		.uleb128 0xe
+ 1150 018e 20000000 		.4byte	.LVL2
+ 1151 0192 4F070000 		.4byte	0x74f
+ 1152 0196 AA010000 		.4byte	0x1aa
+ 1153 019a 0F       		.uleb128 0xf
+ 1154 019b 01       		.uleb128 0x1
+ 1155 019c 50       		.byte	0x50
+ 1156 019d 02       		.uleb128 0x2
+ 1157 019e 75       		.byte	0x75
+ 1158 019f 00       		.sleb128 0
+ 1159 01a0 0F       		.uleb128 0xf
+ 1160 01a1 01       		.uleb128 0x1
+ 1161 01a2 51       		.byte	0x51
+ 1162 01a3 05       		.uleb128 0x5
+ 1163 01a4 03       		.byte	0x3
+ 1164 01a5 00000000 		.4byte	.LC0
+ 1165 01a9 00       		.byte	0
+ 1166 01aa 0E       		.uleb128 0xe
+ 1167 01ab 26000000 		.4byte	.LVL3
+ 1168 01af 5A070000 		.4byte	0x75a
+ 1169 01b3 BE010000 		.4byte	0x1be
+ 1170 01b7 0F       		.uleb128 0xf
+ 1171 01b8 01       		.uleb128 0x1
+ 1172 01b9 50       		.byte	0x50
+ 1173 01ba 02       		.uleb128 0x2
+ 1174 01bb 75       		.byte	0x75
+ 1175 01bc 00       		.sleb128 0
+ 1176 01bd 00       		.byte	0
+ 1177 01be 10       		.uleb128 0x10
+ 1178 01bf 2C000000 		.4byte	.LVL4
+ 1179 01c3 65070000 		.4byte	0x765
+ 1180 01c7 00       		.byte	0
+ 1181 01c8 0B       		.uleb128 0xb
+ 1182 01c9 C4000000 		.4byte	.LASF29
+ 1183 01cd 01       		.byte	0x1
+ 1184 01ce 5F       		.byte	0x5f
+ 1185 01cf 00000000 		.4byte	.LFB68
+ 1186 01d3 24000000 		.4byte	.LFE68-.LFB68
+ 1187 01d7 01       		.uleb128 0x1
+ 1188 01d8 9C       		.byte	0x9c
+ 1189 01d9 00020000 		.4byte	0x200
+ 1190 01dd 0D       		.uleb128 0xd
+ 1191 01de FB010000 		.4byte	.LASF28
+ 1192 01e2 01       		.byte	0x1
+ 1193 01e3 5F       		.byte	0x5f
+ 1194 01e4 81000000 		.4byte	0x81
+ 1195 01e8 30000000 		.4byte	.LLST1
+ 1196 01ec 11       		.uleb128 0x11
+ 1197 01ed 16000000 		.4byte	.LVL7
+ 1198 01f1 5A070000 		.4byte	0x75a
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 28
+
+
+ 1199 01f5 0F       		.uleb128 0xf
+ 1200 01f6 01       		.uleb128 0x1
+ 1201 01f7 50       		.byte	0x50
+ 1202 01f8 05       		.uleb128 0x5
+ 1203 01f9 03       		.byte	0x3
+ 1204 01fa 3C000000 		.4byte	.LC1
+ 1205 01fe 00       		.byte	0
+ 1206 01ff 00       		.byte	0
+ 1207 0200 0B       		.uleb128 0xb
+ 1208 0201 2B010000 		.4byte	.LASF30
+ 1209 0205 01       		.byte	0x1
+ 1210 0206 80       		.byte	0x80
+ 1211 0207 00000000 		.4byte	.LFB70
+ 1212 020b 8C000000 		.4byte	.LFE70-.LFB70
+ 1213 020f 01       		.uleb128 0x1
+ 1214 0210 9C       		.byte	0x9c
+ 1215 0211 19030000 		.4byte	0x319
+ 1216 0215 12       		.uleb128 0x12
+ 1217 0216 34000000 		.4byte	.LASF31
+ 1218 021a 01       		.byte	0x1
+ 1219 021b 80       		.byte	0x80
+ 1220 021c 1A010000 		.4byte	0x11a
+ 1221 0220 02       		.uleb128 0x2
+ 1222 0221 91       		.byte	0x91
+ 1223 0222 74       		.sleb128 -12
+ 1224 0223 0E       		.uleb128 0xe
+ 1225 0224 24000000 		.4byte	.LVL8
+ 1226 0228 4F070000 		.4byte	0x74f
+ 1227 022c 62020000 		.4byte	0x262
+ 1228 0230 0F       		.uleb128 0xf
+ 1229 0231 01       		.uleb128 0x1
+ 1230 0232 50       		.byte	0x50
+ 1231 0233 02       		.uleb128 0x2
+ 1232 0234 74       		.byte	0x74
+ 1233 0235 00       		.sleb128 0
+ 1234 0236 0F       		.uleb128 0xf
+ 1235 0237 01       		.uleb128 0x1
+ 1236 0238 51       		.byte	0x51
+ 1237 0239 05       		.uleb128 0x5
+ 1238 023a 03       		.byte	0x3
+ 1239 023b 64000000 		.4byte	.LC2
+ 1240 023f 0F       		.uleb128 0xf
+ 1241 0240 01       		.uleb128 0x1
+ 1242 0241 52       		.byte	0x52
+ 1243 0242 07       		.uleb128 0x7
+ 1244 0243 91       		.byte	0x91
+ 1245 0244 74       		.sleb128 -12
+ 1246 0245 94       		.byte	0x94
+ 1247 0246 01       		.byte	0x1
+ 1248 0247 08       		.byte	0x8
+ 1249 0248 FF       		.byte	0xff
+ 1250 0249 1A       		.byte	0x1a
+ 1251 024a 0F       		.uleb128 0xf
+ 1252 024b 01       		.uleb128 0x1
+ 1253 024c 53       		.byte	0x53
+ 1254 024d 07       		.uleb128 0x7
+ 1255 024e 91       		.byte	0x91
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 29
+
+
+ 1256 024f 75       		.sleb128 -11
+ 1257 0250 94       		.byte	0x94
+ 1258 0251 01       		.byte	0x1
+ 1259 0252 08       		.byte	0x8
+ 1260 0253 FF       		.byte	0xff
+ 1261 0254 1A       		.byte	0x1a
+ 1262 0255 0F       		.uleb128 0xf
+ 1263 0256 02       		.uleb128 0x2
+ 1264 0257 7D       		.byte	0x7d
+ 1265 0258 00       		.sleb128 0
+ 1266 0259 07       		.uleb128 0x7
+ 1267 025a 91       		.byte	0x91
+ 1268 025b 76       		.sleb128 -10
+ 1269 025c 94       		.byte	0x94
+ 1270 025d 01       		.byte	0x1
+ 1271 025e 08       		.byte	0x8
+ 1272 025f FF       		.byte	0xff
+ 1273 0260 1A       		.byte	0x1a
+ 1274 0261 00       		.byte	0
+ 1275 0262 0E       		.uleb128 0xe
+ 1276 0263 2A000000 		.4byte	.LVL9
+ 1277 0267 5A070000 		.4byte	0x75a
+ 1278 026b 76020000 		.4byte	0x276
+ 1279 026f 0F       		.uleb128 0xf
+ 1280 0270 01       		.uleb128 0x1
+ 1281 0271 50       		.byte	0x50
+ 1282 0272 02       		.uleb128 0x2
+ 1283 0273 74       		.byte	0x74
+ 1284 0274 00       		.sleb128 0
+ 1285 0275 00       		.byte	0
+ 1286 0276 0E       		.uleb128 0xe
+ 1287 0277 48000000 		.4byte	.LVL10
+ 1288 027b 4F070000 		.4byte	0x74f
+ 1289 027f B5020000 		.4byte	0x2b5
+ 1290 0283 0F       		.uleb128 0xf
+ 1291 0284 01       		.uleb128 0x1
+ 1292 0285 50       		.byte	0x50
+ 1293 0286 02       		.uleb128 0x2
+ 1294 0287 74       		.byte	0x74
+ 1295 0288 00       		.sleb128 0
+ 1296 0289 0F       		.uleb128 0xf
+ 1297 028a 01       		.uleb128 0x1
+ 1298 028b 51       		.byte	0x51
+ 1299 028c 05       		.uleb128 0x5
+ 1300 028d 03       		.byte	0x3
+ 1301 028e 94000000 		.4byte	.LC3
+ 1302 0292 0F       		.uleb128 0xf
+ 1303 0293 01       		.uleb128 0x1
+ 1304 0294 52       		.byte	0x52
+ 1305 0295 07       		.uleb128 0x7
+ 1306 0296 91       		.byte	0x91
+ 1307 0297 74       		.sleb128 -12
+ 1308 0298 94       		.byte	0x94
+ 1309 0299 01       		.byte	0x1
+ 1310 029a 08       		.byte	0x8
+ 1311 029b FF       		.byte	0xff
+ 1312 029c 1A       		.byte	0x1a
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 30
+
+
+ 1313 029d 0F       		.uleb128 0xf
+ 1314 029e 01       		.uleb128 0x1
+ 1315 029f 53       		.byte	0x53
+ 1316 02a0 07       		.uleb128 0x7
+ 1317 02a1 91       		.byte	0x91
+ 1318 02a2 75       		.sleb128 -11
+ 1319 02a3 94       		.byte	0x94
+ 1320 02a4 01       		.byte	0x1
+ 1321 02a5 08       		.byte	0x8
+ 1322 02a6 FF       		.byte	0xff
+ 1323 02a7 1A       		.byte	0x1a
+ 1324 02a8 0F       		.uleb128 0xf
+ 1325 02a9 02       		.uleb128 0x2
+ 1326 02aa 7D       		.byte	0x7d
+ 1327 02ab 00       		.sleb128 0
+ 1328 02ac 07       		.uleb128 0x7
+ 1329 02ad 91       		.byte	0x91
+ 1330 02ae 76       		.sleb128 -10
+ 1331 02af 94       		.byte	0x94
+ 1332 02b0 01       		.byte	0x1
+ 1333 02b1 08       		.byte	0x8
+ 1334 02b2 FF       		.byte	0xff
+ 1335 02b3 1A       		.byte	0x1a
+ 1336 02b4 00       		.byte	0
+ 1337 02b5 0E       		.uleb128 0xe
+ 1338 02b6 4E000000 		.4byte	.LVL11
+ 1339 02ba 5A070000 		.4byte	0x75a
+ 1340 02be C9020000 		.4byte	0x2c9
+ 1341 02c2 0F       		.uleb128 0xf
+ 1342 02c3 01       		.uleb128 0x1
+ 1343 02c4 50       		.byte	0x50
+ 1344 02c5 02       		.uleb128 0x2
+ 1345 02c6 74       		.byte	0x74
+ 1346 02c7 00       		.sleb128 0
+ 1347 02c8 00       		.byte	0
+ 1348 02c9 0E       		.uleb128 0xe
+ 1349 02ca 6C000000 		.4byte	.LVL12
+ 1350 02ce 4F070000 		.4byte	0x74f
+ 1351 02d2 08030000 		.4byte	0x308
+ 1352 02d6 0F       		.uleb128 0xf
+ 1353 02d7 01       		.uleb128 0x1
+ 1354 02d8 50       		.byte	0x50
+ 1355 02d9 02       		.uleb128 0x2
+ 1356 02da 74       		.byte	0x74
+ 1357 02db 00       		.sleb128 0
+ 1358 02dc 0F       		.uleb128 0xf
+ 1359 02dd 01       		.uleb128 0x1
+ 1360 02de 51       		.byte	0x51
+ 1361 02df 05       		.uleb128 0x5
+ 1362 02e0 03       		.byte	0x3
+ 1363 02e1 CC000000 		.4byte	.LC4
+ 1364 02e5 0F       		.uleb128 0xf
+ 1365 02e6 01       		.uleb128 0x1
+ 1366 02e7 52       		.byte	0x52
+ 1367 02e8 07       		.uleb128 0x7
+ 1368 02e9 91       		.byte	0x91
+ 1369 02ea 74       		.sleb128 -12
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 31
+
+
+ 1370 02eb 94       		.byte	0x94
+ 1371 02ec 01       		.byte	0x1
+ 1372 02ed 08       		.byte	0x8
+ 1373 02ee FF       		.byte	0xff
+ 1374 02ef 1A       		.byte	0x1a
+ 1375 02f0 0F       		.uleb128 0xf
+ 1376 02f1 01       		.uleb128 0x1
+ 1377 02f2 53       		.byte	0x53
+ 1378 02f3 07       		.uleb128 0x7
+ 1379 02f4 91       		.byte	0x91
+ 1380 02f5 75       		.sleb128 -11
+ 1381 02f6 94       		.byte	0x94
+ 1382 02f7 01       		.byte	0x1
+ 1383 02f8 08       		.byte	0x8
+ 1384 02f9 FF       		.byte	0xff
+ 1385 02fa 1A       		.byte	0x1a
+ 1386 02fb 0F       		.uleb128 0xf
+ 1387 02fc 02       		.uleb128 0x2
+ 1388 02fd 7D       		.byte	0x7d
+ 1389 02fe 00       		.sleb128 0
+ 1390 02ff 07       		.uleb128 0x7
+ 1391 0300 91       		.byte	0x91
+ 1392 0301 76       		.sleb128 -10
+ 1393 0302 94       		.byte	0x94
+ 1394 0303 01       		.byte	0x1
+ 1395 0304 08       		.byte	0x8
+ 1396 0305 FF       		.byte	0xff
+ 1397 0306 1A       		.byte	0x1a
+ 1398 0307 00       		.byte	0
+ 1399 0308 11       		.uleb128 0x11
+ 1400 0309 72000000 		.4byte	.LVL13
+ 1401 030d 5A070000 		.4byte	0x75a
+ 1402 0311 0F       		.uleb128 0xf
+ 1403 0312 01       		.uleb128 0x1
+ 1404 0313 50       		.byte	0x50
+ 1405 0314 02       		.uleb128 0x2
+ 1406 0315 74       		.byte	0x74
+ 1407 0316 00       		.sleb128 0
+ 1408 0317 00       		.byte	0
+ 1409 0318 00       		.byte	0
+ 1410 0319 0B       		.uleb128 0xb
+ 1411 031a 3A000000 		.4byte	.LASF32
+ 1412 031e 01       		.byte	0x1
+ 1413 031f BC       		.byte	0xbc
+ 1414 0320 00000000 		.4byte	.LFB72
+ 1415 0324 30000000 		.4byte	.LFE72-.LFB72
+ 1416 0328 01       		.uleb128 0x1
+ 1417 0329 9C       		.byte	0x9c
+ 1418 032a 79030000 		.4byte	0x379
+ 1419 032e 0D       		.uleb128 0xd
+ 1420 032f B4000000 		.4byte	.LASF33
+ 1421 0333 01       		.byte	0x1
+ 1422 0334 BC       		.byte	0xbc
+ 1423 0335 81000000 		.4byte	0x81
+ 1424 0339 60000000 		.4byte	.LLST2
+ 1425 033d 12       		.uleb128 0x12
+ 1426 033e 34000000 		.4byte	.LASF31
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 32
+
+
+ 1427 0342 01       		.byte	0x1
+ 1428 0343 BC       		.byte	0xbc
+ 1429 0344 1A010000 		.4byte	0x11a
+ 1430 0348 02       		.uleb128 0x2
+ 1431 0349 91       		.byte	0x91
+ 1432 034a 74       		.sleb128 -12
+ 1433 034b 0E       		.uleb128 0xe
+ 1434 034c 1E000000 		.4byte	.LVL16
+ 1435 0350 4F070000 		.4byte	0x74f
+ 1436 0354 68030000 		.4byte	0x368
+ 1437 0358 0F       		.uleb128 0xf
+ 1438 0359 01       		.uleb128 0x1
+ 1439 035a 50       		.byte	0x50
+ 1440 035b 02       		.uleb128 0x2
+ 1441 035c 74       		.byte	0x74
+ 1442 035d 00       		.sleb128 0
+ 1443 035e 0F       		.uleb128 0xf
+ 1444 035f 01       		.uleb128 0x1
+ 1445 0360 51       		.byte	0x51
+ 1446 0361 05       		.uleb128 0x5
+ 1447 0362 03       		.byte	0x3
+ 1448 0363 04010000 		.4byte	.LC5
+ 1449 0367 00       		.byte	0
+ 1450 0368 11       		.uleb128 0x11
+ 1451 0369 24000000 		.4byte	.LVL17
+ 1452 036d 5A070000 		.4byte	0x75a
+ 1453 0371 0F       		.uleb128 0xf
+ 1454 0372 01       		.uleb128 0x1
+ 1455 0373 50       		.byte	0x50
+ 1456 0374 02       		.uleb128 0x2
+ 1457 0375 74       		.byte	0x74
+ 1458 0376 00       		.sleb128 0
+ 1459 0377 00       		.byte	0
+ 1460 0378 00       		.byte	0
+ 1461 0379 0B       		.uleb128 0xb
+ 1462 037a 00000000 		.4byte	.LASF34
+ 1463 037e 01       		.byte	0x1
+ 1464 037f 69       		.byte	0x69
+ 1465 0380 00000000 		.4byte	.LFB69
+ 1466 0384 84000000 		.4byte	.LFE69-.LFB69
+ 1467 0388 01       		.uleb128 0x1
+ 1468 0389 9C       		.byte	0x9c
+ 1469 038a 46040000 		.4byte	0x446
+ 1470 038e 0D       		.uleb128 0xd
+ 1471 038f 07010000 		.4byte	.LASF35
+ 1472 0393 01       		.byte	0x1
+ 1473 0394 69       		.byte	0x69
+ 1474 0395 81000000 		.4byte	0x81
+ 1475 0399 81000000 		.4byte	.LLST3
+ 1476 039d 13       		.uleb128 0x13
+ 1477 039e 12000000 		.4byte	.LBB2
+ 1478 03a2 2C000000 		.4byte	.LBE2-.LBB2
+ 1479 03a6 DC030000 		.4byte	0x3dc
+ 1480 03aa 14       		.uleb128 0x14
+ 1481 03ab 6900     		.ascii	"i\000"
+ 1482 03ad 01       		.byte	0x1
+ 1483 03ae 6D       		.byte	0x6d
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 33
+
+
+ 1484 03af 73000000 		.4byte	0x73
+ 1485 03b3 BB000000 		.4byte	.LLST4
+ 1486 03b7 0E       		.uleb128 0xe
+ 1487 03b8 2A000000 		.4byte	.LVL22
+ 1488 03bc 19030000 		.4byte	0x319
+ 1489 03c0 CB030000 		.4byte	0x3cb
+ 1490 03c4 0F       		.uleb128 0xf
+ 1491 03c5 01       		.uleb128 0x1
+ 1492 03c6 50       		.byte	0x50
+ 1493 03c7 02       		.uleb128 0x2
+ 1494 03c8 74       		.byte	0x74
+ 1495 03c9 00       		.sleb128 0
+ 1496 03ca 00       		.byte	0
+ 1497 03cb 11       		.uleb128 0x11
+ 1498 03cc 36000000 		.4byte	.LVL23
+ 1499 03d0 19030000 		.4byte	0x319
+ 1500 03d4 0F       		.uleb128 0xf
+ 1501 03d5 01       		.uleb128 0x1
+ 1502 03d6 50       		.byte	0x50
+ 1503 03d7 02       		.uleb128 0x2
+ 1504 03d8 74       		.byte	0x74
+ 1505 03d9 00       		.sleb128 0
+ 1506 03da 00       		.byte	0
+ 1507 03db 00       		.byte	0
+ 1508 03dc 13       		.uleb128 0x13
+ 1509 03dd 48000000 		.4byte	.LBB3
+ 1510 03e1 3C000000 		.4byte	.LBE3-.LBB3
+ 1511 03e5 1B040000 		.4byte	0x41b
+ 1512 03e9 14       		.uleb128 0x14
+ 1513 03ea 6900     		.ascii	"i\000"
+ 1514 03ec 01       		.byte	0x1
+ 1515 03ed 76       		.byte	0x76
+ 1516 03ee 73000000 		.4byte	0x73
+ 1517 03f2 DA000000 		.4byte	.LLST5
+ 1518 03f6 0E       		.uleb128 0xe
+ 1519 03f7 60000000 		.4byte	.LVL29
+ 1520 03fb 19030000 		.4byte	0x319
+ 1521 03ff 0A040000 		.4byte	0x40a
+ 1522 0403 0F       		.uleb128 0xf
+ 1523 0404 01       		.uleb128 0x1
+ 1524 0405 50       		.byte	0x50
+ 1525 0406 02       		.uleb128 0x2
+ 1526 0407 74       		.byte	0x74
+ 1527 0408 00       		.sleb128 0
+ 1528 0409 00       		.byte	0
+ 1529 040a 11       		.uleb128 0x11
+ 1530 040b 6C000000 		.4byte	.LVL30
+ 1531 040f 19030000 		.4byte	0x319
+ 1532 0413 0F       		.uleb128 0xf
+ 1533 0414 01       		.uleb128 0x1
+ 1534 0415 50       		.byte	0x50
+ 1535 0416 02       		.uleb128 0x2
+ 1536 0417 74       		.byte	0x74
+ 1537 0418 00       		.sleb128 0
+ 1538 0419 00       		.byte	0
+ 1539 041a 00       		.byte	0
+ 1540 041b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 34
+
+
+ 1541 041c 12000000 		.4byte	.LVL20
+ 1542 0420 5A070000 		.4byte	0x75a
+ 1543 0424 32040000 		.4byte	0x432
+ 1544 0428 0F       		.uleb128 0xf
+ 1545 0429 01       		.uleb128 0x1
+ 1546 042a 50       		.byte	0x50
+ 1547 042b 05       		.uleb128 0x5
+ 1548 042c 03       		.byte	0x3
+ 1549 042d 40010000 		.4byte	.LC6
+ 1550 0431 00       		.byte	0
+ 1551 0432 11       		.uleb128 0x11
+ 1552 0433 48000000 		.4byte	.LVL27
+ 1553 0437 5A070000 		.4byte	0x75a
+ 1554 043b 0F       		.uleb128 0xf
+ 1555 043c 01       		.uleb128 0x1
+ 1556 043d 50       		.byte	0x50
+ 1557 043e 05       		.uleb128 0x5
+ 1558 043f 03       		.byte	0x3
+ 1559 0440 40010000 		.4byte	.LC6
+ 1560 0444 00       		.byte	0
+ 1561 0445 00       		.byte	0
+ 1562 0446 15       		.uleb128 0x15
+ 1563 0447 CC030000 		.4byte	.LASF39
+ 1564 044b 01       		.byte	0x1
+ 1565 044c 9A       		.byte	0x9a
+ 1566 044d 00000000 		.4byte	.LFB71
+ 1567 0451 AC000000 		.4byte	.LFE71-.LFB71
+ 1568 0455 01       		.uleb128 0x1
+ 1569 0456 9C       		.byte	0x9c
+ 1570 0457 DF040000 		.4byte	0x4df
+ 1571 045b 10       		.uleb128 0x10
+ 1572 045c 24000000 		.4byte	.LVL33
+ 1573 0460 79030000 		.4byte	0x379
+ 1574 0464 0E       		.uleb128 0xe
+ 1575 0465 30000000 		.4byte	.LVL34
+ 1576 0469 4F070000 		.4byte	0x74f
+ 1577 046d 81040000 		.4byte	0x481
+ 1578 0471 0F       		.uleb128 0xf
+ 1579 0472 01       		.uleb128 0x1
+ 1580 0473 50       		.byte	0x50
+ 1581 0474 02       		.uleb128 0x2
+ 1582 0475 74       		.byte	0x74
+ 1583 0476 00       		.sleb128 0
+ 1584 0477 0F       		.uleb128 0xf
+ 1585 0478 01       		.uleb128 0x1
+ 1586 0479 51       		.byte	0x51
+ 1587 047a 05       		.uleb128 0x5
+ 1588 047b 03       		.byte	0x3
+ 1589 047c 58010000 		.4byte	.LC7
+ 1590 0480 00       		.byte	0
+ 1591 0481 0E       		.uleb128 0xe
+ 1592 0482 36000000 		.4byte	.LVL35
+ 1593 0486 5A070000 		.4byte	0x75a
+ 1594 048a 95040000 		.4byte	0x495
+ 1595 048e 0F       		.uleb128 0xf
+ 1596 048f 01       		.uleb128 0x1
+ 1597 0490 50       		.byte	0x50
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 35
+
+
+ 1598 0491 02       		.uleb128 0x2
+ 1599 0492 74       		.byte	0x74
+ 1600 0493 00       		.sleb128 0
+ 1601 0494 00       		.byte	0
+ 1602 0495 0E       		.uleb128 0xe
+ 1603 0496 54000000 		.4byte	.LVL36
+ 1604 049a 5A070000 		.4byte	0x75a
+ 1605 049e AC040000 		.4byte	0x4ac
+ 1606 04a2 0F       		.uleb128 0xf
+ 1607 04a3 01       		.uleb128 0x1
+ 1608 04a4 50       		.byte	0x50
+ 1609 04a5 05       		.uleb128 0x5
+ 1610 04a6 03       		.byte	0x3
+ 1611 04a7 70010000 		.4byte	.LC8
+ 1612 04ab 00       		.byte	0
+ 1613 04ac 10       		.uleb128 0x10
+ 1614 04ad 58000000 		.4byte	.LVL37
+ 1615 04b1 70070000 		.4byte	0x770
+ 1616 04b5 0E       		.uleb128 0xe
+ 1617 04b6 72000000 		.4byte	.LVL38
+ 1618 04ba 5A070000 		.4byte	0x75a
+ 1619 04be CC040000 		.4byte	0x4cc
+ 1620 04c2 0F       		.uleb128 0xf
+ 1621 04c3 01       		.uleb128 0x1
+ 1622 04c4 50       		.byte	0x50
+ 1623 04c5 05       		.uleb128 0x5
+ 1624 04c6 03       		.byte	0x3
+ 1625 04c7 84010000 		.4byte	.LC9
+ 1626 04cb 00       		.byte	0
+ 1627 04cc 10       		.uleb128 0x10
+ 1628 04cd 76000000 		.4byte	.LVL39
+ 1629 04d1 7B070000 		.4byte	0x77b
+ 1630 04d5 10       		.uleb128 0x10
+ 1631 04d6 8C000000 		.4byte	.LVL40
+ 1632 04da 7B070000 		.4byte	0x77b
+ 1633 04de 00       		.byte	0
+ 1634 04df 16       		.uleb128 0x16
+ 1635 04e0 82010000 		.4byte	.LASF36
+ 1636 04e4 01       		.byte	0x1
+ 1637 04e5 C1       		.byte	0xc1
+ 1638 04e6 81000000 		.4byte	0x81
+ 1639 04ea 00000000 		.4byte	.LFB73
+ 1640 04ee 18000000 		.4byte	.LFE73-.LFB73
+ 1641 04f2 01       		.uleb128 0x1
+ 1642 04f3 9C       		.byte	0x9c
+ 1643 04f4 0C050000 		.4byte	0x50c
+ 1644 04f8 11       		.uleb128 0x11
+ 1645 04f9 08000000 		.4byte	.LVL41
+ 1646 04fd 5A070000 		.4byte	0x75a
+ 1647 0501 0F       		.uleb128 0xf
+ 1648 0502 01       		.uleb128 0x1
+ 1649 0503 50       		.byte	0x50
+ 1650 0504 05       		.uleb128 0x5
+ 1651 0505 03       		.byte	0x3
+ 1652 0506 98010000 		.4byte	.LC10
+ 1653 050a 00       		.byte	0
+ 1654 050b 00       		.byte	0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 36
+
+
+ 1655 050c 0B       		.uleb128 0xb
+ 1656 050d 4C010000 		.4byte	.LASF37
+ 1657 0511 01       		.byte	0x1
+ 1658 0512 1E       		.byte	0x1e
+ 1659 0513 00000000 		.4byte	.LFB64
+ 1660 0517 A0000000 		.4byte	.LFE64-.LFB64
+ 1661 051b 01       		.uleb128 0x1
+ 1662 051c 9C       		.byte	0x9c
+ 1663 051d E0050000 		.4byte	0x5e0
+ 1664 0521 0D       		.uleb128 0xd
+ 1665 0522 CC020000 		.4byte	.LASF38
+ 1666 0526 01       		.byte	0x1
+ 1667 0527 1E       		.byte	0x1e
+ 1668 0528 BA000000 		.4byte	0xba
+ 1669 052c F9000000 		.4byte	.LLST6
+ 1670 0530 0E       		.uleb128 0xe
+ 1671 0531 1A000000 		.4byte	.LVL44
+ 1672 0535 5A070000 		.4byte	0x75a
+ 1673 0539 47050000 		.4byte	0x547
+ 1674 053d 0F       		.uleb128 0xf
+ 1675 053e 01       		.uleb128 0x1
+ 1676 053f 50       		.byte	0x50
+ 1677 0540 05       		.uleb128 0x5
+ 1678 0541 03       		.byte	0x3
+ 1679 0542 A8010000 		.4byte	.LC11
+ 1680 0546 00       		.byte	0
+ 1681 0547 10       		.uleb128 0x10
+ 1682 0548 22000000 		.4byte	.LVL45
+ 1683 054c 00020000 		.4byte	0x200
+ 1684 0550 10       		.uleb128 0x10
+ 1685 0551 2C000000 		.4byte	.LVL47
+ 1686 0555 DF040000 		.4byte	0x4df
+ 1687 0559 0E       		.uleb128 0xe
+ 1688 055a 36000000 		.4byte	.LVL48
+ 1689 055e 5A070000 		.4byte	0x75a
+ 1690 0562 70050000 		.4byte	0x570
+ 1691 0566 0F       		.uleb128 0xf
+ 1692 0567 01       		.uleb128 0x1
+ 1693 0568 50       		.byte	0x50
+ 1694 0569 05       		.uleb128 0x5
+ 1695 056a 03       		.byte	0x3
+ 1696 056b B8010000 		.4byte	.LC12
+ 1697 056f 00       		.byte	0
+ 1698 0570 10       		.uleb128 0x10
+ 1699 0571 40000000 		.4byte	.LVL50
+ 1700 0575 DF040000 		.4byte	0x4df
+ 1701 0579 0E       		.uleb128 0xe
+ 1702 057a 4A000000 		.4byte	.LVL51
+ 1703 057e 65070000 		.4byte	0x765
+ 1704 0582 8C050000 		.4byte	0x58c
+ 1705 0586 0F       		.uleb128 0xf
+ 1706 0587 01       		.uleb128 0x1
+ 1707 0588 50       		.byte	0x50
+ 1708 0589 01       		.uleb128 0x1
+ 1709 058a 30       		.byte	0x30
+ 1710 058b 00       		.byte	0
+ 1711 058c 0E       		.uleb128 0xe
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 37
+
+
+ 1712 058d 50000000 		.4byte	.LVL52
+ 1713 0591 5A070000 		.4byte	0x75a
+ 1714 0595 A3050000 		.4byte	0x5a3
+ 1715 0599 0F       		.uleb128 0xf
+ 1716 059a 01       		.uleb128 0x1
+ 1717 059b 50       		.byte	0x50
+ 1718 059c 05       		.uleb128 0x5
+ 1719 059d 03       		.byte	0x3
+ 1720 059e CC010000 		.4byte	.LC13
+ 1721 05a2 00       		.byte	0
+ 1722 05a3 10       		.uleb128 0x10
+ 1723 05a4 5E000000 		.4byte	.LVL55
+ 1724 05a8 00020000 		.4byte	0x200
+ 1725 05ac 0E       		.uleb128 0xe
+ 1726 05ad 64000000 		.4byte	.LVL56
+ 1727 05b1 5A070000 		.4byte	0x75a
+ 1728 05b5 C3050000 		.4byte	0x5c3
+ 1729 05b9 0F       		.uleb128 0xf
+ 1730 05ba 01       		.uleb128 0x1
+ 1731 05bb 50       		.byte	0x50
+ 1732 05bc 05       		.uleb128 0x5
+ 1733 05bd 03       		.byte	0x3
+ 1734 05be E0010000 		.4byte	.LC14
+ 1735 05c2 00       		.byte	0
+ 1736 05c3 10       		.uleb128 0x10
+ 1737 05c4 72000000 		.4byte	.LVL59
+ 1738 05c8 00020000 		.4byte	0x200
+ 1739 05cc 11       		.uleb128 0x11
+ 1740 05cd 78000000 		.4byte	.LVL60
+ 1741 05d1 5A070000 		.4byte	0x75a
+ 1742 05d5 0F       		.uleb128 0xf
+ 1743 05d6 01       		.uleb128 0x1
+ 1744 05d7 50       		.byte	0x50
+ 1745 05d8 05       		.uleb128 0x5
+ 1746 05d9 03       		.byte	0x3
+ 1747 05da F0010000 		.4byte	.LC15
+ 1748 05de 00       		.byte	0
+ 1749 05df 00       		.byte	0
+ 1750 05e0 15       		.uleb128 0x15
+ 1751 05e1 16030000 		.4byte	.LASF40
+ 1752 05e5 01       		.byte	0x1
+ 1753 05e6 C6       		.byte	0xc6
+ 1754 05e7 00000000 		.4byte	.LFB74
+ 1755 05eb 6C000000 		.4byte	.LFE74-.LFB74
+ 1756 05ef 01       		.uleb128 0x1
+ 1757 05f0 9C       		.byte	0x9c
+ 1758 05f1 2D060000 		.4byte	0x62d
+ 1759 05f5 17       		.uleb128 0x17
+ 1760 05f6 00000000 		.4byte	.Ldebug_ranges0+0
+ 1761 05fa 14       		.uleb128 0x14
+ 1762 05fb 6900     		.ascii	"i\000"
+ 1763 05fd 01       		.byte	0x1
+ 1764 05fe C9       		.byte	0xc9
+ 1765 05ff 81000000 		.4byte	0x81
+ 1766 0603 AB010000 		.4byte	.LLST7
+ 1767 0607 0E       		.uleb128 0xe
+ 1768 0608 30000000 		.4byte	.LVL62
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 38
+
+
+ 1769 060c 19030000 		.4byte	0x319
+ 1770 0610 1B060000 		.4byte	0x61b
+ 1771 0614 0F       		.uleb128 0xf
+ 1772 0615 01       		.uleb128 0x1
+ 1773 0616 50       		.byte	0x50
+ 1774 0617 02       		.uleb128 0x2
+ 1775 0618 74       		.byte	0x74
+ 1776 0619 00       		.sleb128 0
+ 1777 061a 00       		.byte	0
+ 1778 061b 11       		.uleb128 0x11
+ 1779 061c 46000000 		.4byte	.LVL63
+ 1780 0620 19030000 		.4byte	0x319
+ 1781 0624 0F       		.uleb128 0xf
+ 1782 0625 01       		.uleb128 0x1
+ 1783 0626 50       		.byte	0x50
+ 1784 0627 02       		.uleb128 0x2
+ 1785 0628 74       		.byte	0x74
+ 1786 0629 00       		.sleb128 0
+ 1787 062a 00       		.byte	0
+ 1788 062b 00       		.byte	0
+ 1789 062c 00       		.byte	0
+ 1790 062d 18       		.uleb128 0x18
+ 1791 062e 47000000 		.4byte	.LASF41
+ 1792 0632 01       		.byte	0x1
+ 1793 0633 10       		.byte	0x10
+ 1794 0634 73000000 		.4byte	0x73
+ 1795 0638 05       		.uleb128 0x5
+ 1796 0639 03       		.byte	0x3
+ 1797 063a 08010000 		.4byte	blinking
+ 1798 063e 19       		.uleb128 0x19
+ 1799 063f 0E000000 		.4byte	.LASF42
+ 1800 0643 01       		.byte	0x1
+ 1801 0644 11       		.byte	0x11
+ 1802 0645 81000000 		.4byte	0x81
+ 1803 0649 00       		.byte	0
+ 1804 064a 18       		.uleb128 0x18
+ 1805 064b D7030000 		.4byte	.LASF43
+ 1806 064f 01       		.byte	0x1
+ 1807 0650 12       		.byte	0x12
+ 1808 0651 5B060000 		.4byte	0x65b
+ 1809 0655 05       		.uleb128 0x5
+ 1810 0656 03       		.byte	0x3
+ 1811 0657 08000000 		.4byte	turnedOffColor
+ 1812 065b 1A       		.uleb128 0x1a
+ 1813 065c 1A010000 		.4byte	0x11a
+ 1814 0660 18       		.uleb128 0x18
+ 1815 0661 5E000000 		.4byte	.LASF44
+ 1816 0665 01       		.byte	0x1
+ 1817 0666 13       		.byte	0x13
+ 1818 0667 1A010000 		.4byte	0x11a
+ 1819 066b 05       		.uleb128 0x5
+ 1820 066c 03       		.byte	0x3
+ 1821 066d 00000000 		.4byte	myColor
+ 1822 0671 18       		.uleb128 0x18
+ 1823 0672 A5020000 		.4byte	.LASF45
+ 1824 0676 01       		.byte	0x1
+ 1825 0677 14       		.byte	0x14
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 39
+
+
+ 1826 0678 1A010000 		.4byte	0x11a
+ 1827 067c 05       		.uleb128 0x5
+ 1828 067d 03       		.byte	0x3
+ 1829 067e 04000000 		.4byte	opponentColor
+ 1830 0682 18       		.uleb128 0x18
+ 1831 0683 82000000 		.4byte	.LASF46
+ 1832 0687 01       		.byte	0x1
+ 1833 0688 15       		.byte	0x15
+ 1834 0689 93060000 		.4byte	0x693
+ 1835 068d 05       		.uleb128 0x5
+ 1836 068e 03       		.byte	0x3
+ 1837 068f 00000000 		.4byte	missingCupColor
+ 1838 0693 1A       		.uleb128 0x1a
+ 1839 0694 1A010000 		.4byte	0x11a
+ 1840 0698 18       		.uleb128 0x18
+ 1841 0699 A7010000 		.4byte	.LASF47
+ 1842 069d 01       		.byte	0x1
+ 1843 069e 16       		.byte	0x16
+ 1844 069f A9060000 		.4byte	0x6a9
+ 1845 06a3 05       		.uleb128 0x5
+ 1846 06a4 03       		.byte	0x3
+ 1847 06a5 04000000 		.4byte	placedCupColor
+ 1848 06a9 1A       		.uleb128 0x1a
+ 1849 06aa 1A010000 		.4byte	0x11a
+ 1850 06ae 18       		.uleb128 0x18
+ 1851 06af 61010000 		.4byte	.LASF48
+ 1852 06b3 01       		.byte	0x1
+ 1853 06b4 17       		.byte	0x17
+ 1854 06b5 81000000 		.4byte	0x81
+ 1855 06b9 05       		.uleb128 0x5
+ 1856 06ba 03       		.byte	0x3
+ 1857 06bb 00000000 		.4byte	CupStatus
+ 1858 06bf 18       		.uleb128 0x18
+ 1859 06c0 F6020000 		.4byte	.LASF49
+ 1860 06c4 01       		.byte	0x1
+ 1861 06c5 18       		.byte	0x18
+ 1862 06c6 81000000 		.4byte	0x81
+ 1863 06ca 05       		.uleb128 0x5
+ 1864 06cb 03       		.byte	0x3
+ 1865 06cc 04010000 		.4byte	hitStatus
+ 1866 06d0 1B       		.uleb128 0x1b
+ 1867 06d1 A5000000 		.4byte	0xa5
+ 1868 06d5 E0060000 		.4byte	0x6e0
+ 1869 06d9 1C       		.uleb128 0x1c
+ 1870 06da B3000000 		.4byte	0xb3
+ 1871 06de FF       		.byte	0xff
+ 1872 06df 00       		.byte	0
+ 1873 06e0 18       		.uleb128 0x18
+ 1874 06e1 D2020000 		.4byte	.LASF50
+ 1875 06e5 01       		.byte	0x1
+ 1876 06e6 19       		.byte	0x19
+ 1877 06e7 D0060000 		.4byte	0x6d0
+ 1878 06eb 05       		.uleb128 0x5
+ 1879 06ec 03       		.byte	0x3
+ 1880 06ed 04000000 		.4byte	game_buf
+ 1881 06f1 1D       		.uleb128 0x1d
+ 1882 06f2 6E6E00   		.ascii	"nn\000"
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 40
+
+
+ 1883 06f5 01       		.byte	0x1
+ 1884 06f6 1A       		.byte	0x1a
+ 1885 06f7 73000000 		.4byte	0x73
+ 1886 06fb 1B       		.uleb128 0x1b
+ 1887 06fc 81000000 		.4byte	0x81
+ 1888 0700 0B070000 		.4byte	0x70b
+ 1889 0704 1C       		.uleb128 0x1c
+ 1890 0705 B3000000 		.4byte	0xb3
+ 1891 0709 07       		.byte	0x7
+ 1892 070a 00       		.byte	0
+ 1893 070b 18       		.uleb128 0x18
+ 1894 070c 66000000 		.4byte	.LASF51
+ 1895 0710 01       		.byte	0x1
+ 1896 0711 1B       		.byte	0x1b
+ 1897 0712 FB060000 		.4byte	0x6fb
+ 1898 0716 05       		.uleb128 0x5
+ 1899 0717 03       		.byte	0x3
+ 1900 0718 0C010000 		.4byte	LED_states
+ 1901 071c 18       		.uleb128 0x18
+ 1902 071d 14000000 		.4byte	.LASF52
+ 1903 0721 01       		.byte	0x1
+ 1904 0722 1C       		.byte	0x1c
+ 1905 0723 81000000 		.4byte	0x81
+ 1906 0727 05       		.uleb128 0x5
+ 1907 0728 03       		.byte	0x3
+ 1908 0729 05010000 		.4byte	CupStatus_latest
+ 1909 072d 1E       		.uleb128 0x1e
+ 1910 072e 24030000 		.4byte	.LASF53
+ 1911 0732 05       		.byte	0x5
+ 1912 0733 1207     		.2byte	0x712
+ 1913 0735 39070000 		.4byte	0x739
+ 1914 0739 1F       		.uleb128 0x1f
+ 1915 073a 8C000000 		.4byte	0x8c
+ 1916 073e 20       		.uleb128 0x20
+ 1917 073f 0F020000 		.4byte	.LASF54
+ 1918 0743 04       		.byte	0x4
+ 1919 0744 11       		.byte	0x11
+ 1920 0745 BA000000 		.4byte	0xba
+ 1921 0749 05       		.uleb128 0x5
+ 1922 074a 03       		.byte	0x3
+ 1923 074b 00000000 		.4byte	currentState
+ 1924 074f 21       		.uleb128 0x21
+ 1925 0750 3B010000 		.4byte	.LASF55
+ 1926 0754 3B010000 		.4byte	.LASF55
+ 1927 0758 06       		.byte	0x6
+ 1928 0759 E7       		.byte	0xe7
+ 1929 075a 21       		.uleb128 0x21
+ 1930 075b 92000000 		.4byte	.LASF56
+ 1931 075f 92000000 		.4byte	.LASF56
+ 1932 0763 07       		.byte	0x7
+ 1933 0764 8B       		.byte	0x8b
+ 1934 0765 21       		.uleb128 0x21
+ 1935 0766 50000000 		.4byte	.LASF57
+ 1936 076a 50000000 		.4byte	.LASF57
+ 1937 076e 08       		.byte	0x8
+ 1938 076f 16       		.byte	0x16
+ 1939 0770 21       		.uleb128 0x21
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 41
+
+
+ 1940 0771 E8000000 		.4byte	.LASF58
+ 1941 0775 E8000000 		.4byte	.LASF58
+ 1942 0779 09       		.byte	0x9
+ 1943 077a 5A       		.byte	0x5a
+ 1944 077b 21       		.uleb128 0x21
+ 1945 077c 77000000 		.4byte	.LASF59
+ 1946 0780 77000000 		.4byte	.LASF59
+ 1947 0784 09       		.byte	0x9
+ 1948 0785 5B       		.byte	0x5b
+ 1949 0786 00       		.byte	0
+ 1950              		.section	.debug_abbrev,"",%progbits
+ 1951              	.Ldebug_abbrev0:
+ 1952 0000 01       		.uleb128 0x1
+ 1953 0001 11       		.uleb128 0x11
+ 1954 0002 01       		.byte	0x1
+ 1955 0003 25       		.uleb128 0x25
+ 1956 0004 0E       		.uleb128 0xe
+ 1957 0005 13       		.uleb128 0x13
+ 1958 0006 0B       		.uleb128 0xb
+ 1959 0007 03       		.uleb128 0x3
+ 1960 0008 0E       		.uleb128 0xe
+ 1961 0009 1B       		.uleb128 0x1b
+ 1962 000a 0E       		.uleb128 0xe
+ 1963 000b 55       		.uleb128 0x55
+ 1964 000c 17       		.uleb128 0x17
+ 1965 000d 11       		.uleb128 0x11
+ 1966 000e 01       		.uleb128 0x1
+ 1967 000f 10       		.uleb128 0x10
+ 1968 0010 17       		.uleb128 0x17
+ 1969 0011 00       		.byte	0
+ 1970 0012 00       		.byte	0
+ 1971 0013 02       		.uleb128 0x2
+ 1972 0014 24       		.uleb128 0x24
+ 1973 0015 00       		.byte	0
+ 1974 0016 0B       		.uleb128 0xb
+ 1975 0017 0B       		.uleb128 0xb
+ 1976 0018 3E       		.uleb128 0x3e
+ 1977 0019 0B       		.uleb128 0xb
+ 1978 001a 03       		.uleb128 0x3
+ 1979 001b 0E       		.uleb128 0xe
+ 1980 001c 00       		.byte	0
+ 1981 001d 00       		.byte	0
+ 1982 001e 03       		.uleb128 0x3
+ 1983 001f 16       		.uleb128 0x16
+ 1984 0020 00       		.byte	0
+ 1985 0021 03       		.uleb128 0x3
+ 1986 0022 0E       		.uleb128 0xe
+ 1987 0023 3A       		.uleb128 0x3a
+ 1988 0024 0B       		.uleb128 0xb
+ 1989 0025 3B       		.uleb128 0x3b
+ 1990 0026 0B       		.uleb128 0xb
+ 1991 0027 49       		.uleb128 0x49
+ 1992 0028 13       		.uleb128 0x13
+ 1993 0029 00       		.byte	0
+ 1994 002a 00       		.byte	0
+ 1995 002b 04       		.uleb128 0x4
+ 1996 002c 24       		.uleb128 0x24
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 42
+
+
+ 1997 002d 00       		.byte	0
+ 1998 002e 0B       		.uleb128 0xb
+ 1999 002f 0B       		.uleb128 0xb
+ 2000 0030 3E       		.uleb128 0x3e
+ 2001 0031 0B       		.uleb128 0xb
+ 2002 0032 03       		.uleb128 0x3
+ 2003 0033 08       		.uleb128 0x8
+ 2004 0034 00       		.byte	0
+ 2005 0035 00       		.byte	0
+ 2006 0036 05       		.uleb128 0x5
+ 2007 0037 04       		.uleb128 0x4
+ 2008 0038 01       		.byte	0x1
+ 2009 0039 03       		.uleb128 0x3
+ 2010 003a 0E       		.uleb128 0xe
+ 2011 003b 0B       		.uleb128 0xb
+ 2012 003c 0B       		.uleb128 0xb
+ 2013 003d 49       		.uleb128 0x49
+ 2014 003e 13       		.uleb128 0x13
+ 2015 003f 3A       		.uleb128 0x3a
+ 2016 0040 0B       		.uleb128 0xb
+ 2017 0041 3B       		.uleb128 0x3b
+ 2018 0042 0B       		.uleb128 0xb
+ 2019 0043 01       		.uleb128 0x1
+ 2020 0044 13       		.uleb128 0x13
+ 2021 0045 00       		.byte	0
+ 2022 0046 00       		.byte	0
+ 2023 0047 06       		.uleb128 0x6
+ 2024 0048 28       		.uleb128 0x28
+ 2025 0049 00       		.byte	0
+ 2026 004a 03       		.uleb128 0x3
+ 2027 004b 0E       		.uleb128 0xe
+ 2028 004c 1C       		.uleb128 0x1c
+ 2029 004d 0B       		.uleb128 0xb
+ 2030 004e 00       		.byte	0
+ 2031 004f 00       		.byte	0
+ 2032 0050 07       		.uleb128 0x7
+ 2033 0051 28       		.uleb128 0x28
+ 2034 0052 00       		.byte	0
+ 2035 0053 03       		.uleb128 0x3
+ 2036 0054 08       		.uleb128 0x8
+ 2037 0055 1C       		.uleb128 0x1c
+ 2038 0056 0B       		.uleb128 0xb
+ 2039 0057 00       		.byte	0
+ 2040 0058 00       		.byte	0
+ 2041 0059 08       		.uleb128 0x8
+ 2042 005a 13       		.uleb128 0x13
+ 2043 005b 01       		.byte	0x1
+ 2044 005c 03       		.uleb128 0x3
+ 2045 005d 0E       		.uleb128 0xe
+ 2046 005e 0B       		.uleb128 0xb
+ 2047 005f 0B       		.uleb128 0xb
+ 2048 0060 3A       		.uleb128 0x3a
+ 2049 0061 0B       		.uleb128 0xb
+ 2050 0062 3B       		.uleb128 0x3b
+ 2051 0063 0B       		.uleb128 0xb
+ 2052 0064 01       		.uleb128 0x1
+ 2053 0065 13       		.uleb128 0x13
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 43
+
+
+ 2054 0066 00       		.byte	0
+ 2055 0067 00       		.byte	0
+ 2056 0068 09       		.uleb128 0x9
+ 2057 0069 0D       		.uleb128 0xd
+ 2058 006a 00       		.byte	0
+ 2059 006b 03       		.uleb128 0x3
+ 2060 006c 08       		.uleb128 0x8
+ 2061 006d 3A       		.uleb128 0x3a
+ 2062 006e 0B       		.uleb128 0xb
+ 2063 006f 3B       		.uleb128 0x3b
+ 2064 0070 0B       		.uleb128 0xb
+ 2065 0071 49       		.uleb128 0x49
+ 2066 0072 13       		.uleb128 0x13
+ 2067 0073 38       		.uleb128 0x38
+ 2068 0074 0B       		.uleb128 0xb
+ 2069 0075 00       		.byte	0
+ 2070 0076 00       		.byte	0
+ 2071 0077 0A       		.uleb128 0xa
+ 2072 0078 0D       		.uleb128 0xd
+ 2073 0079 00       		.byte	0
+ 2074 007a 03       		.uleb128 0x3
+ 2075 007b 0E       		.uleb128 0xe
+ 2076 007c 3A       		.uleb128 0x3a
+ 2077 007d 0B       		.uleb128 0xb
+ 2078 007e 3B       		.uleb128 0x3b
+ 2079 007f 0B       		.uleb128 0xb
+ 2080 0080 49       		.uleb128 0x49
+ 2081 0081 13       		.uleb128 0x13
+ 2082 0082 38       		.uleb128 0x38
+ 2083 0083 0B       		.uleb128 0xb
+ 2084 0084 00       		.byte	0
+ 2085 0085 00       		.byte	0
+ 2086 0086 0B       		.uleb128 0xb
+ 2087 0087 2E       		.uleb128 0x2e
+ 2088 0088 01       		.byte	0x1
+ 2089 0089 3F       		.uleb128 0x3f
+ 2090 008a 19       		.uleb128 0x19
+ 2091 008b 03       		.uleb128 0x3
+ 2092 008c 0E       		.uleb128 0xe
+ 2093 008d 3A       		.uleb128 0x3a
+ 2094 008e 0B       		.uleb128 0xb
+ 2095 008f 3B       		.uleb128 0x3b
+ 2096 0090 0B       		.uleb128 0xb
+ 2097 0091 27       		.uleb128 0x27
+ 2098 0092 19       		.uleb128 0x19
+ 2099 0093 11       		.uleb128 0x11
+ 2100 0094 01       		.uleb128 0x1
+ 2101 0095 12       		.uleb128 0x12
+ 2102 0096 06       		.uleb128 0x6
+ 2103 0097 40       		.uleb128 0x40
+ 2104 0098 18       		.uleb128 0x18
+ 2105 0099 9742     		.uleb128 0x2117
+ 2106 009b 19       		.uleb128 0x19
+ 2107 009c 01       		.uleb128 0x1
+ 2108 009d 13       		.uleb128 0x13
+ 2109 009e 00       		.byte	0
+ 2110 009f 00       		.byte	0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 44
+
+
+ 2111 00a0 0C       		.uleb128 0xc
+ 2112 00a1 05       		.uleb128 0x5
+ 2113 00a2 00       		.byte	0
+ 2114 00a3 03       		.uleb128 0x3
+ 2115 00a4 08       		.uleb128 0x8
+ 2116 00a5 3A       		.uleb128 0x3a
+ 2117 00a6 0B       		.uleb128 0xb
+ 2118 00a7 3B       		.uleb128 0x3b
+ 2119 00a8 0B       		.uleb128 0xb
+ 2120 00a9 49       		.uleb128 0x49
+ 2121 00aa 13       		.uleb128 0x13
+ 2122 00ab 02       		.uleb128 0x2
+ 2123 00ac 18       		.uleb128 0x18
+ 2124 00ad 00       		.byte	0
+ 2125 00ae 00       		.byte	0
+ 2126 00af 0D       		.uleb128 0xd
+ 2127 00b0 05       		.uleb128 0x5
+ 2128 00b1 00       		.byte	0
+ 2129 00b2 03       		.uleb128 0x3
+ 2130 00b3 0E       		.uleb128 0xe
+ 2131 00b4 3A       		.uleb128 0x3a
+ 2132 00b5 0B       		.uleb128 0xb
+ 2133 00b6 3B       		.uleb128 0x3b
+ 2134 00b7 0B       		.uleb128 0xb
+ 2135 00b8 49       		.uleb128 0x49
+ 2136 00b9 13       		.uleb128 0x13
+ 2137 00ba 02       		.uleb128 0x2
+ 2138 00bb 17       		.uleb128 0x17
+ 2139 00bc 00       		.byte	0
+ 2140 00bd 00       		.byte	0
+ 2141 00be 0E       		.uleb128 0xe
+ 2142 00bf 898201   		.uleb128 0x4109
+ 2143 00c2 01       		.byte	0x1
+ 2144 00c3 11       		.uleb128 0x11
+ 2145 00c4 01       		.uleb128 0x1
+ 2146 00c5 31       		.uleb128 0x31
+ 2147 00c6 13       		.uleb128 0x13
+ 2148 00c7 01       		.uleb128 0x1
+ 2149 00c8 13       		.uleb128 0x13
+ 2150 00c9 00       		.byte	0
+ 2151 00ca 00       		.byte	0
+ 2152 00cb 0F       		.uleb128 0xf
+ 2153 00cc 8A8201   		.uleb128 0x410a
+ 2154 00cf 00       		.byte	0
+ 2155 00d0 02       		.uleb128 0x2
+ 2156 00d1 18       		.uleb128 0x18
+ 2157 00d2 9142     		.uleb128 0x2111
+ 2158 00d4 18       		.uleb128 0x18
+ 2159 00d5 00       		.byte	0
+ 2160 00d6 00       		.byte	0
+ 2161 00d7 10       		.uleb128 0x10
+ 2162 00d8 898201   		.uleb128 0x4109
+ 2163 00db 00       		.byte	0
+ 2164 00dc 11       		.uleb128 0x11
+ 2165 00dd 01       		.uleb128 0x1
+ 2166 00de 31       		.uleb128 0x31
+ 2167 00df 13       		.uleb128 0x13
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 45
+
+
+ 2168 00e0 00       		.byte	0
+ 2169 00e1 00       		.byte	0
+ 2170 00e2 11       		.uleb128 0x11
+ 2171 00e3 898201   		.uleb128 0x4109
+ 2172 00e6 01       		.byte	0x1
+ 2173 00e7 11       		.uleb128 0x11
+ 2174 00e8 01       		.uleb128 0x1
+ 2175 00e9 31       		.uleb128 0x31
+ 2176 00ea 13       		.uleb128 0x13
+ 2177 00eb 00       		.byte	0
+ 2178 00ec 00       		.byte	0
+ 2179 00ed 12       		.uleb128 0x12
+ 2180 00ee 05       		.uleb128 0x5
+ 2181 00ef 00       		.byte	0
+ 2182 00f0 03       		.uleb128 0x3
+ 2183 00f1 0E       		.uleb128 0xe
+ 2184 00f2 3A       		.uleb128 0x3a
+ 2185 00f3 0B       		.uleb128 0xb
+ 2186 00f4 3B       		.uleb128 0x3b
+ 2187 00f5 0B       		.uleb128 0xb
+ 2188 00f6 49       		.uleb128 0x49
+ 2189 00f7 13       		.uleb128 0x13
+ 2190 00f8 02       		.uleb128 0x2
+ 2191 00f9 18       		.uleb128 0x18
+ 2192 00fa 00       		.byte	0
+ 2193 00fb 00       		.byte	0
+ 2194 00fc 13       		.uleb128 0x13
+ 2195 00fd 0B       		.uleb128 0xb
+ 2196 00fe 01       		.byte	0x1
+ 2197 00ff 11       		.uleb128 0x11
+ 2198 0100 01       		.uleb128 0x1
+ 2199 0101 12       		.uleb128 0x12
+ 2200 0102 06       		.uleb128 0x6
+ 2201 0103 01       		.uleb128 0x1
+ 2202 0104 13       		.uleb128 0x13
+ 2203 0105 00       		.byte	0
+ 2204 0106 00       		.byte	0
+ 2205 0107 14       		.uleb128 0x14
+ 2206 0108 34       		.uleb128 0x34
+ 2207 0109 00       		.byte	0
+ 2208 010a 03       		.uleb128 0x3
+ 2209 010b 08       		.uleb128 0x8
+ 2210 010c 3A       		.uleb128 0x3a
+ 2211 010d 0B       		.uleb128 0xb
+ 2212 010e 3B       		.uleb128 0x3b
+ 2213 010f 0B       		.uleb128 0xb
+ 2214 0110 49       		.uleb128 0x49
+ 2215 0111 13       		.uleb128 0x13
+ 2216 0112 02       		.uleb128 0x2
+ 2217 0113 17       		.uleb128 0x17
+ 2218 0114 00       		.byte	0
+ 2219 0115 00       		.byte	0
+ 2220 0116 15       		.uleb128 0x15
+ 2221 0117 2E       		.uleb128 0x2e
+ 2222 0118 01       		.byte	0x1
+ 2223 0119 3F       		.uleb128 0x3f
+ 2224 011a 19       		.uleb128 0x19
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 46
+
+
+ 2225 011b 03       		.uleb128 0x3
+ 2226 011c 0E       		.uleb128 0xe
+ 2227 011d 3A       		.uleb128 0x3a
+ 2228 011e 0B       		.uleb128 0xb
+ 2229 011f 3B       		.uleb128 0x3b
+ 2230 0120 0B       		.uleb128 0xb
+ 2231 0121 11       		.uleb128 0x11
+ 2232 0122 01       		.uleb128 0x1
+ 2233 0123 12       		.uleb128 0x12
+ 2234 0124 06       		.uleb128 0x6
+ 2235 0125 40       		.uleb128 0x40
+ 2236 0126 18       		.uleb128 0x18
+ 2237 0127 9742     		.uleb128 0x2117
+ 2238 0129 19       		.uleb128 0x19
+ 2239 012a 01       		.uleb128 0x1
+ 2240 012b 13       		.uleb128 0x13
+ 2241 012c 00       		.byte	0
+ 2242 012d 00       		.byte	0
+ 2243 012e 16       		.uleb128 0x16
+ 2244 012f 2E       		.uleb128 0x2e
+ 2245 0130 01       		.byte	0x1
+ 2246 0131 3F       		.uleb128 0x3f
+ 2247 0132 19       		.uleb128 0x19
+ 2248 0133 03       		.uleb128 0x3
+ 2249 0134 0E       		.uleb128 0xe
+ 2250 0135 3A       		.uleb128 0x3a
+ 2251 0136 0B       		.uleb128 0xb
+ 2252 0137 3B       		.uleb128 0x3b
+ 2253 0138 0B       		.uleb128 0xb
+ 2254 0139 49       		.uleb128 0x49
+ 2255 013a 13       		.uleb128 0x13
+ 2256 013b 11       		.uleb128 0x11
+ 2257 013c 01       		.uleb128 0x1
+ 2258 013d 12       		.uleb128 0x12
+ 2259 013e 06       		.uleb128 0x6
+ 2260 013f 40       		.uleb128 0x40
+ 2261 0140 18       		.uleb128 0x18
+ 2262 0141 9742     		.uleb128 0x2117
+ 2263 0143 19       		.uleb128 0x19
+ 2264 0144 01       		.uleb128 0x1
+ 2265 0145 13       		.uleb128 0x13
+ 2266 0146 00       		.byte	0
+ 2267 0147 00       		.byte	0
+ 2268 0148 17       		.uleb128 0x17
+ 2269 0149 0B       		.uleb128 0xb
+ 2270 014a 01       		.byte	0x1
+ 2271 014b 55       		.uleb128 0x55
+ 2272 014c 17       		.uleb128 0x17
+ 2273 014d 00       		.byte	0
+ 2274 014e 00       		.byte	0
+ 2275 014f 18       		.uleb128 0x18
+ 2276 0150 34       		.uleb128 0x34
+ 2277 0151 00       		.byte	0
+ 2278 0152 03       		.uleb128 0x3
+ 2279 0153 0E       		.uleb128 0xe
+ 2280 0154 3A       		.uleb128 0x3a
+ 2281 0155 0B       		.uleb128 0xb
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 47
+
+
+ 2282 0156 3B       		.uleb128 0x3b
+ 2283 0157 0B       		.uleb128 0xb
+ 2284 0158 49       		.uleb128 0x49
+ 2285 0159 13       		.uleb128 0x13
+ 2286 015a 02       		.uleb128 0x2
+ 2287 015b 18       		.uleb128 0x18
+ 2288 015c 00       		.byte	0
+ 2289 015d 00       		.byte	0
+ 2290 015e 19       		.uleb128 0x19
+ 2291 015f 34       		.uleb128 0x34
+ 2292 0160 00       		.byte	0
+ 2293 0161 03       		.uleb128 0x3
+ 2294 0162 0E       		.uleb128 0xe
+ 2295 0163 3A       		.uleb128 0x3a
+ 2296 0164 0B       		.uleb128 0xb
+ 2297 0165 3B       		.uleb128 0x3b
+ 2298 0166 0B       		.uleb128 0xb
+ 2299 0167 49       		.uleb128 0x49
+ 2300 0168 13       		.uleb128 0x13
+ 2301 0169 1C       		.uleb128 0x1c
+ 2302 016a 0B       		.uleb128 0xb
+ 2303 016b 00       		.byte	0
+ 2304 016c 00       		.byte	0
+ 2305 016d 1A       		.uleb128 0x1a
+ 2306 016e 26       		.uleb128 0x26
+ 2307 016f 00       		.byte	0
+ 2308 0170 49       		.uleb128 0x49
+ 2309 0171 13       		.uleb128 0x13
+ 2310 0172 00       		.byte	0
+ 2311 0173 00       		.byte	0
+ 2312 0174 1B       		.uleb128 0x1b
+ 2313 0175 01       		.uleb128 0x1
+ 2314 0176 01       		.byte	0x1
+ 2315 0177 49       		.uleb128 0x49
+ 2316 0178 13       		.uleb128 0x13
+ 2317 0179 01       		.uleb128 0x1
+ 2318 017a 13       		.uleb128 0x13
+ 2319 017b 00       		.byte	0
+ 2320 017c 00       		.byte	0
+ 2321 017d 1C       		.uleb128 0x1c
+ 2322 017e 21       		.uleb128 0x21
+ 2323 017f 00       		.byte	0
+ 2324 0180 49       		.uleb128 0x49
+ 2325 0181 13       		.uleb128 0x13
+ 2326 0182 2F       		.uleb128 0x2f
+ 2327 0183 0B       		.uleb128 0xb
+ 2328 0184 00       		.byte	0
+ 2329 0185 00       		.byte	0
+ 2330 0186 1D       		.uleb128 0x1d
+ 2331 0187 34       		.uleb128 0x34
+ 2332 0188 00       		.byte	0
+ 2333 0189 03       		.uleb128 0x3
+ 2334 018a 08       		.uleb128 0x8
+ 2335 018b 3A       		.uleb128 0x3a
+ 2336 018c 0B       		.uleb128 0xb
+ 2337 018d 3B       		.uleb128 0x3b
+ 2338 018e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 48
+
+
+ 2339 018f 49       		.uleb128 0x49
+ 2340 0190 13       		.uleb128 0x13
+ 2341 0191 00       		.byte	0
+ 2342 0192 00       		.byte	0
+ 2343 0193 1E       		.uleb128 0x1e
+ 2344 0194 34       		.uleb128 0x34
+ 2345 0195 00       		.byte	0
+ 2346 0196 03       		.uleb128 0x3
+ 2347 0197 0E       		.uleb128 0xe
+ 2348 0198 3A       		.uleb128 0x3a
+ 2349 0199 0B       		.uleb128 0xb
+ 2350 019a 3B       		.uleb128 0x3b
+ 2351 019b 05       		.uleb128 0x5
+ 2352 019c 49       		.uleb128 0x49
+ 2353 019d 13       		.uleb128 0x13
+ 2354 019e 3F       		.uleb128 0x3f
+ 2355 019f 19       		.uleb128 0x19
+ 2356 01a0 3C       		.uleb128 0x3c
+ 2357 01a1 19       		.uleb128 0x19
+ 2358 01a2 00       		.byte	0
+ 2359 01a3 00       		.byte	0
+ 2360 01a4 1F       		.uleb128 0x1f
+ 2361 01a5 35       		.uleb128 0x35
+ 2362 01a6 00       		.byte	0
+ 2363 01a7 49       		.uleb128 0x49
+ 2364 01a8 13       		.uleb128 0x13
+ 2365 01a9 00       		.byte	0
+ 2366 01aa 00       		.byte	0
+ 2367 01ab 20       		.uleb128 0x20
+ 2368 01ac 34       		.uleb128 0x34
+ 2369 01ad 00       		.byte	0
+ 2370 01ae 03       		.uleb128 0x3
+ 2371 01af 0E       		.uleb128 0xe
+ 2372 01b0 3A       		.uleb128 0x3a
+ 2373 01b1 0B       		.uleb128 0xb
+ 2374 01b2 3B       		.uleb128 0x3b
+ 2375 01b3 0B       		.uleb128 0xb
+ 2376 01b4 49       		.uleb128 0x49
+ 2377 01b5 13       		.uleb128 0x13
+ 2378 01b6 3F       		.uleb128 0x3f
+ 2379 01b7 19       		.uleb128 0x19
+ 2380 01b8 02       		.uleb128 0x2
+ 2381 01b9 18       		.uleb128 0x18
+ 2382 01ba 00       		.byte	0
+ 2383 01bb 00       		.byte	0
+ 2384 01bc 21       		.uleb128 0x21
+ 2385 01bd 2E       		.uleb128 0x2e
+ 2386 01be 00       		.byte	0
+ 2387 01bf 3F       		.uleb128 0x3f
+ 2388 01c0 19       		.uleb128 0x19
+ 2389 01c1 3C       		.uleb128 0x3c
+ 2390 01c2 19       		.uleb128 0x19
+ 2391 01c3 6E       		.uleb128 0x6e
+ 2392 01c4 0E       		.uleb128 0xe
+ 2393 01c5 03       		.uleb128 0x3
+ 2394 01c6 0E       		.uleb128 0xe
+ 2395 01c7 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 49
+
+
+ 2396 01c8 0B       		.uleb128 0xb
+ 2397 01c9 3B       		.uleb128 0x3b
+ 2398 01ca 0B       		.uleb128 0xb
+ 2399 01cb 00       		.byte	0
+ 2400 01cc 00       		.byte	0
+ 2401 01cd 00       		.byte	0
+ 2402              		.section	.debug_loc,"",%progbits
+ 2403              	.Ldebug_loc0:
+ 2404              	.LLST0:
+ 2405 0000 00000000 		.4byte	.LVL0
+ 2406 0004 1C000000 		.4byte	.LVL1
+ 2407 0008 0100     		.2byte	0x1
+ 2408 000a 50       		.byte	0x50
+ 2409 000b 1C000000 		.4byte	.LVL1
+ 2410 000f 1F000000 		.4byte	.LVL2-1
+ 2411 0013 0500     		.2byte	0x5
+ 2412 0015 03       		.byte	0x3
+ 2413 0016 00000000 		.4byte	CupStatus
+ 2414 001a 1F000000 		.4byte	.LVL2-1
+ 2415 001e 3C000000 		.4byte	.LFE67
+ 2416 0022 0400     		.2byte	0x4
+ 2417 0024 F3       		.byte	0xf3
+ 2418 0025 01       		.uleb128 0x1
+ 2419 0026 50       		.byte	0x50
+ 2420 0027 9F       		.byte	0x9f
+ 2421 0028 00000000 		.4byte	0
+ 2422 002c 00000000 		.4byte	0
+ 2423              	.LLST1:
+ 2424 0030 00000000 		.4byte	.LVL5
+ 2425 0034 12000000 		.4byte	.LVL6
+ 2426 0038 0100     		.2byte	0x1
+ 2427 003a 50       		.byte	0x50
+ 2428 003b 12000000 		.4byte	.LVL6
+ 2429 003f 15000000 		.4byte	.LVL7-1
+ 2430 0043 0500     		.2byte	0x5
+ 2431 0045 03       		.byte	0x3
+ 2432 0046 04010000 		.4byte	hitStatus
+ 2433 004a 15000000 		.4byte	.LVL7-1
+ 2434 004e 24000000 		.4byte	.LFE68
+ 2435 0052 0400     		.2byte	0x4
+ 2436 0054 F3       		.byte	0xf3
+ 2437 0055 01       		.uleb128 0x1
+ 2438 0056 50       		.byte	0x50
+ 2439 0057 9F       		.byte	0x9f
+ 2440 0058 00000000 		.4byte	0
+ 2441 005c 00000000 		.4byte	0
+ 2442              	.LLST2:
+ 2443 0060 00000000 		.4byte	.LVL14
+ 2444 0064 1A000000 		.4byte	.LVL15
+ 2445 0068 0100     		.2byte	0x1
+ 2446 006a 50       		.byte	0x50
+ 2447 006b 1A000000 		.4byte	.LVL15
+ 2448 006f 30000000 		.4byte	.LFE72
+ 2449 0073 0400     		.2byte	0x4
+ 2450 0075 F3       		.byte	0xf3
+ 2451 0076 01       		.uleb128 0x1
+ 2452 0077 50       		.byte	0x50
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 50
+
+
+ 2453 0078 9F       		.byte	0x9f
+ 2454 0079 00000000 		.4byte	0
+ 2455 007d 00000000 		.4byte	0
+ 2456              	.LLST3:
+ 2457 0081 00000000 		.4byte	.LVL18
+ 2458 0085 0E000000 		.4byte	.LVL19
+ 2459 0089 0100     		.2byte	0x1
+ 2460 008b 50       		.byte	0x50
+ 2461 008c 0E000000 		.4byte	.LVL19
+ 2462 0090 3E000000 		.4byte	.LVL25
+ 2463 0094 0400     		.2byte	0x4
+ 2464 0096 F3       		.byte	0xf3
+ 2465 0097 01       		.uleb128 0x1
+ 2466 0098 50       		.byte	0x50
+ 2467 0099 9F       		.byte	0x9f
+ 2468 009a 3E000000 		.4byte	.LVL25
+ 2469 009e 44000000 		.4byte	.LVL26
+ 2470 00a2 0100     		.2byte	0x1
+ 2471 00a4 50       		.byte	0x50
+ 2472 00a5 44000000 		.4byte	.LVL26
+ 2473 00a9 84000000 		.4byte	.LFE69
+ 2474 00ad 0400     		.2byte	0x4
+ 2475 00af F3       		.byte	0xf3
+ 2476 00b0 01       		.uleb128 0x1
+ 2477 00b1 50       		.byte	0x50
+ 2478 00b2 9F       		.byte	0x9f
+ 2479 00b3 00000000 		.4byte	0
+ 2480 00b7 00000000 		.4byte	0
+ 2481              	.LLST4:
+ 2482 00bb 12000000 		.4byte	.LVL20
+ 2483 00bf 16000000 		.4byte	.LVL21
+ 2484 00c3 0200     		.2byte	0x2
+ 2485 00c5 30       		.byte	0x30
+ 2486 00c6 9F       		.byte	0x9f
+ 2487 00c7 16000000 		.4byte	.LVL21
+ 2488 00cb 3E000000 		.4byte	.LVL25
+ 2489 00cf 0100     		.2byte	0x1
+ 2490 00d1 54       		.byte	0x54
+ 2491 00d2 00000000 		.4byte	0
+ 2492 00d6 00000000 		.4byte	0
+ 2493              	.LLST5:
+ 2494 00da 48000000 		.4byte	.LVL27
+ 2495 00de 4C000000 		.4byte	.LVL28
+ 2496 00e2 0200     		.2byte	0x2
+ 2497 00e4 30       		.byte	0x30
+ 2498 00e5 9F       		.byte	0x9f
+ 2499 00e6 4C000000 		.4byte	.LVL28
+ 2500 00ea 72000000 		.4byte	.LVL32
+ 2501 00ee 0100     		.2byte	0x1
+ 2502 00f0 54       		.byte	0x54
+ 2503 00f1 00000000 		.4byte	0
+ 2504 00f5 00000000 		.4byte	0
+ 2505              	.LLST6:
+ 2506 00f9 00000000 		.4byte	.LVL42
+ 2507 00fd 16000000 		.4byte	.LVL43
+ 2508 0101 0100     		.2byte	0x1
+ 2509 0103 50       		.byte	0x50
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 51
+
+
+ 2510 0104 16000000 		.4byte	.LVL43
+ 2511 0108 19000000 		.4byte	.LVL44-1
+ 2512 010c 0500     		.2byte	0x5
+ 2513 010e 03       		.byte	0x3
+ 2514 010f 00000000 		.4byte	currentState
+ 2515 0113 19000000 		.4byte	.LVL44-1
+ 2516 0117 24000000 		.4byte	.LVL46
+ 2517 011b 0400     		.2byte	0x4
+ 2518 011d F3       		.byte	0xf3
+ 2519 011e 01       		.uleb128 0x1
+ 2520 011f 50       		.byte	0x50
+ 2521 0120 9F       		.byte	0x9f
+ 2522 0121 24000000 		.4byte	.LVL46
+ 2523 0125 2B000000 		.4byte	.LVL47-1
+ 2524 0129 0100     		.2byte	0x1
+ 2525 012b 50       		.byte	0x50
+ 2526 012c 2B000000 		.4byte	.LVL47-1
+ 2527 0130 38000000 		.4byte	.LVL49
+ 2528 0134 0400     		.2byte	0x4
+ 2529 0136 F3       		.byte	0xf3
+ 2530 0137 01       		.uleb128 0x1
+ 2531 0138 50       		.byte	0x50
+ 2532 0139 9F       		.byte	0x9f
+ 2533 013a 38000000 		.4byte	.LVL49
+ 2534 013e 3F000000 		.4byte	.LVL50-1
+ 2535 0142 0100     		.2byte	0x1
+ 2536 0144 50       		.byte	0x50
+ 2537 0145 3F000000 		.4byte	.LVL50-1
+ 2538 0149 52000000 		.4byte	.LVL53
+ 2539 014d 0400     		.2byte	0x4
+ 2540 014f F3       		.byte	0xf3
+ 2541 0150 01       		.uleb128 0x1
+ 2542 0151 50       		.byte	0x50
+ 2543 0152 9F       		.byte	0x9f
+ 2544 0153 52000000 		.4byte	.LVL53
+ 2545 0157 5A000000 		.4byte	.LVL54
+ 2546 015b 0100     		.2byte	0x1
+ 2547 015d 50       		.byte	0x50
+ 2548 015e 5A000000 		.4byte	.LVL54
+ 2549 0162 5D000000 		.4byte	.LVL55-1
+ 2550 0166 0500     		.2byte	0x5
+ 2551 0168 03       		.byte	0x3
+ 2552 0169 00000000 		.4byte	currentState
+ 2553 016d 5D000000 		.4byte	.LVL55-1
+ 2554 0171 66000000 		.4byte	.LVL57
+ 2555 0175 0400     		.2byte	0x4
+ 2556 0177 F3       		.byte	0xf3
+ 2557 0178 01       		.uleb128 0x1
+ 2558 0179 50       		.byte	0x50
+ 2559 017a 9F       		.byte	0x9f
+ 2560 017b 66000000 		.4byte	.LVL57
+ 2561 017f 6E000000 		.4byte	.LVL58
+ 2562 0183 0100     		.2byte	0x1
+ 2563 0185 50       		.byte	0x50
+ 2564 0186 6E000000 		.4byte	.LVL58
+ 2565 018a 71000000 		.4byte	.LVL59-1
+ 2566 018e 0500     		.2byte	0x5
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 52
+
+
+ 2567 0190 03       		.byte	0x3
+ 2568 0191 00000000 		.4byte	currentState
+ 2569 0195 71000000 		.4byte	.LVL59-1
+ 2570 0199 A0000000 		.4byte	.LFE64
+ 2571 019d 0400     		.2byte	0x4
+ 2572 019f F3       		.byte	0xf3
+ 2573 01a0 01       		.uleb128 0x1
+ 2574 01a1 50       		.byte	0x50
+ 2575 01a2 9F       		.byte	0x9f
+ 2576 01a3 00000000 		.4byte	0
+ 2577 01a7 00000000 		.4byte	0
+ 2578              	.LLST7:
+ 2579 01ab 0C000000 		.4byte	.LVL61
+ 2580 01af 52000000 		.4byte	.LVL64
+ 2581 01b3 0100     		.2byte	0x1
+ 2582 01b5 54       		.byte	0x54
+ 2583 01b6 54000000 		.4byte	.LVL65
+ 2584 01ba 56000000 		.4byte	.LVL66
+ 2585 01be 0100     		.2byte	0x1
+ 2586 01c0 54       		.byte	0x54
+ 2587 01c1 58000000 		.4byte	.LVL67
+ 2588 01c5 5C000000 		.4byte	.LVL68
+ 2589 01c9 0100     		.2byte	0x1
+ 2590 01cb 54       		.byte	0x54
+ 2591 01cc 00000000 		.4byte	0
+ 2592 01d0 00000000 		.4byte	0
+ 2593              		.section	.debug_aranges,"",%progbits
+ 2594 0000 6C000000 		.4byte	0x6c
+ 2595 0004 0200     		.2byte	0x2
+ 2596 0006 00000000 		.4byte	.Ldebug_info0
+ 2597 000a 04       		.byte	0x4
+ 2598 000b 00       		.byte	0
+ 2599 000c 0000     		.2byte	0
+ 2600 000e 0000     		.2byte	0
+ 2601 0010 00000000 		.4byte	.LFB65
+ 2602 0014 14000000 		.4byte	.LFE65-.LFB65
+ 2603 0018 00000000 		.4byte	.LFB66
+ 2604 001c 14000000 		.4byte	.LFE66-.LFB66
+ 2605 0020 00000000 		.4byte	.LFB67
+ 2606 0024 3C000000 		.4byte	.LFE67-.LFB67
+ 2607 0028 00000000 		.4byte	.LFB68
+ 2608 002c 24000000 		.4byte	.LFE68-.LFB68
+ 2609 0030 00000000 		.4byte	.LFB70
+ 2610 0034 8C000000 		.4byte	.LFE70-.LFB70
+ 2611 0038 00000000 		.4byte	.LFB72
+ 2612 003c 30000000 		.4byte	.LFE72-.LFB72
+ 2613 0040 00000000 		.4byte	.LFB69
+ 2614 0044 84000000 		.4byte	.LFE69-.LFB69
+ 2615 0048 00000000 		.4byte	.LFB71
+ 2616 004c AC000000 		.4byte	.LFE71-.LFB71
+ 2617 0050 00000000 		.4byte	.LFB73
+ 2618 0054 18000000 		.4byte	.LFE73-.LFB73
+ 2619 0058 00000000 		.4byte	.LFB64
+ 2620 005c A0000000 		.4byte	.LFE64-.LFB64
+ 2621 0060 00000000 		.4byte	.LFB74
+ 2622 0064 6C000000 		.4byte	.LFE74-.LFB74
+ 2623 0068 00000000 		.4byte	0
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 53
+
+
+ 2624 006c 00000000 		.4byte	0
+ 2625              		.section	.debug_ranges,"",%progbits
+ 2626              	.Ldebug_ranges0:
+ 2627 0000 0C000000 		.4byte	.LBB4
+ 2628 0004 56000000 		.4byte	.LBE4
+ 2629 0008 58000000 		.4byte	.LBB5
+ 2630 000c 6C000000 		.4byte	.LBE5
+ 2631 0010 00000000 		.4byte	0
+ 2632 0014 00000000 		.4byte	0
+ 2633 0018 00000000 		.4byte	.LFB65
+ 2634 001c 14000000 		.4byte	.LFE65
+ 2635 0020 00000000 		.4byte	.LFB66
+ 2636 0024 14000000 		.4byte	.LFE66
+ 2637 0028 00000000 		.4byte	.LFB67
+ 2638 002c 3C000000 		.4byte	.LFE67
+ 2639 0030 00000000 		.4byte	.LFB68
+ 2640 0034 24000000 		.4byte	.LFE68
+ 2641 0038 00000000 		.4byte	.LFB70
+ 2642 003c 8C000000 		.4byte	.LFE70
+ 2643 0040 00000000 		.4byte	.LFB72
+ 2644 0044 30000000 		.4byte	.LFE72
+ 2645 0048 00000000 		.4byte	.LFB69
+ 2646 004c 84000000 		.4byte	.LFE69
+ 2647 0050 00000000 		.4byte	.LFB71
+ 2648 0054 AC000000 		.4byte	.LFE71
+ 2649 0058 00000000 		.4byte	.LFB73
+ 2650 005c 18000000 		.4byte	.LFE73
+ 2651 0060 00000000 		.4byte	.LFB64
+ 2652 0064 A0000000 		.4byte	.LFE64
+ 2653 0068 00000000 		.4byte	.LFB74
+ 2654 006c 6C000000 		.4byte	.LFE74
+ 2655 0070 00000000 		.4byte	0
+ 2656 0074 00000000 		.4byte	0
+ 2657              		.section	.debug_line,"",%progbits
+ 2658              	.Ldebug_line0:
+ 2659 0000 6E030000 		.section	.debug_str,"MS",%progbits,1
+ 2659      02002902 
+ 2659      00000201 
+ 2659      FB0E0D00 
+ 2659      01010101 
+ 2660              	.LASF34:
+ 2661 0000 436F6E74 		.ascii	"ControlLights\000"
+ 2661      726F6C4C 
+ 2661      69676874 
+ 2661      7300
+ 2662              	.LASF42:
+ 2663 000e 626C696E 		.ascii	"blink\000"
+ 2663      6B00
+ 2664              	.LASF52:
+ 2665 0014 43757053 		.ascii	"CupStatus_latest\000"
+ 2665      74617475 
+ 2665      735F6C61 
+ 2665      74657374 
+ 2665      00
+ 2666              	.LASF18:
+ 2667 0025 49444C45 		.ascii	"IDLE\000"
+ 2667      00
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 54
+
+
+ 2668              	.LASF2:
+ 2669 002a 73686F72 		.ascii	"short int\000"
+ 2669      7420696E 
+ 2669      7400
+ 2670              	.LASF31:
+ 2671 0034 636F6C6F 		.ascii	"color\000"
+ 2671      7200
+ 2672              	.LASF32:
+ 2673 003a 636F6E74 		.ascii	"controlLight\000"
+ 2673      726F6C4C 
+ 2673      69676874 
+ 2673      00
+ 2674              	.LASF41:
+ 2675 0047 626C696E 		.ascii	"blinking\000"
+ 2675      6B696E67 
+ 2675      00
+ 2676              	.LASF57:
+ 2677 0050 73656E64 		.ascii	"sendCupStatus\000"
+ 2677      43757053 
+ 2677      74617475 
+ 2677      7300
+ 2678              	.LASF44:
+ 2679 005e 6D79436F 		.ascii	"myColor\000"
+ 2679      6C6F7200 
+ 2680              	.LASF51:
+ 2681 0066 4C45445F 		.ascii	"LED_states\000"
+ 2681      73746174 
+ 2681      657300
+ 2682              	.LASF22:
+ 2683 0071 47726565 		.ascii	"Green\000"
+ 2683      6E00
+ 2684              	.LASF59:
+ 2685 0077 54696D65 		.ascii	"Timer_Stop\000"
+ 2685      725F5374 
+ 2685      6F7000
+ 2686              	.LASF46:
+ 2687 0082 6D697373 		.ascii	"missingCupColor\000"
+ 2687      696E6743 
+ 2687      7570436F 
+ 2687      6C6F7200 
+ 2688              	.LASF56:
+ 2689 0092 55415254 		.ascii	"UART_PutString\000"
+ 2689      5F507574 
+ 2689      53747269 
+ 2689      6E6700
+ 2690              	.LASF25:
+ 2691 00a1 7365744D 		.ascii	"setMyColor\000"
+ 2691      79436F6C 
+ 2691      6F7200
+ 2692              	.LASF24:
+ 2693 00ac 636F6C6F 		.ascii	"color_t\000"
+ 2693      725F7400 
+ 2694              	.LASF33:
+ 2695 00b4 696E6465 		.ascii	"index\000"
+ 2695      7800
+ 2696              	.LASF63:
+ 2697 00ba 47616D65 		.ascii	"GameState\000"
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 55
+
+
+ 2697      53746174 
+ 2697      6500
+ 2698              	.LASF29:
+ 2699 00c4 75706461 		.ascii	"updateHitStatus\000"
+ 2699      74654869 
+ 2699      74537461 
+ 2699      74757300 
+ 2700              	.LASF13:
+ 2701 00d4 666C6F61 		.ascii	"float\000"
+ 2701      7400
+ 2702              	.LASF8:
+ 2703 00da 6C6F6E67 		.ascii	"long long int\000"
+ 2703      206C6F6E 
+ 2703      6720696E 
+ 2703      7400
+ 2704              	.LASF58:
+ 2705 00e8 54696D65 		.ascii	"Timer_Start\000"
+ 2705      725F5374 
+ 2705      61727400 
+ 2706              	.LASF6:
+ 2707 00f4 6C6F6E67 		.ascii	"long int\000"
+ 2707      20696E74 
+ 2707      00
+ 2708              	.LASF4:
+ 2709 00fd 5F5F7569 		.ascii	"__uint8_t\000"
+ 2709      6E74385F 
+ 2709      7400
+ 2710              	.LASF35:
+ 2711 0107 63757073 		.ascii	"cupstatus\000"
+ 2711      74617475 
+ 2711      7300
+ 2712              	.LASF16:
+ 2713 0111 6C6F6E67 		.ascii	"long double\000"
+ 2713      20646F75 
+ 2713      626C6500 
+ 2714              	.LASF1:
+ 2715 011d 756E7369 		.ascii	"unsigned char\000"
+ 2715      676E6564 
+ 2715      20636861 
+ 2715      7200
+ 2716              	.LASF30:
+ 2717 012b 436F6E74 		.ascii	"ControlAllColor\000"
+ 2717      726F6C41 
+ 2717      6C6C436F 
+ 2717      6C6F7200 
+ 2718              	.LASF55:
+ 2719 013b 73707269 		.ascii	"sprintf\000"
+ 2719      6E746600 
+ 2720              	.LASF19:
+ 2721 0143 53544152 		.ascii	"STARTING\000"
+ 2721      54494E47 
+ 2721      00
+ 2722              	.LASF37:
+ 2723 014c 73657453 		.ascii	"setState\000"
+ 2723      74617465 
+ 2723      00
+ 2724              	.LASF0:
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 56
+
+
+ 2725 0155 7369676E 		.ascii	"signed char\000"
+ 2725      65642063 
+ 2725      68617200 
+ 2726              	.LASF48:
+ 2727 0161 43757053 		.ascii	"CupStatus\000"
+ 2727      74617475 
+ 2727      7300
+ 2728              	.LASF9:
+ 2729 016b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2729      206C6F6E 
+ 2729      6720756E 
+ 2729      7369676E 
+ 2729      65642069 
+ 2730              	.LASF36:
+ 2731 0182 67657443 		.ascii	"getCupStatus\000"
+ 2731      75705374 
+ 2731      61747573 
+ 2731      00
+ 2732              	.LASF20:
+ 2733 018f 504C4159 		.ascii	"PLAYING\000"
+ 2733      494E4700 
+ 2734              	.LASF27:
+ 2735 0197 75706461 		.ascii	"updateCupStatus\000"
+ 2735      74654375 
+ 2735      70537461 
+ 2735      74757300 
+ 2736              	.LASF47:
+ 2737 01a7 706C6163 		.ascii	"placedCupColor\000"
+ 2737      65644375 
+ 2737      70436F6C 
+ 2737      6F7200
+ 2738              	.LASF61:
+ 2739 01b6 2E2E5C2E 		.ascii	"..\\..\\..\\playerSide_gamecontroller\\playerSide.c"
+ 2739      2E5C2E2E 
+ 2739      5C706C61 
+ 2739      79657253 
+ 2739      6964655F 
+ 2740 01e5 7964736E 		.ascii	"ydsn\\GameController.c\000"
+ 2740      5C47616D 
+ 2740      65436F6E 
+ 2740      74726F6C 
+ 2740      6C65722E 
+ 2741              	.LASF28:
+ 2742 01fb 73746174 		.ascii	"status\000"
+ 2742      757300
+ 2743              	.LASF15:
+ 2744 0202 63686172 		.ascii	"char\000"
+ 2744      00
+ 2745              	.LASF12:
+ 2746 0207 696E7433 		.ascii	"int32_t\000"
+ 2746      325F7400 
+ 2747              	.LASF54:
+ 2748 020f 63757272 		.ascii	"currentState\000"
+ 2748      656E7453 
+ 2748      74617465 
+ 2748      00
+ 2749              	.LASF62:
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 57
+
+
+ 2750 021c 433A5C55 		.ascii	"C:\\Users\\marti\\OneDrive\\Dokumenter\\3 semester "
+ 2750      73657273 
+ 2750      5C6D6172 
+ 2750      74695C4F 
+ 2750      6E654472 
+ 2751 024a 7265706F 		.ascii	"repos\\player_side_app\\rpi_Boundary\\PlayerSide_sl"
+ 2751      735C706C 
+ 2751      61796572 
+ 2751      5F736964 
+ 2751      655F6170 
+ 2752 027a 6176655C 		.ascii	"ave\\Design01.cydsn\000"
+ 2752      44657369 
+ 2752      676E3031 
+ 2752      2E637964 
+ 2752      736E00
+ 2753              	.LASF3:
+ 2754 028d 73686F72 		.ascii	"short unsigned int\000"
+ 2754      7420756E 
+ 2754      7369676E 
+ 2754      65642069 
+ 2754      6E7400
+ 2755              	.LASF21:
+ 2756 02a0 4C4F5354 		.ascii	"LOST\000"
+ 2756      00
+ 2757              	.LASF45:
+ 2758 02a5 6F70706F 		.ascii	"opponentColor\000"
+ 2758      6E656E74 
+ 2758      436F6C6F 
+ 2758      7200
+ 2759              	.LASF7:
+ 2760 02b3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2760      20756E73 
+ 2760      69676E65 
+ 2760      6420696E 
+ 2760      7400
+ 2761              	.LASF14:
+ 2762 02c5 646F7562 		.ascii	"double\000"
+ 2762      6C6500
+ 2763              	.LASF38:
+ 2764 02cc 73746174 		.ascii	"state\000"
+ 2764      6500
+ 2765              	.LASF50:
+ 2766 02d2 67616D65 		.ascii	"game_buf\000"
+ 2766      5F627566 
+ 2766      00
+ 2767              	.LASF5:
+ 2768 02db 5F5F696E 		.ascii	"__int32_t\000"
+ 2768      7433325F 
+ 2768      7400
+ 2769              	.LASF11:
+ 2770 02e5 75696E74 		.ascii	"uint8_t\000"
+ 2770      385F7400 
+ 2771              	.LASF17:
+ 2772 02ed 73697A65 		.ascii	"sizetype\000"
+ 2772      74797065 
+ 2772      00
+ 2773              	.LASF49:
+ARM GAS  C:\Users\marti\AppData\Local\Temp\ccs1mlZa.s 			page 58
+
+
+ 2774 02f6 68697453 		.ascii	"hitStatus\000"
+ 2774      74617475 
+ 2774      7300
+ 2775              	.LASF26:
+ 2776 0300 7365744F 		.ascii	"setOpponentColor\000"
+ 2776      70706F6E 
+ 2776      656E7443 
+ 2776      6F6C6F72 
+ 2776      00
+ 2777              	.LASF23:
+ 2778 0311 426C7565 		.ascii	"Blue\000"
+ 2778      00
+ 2779              	.LASF40:
+ 2780 0316 496E7465 		.ascii	"Interrupt_LED\000"
+ 2780      72727570 
+ 2780      745F4C45 
+ 2780      4400
+ 2781              	.LASF53:
+ 2782 0324 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2782      52784275 
+ 2782      66666572 
+ 2782      00
+ 2783              	.LASF60:
+ 2784 0331 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2784      43313120 
+ 2784      352E342E 
+ 2784      31203230 
+ 2784      31363036 
+ 2785 0364 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2785      20726576 
+ 2785      6973696F 
+ 2785      6E203233 
+ 2785      37373135 
+ 2786 0397 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2786      66756E63 
+ 2786      74696F6E 
+ 2786      2D736563 
+ 2786      74696F6E 
+ 2787              	.LASF10:
+ 2788 03bf 756E7369 		.ascii	"unsigned int\000"
+ 2788      676E6564 
+ 2788      20696E74 
+ 2788      00
+ 2789              	.LASF39:
+ 2790 03cc 436F6E74 		.ascii	"Controller\000"
+ 2790      726F6C6C 
+ 2790      657200
+ 2791              	.LASF43:
+ 2792 03d7 7475726E 		.ascii	"turnedOffColor\000"
+ 2792      65644F66 
+ 2792      66436F6C 
+ 2792      6F7200
+ 2793              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,3509 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CapSense_CSD_CSHL.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	CapSense_CSD_sensorBaseline,2,4
+  20              		.comm	CapSense_CSD_sensorBaselineLow,1,4
+  21              		.comm	CapSense_CSD_sensorSignal,1,4
+  22              		.comm	CapSense_CSD_sensorOnMask,1,4
+  23              		.comm	CapSense_CSD_lowBaselineResetCnt,1,4
+  24              		.global	CapSense_CSD_fingerThreshold
+  25              		.data
+  26              		.align	2
+  27              		.type	CapSense_CSD_fingerThreshold, %object
+  28              		.size	CapSense_CSD_fingerThreshold, 1
+  29              	CapSense_CSD_fingerThreshold:
+  30 0000 7D       		.byte	125
+  31              		.global	CapSense_CSD_noiseThreshold
+  32 0001 000000   		.align	2
+  33              		.type	CapSense_CSD_noiseThreshold, %object
+  34              		.size	CapSense_CSD_noiseThreshold, 1
+  35              	CapSense_CSD_noiseThreshold:
+  36 0004 2D       		.byte	45
+  37              		.global	CapSense_CSD_hysteresis
+  38 0005 000000   		.align	2
+  39              		.type	CapSense_CSD_hysteresis, %object
+  40              		.size	CapSense_CSD_hysteresis, 1
+  41              	CapSense_CSD_hysteresis:
+  42 0008 19       		.byte	25
+  43              		.global	CapSense_CSD_debounce
+  44 0009 000000   		.align	2
+  45              		.type	CapSense_CSD_debounce, %object
+  46              		.size	CapSense_CSD_debounce, 1
+  47              	CapSense_CSD_debounce:
+  48 000c 05       		.byte	5
+  49              		.global	CapSense_CSD_debounceCounter
+  50              		.bss
+  51              		.align	2
+  52              		.type	CapSense_CSD_debounceCounter, %object
+  53              		.size	CapSense_CSD_debounceCounter, 2
+  54              	CapSense_CSD_debounceCounter:
+  55 0000 0000     		.space	2
+  56              		.global	CapSense_CSD_rawDataIndex
+  57              		.section	.rodata
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 2
+
+
+  58              		.align	2
+  59              		.type	CapSense_CSD_rawDataIndex, %object
+  60              		.size	CapSense_CSD_rawDataIndex, 1
+  61              	CapSense_CSD_rawDataIndex:
+  62 0000 00       		.space	1
+  63              		.global	CapSense_CSD_numberOfSensors
+  64 0001 000000   		.align	2
+  65              		.type	CapSense_CSD_numberOfSensors, %object
+  66              		.size	CapSense_CSD_numberOfSensors, 1
+  67              	CapSense_CSD_numberOfSensors:
+  68 0004 01       		.byte	1
+  69              		.section	.text.CapSense_CSD_BaseInit,"ax",%progbits
+  70              		.align	2
+  71              		.global	CapSense_CSD_BaseInit
+  72              		.thumb
+  73              		.thumb_func
+  74              		.type	CapSense_CSD_BaseInit, %function
+  75              	CapSense_CSD_BaseInit:
+  76              	.LFB0:
+  77              		.file 1 "Generated_Source\\PSoC5\\CapSense_CSD_CSHL.c"
+   1:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * File Name: CapSense_CSD_CSHL.c
+   3:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Version 3.50
+   4:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+   5:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Description:
+   6:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  This file provides the source code to the High Level APIs for the CapSesne
+   7:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CSD component.
+   8:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+   9:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Note:
+  10:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+  11:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+  12:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * the software package with which this file was provided.
+  16:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+  17:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  18:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** #include "CapSense_CSD_CSHL.h"
+  19:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  20:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /* Storage of filters data */
+  21:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** #if ( (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER) | \
+  22:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****       (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_AVERAGING_FILTER) )
+  23:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  24:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint16 CapSense_CSD_rawFilterData1[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  25:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint16 CapSense_CSD_rawFilterData2[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  26:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  27:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** #elif ( (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR2_FILTER)   | \
+  28:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR4_FILTER)   | \
+  29:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_JITTER_FILTER) | \
+  30:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR8_FILTER)   | \
+  31:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR16_FILTER) )
+  32:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+  33:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint16 CapSense_CSD_rawFilterData1[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  34:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  35:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** #else
+  36:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* No Raw filters */
+  37:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** #endif  /* ( (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER) || \
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 3
+
+
+  38:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         *    (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_AVERAGING_FILTER) )
+  39:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         */
+  40:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  41:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint16 CapSense_CSD_sensorBaseline[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  42:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_sensorBaselineLow[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  43:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_sensorSignal[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  44:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_sensorOnMask[(((CapSense_CSD_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)];
+  45:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  46:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_lowBaselineResetCnt[CapSense_CSD_TOTAL_SENSOR_COUNT];
+  47:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  48:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_fingerThreshold[] = {
+  49:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     125u, 
+  50:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  51:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  52:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_noiseThreshold[] = {
+  53:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     45u, 
+  54:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  55:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  56:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_hysteresis[] = {
+  57:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     25u, 
+  58:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  59:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  60:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_debounce[] = {
+  61:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     5u, 
+  62:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  63:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  64:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_debounceCounter[] = {
+  65:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     0u, 0u, 
+  66:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  67:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  68:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** const uint8 CYCODE CapSense_CSD_rawDataIndex[] = {
+  69:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     0u, /* Button0__BTN */
+  70:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  71:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  72:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  73:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** const uint8 CYCODE CapSense_CSD_numberOfSensors[] = {
+  74:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     1u, /* Button0__BTN */
+  75:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  76:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** };
+  77:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  78:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  79:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  80:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+  81:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+  82:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_BaseInit
+  83:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+  84:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+  85:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+  86:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Loads the CapSense_CSD_sensorBaseline[sensor] array element with an 
+  87:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  initial value which is equal to raw count value. 
+  88:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Resets to zero CapSense_CSD_sensorBaselineLow[sensor] and 
+  89:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorSignal[sensor] array element.
+  90:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Loads CapSense_CSD_debounceCounter[sensor] array element with initial 
+  91:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  value equal CapSense_CSD_debounce[].
+  92:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Loads the CapSense_CSD_rawFilterData2[sensor] and 
+  93:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_rawFilterData2[sensor] array element with an 
+  94:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  initial value which is equal raw count value if raw data filter is enabled.
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 4
+
+
+  95:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+  96:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+  97:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensor:  Sensor number.
+  98:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+  99:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 100:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 101:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 102:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 103:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorBaseline[]    - used to store baseline value.
+ 104:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorBaselineLow[] - used to store fraction byte of 
+ 105:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  baseline value.
+ 106:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorSignal[]      - used to store diffence between 
+ 107:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  current value of raw data and previous value of baseline.
+ 108:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_debounceCounter[]   - used to store current debounce 
+ 109:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  counter of sensor. Widget which has this parameter are buttons, matrix 
+ 110:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  buttons, proximity, guard. All other widgets haven't debounce parameter
+ 111:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  and use the last element of this array with value 0 (it means no debounce).
+ 112:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_rawFilterData1[]    - used to store previous sample of 
+ 113:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  any enabled raw data filter.
+ 114:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_rawFilterData2[]    - used to store before previous sample
+ 115:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  of enabled raw data filter. Only required for median or average filters.
+ 116:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 117:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 118:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 119:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 120:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 121:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_BaseInit(uint8 sensor) 
+ 122:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+  78              		.loc 1 122 0
+  79              		.cfi_startproc
+  80              		@ args = 0, pretend = 0, frame = 16
+  81              		@ frame_needed = 1, uses_anonymous_args = 0
+  82              		@ link register save eliminated.
+  83 0000 80B4     		push	{r7}
+  84              		.cfi_def_cfa_offset 4
+  85              		.cfi_offset 7, -4
+  86 0002 85B0     		sub	sp, sp, #20
+  87              		.cfi_def_cfa_offset 24
+  88 0004 00AF     		add	r7, sp, #0
+  89              		.cfi_def_cfa_register 7
+  90 0006 0346     		mov	r3, r0
+  91 0008 FB71     		strb	r3, [r7, #7]
+ 123:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if ((CapSense_CSD_TOTAL_BUTTONS_COUNT) || (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) || \
+ 124:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****          (CapSense_CSD_TOTAL_GENERICS_COUNT))
+ 125:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         uint8 widget = CapSense_CSD_widgetNumber[sensor];
+  92              		.loc 1 125 0
+  93 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  94 000c 0E4A     		ldr	r2, .L2
+  95 000e D35C     		ldrb	r3, [r2, r3]
+  96 0010 FB73     		strb	r3, [r7, #15]
+ 126:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif /* ((CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) || (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUN
+ 127:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 128:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT)
+ 129:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         uint8 debounceIndex;
+ 130:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* (CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT) */
+ 131:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 132:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TOTAL_GENERICS_COUNT)
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 5
+
+
+ 133:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Exclude generic widget */
+ 134:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(widget < CapSense_CSD_END_OF_WIDGETS_INDEX)
+ 135:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 136:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* CapSense_CSD_TOTAL_GENERICS_COUNT */
+ 137:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 138:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Initialize Baseline */
+ 139:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_sensorBaseline[sensor] = CapSense_CSD_sensorRaw[sensor];
+  97              		.loc 1 139 0
+  98 0012 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  99 0014 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 100 0016 0D49     		ldr	r1, .L2+4
+ 101 0018 31F81210 		ldrh	r1, [r1, r2, lsl #1]
+ 102 001c 0C4A     		ldr	r2, .L2+8
+ 103 001e 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 140:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_sensorBaselineLow[sensor] = 0u;
+ 104              		.loc 1 140 0
+ 105 0022 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 106 0024 0B4A     		ldr	r2, .L2+12
+ 107 0026 0021     		movs	r1, #0
+ 108 0028 D154     		strb	r1, [r2, r3]
+ 141:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_sensorSignal[sensor] = 0u;
+ 109              		.loc 1 141 0
+ 110 002a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 111 002c 0A4A     		ldr	r2, .L2+16
+ 112 002e 0021     		movs	r1, #0
+ 113 0030 D154     		strb	r1, [r2, r3]
+ 142:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 143:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_debounceCounter[widget] =  CapSense_CSD_debounce[widget];
+ 114              		.loc 1 143 0
+ 115 0032 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 116 0034 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 117 0036 0949     		ldr	r1, .L2+20
+ 118 0038 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 119 003a 094A     		ldr	r2, .L2+24
+ 120 003c D154     		strb	r1, [r2, r3]
+ 144:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 145:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 146:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if ((CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER) |\
+ 147:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****          (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_AVERAGING_FILTER))
+ 148:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 149:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = CapSense_CSD_sensorRaw[sensor];
+ 150:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData2[sensor] = CapSense_CSD_sensorRaw[sensor];
+ 151:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 152:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif ((CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR2_FILTER) |\
+ 153:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****            (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR4_FILTER) |\
+ 154:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****            (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_JITTER_FILTER) |\
+ 155:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****            (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR8_FILTER) |\
+ 156:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****            (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR16_FILTER))
+ 157:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             
+ 158:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = CapSense_CSD_sensorRaw[sensor];
+ 159:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 160:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #else
+ 161:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* No Raw filters */
+ 162:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* ((CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER) | \
+ 163:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             *   (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_AVERAGING_FILTER))
+ 164:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             */
+ 165:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 6
+
+
+ 166:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TOTAL_GENERICS_COUNT)
+ 167:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Exclude generic widget */
+ 168:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 169:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* CapSense_CSD_TOTAL_GENERICS_COUNT */
+ 170:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 121              		.loc 1 170 0
+ 122 003e 00BF     		nop
+ 123 0040 1437     		adds	r7, r7, #20
+ 124              		.cfi_def_cfa_offset 4
+ 125 0042 BD46     		mov	sp, r7
+ 126              		.cfi_def_cfa_register 13
+ 127              		@ sp needed
+ 128 0044 80BC     		pop	{r7}
+ 129              		.cfi_restore 7
+ 130              		.cfi_def_cfa_offset 0
+ 131 0046 7047     		bx	lr
+ 132              	.L3:
+ 133              		.align	2
+ 134              	.L2:
+ 135 0048 00000000 		.word	CapSense_CSD_widgetNumber
+ 136 004c 00000000 		.word	CapSense_CSD_sensorRaw
+ 137 0050 00000000 		.word	CapSense_CSD_sensorBaseline
+ 138 0054 00000000 		.word	CapSense_CSD_sensorBaselineLow
+ 139 0058 00000000 		.word	CapSense_CSD_sensorSignal
+ 140 005c 00000000 		.word	CapSense_CSD_debounce
+ 141 0060 00000000 		.word	CapSense_CSD_debounceCounter
+ 142              		.cfi_endproc
+ 143              	.LFE0:
+ 144              		.size	CapSense_CSD_BaseInit, .-CapSense_CSD_BaseInit
+ 145              		.section	.text.CapSense_CSD_InitializeSensorBaseline,"ax",%progbits
+ 146              		.align	2
+ 147              		.global	CapSense_CSD_InitializeSensorBaseline
+ 148              		.thumb
+ 149              		.thumb_func
+ 150              		.type	CapSense_CSD_InitializeSensorBaseline, %function
+ 151              	CapSense_CSD_InitializeSensorBaseline:
+ 152              	.LFB1:
+ 171:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 172:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 173:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 174:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_InitializeSensorBaseline
+ 175:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 176:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 177:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 178:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Loads the CapSense_CSD_sensorBaseline[sensor] array element with an 
+ 179:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  initial value by scanning the selected sensor (one channel design) or pair 
+ 180:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  of sensors (two channels designs). The raw count value is copied into the 
+ 181:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  baseline array for each sensor. The raw data filters are initialized if 
+ 182:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  enabled.
+ 183:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 184:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 185:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensor:  Sensor number.
+ 186:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 187:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 188:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 189:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 190:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 7
+
+
+ 191:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 192:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 193:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 194:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_InitializeSensorBaseline(uint8 sensor)
+ 195:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                           
+ 196:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 153              		.loc 1 196 0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 8
+ 156              		@ frame_needed = 1, uses_anonymous_args = 0
+ 157 0000 80B5     		push	{r7, lr}
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 7, -8
+ 160              		.cfi_offset 14, -4
+ 161 0002 82B0     		sub	sp, sp, #8
+ 162              		.cfi_def_cfa_offset 16
+ 163 0004 00AF     		add	r7, sp, #0
+ 164              		.cfi_def_cfa_register 7
+ 165 0006 0346     		mov	r3, r0
+ 166 0008 FB71     		strb	r3, [r7, #7]
+ 197:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Scan sensor */
+ 198:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_ScanSensor(sensor);
+ 167              		.loc 1 198 0
+ 168 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 169 000c 1846     		mov	r0, r3
+ 170 000e FFF7FEFF 		bl	CapSense_CSD_ScanSensor
+ 199:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     while(CapSense_CSD_IsBusy() != 0u)
+ 171              		.loc 1 199 0
+ 172 0012 00BF     		nop
+ 173              	.L5:
+ 174              		.loc 1 199 0 is_stmt 0 discriminator 1
+ 175 0014 FFF7FEFF 		bl	CapSense_CSD_IsBusy
+ 176 0018 0346     		mov	r3, r0
+ 177 001a 002B     		cmp	r3, #0
+ 178 001c FAD1     		bne	.L5
+ 200:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 201:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Wait while busy */
+ 202:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 203:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 204:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_DESIGN_TYPE == CapSense_CSD_ONE_CHANNEL_DESIGN)
+ 205:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Initialize Baseline, Signal and debounce counters */       
+ 206:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_BaseInit(sensor);
+ 179              		.loc 1 206 0 is_stmt 1
+ 180 001e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 181 0020 1846     		mov	r0, r3
+ 182 0022 FFF7FEFF 		bl	CapSense_CSD_BaseInit
+ 207:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 208:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #else
+ 209:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 210:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(sensor < CapSense_CSD_TOTAL_SENSOR_COUNT__CH0)
+ 211:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 212:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Initialize Baseline, Signal and debounce counters */ 
+ 213:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_BaseInit(sensor);
+ 214:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 215:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 216:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(sensor < CapSense_CSD_TOTAL_SENSOR_COUNT__CH1)
+ 217:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 8
+
+
+ 218:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Initialize Baseline, Signal and debounce counters */
+ 219:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_BaseInit(sensor + CapSense_CSD_TOTAL_SENSOR_COUNT__CH0);
+ 220:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 221:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 222:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* (CapSense_CSD_DESIGN_TYPE == CapSense_CSD_ONE_CHANNEL_DESIGN) */
+ 223:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 183              		.loc 1 223 0
+ 184 0026 00BF     		nop
+ 185 0028 0837     		adds	r7, r7, #8
+ 186              		.cfi_def_cfa_offset 8
+ 187 002a BD46     		mov	sp, r7
+ 188              		.cfi_def_cfa_register 13
+ 189              		@ sp needed
+ 190 002c 80BD     		pop	{r7, pc}
+ 191              		.cfi_endproc
+ 192              	.LFE1:
+ 193              		.size	CapSense_CSD_InitializeSensorBaseline, .-CapSense_CSD_InitializeSensorBaseline
+ 194 002e 00BF     		.section	.text.CapSense_CSD_InitializeAllBaselines,"ax",%progbits
+ 195              		.align	2
+ 196              		.global	CapSense_CSD_InitializeAllBaselines
+ 197              		.thumb
+ 198              		.thumb_func
+ 199              		.type	CapSense_CSD_InitializeAllBaselines, %function
+ 200              	CapSense_CSD_InitializeAllBaselines:
+ 201              	.LFB2:
+ 224:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 225:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 226:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 227:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_InitializeAllBaselines
+ 228:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 229:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 230:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 231:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Uses the CapSense_CSD_InitializeSensorBaseline function to loads the 
+ 232:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorBaseline[] array with an initial values by scanning 
+ 233:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  all sensors. The raw count values are copied into the baseline array for 
+ 234:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  all sensors. The raw data filters are initialized if enabled.
+ 235:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 236:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 237:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 238:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 239:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 240:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 241:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 242:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 243:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 244:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 245:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 246:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_InitializeAllBaselines(void)
+ 247:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                           
+ 248:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 202              		.loc 1 248 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 8
+ 205              		@ frame_needed = 1, uses_anonymous_args = 0
+ 206 0000 80B5     		push	{r7, lr}
+ 207              		.cfi_def_cfa_offset 8
+ 208              		.cfi_offset 7, -8
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 9
+
+
+ 209              		.cfi_offset 14, -4
+ 210 0002 82B0     		sub	sp, sp, #8
+ 211              		.cfi_def_cfa_offset 16
+ 212 0004 00AF     		add	r7, sp, #0
+ 213              		.cfi_def_cfa_register 7
+ 249:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 i;
+ 250:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 251:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* The baseline initialize by sensor of sensor pair */
+ 252:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     for(i = 0u; i < CapSense_CSD_TOTAL_SCANSLOT_COUNT; i++)
+ 214              		.loc 1 252 0
+ 215 0006 0023     		movs	r3, #0
+ 216 0008 FB71     		strb	r3, [r7, #7]
+ 217 000a 06E0     		b	.L7
+ 218              	.L8:
+ 253:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 254:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_InitializeSensorBaseline(i);
+ 219              		.loc 1 254 0 discriminator 3
+ 220 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 221 000e 1846     		mov	r0, r3
+ 222 0010 FFF7FEFF 		bl	CapSense_CSD_InitializeSensorBaseline
+ 252:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 223              		.loc 1 252 0 discriminator 3
+ 224 0014 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 225 0016 0133     		adds	r3, r3, #1
+ 226 0018 FB71     		strb	r3, [r7, #7]
+ 227              	.L7:
+ 252:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 228              		.loc 1 252 0 is_stmt 0 discriminator 1
+ 229 001a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 230 001c 002B     		cmp	r3, #0
+ 231 001e F5D0     		beq	.L8
+ 255:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 256:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 232              		.loc 1 256 0 is_stmt 1
+ 233 0020 00BF     		nop
+ 234 0022 0837     		adds	r7, r7, #8
+ 235              		.cfi_def_cfa_offset 8
+ 236 0024 BD46     		mov	sp, r7
+ 237              		.cfi_def_cfa_register 13
+ 238              		@ sp needed
+ 239 0026 80BD     		pop	{r7, pc}
+ 240              		.cfi_endproc
+ 241              	.LFE2:
+ 242              		.size	CapSense_CSD_InitializeAllBaselines, .-CapSense_CSD_InitializeAllBaselines
+ 243              		.section	.text.CapSense_CSD_InitializeEnabledBaselines,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	CapSense_CSD_InitializeEnabledBaselines
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.type	CapSense_CSD_InitializeEnabledBaselines, %function
+ 249              	CapSense_CSD_InitializeEnabledBaselines:
+ 250              	.LFB3:
+ 257:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 258:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 259:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 260:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_InitializeEnabledBaselines
+ 261:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 10
+
+
+ 262:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 263:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 264:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Scans all enabled widgets and the raw count values are copied into the 
+ 265:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  baseline array for all sensors enabled in scanning process. Baselines 
+ 266:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  initialize with zero values for sensors disabled from scanning process. 
+ 267:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  The raw data filters are initialized if enabled.
+ 268:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 269:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 270:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 271:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 272:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 273:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 274:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 275:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 276:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 277:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 278:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 279:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_InitializeEnabledBaselines(void)
+ 280:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                              
+ 281:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 251              		.loc 1 281 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 8
+ 254              		@ frame_needed = 1, uses_anonymous_args = 0
+ 255 0000 80B5     		push	{r7, lr}
+ 256              		.cfi_def_cfa_offset 8
+ 257              		.cfi_offset 7, -8
+ 258              		.cfi_offset 14, -4
+ 259 0002 82B0     		sub	sp, sp, #8
+ 260              		.cfi_def_cfa_offset 16
+ 261 0004 00AF     		add	r7, sp, #0
+ 262              		.cfi_def_cfa_register 7
+ 282:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 i;
+ 283:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 pos;
+ 284:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 enMask;
+ 285:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 286:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     CapSense_CSD_ScanEnabledWidgets();
+ 263              		.loc 1 286 0
+ 264 0006 FFF7FEFF 		bl	CapSense_CSD_ScanEnabledWidgets
+ 287:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     while(CapSense_CSD_IsBusy() != 0u)
+ 265              		.loc 1 287 0
+ 266 000a 00BF     		nop
+ 267              	.L10:
+ 268              		.loc 1 287 0 is_stmt 0 discriminator 1
+ 269 000c FFF7FEFF 		bl	CapSense_CSD_IsBusy
+ 270 0010 0346     		mov	r3, r0
+ 271 0012 002B     		cmp	r3, #0
+ 272 0014 FAD1     		bne	.L10
+ 288:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 289:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Wait while busy */
+ 290:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 291:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 292:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     for(i = 0u; i < CapSense_CSD_TOTAL_SENSOR_COUNT; i++)
+ 273              		.loc 1 292 0 is_stmt 1
+ 274 0016 0023     		movs	r3, #0
+ 275 0018 FB71     		strb	r3, [r7, #7]
+ 276 001a 1DE0     		b	.L11
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 11
+
+
+ 277              	.L13:
+ 293:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 294:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         pos = (i >> 3u);
+ 278              		.loc 1 294 0
+ 279 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 280 001e DB08     		lsrs	r3, r3, #3
+ 281 0020 BB71     		strb	r3, [r7, #6]
+ 295:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         enMask = 0x01u << (i & 0x07u);
+ 282              		.loc 1 295 0
+ 283 0022 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 284 0024 03F00703 		and	r3, r3, #7
+ 285 0028 0122     		movs	r2, #1
+ 286 002a 02FA03F3 		lsl	r3, r2, r3
+ 287 002e 7B71     		strb	r3, [r7, #5]
+ 296:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 297:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Clear raw data if sensor is disabled from scanning process */
+ 298:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if((CapSense_CSD_sensorEnableMask[pos] & enMask) == 0u)
+ 288              		.loc 1 298 0
+ 289 0030 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 290 0032 0D4A     		ldr	r2, .L14
+ 291 0034 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 292 0036 7B79     		ldrb	r3, [r7, #5]
+ 293 0038 1340     		ands	r3, r3, r2
+ 294 003a DBB2     		uxtb	r3, r3
+ 295 003c 002B     		cmp	r3, #0
+ 296 003e 04D1     		bne	.L12
+ 299:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 300:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_sensorRaw[i] = 0u;
+ 297              		.loc 1 300 0
+ 298 0040 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 299 0042 0A4A     		ldr	r2, .L14+4
+ 300 0044 0021     		movs	r1, #0
+ 301 0046 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 302              	.L12:
+ 301:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 302:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 303:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Initialize baselines */
+ 304:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_BaseInit(i);
+ 303              		.loc 1 304 0 discriminator 2
+ 304 004a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 305 004c 1846     		mov	r0, r3
+ 306 004e FFF7FEFF 		bl	CapSense_CSD_BaseInit
+ 292:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 307              		.loc 1 292 0 discriminator 2
+ 308 0052 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 309 0054 0133     		adds	r3, r3, #1
+ 310 0056 FB71     		strb	r3, [r7, #7]
+ 311              	.L11:
+ 292:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 312              		.loc 1 292 0 is_stmt 0 discriminator 1
+ 313 0058 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 314 005a 002B     		cmp	r3, #0
+ 315 005c DED0     		beq	.L13
+ 305:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 306:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }  
+ 316              		.loc 1 306 0 is_stmt 1
+ 317 005e 00BF     		nop
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 12
+
+
+ 318 0060 0837     		adds	r7, r7, #8
+ 319              		.cfi_def_cfa_offset 8
+ 320 0062 BD46     		mov	sp, r7
+ 321              		.cfi_def_cfa_register 13
+ 322              		@ sp needed
+ 323 0064 80BD     		pop	{r7, pc}
+ 324              	.L15:
+ 325 0066 00BF     		.align	2
+ 326              	.L14:
+ 327 0068 00000000 		.word	CapSense_CSD_sensorEnableMask
+ 328 006c 00000000 		.word	CapSense_CSD_sensorRaw
+ 329              		.cfi_endproc
+ 330              	.LFE3:
+ 331              		.size	CapSense_CSD_InitializeEnabledBaselines, .-CapSense_CSD_InitializeEnabledBaselines
+ 332              		.section	.text.CapSense_CSD_UpdateSensorBaseline,"ax",%progbits
+ 333              		.align	2
+ 334              		.global	CapSense_CSD_UpdateSensorBaseline
+ 335              		.thumb
+ 336              		.thumb_func
+ 337              		.type	CapSense_CSD_UpdateSensorBaseline, %function
+ 338              	CapSense_CSD_UpdateSensorBaseline:
+ 339              	.LFB4:
+ 307:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 308:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 309:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 310:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_UpdateSensorBaseline
+ 311:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 312:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 313:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 314:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Updates the CapSense_CSD_sensorBaseline[sensor] array element using the 
+ 315:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  LP filter with k = 256. The signal calculates the difference of count by 
+ 316:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  subtracting the previous baseline from the current raw count value and stores
+ 317:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  it in CapSense_CSD_SensorSignal[sensor]. 
+ 318:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  If auto reset option is enabled the baseline updated regards noise threshold. 
+ 319:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  If auto reset option is disabled the baseline stops updating if signal is 
+ 320:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  greater that zero and baseline loads with raw count value if signal is less 
+ 321:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  that noise threshold.
+ 322:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Raw data filters are applied to the values if enabled before baseline 
+ 323:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  calculation.
+ 324:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 325:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 326:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensor:  Sensor number.
+ 327:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 328:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 329:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 330:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 331:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 332:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorBaseline[]    - used to store baseline value.
+ 333:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorBaselineLow[] - used to store fraction byte of 
+ 334:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  baseline value.
+ 335:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorSignal[]      - used to store diffence between 
+ 336:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  current value of raw data and previous value of baseline.
+ 337:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_rawFilterData1[]    - used to store previous sample of 
+ 338:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  any enabled raw data filter.
+ 339:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_rawFilterData2[]    - used to store before previous sample
+ 340:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  of enabled raw data filter. Only required for median or average filters.
+ 341:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 13
+
+
+ 342:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 343:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 344:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 345:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 346:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****  void CapSense_CSD_UpdateSensorBaseline(uint8 sensor)
+ 347:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                  
+ 348:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 340              		.loc 1 348 0
+ 341              		.cfi_startproc
+ 342              		@ args = 0, pretend = 0, frame = 24
+ 343              		@ frame_needed = 1, uses_anonymous_args = 0
+ 344 0000 80B5     		push	{r7, lr}
+ 345              		.cfi_def_cfa_offset 8
+ 346              		.cfi_offset 7, -8
+ 347              		.cfi_offset 14, -4
+ 348 0002 86B0     		sub	sp, sp, #24
+ 349              		.cfi_def_cfa_offset 32
+ 350 0004 00AF     		add	r7, sp, #0
+ 351              		.cfi_def_cfa_register 7
+ 352 0006 0346     		mov	r3, r0
+ 353 0008 FB71     		strb	r3, [r7, #7]
+ 349:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint32 calc;
+ 350:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint16 tempRaw;
+ 351:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint16 filteredRawData;
+ 352:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 widget = CapSense_CSD_widgetNumber[sensor];
+ 354              		.loc 1 352 0
+ 355 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 356 000c 494A     		ldr	r2, .L28
+ 357 000e D35C     		ldrb	r3, [r2, r3]
+ 358 0010 7B75     		strb	r3, [r7, #21]
+ 353:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 noiseThreshold = CapSense_CSD_noiseThreshold[widget];
+ 359              		.loc 1 353 0
+ 360 0012 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 361 0014 484A     		ldr	r2, .L28+4
+ 362 0016 D35C     		ldrb	r3, [r2, r3]
+ 363 0018 3B75     		strb	r3, [r7, #20]
+ 354:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 355:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TOTAL_GENERICS_COUNT)
+ 356:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Exclude generic widget */
+ 357:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(widget < CapSense_CSD_END_OF_WIDGETS_INDEX)
+ 358:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 359:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* CapSense_CSD_TOTAL_GENERICS_COUNT */
+ 360:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 361:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     filteredRawData = CapSense_CSD_sensorRaw[sensor];
+ 364              		.loc 1 361 0
+ 365 001a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 366 001c 474A     		ldr	r2, .L28+8
+ 367 001e 32F81330 		ldrh	r3, [r2, r3, lsl #1]	@ movhi
+ 368 0022 7B82     		strh	r3, [r7, #18]	@ movhi
+ 362:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 363:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER)
+ 364:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         tempRaw = filteredRawData;
+ 365:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_MedianFilter(filteredRawData, CapSense_CSD_rawFilterData1[se
+ 366:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                                         CapSense_CSD_rawFilterData2[sensor]);
+ 367:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData2[sensor] = CapSense_CSD_rawFilterData1[sensor];
+ 368:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = tempRaw;
+ 369:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 14
+
+
+ 370:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_AVERAGING_FILTER)
+ 371:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         tempRaw = filteredRawData;
+ 372:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_AveragingFilter(filteredRawData, CapSense_CSD_rawFilterData1
+ 373:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                                            CapSense_CSD_rawFilterData2[sensor]);
+ 374:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData2[sensor] = CapSense_CSD_rawFilterData1[sensor];
+ 375:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = tempRaw;
+ 376:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 377:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR2_FILTER)
+ 378:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_IIR2Filter(filteredRawData, CapSense_CSD_rawFilterData1[sens
+ 379:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = filteredRawData;
+ 380:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 381:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR4_FILTER)
+ 382:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_IIR4Filter(filteredRawData, CapSense_CSD_rawFilterData1[sens
+ 383:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = filteredRawData;
+ 384:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             
+ 385:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_JITTER_FILTER)
+ 386:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_JitterFilter(filteredRawData, CapSense_CSD_rawFilterData1[se
+ 387:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = filteredRawData;
+ 388:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 389:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR8_FILTER)
+ 390:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_IIR8Filter(filteredRawData, CapSense_CSD_rawFilterData1[sens
+ 391:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = filteredRawData;
+ 392:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 393:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #elif (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_IIR16_FILTER)
+ 394:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         filteredRawData = CapSense_CSD_IIR16Filter(filteredRawData, CapSense_CSD_rawFilterData1[sen
+ 395:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_rawFilterData1[sensor] = filteredRawData;
+ 396:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 397:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #else
+ 398:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* No Raw filters */
+ 399:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER) */
+ 400:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 401:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TUNING_METHOD == CapSense_CSD_AUTO_TUNING)
+ 402:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_CalculateThresholds(sensor);
+ 403:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif /* (CapSense_CSD_TUNING_METHOD == CapSense_CSD_AUTO_TUNING) */
+ 404:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 405:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 406:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Baseline calculation */
+ 407:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Calculate difference RawData[cur] - Baseline[prev] */
+ 408:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     if(filteredRawData >= CapSense_CSD_sensorBaseline[sensor])
+ 369              		.loc 1 408 0
+ 370 0024 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 371 0026 464A     		ldr	r2, .L28+12
+ 372 0028 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 373 002c 7A8A     		ldrh	r2, [r7, #18]
+ 374 002e 9A42     		cmp	r2, r3
+ 375 0030 09D3     		bcc	.L17
+ 409:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 410:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         tempRaw = filteredRawData - CapSense_CSD_sensorBaseline[sensor];
+ 376              		.loc 1 410 0
+ 377 0032 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 378 0034 424A     		ldr	r2, .L28+12
+ 379 0036 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 380 003a 7A8A     		ldrh	r2, [r7, #18]	@ movhi
+ 381 003c D31A     		subs	r3, r2, r3
+ 382 003e FB82     		strh	r3, [r7, #22]	@ movhi
+ 411:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         widget = 1u;    /* Positive difference - Calculate the Signal */
+ 383              		.loc 1 411 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 15
+
+
+ 384 0040 0123     		movs	r3, #1
+ 385 0042 7B75     		strb	r3, [r7, #21]
+ 386 0044 08E0     		b	.L18
+ 387              	.L17:
+ 412:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 413:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     else
+ 414:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 415:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         tempRaw = CapSense_CSD_sensorBaseline[sensor] - filteredRawData;
+ 388              		.loc 1 415 0
+ 389 0046 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 390 0048 3D4A     		ldr	r2, .L28+12
+ 391 004a 32F81320 		ldrh	r2, [r2, r3, lsl #1]
+ 392 004e 7B8A     		ldrh	r3, [r7, #18]	@ movhi
+ 393 0050 D31A     		subs	r3, r2, r3
+ 394 0052 FB82     		strh	r3, [r7, #22]	@ movhi
+ 416:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         widget = 0u;    /* Negative difference - Do NOT calculate the Signal */
+ 395              		.loc 1 416 0
+ 396 0054 0023     		movs	r3, #0
+ 397 0056 7B75     		strb	r3, [r7, #21]
+ 398              	.L18:
+ 417:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 418:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 419:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     if((widget == 0u) && (tempRaw > (uint16) CapSense_CSD_NEGATIVE_NOISE_THRESHOLD))
+ 399              		.loc 1 419 0
+ 400 0058 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 401 005a 002B     		cmp	r3, #0
+ 402 005c 18D1     		bne	.L19
+ 403              		.loc 1 419 0 is_stmt 0 discriminator 1
+ 404 005e FB8A     		ldrh	r3, [r7, #22]
+ 405 0060 142B     		cmp	r3, #20
+ 406 0062 15D9     		bls	.L19
+ 420:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 421:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(CapSense_CSD_lowBaselineResetCnt[sensor] >= CapSense_CSD_LOW_BASELINE_RESET)
+ 407              		.loc 1 421 0 is_stmt 1
+ 408 0064 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 409 0066 374A     		ldr	r2, .L28+16
+ 410 0068 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 411 006a 042B     		cmp	r3, #4
+ 412 006c 08D9     		bls	.L20
+ 422:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 423:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_BaseInit(sensor);
+ 413              		.loc 1 423 0
+ 414 006e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 415 0070 1846     		mov	r0, r3
+ 416 0072 FFF7FEFF 		bl	CapSense_CSD_BaseInit
+ 424:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_lowBaselineResetCnt[sensor] = 0u;
+ 417              		.loc 1 424 0
+ 418 0076 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 419 0078 324A     		ldr	r2, .L28+16
+ 420 007a 0021     		movs	r1, #0
+ 421 007c D154     		strb	r1, [r2, r3]
+ 421:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 422              		.loc 1 421 0
+ 423 007e 3BE0     		b	.L22
+ 424              	.L20:
+ 425:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 426:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         else
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 16
+
+
+ 427:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 428:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_lowBaselineResetCnt[sensor]++;
+ 425              		.loc 1 428 0
+ 426 0080 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 427 0082 304A     		ldr	r2, .L28+16
+ 428 0084 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 429 0086 0132     		adds	r2, r2, #1
+ 430 0088 D1B2     		uxtb	r1, r2
+ 431 008a 2E4A     		ldr	r2, .L28+16
+ 432 008c D154     		strb	r1, [r2, r3]
+ 421:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 433              		.loc 1 421 0
+ 434 008e 33E0     		b	.L22
+ 435              	.L19:
+ 429:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 430:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 431:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     else
+ 432:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 433:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #if (CapSense_CSD_AUTO_RESET == CapSense_CSD_AUTO_RESET_DISABLE)
+ 434:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Update Baseline if lower that noiseThreshold */
+ 435:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             if ( (tempRaw <= (uint16) noiseThreshold) || 
+ 436              		.loc 1 435 0
+ 437 0090 3B7D     		ldrb	r3, [r7, #20]	@ zero_extendqisi2
+ 438 0092 9BB2     		uxth	r3, r3
+ 439 0094 FA8A     		ldrh	r2, [r7, #22]
+ 440 0096 9A42     		cmp	r2, r3
+ 441 0098 05D9     		bls	.L23
+ 442              		.loc 1 435 0 is_stmt 0 discriminator 1
+ 443 009a FB8A     		ldrh	r3, [r7, #22]
+ 444 009c 132B     		cmp	r3, #19
+ 445 009e 2BD8     		bhi	.L22
+ 436:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                  ((tempRaw < (uint16) CapSense_CSD_NEGATIVE_NOISE_THRESHOLD)
+ 437:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                    && (widget == 0u)))
+ 446              		.loc 1 437 0 is_stmt 1
+ 447 00a0 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 448 00a2 002B     		cmp	r3, #0
+ 449 00a4 28D1     		bne	.L22
+ 450              	.L23:
+ 438:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 439:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #endif /* (CapSense_CSD_AUTO_RESET == CapSense_CSD_AUTO_RESET_DISABLE) */
+ 440:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 /* Make full Baseline 23 bits */
+ 441:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 calc = (uint32) CapSense_CSD_sensorBaseline[sensor] << 8u;
+ 451              		.loc 1 441 0
+ 452 00a6 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 453 00a8 254A     		ldr	r2, .L28+12
+ 454 00aa 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 455 00ae 1B02     		lsls	r3, r3, #8
+ 456 00b0 FB60     		str	r3, [r7, #12]
+ 442:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 calc |= (uint32) CapSense_CSD_sensorBaselineLow[sensor];
+ 457              		.loc 1 442 0
+ 458 00b2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 459 00b4 244A     		ldr	r2, .L28+20
+ 460 00b6 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 461 00b8 1A46     		mov	r2, r3
+ 462 00ba FB68     		ldr	r3, [r7, #12]
+ 463 00bc 1343     		orrs	r3, r3, r2
+ 464 00be FB60     		str	r3, [r7, #12]
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 17
+
+
+ 443:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 444:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 /* Add Raw Data to Baseline */
+ 445:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 calc += filteredRawData;
+ 465              		.loc 1 445 0
+ 466 00c0 7B8A     		ldrh	r3, [r7, #18]
+ 467 00c2 FA68     		ldr	r2, [r7, #12]
+ 468 00c4 1344     		add	r3, r3, r2
+ 469 00c6 FB60     		str	r3, [r7, #12]
+ 446:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 447:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 /* Sub the high Baseline */
+ 448:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 calc -= CapSense_CSD_sensorBaseline[sensor];
+ 470              		.loc 1 448 0
+ 471 00c8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 472 00ca 1D4A     		ldr	r2, .L28+12
+ 473 00cc 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 474 00d0 1A46     		mov	r2, r3
+ 475 00d2 FB68     		ldr	r3, [r7, #12]
+ 476 00d4 9B1A     		subs	r3, r3, r2
+ 477 00d6 FB60     		str	r3, [r7, #12]
+ 449:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 450:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 /* Put Baseline and BaselineLow */
+ 451:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_sensorBaseline[sensor] = ((uint16) (calc >> 8u));
+ 478              		.loc 1 451 0
+ 479 00d8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 480 00da FA68     		ldr	r2, [r7, #12]
+ 481 00dc 120A     		lsrs	r2, r2, #8
+ 482 00de 91B2     		uxth	r1, r2
+ 483 00e0 174A     		ldr	r2, .L28+12
+ 484 00e2 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 452:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_sensorBaselineLow[sensor] = ((uint8) calc);
+ 485              		.loc 1 452 0
+ 486 00e6 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 487 00e8 FA68     		ldr	r2, [r7, #12]
+ 488 00ea D1B2     		uxtb	r1, r2
+ 489 00ec 164A     		ldr	r2, .L28+20
+ 490 00ee D154     		strb	r1, [r2, r3]
+ 453:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 454:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_lowBaselineResetCnt[sensor] = 0u;
+ 491              		.loc 1 454 0
+ 492 00f0 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 493 00f2 144A     		ldr	r2, .L28+16
+ 494 00f4 0021     		movs	r1, #0
+ 495 00f6 D154     		strb	r1, [r2, r3]
+ 496              	.L22:
+ 455:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #if (CapSense_CSD_AUTO_RESET == CapSense_CSD_AUTO_RESET_DISABLE)
+ 456:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             }
+ 457:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #endif /* (CapSense_CSD_AUTO_RESET == CapSense_CSD_AUTO_RESET_DISABLE) */
+ 458:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 459:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 460:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Calculate Signal if possitive difference > noiseThreshold */
+ 461:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     if((tempRaw > (uint16) noiseThreshold) && (widget != 0u))
+ 497              		.loc 1 461 0
+ 498 00f8 3B7D     		ldrb	r3, [r7, #20]	@ zero_extendqisi2
+ 499 00fa 9BB2     		uxth	r3, r3
+ 500 00fc FA8A     		ldrh	r2, [r7, #22]
+ 501 00fe 9A42     		cmp	r2, r3
+ 502 0100 10D9     		bls	.L24
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 18
+
+
+ 503              		.loc 1 461 0 is_stmt 0 discriminator 1
+ 504 0102 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 505 0104 002B     		cmp	r3, #0
+ 506 0106 0DD0     		beq	.L24
+ 462:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 463:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #if (CapSense_CSD_SIGNAL_SIZE == CapSense_CSD_SIGNAL_SIZE_UINT8)
+ 464:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Over flow defence for uint8 */
+ 465:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             if (tempRaw > 0xFFu)
+ 507              		.loc 1 465 0 is_stmt 1
+ 508 0108 FB8A     		ldrh	r3, [r7, #22]
+ 509 010a FF2B     		cmp	r3, #255
+ 510 010c 04D9     		bls	.L25
+ 466:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 467:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_sensorSignal[sensor] = 0xFFu;
+ 511              		.loc 1 467 0
+ 512 010e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 513 0110 0E4A     		ldr	r2, .L28+24
+ 514 0112 FF21     		movs	r1, #255
+ 515 0114 D154     		strb	r1, [r2, r3]
+ 465:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 516              		.loc 1 465 0
+ 517 0116 09E0     		b	.L27
+ 518              	.L25:
+ 468:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             }    
+ 469:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             else 
+ 470:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 471:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_sensorSignal[sensor] = ((uint8) tempRaw);
+ 519              		.loc 1 471 0
+ 520 0118 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 521 011a FA8A     		ldrh	r2, [r7, #22]	@ movhi
+ 522 011c D1B2     		uxtb	r1, r2
+ 523 011e 0B4A     		ldr	r2, .L28+24
+ 524 0120 D154     		strb	r1, [r2, r3]
+ 465:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 525              		.loc 1 465 0
+ 526 0122 03E0     		b	.L27
+ 527              	.L24:
+ 472:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             }
+ 473:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #else
+ 474:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_sensorSignal[sensor] = ((uint16) tempRaw);
+ 475:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         #endif  /* (CapSense_CSD_SIGNAL_SIZE == CapSense_CSD_SIGNAL_SIZE_UINT8) */
+ 476:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 477:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     else
+ 478:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 479:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Signal is zero */
+ 480:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_sensorSignal[sensor] = 0u;
+ 528              		.loc 1 480 0
+ 529 0124 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 530 0126 094A     		ldr	r2, .L28+24
+ 531 0128 0021     		movs	r1, #0
+ 532 012a D154     		strb	r1, [r2, r3]
+ 533              	.L27:
+ 481:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 482:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 483:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #if (CapSense_CSD_TOTAL_GENERICS_COUNT)
+ 484:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Exclude generic widget */
+ 485:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 19
+
+
+ 486:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     #endif  /* CapSense_CSD_TOTAL_GENERICS_COUNT */
+ 487:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 534              		.loc 1 487 0
+ 535 012c 00BF     		nop
+ 536 012e 1837     		adds	r7, r7, #24
+ 537              		.cfi_def_cfa_offset 8
+ 538 0130 BD46     		mov	sp, r7
+ 539              		.cfi_def_cfa_register 13
+ 540              		@ sp needed
+ 541 0132 80BD     		pop	{r7, pc}
+ 542              	.L29:
+ 543              		.align	2
+ 544              	.L28:
+ 545 0134 00000000 		.word	CapSense_CSD_widgetNumber
+ 546 0138 00000000 		.word	CapSense_CSD_noiseThreshold
+ 547 013c 00000000 		.word	CapSense_CSD_sensorRaw
+ 548 0140 00000000 		.word	CapSense_CSD_sensorBaseline
+ 549 0144 00000000 		.word	CapSense_CSD_lowBaselineResetCnt
+ 550 0148 00000000 		.word	CapSense_CSD_sensorBaselineLow
+ 551 014c 00000000 		.word	CapSense_CSD_sensorSignal
+ 552              		.cfi_endproc
+ 553              	.LFE4:
+ 554              		.size	CapSense_CSD_UpdateSensorBaseline, .-CapSense_CSD_UpdateSensorBaseline
+ 555              		.section	.text.CapSense_CSD_UpdateEnabledBaselines,"ax",%progbits
+ 556              		.align	2
+ 557              		.global	CapSense_CSD_UpdateEnabledBaselines
+ 558              		.thumb
+ 559              		.thumb_func
+ 560              		.type	CapSense_CSD_UpdateEnabledBaselines, %function
+ 561              	CapSense_CSD_UpdateEnabledBaselines:
+ 562              	.LFB5:
+ 488:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 489:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 490:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 491:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_UpdateEnabledBaselines
+ 492:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 493:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 494:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 495:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Checks CapSense_CSD_sensorEnableMask[] array and calls the 
+ 496:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_UpdateSensorBaseline function to update the baselines 
+ 497:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  for enabled sensors.
+ 498:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 499:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 500:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 501:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 502:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 503:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 504:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 505:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 506:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[] - used to store the sensor scanning 
+ 507:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  state.
+ 508:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[0] contains the masked bits for sensors 
+ 509:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *   0 through 7 (sensor 0 is bit 0, sensor 1 is bit 1).
+ 510:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[1] contains the masked bits for 
+ 511:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensors 8 through 15 (if needed), and so on.
+ 512:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 - sensor doesn't scan by CapSense_CSD_ScanEnabledWidgets().
+ 513:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  1 - sensor scans by CapSense_CSD_ScanEnabledWidgets().
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 20
+
+
+ 514:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 515:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 516:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 517:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 518:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 519:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****  void CapSense_CSD_UpdateEnabledBaselines(void)
+ 520:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                  
+ 521:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 563              		.loc 1 521 0
+ 564              		.cfi_startproc
+ 565              		@ args = 0, pretend = 0, frame = 8
+ 566              		@ frame_needed = 1, uses_anonymous_args = 0
+ 567 0000 80B5     		push	{r7, lr}
+ 568              		.cfi_def_cfa_offset 8
+ 569              		.cfi_offset 7, -8
+ 570              		.cfi_offset 14, -4
+ 571 0002 82B0     		sub	sp, sp, #8
+ 572              		.cfi_def_cfa_offset 16
+ 573 0004 00AF     		add	r7, sp, #0
+ 574              		.cfi_def_cfa_register 7
+ 522:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 i;
+ 523:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 pos;
+ 524:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 enMask;
+ 525:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 526:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     for(i = 0u; i < CapSense_CSD_TOTAL_SENSOR_COUNT; i++)
+ 575              		.loc 1 526 0
+ 576 0006 0023     		movs	r3, #0
+ 577 0008 FB71     		strb	r3, [r7, #7]
+ 578 000a 18E0     		b	.L31
+ 579              	.L33:
+ 527:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 528:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         pos = (i >> 3u);
+ 580              		.loc 1 528 0
+ 581 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 582 000e DB08     		lsrs	r3, r3, #3
+ 583 0010 BB71     		strb	r3, [r7, #6]
+ 529:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         enMask = (uint8)(0x01u << (i & 0x07u));
+ 584              		.loc 1 529 0
+ 585 0012 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 586 0014 03F00703 		and	r3, r3, #7
+ 587 0018 0122     		movs	r2, #1
+ 588 001a 02FA03F3 		lsl	r3, r2, r3
+ 589 001e 7B71     		strb	r3, [r7, #5]
+ 530:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if((CapSense_CSD_sensorEnableMask[pos] & enMask) != 0u)
+ 590              		.loc 1 530 0
+ 591 0020 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 592 0022 0A4A     		ldr	r2, .L34
+ 593 0024 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 594 0026 7B79     		ldrb	r3, [r7, #5]
+ 595 0028 1340     		ands	r3, r3, r2
+ 596 002a DBB2     		uxtb	r3, r3
+ 597 002c 002B     		cmp	r3, #0
+ 598 002e 03D0     		beq	.L32
+ 531:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 532:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_UpdateSensorBaseline(i);
+ 599              		.loc 1 532 0
+ 600 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 21
+
+
+ 601 0032 1846     		mov	r0, r3
+ 602 0034 FFF7FEFF 		bl	CapSense_CSD_UpdateSensorBaseline
+ 603              	.L32:
+ 526:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 604              		.loc 1 526 0 discriminator 2
+ 605 0038 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 606 003a 0133     		adds	r3, r3, #1
+ 607 003c FB71     		strb	r3, [r7, #7]
+ 608              	.L31:
+ 526:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 609              		.loc 1 526 0 is_stmt 0 discriminator 1
+ 610 003e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 611 0040 002B     		cmp	r3, #0
+ 612 0042 E3D0     		beq	.L33
+ 533:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 534:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 535:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 613              		.loc 1 535 0 is_stmt 1
+ 614 0044 00BF     		nop
+ 615 0046 0837     		adds	r7, r7, #8
+ 616              		.cfi_def_cfa_offset 8
+ 617 0048 BD46     		mov	sp, r7
+ 618              		.cfi_def_cfa_register 13
+ 619              		@ sp needed
+ 620 004a 80BD     		pop	{r7, pc}
+ 621              	.L35:
+ 622              		.align	2
+ 623              	.L34:
+ 624 004c 00000000 		.word	CapSense_CSD_sensorEnableMask
+ 625              		.cfi_endproc
+ 626              	.LFE5:
+ 627              		.size	CapSense_CSD_UpdateEnabledBaselines, .-CapSense_CSD_UpdateEnabledBaselines
+ 628              		.section	.text.CapSense_CSD_CheckIsSensorActive,"ax",%progbits
+ 629              		.align	2
+ 630              		.global	CapSense_CSD_CheckIsSensorActive
+ 631              		.thumb
+ 632              		.thumb_func
+ 633              		.type	CapSense_CSD_CheckIsSensorActive, %function
+ 634              	CapSense_CSD_CheckIsSensorActive:
+ 635              	.LFB6:
+ 536:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 537:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 538:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 539:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_CheckIsSensorActive
+ 540:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 541:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 542:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 543:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Compares the CapSense_CSD_SensorSignal[sensor] array element to finger
+ 544:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  threshold of widget it belongs to. The hysteresis and debounce are taken into 
+ 545:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  account. The hysteresis is added or subtracted from the finger threshold 
+ 546:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  based on whether the sensor is currently active. 
+ 547:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  If the sensor is active, the threshold is lowered by the hysteresis amount.
+ 548:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  If the sensor is inactive, the threshold is raised by the hysteresis amount.
+ 549:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  The debounce counter added to the sensor active transition.
+ 550:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  This function updates CapSense_CSD_SensorOnMask[] array element.
+ 551:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 552:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 22
+
+
+ 553:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensor:  Sensor number.
+ 554:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 555:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 556:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Returns sensor state 1 if active, 0 if not active.
+ 557:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 558:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 559:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorSignal[]      - used to store diffence between 
+ 560:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  current value of raw data and previous value of baseline.
+ 561:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_debounceCounter[]   - used to store current debounce 
+ 562:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  counter of sensor. Widget which has this parameter are buttons, matrix 
+ 563:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  buttons, proximity, guard. All other widgets haven't debounce parameter
+ 564:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  and use the last element of this array with value 0 (it means no debounce).
+ 565:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorOnMask[] - used to store sensors on/off state.
+ 566:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorOnMask[0] contains the masked bits for sensors 
+ 567:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *   0 through 7 (sensor 0 is bit 0, sensor 1 is bit 1).
+ 568:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[1] contains the masked bits for 
+ 569:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensors 8 through 15 (if needed), and so on.
+ 570:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 - sensor is inactive.
+ 571:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  1 - sensor is active.
+ 572:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 573:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 574:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 575:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 576:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 577:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_CheckIsSensorActive(uint8 sensor)
+ 578:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                   
+ 579:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 636              		.loc 1 579 0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 16
+ 639              		@ frame_needed = 1, uses_anonymous_args = 0
+ 640              		@ link register save eliminated.
+ 641 0000 80B4     		push	{r7}
+ 642              		.cfi_def_cfa_offset 4
+ 643              		.cfi_offset 7, -4
+ 644 0002 85B0     		sub	sp, sp, #20
+ 645              		.cfi_def_cfa_offset 24
+ 646 0004 00AF     		add	r7, sp, #0
+ 647              		.cfi_def_cfa_register 7
+ 648 0006 0346     		mov	r3, r0
+ 649 0008 FB71     		strb	r3, [r7, #7]
+ 580:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 debounceIndex;
+ 581:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Get On/Off mask */
+ 582:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 pos = (sensor >> 3u);
+ 650              		.loc 1 582 0
+ 651 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 652 000c DB08     		lsrs	r3, r3, #3
+ 653 000e FB73     		strb	r3, [r7, #15]
+ 583:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 onMask = 0x01u << (sensor & 0x07u);
+ 654              		.loc 1 583 0
+ 655 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 656 0012 03F00703 		and	r3, r3, #7
+ 657 0016 0122     		movs	r2, #1
+ 658 0018 02FA03F3 		lsl	r3, r2, r3
+ 659 001c BB73     		strb	r3, [r7, #14]
+ 584:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Prepare to find debounce counter index */
+ 585:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 widget = CapSense_CSD_widgetNumber[sensor];
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 23
+
+
+ 660              		.loc 1 585 0
+ 661 001e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 662 0020 324A     		ldr	r2, .L45
+ 663 0022 D35C     		ldrb	r3, [r2, r3]
+ 664 0024 7B73     		strb	r3, [r7, #13]
+ 586:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 fingerThreshold = CapSense_CSD_fingerThreshold[widget];
+ 665              		.loc 1 586 0
+ 666 0026 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 667 0028 314A     		ldr	r2, .L45+4
+ 668 002a D35C     		ldrb	r3, [r2, r3]
+ 669 002c 3B73     		strb	r3, [r7, #12]
+ 587:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 hysteresis = CapSense_CSD_hysteresis[widget];
+ 670              		.loc 1 587 0
+ 671 002e 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 672 0030 304A     		ldr	r2, .L45+8
+ 673 0032 D35C     		ldrb	r3, [r2, r3]
+ 674 0034 FB72     		strb	r3, [r7, #11]
+ 588:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 debounce = CapSense_CSD_debounce[widget];
+ 675              		.loc 1 588 0
+ 676 0036 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 677 0038 2F4A     		ldr	r2, .L45+12
+ 678 003a D35C     		ldrb	r3, [r2, r3]
+ 679 003c BB72     		strb	r3, [r7, #10]
+ 589:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 590:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     debounceIndex = widget;
+ 680              		.loc 1 590 0
+ 681 003e 7B7B     		ldrb	r3, [r7, #13]
+ 682 0040 7B72     		strb	r3, [r7, #9]
+ 591:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 592:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 593:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Was on */
+ 594:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     if (0u != (CapSense_CSD_sensorOnMask[pos] & onMask))
+ 683              		.loc 1 594 0
+ 684 0042 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 685 0044 2D4A     		ldr	r2, .L45+16
+ 686 0046 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 687 0048 BB7B     		ldrb	r3, [r7, #14]
+ 688 004a 1340     		ands	r3, r3, r2
+ 689 004c DBB2     		uxtb	r3, r3
+ 690 004e 002B     		cmp	r3, #0
+ 691 0050 18D0     		beq	.L37
+ 595:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 596:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Hysteresis minus */
+ 597:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if (CapSense_CSD_sensorSignal[sensor] < (fingerThreshold - hysteresis))
+ 692              		.loc 1 597 0
+ 693 0052 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 694 0054 2A4A     		ldr	r2, .L45+20
+ 695 0056 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 696 0058 1946     		mov	r1, r3
+ 697 005a 3A7B     		ldrb	r2, [r7, #12]	@ zero_extendqisi2
+ 698 005c FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 699 005e D31A     		subs	r3, r2, r3
+ 700 0060 9942     		cmp	r1, r3
+ 701 0062 32DA     		bge	.L39
+ 598:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 599:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_sensorOnMask[pos] &= (uint8)~onMask;
+ 702              		.loc 1 599 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 24
+
+
+ 703 0064 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 704 0066 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 705 0068 2449     		ldr	r1, .L45+16
+ 706 006a 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 707 006c BA7B     		ldrb	r2, [r7, #14]
+ 708 006e D243     		mvns	r2, r2
+ 709 0070 D2B2     		uxtb	r2, r2
+ 710 0072 0A40     		ands	r2, r2, r1
+ 711 0074 D1B2     		uxtb	r1, r2
+ 712 0076 214A     		ldr	r2, .L45+16
+ 713 0078 D154     		strb	r1, [r2, r3]
+ 600:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_debounceCounter[debounceIndex] = debounce; 
+ 714              		.loc 1 600 0
+ 715 007a 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 716 007c 2149     		ldr	r1, .L45+24
+ 717 007e BA7A     		ldrb	r2, [r7, #10]
+ 718 0080 CA54     		strb	r2, [r1, r3]
+ 719 0082 22E0     		b	.L39
+ 720              	.L37:
+ 601:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 602:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 603:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     else    /* Was off */
+ 604:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 605:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         /* Hysteresis plus */
+ 606:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if (CapSense_CSD_sensorSignal[sensor] > (fingerThreshold + hysteresis))
+ 721              		.loc 1 606 0
+ 722 0084 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 723 0086 1E4A     		ldr	r2, .L45+20
+ 724 0088 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 725 008a 1946     		mov	r1, r3
+ 726 008c 3A7B     		ldrb	r2, [r7, #12]	@ zero_extendqisi2
+ 727 008e FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 728 0090 1344     		add	r3, r3, r2
+ 729 0092 9942     		cmp	r1, r3
+ 730 0094 15DD     		ble	.L40
+ 607:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 608:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Sensor active, decrement debounce counter */
+ 609:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             if (CapSense_CSD_debounceCounter[debounceIndex] <= 1u)
+ 731              		.loc 1 609 0
+ 732 0096 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 733 0098 1A4A     		ldr	r2, .L45+24
+ 734 009a D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 735 009c 012B     		cmp	r3, #1
+ 736 009e 08D8     		bhi	.L41
+ 610:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             {
+ 611:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                 CapSense_CSD_sensorOnMask[pos] |= onMask; 
+ 737              		.loc 1 611 0
+ 738 00a0 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 739 00a2 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 740 00a4 1549     		ldr	r1, .L45+16
+ 741 00a6 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 742 00a8 BA7B     		ldrb	r2, [r7, #14]
+ 743 00aa 0A43     		orrs	r2, r2, r1
+ 744 00ac D1B2     		uxtb	r1, r2
+ 745 00ae 134A     		ldr	r2, .L45+16
+ 746 00b0 D154     		strb	r1, [r2, r3]
+ 747              	.L41:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 25
+
+
+ 612:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             }
+ 613:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_debounceCounter[debounceIndex]--;
+ 748              		.loc 1 613 0
+ 749 00b2 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 750 00b4 134A     		ldr	r2, .L45+24
+ 751 00b6 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 752 00b8 013A     		subs	r2, r2, #1
+ 753 00ba D1B2     		uxtb	r1, r2
+ 754 00bc 114A     		ldr	r2, .L45+24
+ 755 00be D154     		strb	r1, [r2, r3]
+ 756 00c0 03E0     		b	.L39
+ 757              	.L40:
+ 614:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 615:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         else
+ 616:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 617:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             /* Sensor inactive - reset Debounce counter */
+ 618:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             CapSense_CSD_debounceCounter[debounceIndex] = debounce;
+ 758              		.loc 1 618 0
+ 759 00c2 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 760 00c4 0F49     		ldr	r1, .L45+24
+ 761 00c6 BA7A     		ldrb	r2, [r7, #10]
+ 762 00c8 CA54     		strb	r2, [r1, r3]
+ 763              	.L39:
+ 619:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 620:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 621:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 622:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     return (((CapSense_CSD_sensorOnMask[pos] & onMask) != 0u) ? 1u : 0u);
+ 764              		.loc 1 622 0
+ 765 00ca FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 766 00cc 0B4A     		ldr	r2, .L45+16
+ 767 00ce D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 768 00d0 BB7B     		ldrb	r3, [r7, #14]
+ 769 00d2 1340     		ands	r3, r3, r2
+ 770 00d4 DBB2     		uxtb	r3, r3
+ 771 00d6 002B     		cmp	r3, #0
+ 772 00d8 01D0     		beq	.L42
+ 773              		.loc 1 622 0 is_stmt 0 discriminator 1
+ 774 00da 0123     		movs	r3, #1
+ 775 00dc 00E0     		b	.L43
+ 776              	.L42:
+ 777              		.loc 1 622 0 discriminator 2
+ 778 00de 0023     		movs	r3, #0
+ 779              	.L43:
+ 623:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 780              		.loc 1 623 0 is_stmt 1 discriminator 4
+ 781 00e0 1846     		mov	r0, r3
+ 782 00e2 1437     		adds	r7, r7, #20
+ 783              		.cfi_def_cfa_offset 4
+ 784 00e4 BD46     		mov	sp, r7
+ 785              		.cfi_def_cfa_register 13
+ 786              		@ sp needed
+ 787 00e6 80BC     		pop	{r7}
+ 788              		.cfi_restore 7
+ 789              		.cfi_def_cfa_offset 0
+ 790 00e8 7047     		bx	lr
+ 791              	.L46:
+ 792 00ea 00BF     		.align	2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 26
+
+
+ 793              	.L45:
+ 794 00ec 00000000 		.word	CapSense_CSD_widgetNumber
+ 795 00f0 00000000 		.word	CapSense_CSD_fingerThreshold
+ 796 00f4 00000000 		.word	CapSense_CSD_hysteresis
+ 797 00f8 00000000 		.word	CapSense_CSD_debounce
+ 798 00fc 00000000 		.word	CapSense_CSD_sensorOnMask
+ 799 0100 00000000 		.word	CapSense_CSD_sensorSignal
+ 800 0104 00000000 		.word	CapSense_CSD_debounceCounter
+ 801              		.cfi_endproc
+ 802              	.LFE6:
+ 803              		.size	CapSense_CSD_CheckIsSensorActive, .-CapSense_CSD_CheckIsSensorActive
+ 804              		.section	.text.CapSense_CSD_CheckIsWidgetActive,"ax",%progbits
+ 805              		.align	2
+ 806              		.global	CapSense_CSD_CheckIsWidgetActive
+ 807              		.thumb
+ 808              		.thumb_func
+ 809              		.type	CapSense_CSD_CheckIsWidgetActive, %function
+ 810              	CapSense_CSD_CheckIsWidgetActive:
+ 811              	.LFB7:
+ 624:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 625:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 626:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 627:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_CheckIsWidgetActive
+ 628:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 629:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 630:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 631:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Use function CapSense_CSD_CheckIsSensorActive() to update 
+ 632:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorOnMask[] for all sensors within the widget.
+ 633:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  If one of sensors within widget is active the function return that widget is 
+ 634:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  active.
+ 635:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  The touch pad and matrix buttons widgets need to have active sensor within 
+ 636:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  col and row to return widget active status.
+ 637:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 638:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 639:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  widget:  widget number.
+ 640:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 641:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 642:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Returns widget sensor state 1 if one or more sensors within widget is/are 
+ 643:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  active, 0 if all sensors within widget are inactive.
+ 644:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 645:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 646:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 647:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 648:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 649:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_CheckIsWidgetActive(uint8 widget)
+ 650:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                  
+ 651:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 812              		.loc 1 651 0
+ 813              		.cfi_startproc
+ 814              		@ args = 0, pretend = 0, frame = 16
+ 815              		@ frame_needed = 1, uses_anonymous_args = 0
+ 816 0000 80B5     		push	{r7, lr}
+ 817              		.cfi_def_cfa_offset 8
+ 818              		.cfi_offset 7, -8
+ 819              		.cfi_offset 14, -4
+ 820 0002 84B0     		sub	sp, sp, #16
+ 821              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 27
+
+
+ 822 0004 00AF     		add	r7, sp, #0
+ 823              		.cfi_def_cfa_register 7
+ 824 0006 0346     		mov	r3, r0
+ 825 0008 FB71     		strb	r3, [r7, #7]
+ 652:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 rawIndex = CapSense_CSD_rawDataIndex[widget];
+ 826              		.loc 1 652 0
+ 827 000a 0023     		movs	r3, #0
+ 828 000c FB73     		strb	r3, [r7, #15]
+ 653:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 numberOfSensors = CapSense_CSD_numberOfSensors[widget] + rawIndex;
+ 829              		.loc 1 653 0
+ 830 000e 0122     		movs	r2, #1
+ 831 0010 FB7B     		ldrb	r3, [r7, #15]
+ 832 0012 1344     		add	r3, r3, r2
+ 833 0014 7B73     		strb	r3, [r7, #13]
+ 654:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 state = 0u;
+ 834              		.loc 1 654 0
+ 835 0016 0023     		movs	r3, #0
+ 836 0018 BB73     		strb	r3, [r7, #14]
+ 837              	.L49:
+ 655:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 656:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Check all sensors of the widget */
+ 657:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     do
+ 658:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 659:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if(CapSense_CSD_CheckIsSensorActive(rawIndex) != 0u)
+ 838              		.loc 1 659 0
+ 839 001a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 840 001c 1846     		mov	r0, r3
+ 841 001e FFF7FEFF 		bl	CapSense_CSD_CheckIsSensorActive
+ 842 0022 0346     		mov	r3, r0
+ 843 0024 002B     		cmp	r3, #0
+ 844 0026 01D0     		beq	.L48
+ 660:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 661:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             state = CapSense_CSD_SENSOR_1_IS_ACTIVE;
+ 845              		.loc 1 661 0
+ 846 0028 0123     		movs	r3, #1
+ 847 002a BB73     		strb	r3, [r7, #14]
+ 848              	.L48:
+ 662:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 663:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         rawIndex++;
+ 849              		.loc 1 663 0
+ 850 002c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 851 002e 0133     		adds	r3, r3, #1
+ 852 0030 FB73     		strb	r3, [r7, #15]
+ 664:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 665:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     while(rawIndex < numberOfSensors);
+ 853              		.loc 1 665 0
+ 854 0032 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 855 0034 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 856 0036 9A42     		cmp	r2, r3
+ 857 0038 EFD3     		bcc	.L49
+ 666:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 667:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 668:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 669:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     return (state);
+ 858              		.loc 1 669 0
+ 859 003a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 670:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 28
+
+
+ 860              		.loc 1 670 0
+ 861 003c 1846     		mov	r0, r3
+ 862 003e 1037     		adds	r7, r7, #16
+ 863              		.cfi_def_cfa_offset 8
+ 864 0040 BD46     		mov	sp, r7
+ 865              		.cfi_def_cfa_register 13
+ 866              		@ sp needed
+ 867 0042 80BD     		pop	{r7, pc}
+ 868              		.cfi_endproc
+ 869              	.LFE7:
+ 870              		.size	CapSense_CSD_CheckIsWidgetActive, .-CapSense_CSD_CheckIsWidgetActive
+ 871              		.section	.text.CapSense_CSD_CheckIsAnyWidgetActive,"ax",%progbits
+ 872              		.align	2
+ 873              		.global	CapSense_CSD_CheckIsAnyWidgetActive
+ 874              		.thumb
+ 875              		.thumb_func
+ 876              		.type	CapSense_CSD_CheckIsAnyWidgetActive, %function
+ 877              	CapSense_CSD_CheckIsAnyWidgetActive:
+ 878              	.LFB8:
+ 671:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 672:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 673:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 674:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_CheckIsAnyWidgetActive
+ 675:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 676:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 677:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 678:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Compares all sensors of the CapSense_CSD_signal[] array to their finger 
+ 679:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  threshold. Calls CapSense_CSD_CheckIsWidgetActive() for each widget so 
+ 680:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  the CapSense_CSD_SensorOnMask[] array is up to date after calling this 
+ 681:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  function.
+ 682:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 683:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 684:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  widget:  widget number.
+ 685:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 686:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 687:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Returns 1 if any widget is active, 0 none of widgets are active.
+ 688:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 689:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 690:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 691:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 692:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 693:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** uint8 CapSense_CSD_CheckIsAnyWidgetActive(void)
+ 694:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                  
+ 695:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 879              		.loc 1 695 0
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 8
+ 882              		@ frame_needed = 1, uses_anonymous_args = 0
+ 883 0000 80B5     		push	{r7, lr}
+ 884              		.cfi_def_cfa_offset 8
+ 885              		.cfi_offset 7, -8
+ 886              		.cfi_offset 14, -4
+ 887 0002 82B0     		sub	sp, sp, #8
+ 888              		.cfi_def_cfa_offset 16
+ 889 0004 00AF     		add	r7, sp, #0
+ 890              		.cfi_def_cfa_register 7
+ 696:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 i;
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 29
+
+
+ 697:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 state = 0u;
+ 891              		.loc 1 697 0
+ 892 0006 0023     		movs	r3, #0
+ 893 0008 BB71     		strb	r3, [r7, #6]
+ 698:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 699:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     for(i = 0u; i < CapSense_CSD_TOTAL_WIDGET_COUNT; i++)
+ 894              		.loc 1 699 0
+ 895 000a 0023     		movs	r3, #0
+ 896 000c FB71     		strb	r3, [r7, #7]
+ 897 000e 0BE0     		b	.L52
+ 898              	.L54:
+ 700:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 701:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         if (CapSense_CSD_CheckIsWidgetActive(i) != 0u)
+ 899              		.loc 1 701 0
+ 900 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 901 0012 1846     		mov	r0, r3
+ 902 0014 FFF7FEFF 		bl	CapSense_CSD_CheckIsWidgetActive
+ 903 0018 0346     		mov	r3, r0
+ 904 001a 002B     		cmp	r3, #0
+ 905 001c 01D0     		beq	.L53
+ 702:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         {
+ 703:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****             state = CapSense_CSD_WIDGET_IS_ACTIVE;
+ 906              		.loc 1 703 0
+ 907 001e 0123     		movs	r3, #1
+ 908 0020 BB71     		strb	r3, [r7, #6]
+ 909              	.L53:
+ 699:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 910              		.loc 1 699 0 discriminator 2
+ 911 0022 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 912 0024 0133     		adds	r3, r3, #1
+ 913 0026 FB71     		strb	r3, [r7, #7]
+ 914              	.L52:
+ 699:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 915              		.loc 1 699 0 is_stmt 0 discriminator 1
+ 916 0028 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 917 002a 002B     		cmp	r3, #0
+ 918 002c F0D0     		beq	.L54
+ 704:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         }
+ 705:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 706:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 707:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 708:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     return (state);
+ 919              		.loc 1 708 0 is_stmt 1
+ 920 002e BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 709:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 921              		.loc 1 709 0
+ 922 0030 1846     		mov	r0, r3
+ 923 0032 0837     		adds	r7, r7, #8
+ 924              		.cfi_def_cfa_offset 8
+ 925 0034 BD46     		mov	sp, r7
+ 926              		.cfi_def_cfa_register 13
+ 927              		@ sp needed
+ 928 0036 80BD     		pop	{r7, pc}
+ 929              		.cfi_endproc
+ 930              	.LFE8:
+ 931              		.size	CapSense_CSD_CheckIsAnyWidgetActive, .-CapSense_CSD_CheckIsAnyWidgetActive
+ 932              		.section	.text.CapSense_CSD_EnableWidget,"ax",%progbits
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 30
+
+
+ 933              		.align	2
+ 934              		.global	CapSense_CSD_EnableWidget
+ 935              		.thumb
+ 936              		.thumb_func
+ 937              		.type	CapSense_CSD_EnableWidget, %function
+ 938              	CapSense_CSD_EnableWidget:
+ 939              	.LFB9:
+ 710:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 711:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 712:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 713:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_EnableWidget
+ 714:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 715:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 716:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 717:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Enable all widget elements (sensors) to scanning process.
+ 718:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 719:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 720:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  widget:  widget number.
+ 721:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 722:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 723:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 724:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 725:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 726:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[] - used to store the sensor scanning 
+ 727:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  state.
+ 728:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[0] contains the masked bits for sensors 
+ 729:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 through 7 (sensor 0 is bit 0, sensor 1 is bit 1).
+ 730:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[1] contains the masked bits for 
+ 731:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensors 8 through 15 (if needed), and so on.
+ 732:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 - sensor doesn't scan by CapSense_CSD_ScanEnabledWidgets().
+ 733:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  1 - sensor scans by CapSense_CSD_ScanEnabledWidgets().
+ 734:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 735:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 736:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 737:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 738:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 739:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_EnableWidget(uint8 widget)
+ 740:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                    
+ 741:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 940              		.loc 1 741 0
+ 941              		.cfi_startproc
+ 942              		@ args = 0, pretend = 0, frame = 16
+ 943              		@ frame_needed = 1, uses_anonymous_args = 0
+ 944              		@ link register save eliminated.
+ 945 0000 80B4     		push	{r7}
+ 946              		.cfi_def_cfa_offset 4
+ 947              		.cfi_offset 7, -4
+ 948 0002 85B0     		sub	sp, sp, #20
+ 949              		.cfi_def_cfa_offset 24
+ 950 0004 00AF     		add	r7, sp, #0
+ 951              		.cfi_def_cfa_register 7
+ 952 0006 0346     		mov	r3, r0
+ 953 0008 FB71     		strb	r3, [r7, #7]
+ 742:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 pos;
+ 743:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 enMask;
+ 744:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 rawIndex = CapSense_CSD_rawDataIndex[widget];
+ 954              		.loc 1 744 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 31
+
+
+ 955 000a 0023     		movs	r3, #0
+ 956 000c FB73     		strb	r3, [r7, #15]
+ 745:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 numberOfSensors = CapSense_CSD_numberOfSensors[widget] + rawIndex;
+ 957              		.loc 1 745 0
+ 958 000e 0122     		movs	r2, #1
+ 959 0010 FB7B     		ldrb	r3, [r7, #15]
+ 960 0012 1344     		add	r3, r3, r2
+ 961 0014 BB73     		strb	r3, [r7, #14]
+ 962              	.L57:
+ 746:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 747:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Enable all sensors of the widget */
+ 748:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     do
+ 749:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 750:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         pos = (rawIndex >> 3u);
+ 963              		.loc 1 750 0 discriminator 1
+ 964 0016 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 965 0018 DB08     		lsrs	r3, r3, #3
+ 966 001a 7B73     		strb	r3, [r7, #13]
+ 751:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         enMask = 0x01u << (rawIndex & 0x07u);
+ 967              		.loc 1 751 0 discriminator 1
+ 968 001c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 969 001e 03F00703 		and	r3, r3, #7
+ 970 0022 0122     		movs	r2, #1
+ 971 0024 02FA03F3 		lsl	r3, r2, r3
+ 972 0028 3B73     		strb	r3, [r7, #12]
+ 752:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 753:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_sensorEnableMask[pos] |= enMask;
+ 973              		.loc 1 753 0 discriminator 1
+ 974 002a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 975 002c 7A7B     		ldrb	r2, [r7, #13]	@ zero_extendqisi2
+ 976 002e 0949     		ldr	r1, .L58
+ 977 0030 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 978 0032 3A7B     		ldrb	r2, [r7, #12]
+ 979 0034 0A43     		orrs	r2, r2, r1
+ 980 0036 D1B2     		uxtb	r1, r2
+ 981 0038 064A     		ldr	r2, .L58
+ 982 003a D154     		strb	r1, [r2, r3]
+ 754:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         rawIndex++;
+ 983              		.loc 1 754 0 discriminator 1
+ 984 003c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 985 003e 0133     		adds	r3, r3, #1
+ 986 0040 FB73     		strb	r3, [r7, #15]
+ 755:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 756:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     while(rawIndex < numberOfSensors);
+ 987              		.loc 1 756 0 discriminator 1
+ 988 0042 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 989 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 990 0046 9A42     		cmp	r2, r3
+ 991 0048 E5D3     		bcc	.L57
+ 757:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 758:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 759:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 992              		.loc 1 759 0
+ 993 004a 00BF     		nop
+ 994 004c 1437     		adds	r7, r7, #20
+ 995              		.cfi_def_cfa_offset 4
+ 996 004e BD46     		mov	sp, r7
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 32
+
+
+ 997              		.cfi_def_cfa_register 13
+ 998              		@ sp needed
+ 999 0050 80BC     		pop	{r7}
+ 1000              		.cfi_restore 7
+ 1001              		.cfi_def_cfa_offset 0
+ 1002 0052 7047     		bx	lr
+ 1003              	.L59:
+ 1004              		.align	2
+ 1005              	.L58:
+ 1006 0054 00000000 		.word	CapSense_CSD_sensorEnableMask
+ 1007              		.cfi_endproc
+ 1008              	.LFE9:
+ 1009              		.size	CapSense_CSD_EnableWidget, .-CapSense_CSD_EnableWidget
+ 1010              		.section	.text.CapSense_CSD_DisableWidget,"ax",%progbits
+ 1011              		.align	2
+ 1012              		.global	CapSense_CSD_DisableWidget
+ 1013              		.thumb
+ 1014              		.thumb_func
+ 1015              		.type	CapSense_CSD_DisableWidget, %function
+ 1016              	CapSense_CSD_DisableWidget:
+ 1017              	.LFB10:
+ 760:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 761:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 762:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** /*******************************************************************************
+ 763:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Function Name: CapSense_CSD_DisableWidget
+ 764:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** ********************************************************************************
+ 765:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 766:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Summary:
+ 767:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  Disable all widget elements (sensors) from scanning process.
+ 768:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 769:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Parameters:
+ 770:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  widget:  widget number.
+ 771:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 772:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Return:
+ 773:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  None
+ 774:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 775:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Global Variables:
+ 776:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[] - used to store the sensor scanning 
+ 777:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  state.
+ 778:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[0] contains the masked bits for sensors 
+ 779:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 through 7 (sensor 0 is bit 0, sensor 1 is bit 1).
+ 780:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  CapSense_CSD_sensorEnableMask[1] contains the masked bits for 
+ 781:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  sensors 8 through 15 (if needed), and so on.
+ 782:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  0 - sensor doesn't scan by CapSense_CSD_ScanEnabledWidgets().
+ 783:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  1 - sensor scans by CapSense_CSD_ScanEnabledWidgets().
+ 784:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 785:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** * Reentrant:
+ 786:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *  No
+ 787:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *
+ 788:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** *******************************************************************************/
+ 789:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** void CapSense_CSD_DisableWidget(uint8 widget)
+ 790:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****                                     
+ 791:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** {
+ 1018              		.loc 1 791 0
+ 1019              		.cfi_startproc
+ 1020              		@ args = 0, pretend = 0, frame = 16
+ 1021              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 33
+
+
+ 1022              		@ link register save eliminated.
+ 1023 0000 80B4     		push	{r7}
+ 1024              		.cfi_def_cfa_offset 4
+ 1025              		.cfi_offset 7, -4
+ 1026 0002 85B0     		sub	sp, sp, #20
+ 1027              		.cfi_def_cfa_offset 24
+ 1028 0004 00AF     		add	r7, sp, #0
+ 1029              		.cfi_def_cfa_register 7
+ 1030 0006 0346     		mov	r3, r0
+ 1031 0008 FB71     		strb	r3, [r7, #7]
+ 792:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 pos;
+ 793:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 enMask;
+ 794:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 rawIndex = CapSense_CSD_rawDataIndex[widget];
+ 1032              		.loc 1 794 0
+ 1033 000a 0023     		movs	r3, #0
+ 1034 000c FB73     		strb	r3, [r7, #15]
+ 795:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     uint8 numberOfSensors = CapSense_CSD_numberOfSensors[widget] + rawIndex;
+ 1035              		.loc 1 795 0
+ 1036 000e 0122     		movs	r2, #1
+ 1037 0010 FB7B     		ldrb	r3, [r7, #15]
+ 1038 0012 1344     		add	r3, r3, r2
+ 1039 0014 BB73     		strb	r3, [r7, #14]
+ 1040              	.L61:
+ 796:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****    
+ 797:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     /* Disable all sensors of the widget */
+ 798:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     do
+ 799:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     {
+ 800:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         pos = (rawIndex >> 3u);
+ 1041              		.loc 1 800 0 discriminator 1
+ 1042 0016 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1043 0018 DB08     		lsrs	r3, r3, #3
+ 1044 001a 7B73     		strb	r3, [r7, #13]
+ 801:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         enMask = 0x01u << (rawIndex & 0x07u);
+ 1045              		.loc 1 801 0 discriminator 1
+ 1046 001c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1047 001e 03F00703 		and	r3, r3, #7
+ 1048 0022 0122     		movs	r2, #1
+ 1049 0024 02FA03F3 		lsl	r3, r2, r3
+ 1050 0028 3B73     		strb	r3, [r7, #12]
+ 802:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         
+ 803:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         CapSense_CSD_sensorEnableMask[pos] &= (uint8)~enMask;
+ 1051              		.loc 1 803 0 discriminator 1
+ 1052 002a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 1053 002c 7A7B     		ldrb	r2, [r7, #13]	@ zero_extendqisi2
+ 1054 002e 0A49     		ldr	r1, .L62
+ 1055 0030 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 1056 0032 3A7B     		ldrb	r2, [r7, #12]
+ 1057 0034 D243     		mvns	r2, r2
+ 1058 0036 D2B2     		uxtb	r2, r2
+ 1059 0038 0A40     		ands	r2, r2, r1
+ 1060 003a D1B2     		uxtb	r1, r2
+ 1061 003c 064A     		ldr	r2, .L62
+ 1062 003e D154     		strb	r1, [r2, r3]
+ 804:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****         rawIndex++;
+ 1063              		.loc 1 804 0 discriminator 1
+ 1064 0040 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1065 0042 0133     		adds	r3, r3, #1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 34
+
+
+ 1066 0044 FB73     		strb	r3, [r7, #15]
+ 805:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     }
+ 806:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     while(rawIndex < numberOfSensors);
+ 1067              		.loc 1 806 0 discriminator 1
+ 1068 0046 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 1069 0048 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 1070 004a 9A42     		cmp	r2, r3
+ 1071 004c E3D3     		bcc	.L61
+ 807:Generated_Source\PSoC5/CapSense_CSD_CSHL.c ****     
+ 808:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** 
+ 809:Generated_Source\PSoC5/CapSense_CSD_CSHL.c **** }
+ 1072              		.loc 1 809 0
+ 1073 004e 00BF     		nop
+ 1074 0050 1437     		adds	r7, r7, #20
+ 1075              		.cfi_def_cfa_offset 4
+ 1076 0052 BD46     		mov	sp, r7
+ 1077              		.cfi_def_cfa_register 13
+ 1078              		@ sp needed
+ 1079 0054 80BC     		pop	{r7}
+ 1080              		.cfi_restore 7
+ 1081              		.cfi_def_cfa_offset 0
+ 1082 0056 7047     		bx	lr
+ 1083              	.L63:
+ 1084              		.align	2
+ 1085              	.L62:
+ 1086 0058 00000000 		.word	CapSense_CSD_sensorEnableMask
+ 1087              		.cfi_endproc
+ 1088              	.LFE10:
+ 1089              		.size	CapSense_CSD_DisableWidget, .-CapSense_CSD_DisableWidget
+ 1090              		.text
+ 1091              	.Letext0:
+ 1092              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 1093              		.file 3 "Generated_Source\\PSoC5\\CapSense_CSD.h"
+ 1094              		.file 4 "Generated_Source\\PSoC5\\CapSense_CSD_CSHL.h"
+ 1095              		.section	.debug_info,"",%progbits
+ 1096              	.Ldebug_info0:
+ 1097 0000 45050000 		.4byte	0x545
+ 1098 0004 0400     		.2byte	0x4
+ 1099 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1100 000a 04       		.byte	0x4
+ 1101 000b 01       		.uleb128 0x1
+ 1102 000c 95000000 		.4byte	.LASF58
+ 1103 0010 0C       		.byte	0xc
+ 1104 0011 00000000 		.4byte	.LASF59
+ 1105 0015 59040000 		.4byte	.LASF60
+ 1106 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1107 001d 00000000 		.4byte	0
+ 1108 0021 00000000 		.4byte	.Ldebug_line0
+ 1109 0025 02       		.uleb128 0x2
+ 1110 0026 01       		.byte	0x1
+ 1111 0027 06       		.byte	0x6
+ 1112 0028 48010000 		.4byte	.LASF0
+ 1113 002c 02       		.uleb128 0x2
+ 1114 002d 01       		.byte	0x1
+ 1115 002e 08       		.byte	0x8
+ 1116 002f 49030000 		.4byte	.LASF1
+ 1117 0033 02       		.uleb128 0x2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 35
+
+
+ 1118 0034 02       		.byte	0x2
+ 1119 0035 05       		.byte	0x5
+ 1120 0036 66030000 		.4byte	.LASF2
+ 1121 003a 02       		.uleb128 0x2
+ 1122 003b 02       		.byte	0x2
+ 1123 003c 07       		.byte	0x7
+ 1124 003d 57020000 		.4byte	.LASF3
+ 1125 0041 02       		.uleb128 0x2
+ 1126 0042 04       		.byte	0x4
+ 1127 0043 05       		.byte	0x5
+ 1128 0044 94010000 		.4byte	.LASF4
+ 1129 0048 02       		.uleb128 0x2
+ 1130 0049 04       		.byte	0x4
+ 1131 004a 07       		.byte	0x7
+ 1132 004b 2B020000 		.4byte	.LASF5
+ 1133 004f 02       		.uleb128 0x2
+ 1134 0050 08       		.byte	0x8
+ 1135 0051 05       		.byte	0x5
+ 1136 0052 3A010000 		.4byte	.LASF6
+ 1137 0056 02       		.uleb128 0x2
+ 1138 0057 08       		.byte	0x8
+ 1139 0058 07       		.byte	0x7
+ 1140 0059 23010000 		.4byte	.LASF7
+ 1141 005d 03       		.uleb128 0x3
+ 1142 005e 04       		.byte	0x4
+ 1143 005f 05       		.byte	0x5
+ 1144 0060 696E7400 		.ascii	"int\000"
+ 1145 0064 02       		.uleb128 0x2
+ 1146 0065 04       		.byte	0x4
+ 1147 0066 07       		.byte	0x7
+ 1148 0067 1E020000 		.4byte	.LASF8
+ 1149 006b 04       		.uleb128 0x4
+ 1150 006c B7010000 		.4byte	.LASF9
+ 1151 0070 02       		.byte	0x2
+ 1152 0071 9201     		.2byte	0x192
+ 1153 0073 2C000000 		.4byte	0x2c
+ 1154 0077 04       		.uleb128 0x4
+ 1155 0078 48000000 		.4byte	.LASF10
+ 1156 007c 02       		.byte	0x2
+ 1157 007d 9301     		.2byte	0x193
+ 1158 007f 3A000000 		.4byte	0x3a
+ 1159 0083 04       		.uleb128 0x4
+ 1160 0084 C4010000 		.4byte	.LASF11
+ 1161 0088 02       		.byte	0x2
+ 1162 0089 9401     		.2byte	0x194
+ 1163 008b 48000000 		.4byte	0x48
+ 1164 008f 02       		.uleb128 0x2
+ 1165 0090 04       		.byte	0x4
+ 1166 0091 04       		.byte	0x4
+ 1167 0092 E1020000 		.4byte	.LASF12
+ 1168 0096 02       		.uleb128 0x2
+ 1169 0097 08       		.byte	0x8
+ 1170 0098 04       		.byte	0x4
+ 1171 0099 BD010000 		.4byte	.LASF13
+ 1172 009d 02       		.uleb128 0x2
+ 1173 009e 01       		.byte	0x1
+ 1174 009f 08       		.byte	0x8
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 36
+
+
+ 1175 00a0 F0030000 		.4byte	.LASF14
+ 1176 00a4 02       		.uleb128 0x2
+ 1177 00a5 08       		.byte	0x8
+ 1178 00a6 04       		.byte	0x4
+ 1179 00a7 88020000 		.4byte	.LASF15
+ 1180 00ab 02       		.uleb128 0x2
+ 1181 00ac 04       		.byte	0x4
+ 1182 00ad 07       		.byte	0x7
+ 1183 00ae 7F020000 		.4byte	.LASF16
+ 1184 00b2 05       		.uleb128 0x5
+ 1185 00b3 D6010000 		.4byte	.LASF17
+ 1186 00b7 01       		.byte	0x1
+ 1187 00b8 79       		.byte	0x79
+ 1188 00b9 00000000 		.4byte	.LFB0
+ 1189 00bd 64000000 		.4byte	.LFE0-.LFB0
+ 1190 00c1 01       		.uleb128 0x1
+ 1191 00c2 9C       		.byte	0x9c
+ 1192 00c3 E4000000 		.4byte	0xe4
+ 1193 00c7 06       		.uleb128 0x6
+ 1194 00c8 6A020000 		.4byte	.LASF19
+ 1195 00cc 01       		.byte	0x1
+ 1196 00cd 79       		.byte	0x79
+ 1197 00ce 6B000000 		.4byte	0x6b
+ 1198 00d2 02       		.uleb128 0x2
+ 1199 00d3 91       		.byte	0x91
+ 1200 00d4 6F       		.sleb128 -17
+ 1201 00d5 07       		.uleb128 0x7
+ 1202 00d6 70030000 		.4byte	.LASF21
+ 1203 00da 01       		.byte	0x1
+ 1204 00db 7D       		.byte	0x7d
+ 1205 00dc 6B000000 		.4byte	0x6b
+ 1206 00e0 02       		.uleb128 0x2
+ 1207 00e1 91       		.byte	0x91
+ 1208 00e2 77       		.sleb128 -9
+ 1209 00e3 00       		.byte	0
+ 1210 00e4 08       		.uleb128 0x8
+ 1211 00e5 6F000000 		.4byte	.LASF18
+ 1212 00e9 01       		.byte	0x1
+ 1213 00ea C2       		.byte	0xc2
+ 1214 00eb 00000000 		.4byte	.LFB1
+ 1215 00ef 2E000000 		.4byte	.LFE1-.LFB1
+ 1216 00f3 01       		.uleb128 0x1
+ 1217 00f4 9C       		.byte	0x9c
+ 1218 00f5 08010000 		.4byte	0x108
+ 1219 00f9 06       		.uleb128 0x6
+ 1220 00fa 6A020000 		.4byte	.LASF19
+ 1221 00fe 01       		.byte	0x1
+ 1222 00ff C2       		.byte	0xc2
+ 1223 0100 6B000000 		.4byte	0x6b
+ 1224 0104 02       		.uleb128 0x2
+ 1225 0105 91       		.byte	0x91
+ 1226 0106 77       		.sleb128 -9
+ 1227 0107 00       		.byte	0
+ 1228 0108 08       		.uleb128 0x8
+ 1229 0109 08030000 		.4byte	.LASF20
+ 1230 010d 01       		.byte	0x1
+ 1231 010e F6       		.byte	0xf6
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 37
+
+
+ 1232 010f 00000000 		.4byte	.LFB2
+ 1233 0113 28000000 		.4byte	.LFE2-.LFB2
+ 1234 0117 01       		.uleb128 0x1
+ 1235 0118 9C       		.byte	0x9c
+ 1236 0119 2A010000 		.4byte	0x12a
+ 1237 011d 09       		.uleb128 0x9
+ 1238 011e 6900     		.ascii	"i\000"
+ 1239 0120 01       		.byte	0x1
+ 1240 0121 F9       		.byte	0xf9
+ 1241 0122 6B000000 		.4byte	0x6b
+ 1242 0126 02       		.uleb128 0x2
+ 1243 0127 91       		.byte	0x91
+ 1244 0128 77       		.sleb128 -9
+ 1245 0129 00       		.byte	0
+ 1246 012a 0A       		.uleb128 0xa
+ 1247 012b 94020000 		.4byte	.LASF22
+ 1248 012f 01       		.byte	0x1
+ 1249 0130 1701     		.2byte	0x117
+ 1250 0132 00000000 		.4byte	.LFB3
+ 1251 0136 70000000 		.4byte	.LFE3-.LFB3
+ 1252 013a 01       		.uleb128 0x1
+ 1253 013b 9C       		.byte	0x9c
+ 1254 013c 6C010000 		.4byte	0x16c
+ 1255 0140 0B       		.uleb128 0xb
+ 1256 0141 6900     		.ascii	"i\000"
+ 1257 0143 01       		.byte	0x1
+ 1258 0144 1A01     		.2byte	0x11a
+ 1259 0146 6B000000 		.4byte	0x6b
+ 1260 014a 02       		.uleb128 0x2
+ 1261 014b 91       		.byte	0x91
+ 1262 014c 77       		.sleb128 -9
+ 1263 014d 0B       		.uleb128 0xb
+ 1264 014e 706F7300 		.ascii	"pos\000"
+ 1265 0152 01       		.byte	0x1
+ 1266 0153 1B01     		.2byte	0x11b
+ 1267 0155 6B000000 		.4byte	0x6b
+ 1268 0159 02       		.uleb128 0x2
+ 1269 015a 91       		.byte	0x91
+ 1270 015b 76       		.sleb128 -10
+ 1271 015c 0C       		.uleb128 0xc
+ 1272 015d BC020000 		.4byte	.LASF23
+ 1273 0161 01       		.byte	0x1
+ 1274 0162 1C01     		.2byte	0x11c
+ 1275 0164 6B000000 		.4byte	0x6b
+ 1276 0168 02       		.uleb128 0x2
+ 1277 0169 91       		.byte	0x91
+ 1278 016a 75       		.sleb128 -11
+ 1279 016b 00       		.byte	0
+ 1280 016c 0A       		.uleb128 0xa
+ 1281 016d 95030000 		.4byte	.LASF24
+ 1282 0171 01       		.byte	0x1
+ 1283 0172 5A01     		.2byte	0x15a
+ 1284 0174 00000000 		.4byte	.LFB4
+ 1285 0178 50010000 		.4byte	.LFE4-.LFB4
+ 1286 017c 01       		.uleb128 0x1
+ 1287 017d 9C       		.byte	0x9c
+ 1288 017e DD010000 		.4byte	0x1dd
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 38
+
+
+ 1289 0182 0D       		.uleb128 0xd
+ 1290 0183 6A020000 		.4byte	.LASF19
+ 1291 0187 01       		.byte	0x1
+ 1292 0188 5A01     		.2byte	0x15a
+ 1293 018a 6B000000 		.4byte	0x6b
+ 1294 018e 02       		.uleb128 0x2
+ 1295 018f 91       		.byte	0x91
+ 1296 0190 67       		.sleb128 -25
+ 1297 0191 0C       		.uleb128 0xc
+ 1298 0192 71020000 		.4byte	.LASF25
+ 1299 0196 01       		.byte	0x1
+ 1300 0197 5D01     		.2byte	0x15d
+ 1301 0199 83000000 		.4byte	0x83
+ 1302 019d 02       		.uleb128 0x2
+ 1303 019e 91       		.byte	0x91
+ 1304 019f 6C       		.sleb128 -20
+ 1305 01a0 0C       		.uleb128 0xc
+ 1306 01a1 3E050000 		.4byte	.LASF26
+ 1307 01a5 01       		.byte	0x1
+ 1308 01a6 5E01     		.2byte	0x15e
+ 1309 01a8 77000000 		.4byte	0x77
+ 1310 01ac 02       		.uleb128 0x2
+ 1311 01ad 91       		.byte	0x91
+ 1312 01ae 76       		.sleb128 -10
+ 1313 01af 0C       		.uleb128 0xc
+ 1314 01b0 4F000000 		.4byte	.LASF27
+ 1315 01b4 01       		.byte	0x1
+ 1316 01b5 5F01     		.2byte	0x15f
+ 1317 01b7 77000000 		.4byte	0x77
+ 1318 01bb 02       		.uleb128 0x2
+ 1319 01bc 91       		.byte	0x91
+ 1320 01bd 72       		.sleb128 -14
+ 1321 01be 0C       		.uleb128 0xc
+ 1322 01bf 70030000 		.4byte	.LASF21
+ 1323 01c3 01       		.byte	0x1
+ 1324 01c4 6001     		.2byte	0x160
+ 1325 01c6 6B000000 		.4byte	0x6b
+ 1326 01ca 02       		.uleb128 0x2
+ 1327 01cb 91       		.byte	0x91
+ 1328 01cc 75       		.sleb128 -11
+ 1329 01cd 0C       		.uleb128 0xc
+ 1330 01ce 57030000 		.4byte	.LASF28
+ 1331 01d2 01       		.byte	0x1
+ 1332 01d3 6101     		.2byte	0x161
+ 1333 01d5 6B000000 		.4byte	0x6b
+ 1334 01d9 02       		.uleb128 0x2
+ 1335 01da 91       		.byte	0x91
+ 1336 01db 74       		.sleb128 -12
+ 1337 01dc 00       		.byte	0
+ 1338 01dd 0A       		.uleb128 0xa
+ 1339 01de 0F040000 		.4byte	.LASF29
+ 1340 01e2 01       		.byte	0x1
+ 1341 01e3 0702     		.2byte	0x207
+ 1342 01e5 00000000 		.4byte	.LFB5
+ 1343 01e9 50000000 		.4byte	.LFE5-.LFB5
+ 1344 01ed 01       		.uleb128 0x1
+ 1345 01ee 9C       		.byte	0x9c
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 39
+
+
+ 1346 01ef 1F020000 		.4byte	0x21f
+ 1347 01f3 0B       		.uleb128 0xb
+ 1348 01f4 6900     		.ascii	"i\000"
+ 1349 01f6 01       		.byte	0x1
+ 1350 01f7 0A02     		.2byte	0x20a
+ 1351 01f9 6B000000 		.4byte	0x6b
+ 1352 01fd 02       		.uleb128 0x2
+ 1353 01fe 91       		.byte	0x91
+ 1354 01ff 77       		.sleb128 -9
+ 1355 0200 0B       		.uleb128 0xb
+ 1356 0201 706F7300 		.ascii	"pos\000"
+ 1357 0205 01       		.byte	0x1
+ 1358 0206 0B02     		.2byte	0x20b
+ 1359 0208 6B000000 		.4byte	0x6b
+ 1360 020c 02       		.uleb128 0x2
+ 1361 020d 91       		.byte	0x91
+ 1362 020e 76       		.sleb128 -10
+ 1363 020f 0C       		.uleb128 0xc
+ 1364 0210 BC020000 		.4byte	.LASF23
+ 1365 0214 01       		.byte	0x1
+ 1366 0215 0C02     		.2byte	0x20c
+ 1367 0217 6B000000 		.4byte	0x6b
+ 1368 021b 02       		.uleb128 0x2
+ 1369 021c 91       		.byte	0x91
+ 1370 021d 75       		.sleb128 -11
+ 1371 021e 00       		.byte	0
+ 1372 021f 0E       		.uleb128 0xe
+ 1373 0220 6D010000 		.4byte	.LASF35
+ 1374 0224 01       		.byte	0x1
+ 1375 0225 4102     		.2byte	0x241
+ 1376 0227 6B000000 		.4byte	0x6b
+ 1377 022b 00000000 		.4byte	.LFB6
+ 1378 022f 08010000 		.4byte	.LFE6-.LFB6
+ 1379 0233 01       		.uleb128 0x1
+ 1380 0234 9C       		.byte	0x9c
+ 1381 0235 B2020000 		.4byte	0x2b2
+ 1382 0239 0D       		.uleb128 0xd
+ 1383 023a 6A020000 		.4byte	.LASF19
+ 1384 023e 01       		.byte	0x1
+ 1385 023f 4102     		.2byte	0x241
+ 1386 0241 6B000000 		.4byte	0x6b
+ 1387 0245 02       		.uleb128 0x2
+ 1388 0246 91       		.byte	0x91
+ 1389 0247 6F       		.sleb128 -17
+ 1390 0248 0C       		.uleb128 0xc
+ 1391 0249 4B040000 		.4byte	.LASF30
+ 1392 024d 01       		.byte	0x1
+ 1393 024e 4402     		.2byte	0x244
+ 1394 0250 6B000000 		.4byte	0x6b
+ 1395 0254 02       		.uleb128 0x2
+ 1396 0255 91       		.byte	0x91
+ 1397 0256 71       		.sleb128 -15
+ 1398 0257 0B       		.uleb128 0xb
+ 1399 0258 706F7300 		.ascii	"pos\000"
+ 1400 025c 01       		.byte	0x1
+ 1401 025d 4602     		.2byte	0x246
+ 1402 025f 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 40
+
+
+ 1403 0263 02       		.uleb128 0x2
+ 1404 0264 91       		.byte	0x91
+ 1405 0265 77       		.sleb128 -9
+ 1406 0266 0C       		.uleb128 0xc
+ 1407 0267 77030000 		.4byte	.LASF31
+ 1408 026b 01       		.byte	0x1
+ 1409 026c 4702     		.2byte	0x247
+ 1410 026e 6B000000 		.4byte	0x6b
+ 1411 0272 02       		.uleb128 0x2
+ 1412 0273 91       		.byte	0x91
+ 1413 0274 76       		.sleb128 -10
+ 1414 0275 0C       		.uleb128 0xc
+ 1415 0276 70030000 		.4byte	.LASF21
+ 1416 027a 01       		.byte	0x1
+ 1417 027b 4902     		.2byte	0x249
+ 1418 027d 6B000000 		.4byte	0x6b
+ 1419 0281 02       		.uleb128 0x2
+ 1420 0282 91       		.byte	0x91
+ 1421 0283 75       		.sleb128 -11
+ 1422 0284 0C       		.uleb128 0xc
+ 1423 0285 5F000000 		.4byte	.LASF32
+ 1424 0289 01       		.byte	0x1
+ 1425 028a 4A02     		.2byte	0x24a
+ 1426 028c 6B000000 		.4byte	0x6b
+ 1427 0290 02       		.uleb128 0x2
+ 1428 0291 91       		.byte	0x91
+ 1429 0292 74       		.sleb128 -12
+ 1430 0293 0C       		.uleb128 0xc
+ 1431 0294 CB010000 		.4byte	.LASF33
+ 1432 0298 01       		.byte	0x1
+ 1433 0299 4B02     		.2byte	0x24b
+ 1434 029b 6B000000 		.4byte	0x6b
+ 1435 029f 02       		.uleb128 0x2
+ 1436 02a0 91       		.byte	0x91
+ 1437 02a1 73       		.sleb128 -13
+ 1438 02a2 0C       		.uleb128 0xc
+ 1439 02a3 76020000 		.4byte	.LASF34
+ 1440 02a7 01       		.byte	0x1
+ 1441 02a8 4C02     		.2byte	0x24c
+ 1442 02aa 6B000000 		.4byte	0x6b
+ 1443 02ae 02       		.uleb128 0x2
+ 1444 02af 91       		.byte	0x91
+ 1445 02b0 72       		.sleb128 -14
+ 1446 02b1 00       		.byte	0
+ 1447 02b2 0F       		.uleb128 0xf
+ 1448 02b3 E4040000 		.4byte	.LASF36
+ 1449 02b7 01       		.byte	0x1
+ 1450 02b8 8902     		.2byte	0x289
+ 1451 02ba 6B000000 		.4byte	0x6b
+ 1452 02be 00000000 		.4byte	.LFB7
+ 1453 02c2 44000000 		.4byte	.LFE7-.LFB7
+ 1454 02c6 01       		.uleb128 0x1
+ 1455 02c7 9C       		.byte	0x9c
+ 1456 02c8 09030000 		.4byte	0x309
+ 1457 02cc 0D       		.uleb128 0xd
+ 1458 02cd 70030000 		.4byte	.LASF21
+ 1459 02d1 01       		.byte	0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 41
+
+
+ 1460 02d2 8902     		.2byte	0x289
+ 1461 02d4 6B000000 		.4byte	0x6b
+ 1462 02d8 02       		.uleb128 0x2
+ 1463 02d9 91       		.byte	0x91
+ 1464 02da 6F       		.sleb128 -17
+ 1465 02db 0C       		.uleb128 0xc
+ 1466 02dc 54010000 		.4byte	.LASF37
+ 1467 02e0 01       		.byte	0x1
+ 1468 02e1 8C02     		.2byte	0x28c
+ 1469 02e3 6B000000 		.4byte	0x6b
+ 1470 02e7 02       		.uleb128 0x2
+ 1471 02e8 91       		.byte	0x91
+ 1472 02e9 77       		.sleb128 -9
+ 1473 02ea 0C       		.uleb128 0xc
+ 1474 02eb 5D010000 		.4byte	.LASF38
+ 1475 02ef 01       		.byte	0x1
+ 1476 02f0 8D02     		.2byte	0x28d
+ 1477 02f2 6B000000 		.4byte	0x6b
+ 1478 02f6 02       		.uleb128 0x2
+ 1479 02f7 91       		.byte	0x91
+ 1480 02f8 75       		.sleb128 -11
+ 1481 02f9 0C       		.uleb128 0xc
+ 1482 02fa 8E010000 		.4byte	.LASF39
+ 1483 02fe 01       		.byte	0x1
+ 1484 02ff 8E02     		.2byte	0x28e
+ 1485 0301 6B000000 		.4byte	0x6b
+ 1486 0305 02       		.uleb128 0x2
+ 1487 0306 91       		.byte	0x91
+ 1488 0307 76       		.sleb128 -10
+ 1489 0308 00       		.byte	0
+ 1490 0309 0F       		.uleb128 0xf
+ 1491 030a C0040000 		.4byte	.LASF40
+ 1492 030e 01       		.byte	0x1
+ 1493 030f B502     		.2byte	0x2b5
+ 1494 0311 6B000000 		.4byte	0x6b
+ 1495 0315 00000000 		.4byte	.LFB8
+ 1496 0319 38000000 		.4byte	.LFE8-.LFB8
+ 1497 031d 01       		.uleb128 0x1
+ 1498 031e 9C       		.byte	0x9c
+ 1499 031f 40030000 		.4byte	0x340
+ 1500 0323 0B       		.uleb128 0xb
+ 1501 0324 6900     		.ascii	"i\000"
+ 1502 0326 01       		.byte	0x1
+ 1503 0327 B802     		.2byte	0x2b8
+ 1504 0329 6B000000 		.4byte	0x6b
+ 1505 032d 02       		.uleb128 0x2
+ 1506 032e 91       		.byte	0x91
+ 1507 032f 77       		.sleb128 -9
+ 1508 0330 0C       		.uleb128 0xc
+ 1509 0331 8E010000 		.4byte	.LASF39
+ 1510 0335 01       		.byte	0x1
+ 1511 0336 B902     		.2byte	0x2b9
+ 1512 0338 6B000000 		.4byte	0x6b
+ 1513 033c 02       		.uleb128 0x2
+ 1514 033d 91       		.byte	0x91
+ 1515 033e 76       		.sleb128 -10
+ 1516 033f 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 42
+
+
+ 1517 0340 10       		.uleb128 0x10
+ 1518 0341 F5030000 		.4byte	.LASF41
+ 1519 0345 01       		.byte	0x1
+ 1520 0346 E302     		.2byte	0x2e3
+ 1521 0348 00000000 		.4byte	.LFB9
+ 1522 034c 58000000 		.4byte	.LFE9-.LFB9
+ 1523 0350 01       		.uleb128 0x1
+ 1524 0351 9C       		.byte	0x9c
+ 1525 0352 A2030000 		.4byte	0x3a2
+ 1526 0356 0D       		.uleb128 0xd
+ 1527 0357 70030000 		.4byte	.LASF21
+ 1528 035b 01       		.byte	0x1
+ 1529 035c E302     		.2byte	0x2e3
+ 1530 035e 6B000000 		.4byte	0x6b
+ 1531 0362 02       		.uleb128 0x2
+ 1532 0363 91       		.byte	0x91
+ 1533 0364 6F       		.sleb128 -17
+ 1534 0365 0B       		.uleb128 0xb
+ 1535 0366 706F7300 		.ascii	"pos\000"
+ 1536 036a 01       		.byte	0x1
+ 1537 036b E602     		.2byte	0x2e6
+ 1538 036d 6B000000 		.4byte	0x6b
+ 1539 0371 02       		.uleb128 0x2
+ 1540 0372 91       		.byte	0x91
+ 1541 0373 75       		.sleb128 -11
+ 1542 0374 0C       		.uleb128 0xc
+ 1543 0375 BC020000 		.4byte	.LASF23
+ 1544 0379 01       		.byte	0x1
+ 1545 037a E702     		.2byte	0x2e7
+ 1546 037c 6B000000 		.4byte	0x6b
+ 1547 0380 02       		.uleb128 0x2
+ 1548 0381 91       		.byte	0x91
+ 1549 0382 74       		.sleb128 -12
+ 1550 0383 0C       		.uleb128 0xc
+ 1551 0384 54010000 		.4byte	.LASF37
+ 1552 0388 01       		.byte	0x1
+ 1553 0389 E802     		.2byte	0x2e8
+ 1554 038b 6B000000 		.4byte	0x6b
+ 1555 038f 02       		.uleb128 0x2
+ 1556 0390 91       		.byte	0x91
+ 1557 0391 77       		.sleb128 -9
+ 1558 0392 0C       		.uleb128 0xc
+ 1559 0393 5D010000 		.4byte	.LASF38
+ 1560 0397 01       		.byte	0x1
+ 1561 0398 E902     		.2byte	0x2e9
+ 1562 039a 6B000000 		.4byte	0x6b
+ 1563 039e 02       		.uleb128 0x2
+ 1564 039f 91       		.byte	0x91
+ 1565 03a0 76       		.sleb128 -10
+ 1566 03a1 00       		.byte	0
+ 1567 03a2 10       		.uleb128 0x10
+ 1568 03a3 46050000 		.4byte	.LASF42
+ 1569 03a7 01       		.byte	0x1
+ 1570 03a8 1503     		.2byte	0x315
+ 1571 03aa 00000000 		.4byte	.LFB10
+ 1572 03ae 5C000000 		.4byte	.LFE10-.LFB10
+ 1573 03b2 01       		.uleb128 0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 43
+
+
+ 1574 03b3 9C       		.byte	0x9c
+ 1575 03b4 04040000 		.4byte	0x404
+ 1576 03b8 0D       		.uleb128 0xd
+ 1577 03b9 70030000 		.4byte	.LASF21
+ 1578 03bd 01       		.byte	0x1
+ 1579 03be 1503     		.2byte	0x315
+ 1580 03c0 6B000000 		.4byte	0x6b
+ 1581 03c4 02       		.uleb128 0x2
+ 1582 03c5 91       		.byte	0x91
+ 1583 03c6 6F       		.sleb128 -17
+ 1584 03c7 0B       		.uleb128 0xb
+ 1585 03c8 706F7300 		.ascii	"pos\000"
+ 1586 03cc 01       		.byte	0x1
+ 1587 03cd 1803     		.2byte	0x318
+ 1588 03cf 6B000000 		.4byte	0x6b
+ 1589 03d3 02       		.uleb128 0x2
+ 1590 03d4 91       		.byte	0x91
+ 1591 03d5 75       		.sleb128 -11
+ 1592 03d6 0C       		.uleb128 0xc
+ 1593 03d7 BC020000 		.4byte	.LASF23
+ 1594 03db 01       		.byte	0x1
+ 1595 03dc 1903     		.2byte	0x319
+ 1596 03de 6B000000 		.4byte	0x6b
+ 1597 03e2 02       		.uleb128 0x2
+ 1598 03e3 91       		.byte	0x91
+ 1599 03e4 74       		.sleb128 -12
+ 1600 03e5 0C       		.uleb128 0xc
+ 1601 03e6 54010000 		.4byte	.LASF37
+ 1602 03ea 01       		.byte	0x1
+ 1603 03eb 1A03     		.2byte	0x31a
+ 1604 03ed 6B000000 		.4byte	0x6b
+ 1605 03f1 02       		.uleb128 0x2
+ 1606 03f2 91       		.byte	0x91
+ 1607 03f3 77       		.sleb128 -9
+ 1608 03f4 0C       		.uleb128 0xc
+ 1609 03f5 5D010000 		.4byte	.LASF38
+ 1610 03f9 01       		.byte	0x1
+ 1611 03fa 1B03     		.2byte	0x31b
+ 1612 03fc 6B000000 		.4byte	0x6b
+ 1613 0400 02       		.uleb128 0x2
+ 1614 0401 91       		.byte	0x91
+ 1615 0402 76       		.sleb128 -10
+ 1616 0403 00       		.byte	0
+ 1617 0404 11       		.uleb128 0x11
+ 1618 0405 77000000 		.4byte	0x77
+ 1619 0409 14040000 		.4byte	0x414
+ 1620 040d 12       		.uleb128 0x12
+ 1621 040e AB000000 		.4byte	0xab
+ 1622 0412 00       		.byte	0
+ 1623 0413 00       		.byte	0
+ 1624 0414 13       		.uleb128 0x13
+ 1625 0415 7E030000 		.4byte	.LASF43
+ 1626 0419 03       		.byte	0x3
+ 1627 041a B902     		.2byte	0x2b9
+ 1628 041c 04040000 		.4byte	0x404
+ 1629 0420 11       		.uleb128 0x11
+ 1630 0421 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 44
+
+
+ 1631 0425 30040000 		.4byte	0x430
+ 1632 0429 12       		.uleb128 0x12
+ 1633 042a AB000000 		.4byte	0xab
+ 1634 042e 00       		.byte	0
+ 1635 042f 00       		.byte	0
+ 1636 0430 13       		.uleb128 0x13
+ 1637 0431 C3020000 		.4byte	.LASF44
+ 1638 0435 04       		.byte	0x4
+ 1639 0436 0301     		.2byte	0x103
+ 1640 0438 20040000 		.4byte	0x420
+ 1641 043c 11       		.uleb128 0x11
+ 1642 043d 4C040000 		.4byte	0x44c
+ 1643 0441 4C040000 		.4byte	0x44c
+ 1644 0445 12       		.uleb128 0x12
+ 1645 0446 AB000000 		.4byte	0xab
+ 1646 044a 00       		.byte	0
+ 1647 044b 00       		.byte	0
+ 1648 044c 14       		.uleb128 0x14
+ 1649 044d 6B000000 		.4byte	0x6b
+ 1650 0451 13       		.uleb128 0x13
+ 1651 0452 9D010000 		.4byte	.LASF45
+ 1652 0456 04       		.byte	0x4
+ 1653 0457 0401     		.2byte	0x104
+ 1654 0459 5D040000 		.4byte	0x45d
+ 1655 045d 14       		.uleb128 0x14
+ 1656 045e 3C040000 		.4byte	0x43c
+ 1657 0462 15       		.uleb128 0x15
+ 1658 0463 EC010000 		.4byte	.LASF46
+ 1659 0467 01       		.byte	0x1
+ 1660 0468 29       		.byte	0x29
+ 1661 0469 04040000 		.4byte	0x404
+ 1662 046d 05       		.uleb128 0x5
+ 1663 046e 03       		.byte	0x3
+ 1664 046f 00000000 		.4byte	CapSense_CSD_sensorBaseline
+ 1665 0473 15       		.uleb128 0x15
+ 1666 0474 1F050000 		.4byte	.LASF47
+ 1667 0478 01       		.byte	0x1
+ 1668 0479 2A       		.byte	0x2a
+ 1669 047a 20040000 		.4byte	0x420
+ 1670 047e 05       		.uleb128 0x5
+ 1671 047f 03       		.byte	0x3
+ 1672 0480 00000000 		.4byte	CapSense_CSD_sensorBaselineLow
+ 1673 0484 15       		.uleb128 0x15
+ 1674 0485 3D020000 		.4byte	.LASF48
+ 1675 0489 01       		.byte	0x1
+ 1676 048a 2B       		.byte	0x2b
+ 1677 048b 20040000 		.4byte	0x420
+ 1678 048f 05       		.uleb128 0x5
+ 1679 0490 03       		.byte	0x3
+ 1680 0491 00000000 		.4byte	CapSense_CSD_sensorSignal
+ 1681 0495 15       		.uleb128 0x15
+ 1682 0496 61050000 		.4byte	.LASF49
+ 1683 049a 01       		.byte	0x1
+ 1684 049b 2C       		.byte	0x2c
+ 1685 049c 20040000 		.4byte	0x420
+ 1686 04a0 05       		.uleb128 0x5
+ 1687 04a1 03       		.byte	0x3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 45
+
+
+ 1688 04a2 00000000 		.4byte	CapSense_CSD_sensorOnMask
+ 1689 04a6 15       		.uleb128 0x15
+ 1690 04a7 E7020000 		.4byte	.LASF50
+ 1691 04ab 01       		.byte	0x1
+ 1692 04ac 2E       		.byte	0x2e
+ 1693 04ad 20040000 		.4byte	0x420
+ 1694 04b1 05       		.uleb128 0x5
+ 1695 04b2 03       		.byte	0x3
+ 1696 04b3 00000000 		.4byte	CapSense_CSD_lowBaselineResetCnt
+ 1697 04b7 15       		.uleb128 0x15
+ 1698 04b8 2C030000 		.4byte	.LASF51
+ 1699 04bc 01       		.byte	0x1
+ 1700 04bd 30       		.byte	0x30
+ 1701 04be 20040000 		.4byte	0x420
+ 1702 04c2 05       		.uleb128 0x5
+ 1703 04c3 03       		.byte	0x3
+ 1704 04c4 00000000 		.4byte	CapSense_CSD_fingerThreshold
+ 1705 04c8 15       		.uleb128 0x15
+ 1706 04c9 D4030000 		.4byte	.LASF52
+ 1707 04cd 01       		.byte	0x1
+ 1708 04ce 34       		.byte	0x34
+ 1709 04cf 20040000 		.4byte	0x420
+ 1710 04d3 05       		.uleb128 0x5
+ 1711 04d4 03       		.byte	0x3
+ 1712 04d5 00000000 		.4byte	CapSense_CSD_noiseThreshold
+ 1713 04d9 15       		.uleb128 0x15
+ 1714 04da 33040000 		.4byte	.LASF53
+ 1715 04de 01       		.byte	0x1
+ 1716 04df 38       		.byte	0x38
+ 1717 04e0 20040000 		.4byte	0x420
+ 1718 04e4 05       		.uleb128 0x5
+ 1719 04e5 03       		.byte	0x3
+ 1720 04e6 00000000 		.4byte	CapSense_CSD_hysteresis
+ 1721 04ea 15       		.uleb128 0x15
+ 1722 04eb 08020000 		.4byte	.LASF54
+ 1723 04ef 01       		.byte	0x1
+ 1724 04f0 3C       		.byte	0x3c
+ 1725 04f1 20040000 		.4byte	0x420
+ 1726 04f5 05       		.uleb128 0x5
+ 1727 04f6 03       		.byte	0x3
+ 1728 04f7 00000000 		.4byte	CapSense_CSD_debounce
+ 1729 04fb 11       		.uleb128 0x11
+ 1730 04fc 6B000000 		.4byte	0x6b
+ 1731 0500 0B050000 		.4byte	0x50b
+ 1732 0504 12       		.uleb128 0x12
+ 1733 0505 AB000000 		.4byte	0xab
+ 1734 0509 01       		.byte	0x1
+ 1735 050a 00       		.byte	0
+ 1736 050b 15       		.uleb128 0x15
+ 1737 050c 2B000000 		.4byte	.LASF55
+ 1738 0510 01       		.byte	0x1
+ 1739 0511 40       		.byte	0x40
+ 1740 0512 FB040000 		.4byte	0x4fb
+ 1741 0516 05       		.uleb128 0x5
+ 1742 0517 03       		.byte	0x3
+ 1743 0518 00000000 		.4byte	CapSense_CSD_debounceCounter
+ 1744 051c 15       		.uleb128 0x15
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 46
+
+
+ 1745 051d 05050000 		.4byte	.LASF56
+ 1746 0521 01       		.byte	0x1
+ 1747 0522 44       		.byte	0x44
+ 1748 0523 2D050000 		.4byte	0x52d
+ 1749 0527 05       		.uleb128 0x5
+ 1750 0528 03       		.byte	0x3
+ 1751 0529 00000000 		.4byte	CapSense_CSD_rawDataIndex
+ 1752 052d 14       		.uleb128 0x14
+ 1753 052e 3C040000 		.4byte	0x43c
+ 1754 0532 15       		.uleb128 0x15
+ 1755 0533 B7030000 		.4byte	.LASF57
+ 1756 0537 01       		.byte	0x1
+ 1757 0538 49       		.byte	0x49
+ 1758 0539 43050000 		.4byte	0x543
+ 1759 053d 05       		.uleb128 0x5
+ 1760 053e 03       		.byte	0x3
+ 1761 053f 00000000 		.4byte	CapSense_CSD_numberOfSensors
+ 1762 0543 14       		.uleb128 0x14
+ 1763 0544 3C040000 		.4byte	0x43c
+ 1764 0548 00       		.byte	0
+ 1765              		.section	.debug_abbrev,"",%progbits
+ 1766              	.Ldebug_abbrev0:
+ 1767 0000 01       		.uleb128 0x1
+ 1768 0001 11       		.uleb128 0x11
+ 1769 0002 01       		.byte	0x1
+ 1770 0003 25       		.uleb128 0x25
+ 1771 0004 0E       		.uleb128 0xe
+ 1772 0005 13       		.uleb128 0x13
+ 1773 0006 0B       		.uleb128 0xb
+ 1774 0007 03       		.uleb128 0x3
+ 1775 0008 0E       		.uleb128 0xe
+ 1776 0009 1B       		.uleb128 0x1b
+ 1777 000a 0E       		.uleb128 0xe
+ 1778 000b 55       		.uleb128 0x55
+ 1779 000c 17       		.uleb128 0x17
+ 1780 000d 11       		.uleb128 0x11
+ 1781 000e 01       		.uleb128 0x1
+ 1782 000f 10       		.uleb128 0x10
+ 1783 0010 17       		.uleb128 0x17
+ 1784 0011 00       		.byte	0
+ 1785 0012 00       		.byte	0
+ 1786 0013 02       		.uleb128 0x2
+ 1787 0014 24       		.uleb128 0x24
+ 1788 0015 00       		.byte	0
+ 1789 0016 0B       		.uleb128 0xb
+ 1790 0017 0B       		.uleb128 0xb
+ 1791 0018 3E       		.uleb128 0x3e
+ 1792 0019 0B       		.uleb128 0xb
+ 1793 001a 03       		.uleb128 0x3
+ 1794 001b 0E       		.uleb128 0xe
+ 1795 001c 00       		.byte	0
+ 1796 001d 00       		.byte	0
+ 1797 001e 03       		.uleb128 0x3
+ 1798 001f 24       		.uleb128 0x24
+ 1799 0020 00       		.byte	0
+ 1800 0021 0B       		.uleb128 0xb
+ 1801 0022 0B       		.uleb128 0xb
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 47
+
+
+ 1802 0023 3E       		.uleb128 0x3e
+ 1803 0024 0B       		.uleb128 0xb
+ 1804 0025 03       		.uleb128 0x3
+ 1805 0026 08       		.uleb128 0x8
+ 1806 0027 00       		.byte	0
+ 1807 0028 00       		.byte	0
+ 1808 0029 04       		.uleb128 0x4
+ 1809 002a 16       		.uleb128 0x16
+ 1810 002b 00       		.byte	0
+ 1811 002c 03       		.uleb128 0x3
+ 1812 002d 0E       		.uleb128 0xe
+ 1813 002e 3A       		.uleb128 0x3a
+ 1814 002f 0B       		.uleb128 0xb
+ 1815 0030 3B       		.uleb128 0x3b
+ 1816 0031 05       		.uleb128 0x5
+ 1817 0032 49       		.uleb128 0x49
+ 1818 0033 13       		.uleb128 0x13
+ 1819 0034 00       		.byte	0
+ 1820 0035 00       		.byte	0
+ 1821 0036 05       		.uleb128 0x5
+ 1822 0037 2E       		.uleb128 0x2e
+ 1823 0038 01       		.byte	0x1
+ 1824 0039 3F       		.uleb128 0x3f
+ 1825 003a 19       		.uleb128 0x19
+ 1826 003b 03       		.uleb128 0x3
+ 1827 003c 0E       		.uleb128 0xe
+ 1828 003d 3A       		.uleb128 0x3a
+ 1829 003e 0B       		.uleb128 0xb
+ 1830 003f 3B       		.uleb128 0x3b
+ 1831 0040 0B       		.uleb128 0xb
+ 1832 0041 27       		.uleb128 0x27
+ 1833 0042 19       		.uleb128 0x19
+ 1834 0043 11       		.uleb128 0x11
+ 1835 0044 01       		.uleb128 0x1
+ 1836 0045 12       		.uleb128 0x12
+ 1837 0046 06       		.uleb128 0x6
+ 1838 0047 40       		.uleb128 0x40
+ 1839 0048 18       		.uleb128 0x18
+ 1840 0049 9742     		.uleb128 0x2117
+ 1841 004b 19       		.uleb128 0x19
+ 1842 004c 01       		.uleb128 0x1
+ 1843 004d 13       		.uleb128 0x13
+ 1844 004e 00       		.byte	0
+ 1845 004f 00       		.byte	0
+ 1846 0050 06       		.uleb128 0x6
+ 1847 0051 05       		.uleb128 0x5
+ 1848 0052 00       		.byte	0
+ 1849 0053 03       		.uleb128 0x3
+ 1850 0054 0E       		.uleb128 0xe
+ 1851 0055 3A       		.uleb128 0x3a
+ 1852 0056 0B       		.uleb128 0xb
+ 1853 0057 3B       		.uleb128 0x3b
+ 1854 0058 0B       		.uleb128 0xb
+ 1855 0059 49       		.uleb128 0x49
+ 1856 005a 13       		.uleb128 0x13
+ 1857 005b 02       		.uleb128 0x2
+ 1858 005c 18       		.uleb128 0x18
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 48
+
+
+ 1859 005d 00       		.byte	0
+ 1860 005e 00       		.byte	0
+ 1861 005f 07       		.uleb128 0x7
+ 1862 0060 34       		.uleb128 0x34
+ 1863 0061 00       		.byte	0
+ 1864 0062 03       		.uleb128 0x3
+ 1865 0063 0E       		.uleb128 0xe
+ 1866 0064 3A       		.uleb128 0x3a
+ 1867 0065 0B       		.uleb128 0xb
+ 1868 0066 3B       		.uleb128 0x3b
+ 1869 0067 0B       		.uleb128 0xb
+ 1870 0068 49       		.uleb128 0x49
+ 1871 0069 13       		.uleb128 0x13
+ 1872 006a 02       		.uleb128 0x2
+ 1873 006b 18       		.uleb128 0x18
+ 1874 006c 00       		.byte	0
+ 1875 006d 00       		.byte	0
+ 1876 006e 08       		.uleb128 0x8
+ 1877 006f 2E       		.uleb128 0x2e
+ 1878 0070 01       		.byte	0x1
+ 1879 0071 3F       		.uleb128 0x3f
+ 1880 0072 19       		.uleb128 0x19
+ 1881 0073 03       		.uleb128 0x3
+ 1882 0074 0E       		.uleb128 0xe
+ 1883 0075 3A       		.uleb128 0x3a
+ 1884 0076 0B       		.uleb128 0xb
+ 1885 0077 3B       		.uleb128 0x3b
+ 1886 0078 0B       		.uleb128 0xb
+ 1887 0079 27       		.uleb128 0x27
+ 1888 007a 19       		.uleb128 0x19
+ 1889 007b 11       		.uleb128 0x11
+ 1890 007c 01       		.uleb128 0x1
+ 1891 007d 12       		.uleb128 0x12
+ 1892 007e 06       		.uleb128 0x6
+ 1893 007f 40       		.uleb128 0x40
+ 1894 0080 18       		.uleb128 0x18
+ 1895 0081 9642     		.uleb128 0x2116
+ 1896 0083 19       		.uleb128 0x19
+ 1897 0084 01       		.uleb128 0x1
+ 1898 0085 13       		.uleb128 0x13
+ 1899 0086 00       		.byte	0
+ 1900 0087 00       		.byte	0
+ 1901 0088 09       		.uleb128 0x9
+ 1902 0089 34       		.uleb128 0x34
+ 1903 008a 00       		.byte	0
+ 1904 008b 03       		.uleb128 0x3
+ 1905 008c 08       		.uleb128 0x8
+ 1906 008d 3A       		.uleb128 0x3a
+ 1907 008e 0B       		.uleb128 0xb
+ 1908 008f 3B       		.uleb128 0x3b
+ 1909 0090 0B       		.uleb128 0xb
+ 1910 0091 49       		.uleb128 0x49
+ 1911 0092 13       		.uleb128 0x13
+ 1912 0093 02       		.uleb128 0x2
+ 1913 0094 18       		.uleb128 0x18
+ 1914 0095 00       		.byte	0
+ 1915 0096 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 49
+
+
+ 1916 0097 0A       		.uleb128 0xa
+ 1917 0098 2E       		.uleb128 0x2e
+ 1918 0099 01       		.byte	0x1
+ 1919 009a 3F       		.uleb128 0x3f
+ 1920 009b 19       		.uleb128 0x19
+ 1921 009c 03       		.uleb128 0x3
+ 1922 009d 0E       		.uleb128 0xe
+ 1923 009e 3A       		.uleb128 0x3a
+ 1924 009f 0B       		.uleb128 0xb
+ 1925 00a0 3B       		.uleb128 0x3b
+ 1926 00a1 05       		.uleb128 0x5
+ 1927 00a2 27       		.uleb128 0x27
+ 1928 00a3 19       		.uleb128 0x19
+ 1929 00a4 11       		.uleb128 0x11
+ 1930 00a5 01       		.uleb128 0x1
+ 1931 00a6 12       		.uleb128 0x12
+ 1932 00a7 06       		.uleb128 0x6
+ 1933 00a8 40       		.uleb128 0x40
+ 1934 00a9 18       		.uleb128 0x18
+ 1935 00aa 9642     		.uleb128 0x2116
+ 1936 00ac 19       		.uleb128 0x19
+ 1937 00ad 01       		.uleb128 0x1
+ 1938 00ae 13       		.uleb128 0x13
+ 1939 00af 00       		.byte	0
+ 1940 00b0 00       		.byte	0
+ 1941 00b1 0B       		.uleb128 0xb
+ 1942 00b2 34       		.uleb128 0x34
+ 1943 00b3 00       		.byte	0
+ 1944 00b4 03       		.uleb128 0x3
+ 1945 00b5 08       		.uleb128 0x8
+ 1946 00b6 3A       		.uleb128 0x3a
+ 1947 00b7 0B       		.uleb128 0xb
+ 1948 00b8 3B       		.uleb128 0x3b
+ 1949 00b9 05       		.uleb128 0x5
+ 1950 00ba 49       		.uleb128 0x49
+ 1951 00bb 13       		.uleb128 0x13
+ 1952 00bc 02       		.uleb128 0x2
+ 1953 00bd 18       		.uleb128 0x18
+ 1954 00be 00       		.byte	0
+ 1955 00bf 00       		.byte	0
+ 1956 00c0 0C       		.uleb128 0xc
+ 1957 00c1 34       		.uleb128 0x34
+ 1958 00c2 00       		.byte	0
+ 1959 00c3 03       		.uleb128 0x3
+ 1960 00c4 0E       		.uleb128 0xe
+ 1961 00c5 3A       		.uleb128 0x3a
+ 1962 00c6 0B       		.uleb128 0xb
+ 1963 00c7 3B       		.uleb128 0x3b
+ 1964 00c8 05       		.uleb128 0x5
+ 1965 00c9 49       		.uleb128 0x49
+ 1966 00ca 13       		.uleb128 0x13
+ 1967 00cb 02       		.uleb128 0x2
+ 1968 00cc 18       		.uleb128 0x18
+ 1969 00cd 00       		.byte	0
+ 1970 00ce 00       		.byte	0
+ 1971 00cf 0D       		.uleb128 0xd
+ 1972 00d0 05       		.uleb128 0x5
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 50
+
+
+ 1973 00d1 00       		.byte	0
+ 1974 00d2 03       		.uleb128 0x3
+ 1975 00d3 0E       		.uleb128 0xe
+ 1976 00d4 3A       		.uleb128 0x3a
+ 1977 00d5 0B       		.uleb128 0xb
+ 1978 00d6 3B       		.uleb128 0x3b
+ 1979 00d7 05       		.uleb128 0x5
+ 1980 00d8 49       		.uleb128 0x49
+ 1981 00d9 13       		.uleb128 0x13
+ 1982 00da 02       		.uleb128 0x2
+ 1983 00db 18       		.uleb128 0x18
+ 1984 00dc 00       		.byte	0
+ 1985 00dd 00       		.byte	0
+ 1986 00de 0E       		.uleb128 0xe
+ 1987 00df 2E       		.uleb128 0x2e
+ 1988 00e0 01       		.byte	0x1
+ 1989 00e1 3F       		.uleb128 0x3f
+ 1990 00e2 19       		.uleb128 0x19
+ 1991 00e3 03       		.uleb128 0x3
+ 1992 00e4 0E       		.uleb128 0xe
+ 1993 00e5 3A       		.uleb128 0x3a
+ 1994 00e6 0B       		.uleb128 0xb
+ 1995 00e7 3B       		.uleb128 0x3b
+ 1996 00e8 05       		.uleb128 0x5
+ 1997 00e9 27       		.uleb128 0x27
+ 1998 00ea 19       		.uleb128 0x19
+ 1999 00eb 49       		.uleb128 0x49
+ 2000 00ec 13       		.uleb128 0x13
+ 2001 00ed 11       		.uleb128 0x11
+ 2002 00ee 01       		.uleb128 0x1
+ 2003 00ef 12       		.uleb128 0x12
+ 2004 00f0 06       		.uleb128 0x6
+ 2005 00f1 40       		.uleb128 0x40
+ 2006 00f2 18       		.uleb128 0x18
+ 2007 00f3 9742     		.uleb128 0x2117
+ 2008 00f5 19       		.uleb128 0x19
+ 2009 00f6 01       		.uleb128 0x1
+ 2010 00f7 13       		.uleb128 0x13
+ 2011 00f8 00       		.byte	0
+ 2012 00f9 00       		.byte	0
+ 2013 00fa 0F       		.uleb128 0xf
+ 2014 00fb 2E       		.uleb128 0x2e
+ 2015 00fc 01       		.byte	0x1
+ 2016 00fd 3F       		.uleb128 0x3f
+ 2017 00fe 19       		.uleb128 0x19
+ 2018 00ff 03       		.uleb128 0x3
+ 2019 0100 0E       		.uleb128 0xe
+ 2020 0101 3A       		.uleb128 0x3a
+ 2021 0102 0B       		.uleb128 0xb
+ 2022 0103 3B       		.uleb128 0x3b
+ 2023 0104 05       		.uleb128 0x5
+ 2024 0105 27       		.uleb128 0x27
+ 2025 0106 19       		.uleb128 0x19
+ 2026 0107 49       		.uleb128 0x49
+ 2027 0108 13       		.uleb128 0x13
+ 2028 0109 11       		.uleb128 0x11
+ 2029 010a 01       		.uleb128 0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 51
+
+
+ 2030 010b 12       		.uleb128 0x12
+ 2031 010c 06       		.uleb128 0x6
+ 2032 010d 40       		.uleb128 0x40
+ 2033 010e 18       		.uleb128 0x18
+ 2034 010f 9642     		.uleb128 0x2116
+ 2035 0111 19       		.uleb128 0x19
+ 2036 0112 01       		.uleb128 0x1
+ 2037 0113 13       		.uleb128 0x13
+ 2038 0114 00       		.byte	0
+ 2039 0115 00       		.byte	0
+ 2040 0116 10       		.uleb128 0x10
+ 2041 0117 2E       		.uleb128 0x2e
+ 2042 0118 01       		.byte	0x1
+ 2043 0119 3F       		.uleb128 0x3f
+ 2044 011a 19       		.uleb128 0x19
+ 2045 011b 03       		.uleb128 0x3
+ 2046 011c 0E       		.uleb128 0xe
+ 2047 011d 3A       		.uleb128 0x3a
+ 2048 011e 0B       		.uleb128 0xb
+ 2049 011f 3B       		.uleb128 0x3b
+ 2050 0120 05       		.uleb128 0x5
+ 2051 0121 27       		.uleb128 0x27
+ 2052 0122 19       		.uleb128 0x19
+ 2053 0123 11       		.uleb128 0x11
+ 2054 0124 01       		.uleb128 0x1
+ 2055 0125 12       		.uleb128 0x12
+ 2056 0126 06       		.uleb128 0x6
+ 2057 0127 40       		.uleb128 0x40
+ 2058 0128 18       		.uleb128 0x18
+ 2059 0129 9742     		.uleb128 0x2117
+ 2060 012b 19       		.uleb128 0x19
+ 2061 012c 01       		.uleb128 0x1
+ 2062 012d 13       		.uleb128 0x13
+ 2063 012e 00       		.byte	0
+ 2064 012f 00       		.byte	0
+ 2065 0130 11       		.uleb128 0x11
+ 2066 0131 01       		.uleb128 0x1
+ 2067 0132 01       		.byte	0x1
+ 2068 0133 49       		.uleb128 0x49
+ 2069 0134 13       		.uleb128 0x13
+ 2070 0135 01       		.uleb128 0x1
+ 2071 0136 13       		.uleb128 0x13
+ 2072 0137 00       		.byte	0
+ 2073 0138 00       		.byte	0
+ 2074 0139 12       		.uleb128 0x12
+ 2075 013a 21       		.uleb128 0x21
+ 2076 013b 00       		.byte	0
+ 2077 013c 49       		.uleb128 0x49
+ 2078 013d 13       		.uleb128 0x13
+ 2079 013e 2F       		.uleb128 0x2f
+ 2080 013f 0B       		.uleb128 0xb
+ 2081 0140 00       		.byte	0
+ 2082 0141 00       		.byte	0
+ 2083 0142 13       		.uleb128 0x13
+ 2084 0143 34       		.uleb128 0x34
+ 2085 0144 00       		.byte	0
+ 2086 0145 03       		.uleb128 0x3
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 52
+
+
+ 2087 0146 0E       		.uleb128 0xe
+ 2088 0147 3A       		.uleb128 0x3a
+ 2089 0148 0B       		.uleb128 0xb
+ 2090 0149 3B       		.uleb128 0x3b
+ 2091 014a 05       		.uleb128 0x5
+ 2092 014b 49       		.uleb128 0x49
+ 2093 014c 13       		.uleb128 0x13
+ 2094 014d 3F       		.uleb128 0x3f
+ 2095 014e 19       		.uleb128 0x19
+ 2096 014f 3C       		.uleb128 0x3c
+ 2097 0150 19       		.uleb128 0x19
+ 2098 0151 00       		.byte	0
+ 2099 0152 00       		.byte	0
+ 2100 0153 14       		.uleb128 0x14
+ 2101 0154 26       		.uleb128 0x26
+ 2102 0155 00       		.byte	0
+ 2103 0156 49       		.uleb128 0x49
+ 2104 0157 13       		.uleb128 0x13
+ 2105 0158 00       		.byte	0
+ 2106 0159 00       		.byte	0
+ 2107 015a 15       		.uleb128 0x15
+ 2108 015b 34       		.uleb128 0x34
+ 2109 015c 00       		.byte	0
+ 2110 015d 03       		.uleb128 0x3
+ 2111 015e 0E       		.uleb128 0xe
+ 2112 015f 3A       		.uleb128 0x3a
+ 2113 0160 0B       		.uleb128 0xb
+ 2114 0161 3B       		.uleb128 0x3b
+ 2115 0162 0B       		.uleb128 0xb
+ 2116 0163 49       		.uleb128 0x49
+ 2117 0164 13       		.uleb128 0x13
+ 2118 0165 3F       		.uleb128 0x3f
+ 2119 0166 19       		.uleb128 0x19
+ 2120 0167 02       		.uleb128 0x2
+ 2121 0168 18       		.uleb128 0x18
+ 2122 0169 00       		.byte	0
+ 2123 016a 00       		.byte	0
+ 2124 016b 00       		.byte	0
+ 2125              		.section	.debug_aranges,"",%progbits
+ 2126 0000 6C000000 		.4byte	0x6c
+ 2127 0004 0200     		.2byte	0x2
+ 2128 0006 00000000 		.4byte	.Ldebug_info0
+ 2129 000a 04       		.byte	0x4
+ 2130 000b 00       		.byte	0
+ 2131 000c 0000     		.2byte	0
+ 2132 000e 0000     		.2byte	0
+ 2133 0010 00000000 		.4byte	.LFB0
+ 2134 0014 64000000 		.4byte	.LFE0-.LFB0
+ 2135 0018 00000000 		.4byte	.LFB1
+ 2136 001c 2E000000 		.4byte	.LFE1-.LFB1
+ 2137 0020 00000000 		.4byte	.LFB2
+ 2138 0024 28000000 		.4byte	.LFE2-.LFB2
+ 2139 0028 00000000 		.4byte	.LFB3
+ 2140 002c 70000000 		.4byte	.LFE3-.LFB3
+ 2141 0030 00000000 		.4byte	.LFB4
+ 2142 0034 50010000 		.4byte	.LFE4-.LFB4
+ 2143 0038 00000000 		.4byte	.LFB5
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 53
+
+
+ 2144 003c 50000000 		.4byte	.LFE5-.LFB5
+ 2145 0040 00000000 		.4byte	.LFB6
+ 2146 0044 08010000 		.4byte	.LFE6-.LFB6
+ 2147 0048 00000000 		.4byte	.LFB7
+ 2148 004c 44000000 		.4byte	.LFE7-.LFB7
+ 2149 0050 00000000 		.4byte	.LFB8
+ 2150 0054 38000000 		.4byte	.LFE8-.LFB8
+ 2151 0058 00000000 		.4byte	.LFB9
+ 2152 005c 58000000 		.4byte	.LFE9-.LFB9
+ 2153 0060 00000000 		.4byte	.LFB10
+ 2154 0064 5C000000 		.4byte	.LFE10-.LFB10
+ 2155 0068 00000000 		.4byte	0
+ 2156 006c 00000000 		.4byte	0
+ 2157              		.section	.debug_ranges,"",%progbits
+ 2158              	.Ldebug_ranges0:
+ 2159 0000 00000000 		.4byte	.LFB0
+ 2160 0004 64000000 		.4byte	.LFE0
+ 2161 0008 00000000 		.4byte	.LFB1
+ 2162 000c 2E000000 		.4byte	.LFE1
+ 2163 0010 00000000 		.4byte	.LFB2
+ 2164 0014 28000000 		.4byte	.LFE2
+ 2165 0018 00000000 		.4byte	.LFB3
+ 2166 001c 70000000 		.4byte	.LFE3
+ 2167 0020 00000000 		.4byte	.LFB4
+ 2168 0024 50010000 		.4byte	.LFE4
+ 2169 0028 00000000 		.4byte	.LFB5
+ 2170 002c 50000000 		.4byte	.LFE5
+ 2171 0030 00000000 		.4byte	.LFB6
+ 2172 0034 08010000 		.4byte	.LFE6
+ 2173 0038 00000000 		.4byte	.LFB7
+ 2174 003c 44000000 		.4byte	.LFE7
+ 2175 0040 00000000 		.4byte	.LFB8
+ 2176 0044 38000000 		.4byte	.LFE8
+ 2177 0048 00000000 		.4byte	.LFB9
+ 2178 004c 58000000 		.4byte	.LFE9
+ 2179 0050 00000000 		.4byte	.LFB10
+ 2180 0054 5C000000 		.4byte	.LFE10
+ 2181 0058 00000000 		.4byte	0
+ 2182 005c 00000000 		.4byte	0
+ 2183              		.section	.debug_line,"",%progbits
+ 2184              	.Ldebug_line0:
+ 2185 0000 47020000 		.section	.debug_str,"MS",%progbits,1
+ 2185      02007700 
+ 2185      00000201 
+ 2185      FB0E0D00 
+ 2185      01010101 
+ 2186              	.LASF59:
+ 2187 0000 47656E65 		.ascii	"Generated_Source\\PSoC5\\CapSense_CSD_CSHL.c\000"
+ 2187      72617465 
+ 2187      645F536F 
+ 2187      75726365 
+ 2187      5C50536F 
+ 2188              	.LASF55:
+ 2189 002b 43617053 		.ascii	"CapSense_CSD_debounceCounter\000"
+ 2189      656E7365 
+ 2189      5F435344 
+ 2189      5F646562 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 54
+
+
+ 2189      6F756E63 
+ 2190              	.LASF10:
+ 2191 0048 75696E74 		.ascii	"uint16\000"
+ 2191      313600
+ 2192              	.LASF27:
+ 2193 004f 66696C74 		.ascii	"filteredRawData\000"
+ 2193      65726564 
+ 2193      52617744 
+ 2193      61746100 
+ 2194              	.LASF32:
+ 2195 005f 66696E67 		.ascii	"fingerThreshold\000"
+ 2195      65725468 
+ 2195      72657368 
+ 2195      6F6C6400 
+ 2196              	.LASF18:
+ 2197 006f 43617053 		.ascii	"CapSense_CSD_InitializeSensorBaseline\000"
+ 2197      656E7365 
+ 2197      5F435344 
+ 2197      5F496E69 
+ 2197      7469616C 
+ 2198              	.LASF58:
+ 2199 0095 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2199      43313120 
+ 2199      352E342E 
+ 2199      31203230 
+ 2199      31363036 
+ 2200 00c8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2200      20726576 
+ 2200      6973696F 
+ 2200      6E203233 
+ 2200      37373135 
+ 2201 00fb 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2201      66756E63 
+ 2201      74696F6E 
+ 2201      2D736563 
+ 2201      74696F6E 
+ 2202              	.LASF7:
+ 2203 0123 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2203      206C6F6E 
+ 2203      6720756E 
+ 2203      7369676E 
+ 2203      65642069 
+ 2204              	.LASF6:
+ 2205 013a 6C6F6E67 		.ascii	"long long int\000"
+ 2205      206C6F6E 
+ 2205      6720696E 
+ 2205      7400
+ 2206              	.LASF0:
+ 2207 0148 7369676E 		.ascii	"signed char\000"
+ 2207      65642063 
+ 2207      68617200 
+ 2208              	.LASF37:
+ 2209 0154 72617749 		.ascii	"rawIndex\000"
+ 2209      6E646578 
+ 2209      00
+ 2210              	.LASF38:
+ 2211 015d 6E756D62 		.ascii	"numberOfSensors\000"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 55
+
+
+ 2211      65724F66 
+ 2211      53656E73 
+ 2211      6F727300 
+ 2212              	.LASF35:
+ 2213 016d 43617053 		.ascii	"CapSense_CSD_CheckIsSensorActive\000"
+ 2213      656E7365 
+ 2213      5F435344 
+ 2213      5F436865 
+ 2213      636B4973 
+ 2214              	.LASF39:
+ 2215 018e 73746174 		.ascii	"state\000"
+ 2215      6500
+ 2216              	.LASF4:
+ 2217 0194 6C6F6E67 		.ascii	"long int\000"
+ 2217      20696E74 
+ 2217      00
+ 2218              	.LASF45:
+ 2219 019d 43617053 		.ascii	"CapSense_CSD_widgetNumber\000"
+ 2219      656E7365 
+ 2219      5F435344 
+ 2219      5F776964 
+ 2219      6765744E 
+ 2220              	.LASF9:
+ 2221 01b7 75696E74 		.ascii	"uint8\000"
+ 2221      3800
+ 2222              	.LASF13:
+ 2223 01bd 646F7562 		.ascii	"double\000"
+ 2223      6C6500
+ 2224              	.LASF11:
+ 2225 01c4 75696E74 		.ascii	"uint32\000"
+ 2225      333200
+ 2226              	.LASF33:
+ 2227 01cb 68797374 		.ascii	"hysteresis\000"
+ 2227      65726573 
+ 2227      697300
+ 2228              	.LASF17:
+ 2229 01d6 43617053 		.ascii	"CapSense_CSD_BaseInit\000"
+ 2229      656E7365 
+ 2229      5F435344 
+ 2229      5F426173 
+ 2229      65496E69 
+ 2230              	.LASF46:
+ 2231 01ec 43617053 		.ascii	"CapSense_CSD_sensorBaseline\000"
+ 2231      656E7365 
+ 2231      5F435344 
+ 2231      5F73656E 
+ 2231      736F7242 
+ 2232              	.LASF54:
+ 2233 0208 43617053 		.ascii	"CapSense_CSD_debounce\000"
+ 2233      656E7365 
+ 2233      5F435344 
+ 2233      5F646562 
+ 2233      6F756E63 
+ 2234              	.LASF8:
+ 2235 021e 756E7369 		.ascii	"unsigned int\000"
+ 2235      676E6564 
+ 2235      20696E74 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 56
+
+
+ 2235      00
+ 2236              	.LASF5:
+ 2237 022b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2237      20756E73 
+ 2237      69676E65 
+ 2237      6420696E 
+ 2237      7400
+ 2238              	.LASF48:
+ 2239 023d 43617053 		.ascii	"CapSense_CSD_sensorSignal\000"
+ 2239      656E7365 
+ 2239      5F435344 
+ 2239      5F73656E 
+ 2239      736F7253 
+ 2240              	.LASF3:
+ 2241 0257 73686F72 		.ascii	"short unsigned int\000"
+ 2241      7420756E 
+ 2241      7369676E 
+ 2241      65642069 
+ 2241      6E7400
+ 2242              	.LASF19:
+ 2243 026a 73656E73 		.ascii	"sensor\000"
+ 2243      6F7200
+ 2244              	.LASF25:
+ 2245 0271 63616C63 		.ascii	"calc\000"
+ 2245      00
+ 2246              	.LASF34:
+ 2247 0276 6465626F 		.ascii	"debounce\000"
+ 2247      756E6365 
+ 2247      00
+ 2248              	.LASF16:
+ 2249 027f 73697A65 		.ascii	"sizetype\000"
+ 2249      74797065 
+ 2249      00
+ 2250              	.LASF15:
+ 2251 0288 6C6F6E67 		.ascii	"long double\000"
+ 2251      20646F75 
+ 2251      626C6500 
+ 2252              	.LASF22:
+ 2253 0294 43617053 		.ascii	"CapSense_CSD_InitializeEnabledBaselines\000"
+ 2253      656E7365 
+ 2253      5F435344 
+ 2253      5F496E69 
+ 2253      7469616C 
+ 2254              	.LASF23:
+ 2255 02bc 656E4D61 		.ascii	"enMask\000"
+ 2255      736B00
+ 2256              	.LASF44:
+ 2257 02c3 43617053 		.ascii	"CapSense_CSD_sensorEnableMask\000"
+ 2257      656E7365 
+ 2257      5F435344 
+ 2257      5F73656E 
+ 2257      736F7245 
+ 2258              	.LASF12:
+ 2259 02e1 666C6F61 		.ascii	"float\000"
+ 2259      7400
+ 2260              	.LASF50:
+ 2261 02e7 43617053 		.ascii	"CapSense_CSD_lowBaselineResetCnt\000"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 57
+
+
+ 2261      656E7365 
+ 2261      5F435344 
+ 2261      5F6C6F77 
+ 2261      42617365 
+ 2262              	.LASF20:
+ 2263 0308 43617053 		.ascii	"CapSense_CSD_InitializeAllBaselines\000"
+ 2263      656E7365 
+ 2263      5F435344 
+ 2263      5F496E69 
+ 2263      7469616C 
+ 2264              	.LASF51:
+ 2265 032c 43617053 		.ascii	"CapSense_CSD_fingerThreshold\000"
+ 2265      656E7365 
+ 2265      5F435344 
+ 2265      5F66696E 
+ 2265      67657254 
+ 2266              	.LASF1:
+ 2267 0349 756E7369 		.ascii	"unsigned char\000"
+ 2267      676E6564 
+ 2267      20636861 
+ 2267      7200
+ 2268              	.LASF28:
+ 2269 0357 6E6F6973 		.ascii	"noiseThreshold\000"
+ 2269      65546872 
+ 2269      6573686F 
+ 2269      6C6400
+ 2270              	.LASF2:
+ 2271 0366 73686F72 		.ascii	"short int\000"
+ 2271      7420696E 
+ 2271      7400
+ 2272              	.LASF21:
+ 2273 0370 77696467 		.ascii	"widget\000"
+ 2273      657400
+ 2274              	.LASF31:
+ 2275 0377 6F6E4D61 		.ascii	"onMask\000"
+ 2275      736B00
+ 2276              	.LASF43:
+ 2277 037e 43617053 		.ascii	"CapSense_CSD_sensorRaw\000"
+ 2277      656E7365 
+ 2277      5F435344 
+ 2277      5F73656E 
+ 2277      736F7252 
+ 2278              	.LASF24:
+ 2279 0395 43617053 		.ascii	"CapSense_CSD_UpdateSensorBaseline\000"
+ 2279      656E7365 
+ 2279      5F435344 
+ 2279      5F557064 
+ 2279      61746553 
+ 2280              	.LASF57:
+ 2281 03b7 43617053 		.ascii	"CapSense_CSD_numberOfSensors\000"
+ 2281      656E7365 
+ 2281      5F435344 
+ 2281      5F6E756D 
+ 2281      6265724F 
+ 2282              	.LASF52:
+ 2283 03d4 43617053 		.ascii	"CapSense_CSD_noiseThreshold\000"
+ 2283      656E7365 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 58
+
+
+ 2283      5F435344 
+ 2283      5F6E6F69 
+ 2283      73655468 
+ 2284              	.LASF14:
+ 2285 03f0 63686172 		.ascii	"char\000"
+ 2285      00
+ 2286              	.LASF41:
+ 2287 03f5 43617053 		.ascii	"CapSense_CSD_EnableWidget\000"
+ 2287      656E7365 
+ 2287      5F435344 
+ 2287      5F456E61 
+ 2287      626C6557 
+ 2288              	.LASF29:
+ 2289 040f 43617053 		.ascii	"CapSense_CSD_UpdateEnabledBaselines\000"
+ 2289      656E7365 
+ 2289      5F435344 
+ 2289      5F557064 
+ 2289      61746545 
+ 2290              	.LASF53:
+ 2291 0433 43617053 		.ascii	"CapSense_CSD_hysteresis\000"
+ 2291      656E7365 
+ 2291      5F435344 
+ 2291      5F687973 
+ 2291      74657265 
+ 2292              	.LASF30:
+ 2293 044b 6465626F 		.ascii	"debounceIndex\000"
+ 2293      756E6365 
+ 2293      496E6465 
+ 2293      7800
+ 2294              	.LASF60:
+ 2295 0459 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 2295      73657273 
+ 2295      5C6E696B 
+ 2295      6F6C5C44 
+ 2295      6F63756D 
+ 2296 0486 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CapSense_CSD_Desig"
+ 2296      7965725F 
+ 2296      73696465 
+ 2296      5F617070 
+ 2296      5C437570 
+ 2297 04b6 6E30312E 		.ascii	"n01.cydsn\000"
+ 2297      63796473 
+ 2297      6E00
+ 2298              	.LASF40:
+ 2299 04c0 43617053 		.ascii	"CapSense_CSD_CheckIsAnyWidgetActive\000"
+ 2299      656E7365 
+ 2299      5F435344 
+ 2299      5F436865 
+ 2299      636B4973 
+ 2300              	.LASF36:
+ 2301 04e4 43617053 		.ascii	"CapSense_CSD_CheckIsWidgetActive\000"
+ 2301      656E7365 
+ 2301      5F435344 
+ 2301      5F436865 
+ 2301      636B4973 
+ 2302              	.LASF56:
+ 2303 0505 43617053 		.ascii	"CapSense_CSD_rawDataIndex\000"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccw1SuWL.s 			page 59
+
+
+ 2303      656E7365 
+ 2303      5F435344 
+ 2303      5F726177 
+ 2303      44617461 
+ 2304              	.LASF47:
+ 2305 051f 43617053 		.ascii	"CapSense_CSD_sensorBaselineLow\000"
+ 2305      656E7365 
+ 2305      5F435344 
+ 2305      5F73656E 
+ 2305      736F7242 
+ 2306              	.LASF26:
+ 2307 053e 74656D70 		.ascii	"tempRaw\000"
+ 2307      52617700 
+ 2308              	.LASF42:
+ 2309 0546 43617053 		.ascii	"CapSense_CSD_DisableWidget\000"
+ 2309      656E7365 
+ 2309      5F435344 
+ 2309      5F446973 
+ 2309      61626C65 
+ 2310              	.LASF49:
+ 2311 0561 43617053 		.ascii	"CapSense_CSD_sensorOnMask\000"
+ 2311      656E7365 
+ 2311      5F435344 
+ 2311      5F73656E 
+ 2311      736F724F 
+ 2312              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

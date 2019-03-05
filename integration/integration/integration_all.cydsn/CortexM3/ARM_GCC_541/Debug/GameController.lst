@@ -1,0 +1,2926 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"GameController.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.updateCupStatus,"ax",%progbits
+  20              		.align	2
+  21              		.global	updateCupStatus
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	updateCupStatus, %function
+  25              	updateCupStatus:
+  26              	.LFB67:
+  27              		.file 1 "GameController.c"
+   1:GameController.c **** /* ========================================
+   2:GameController.c ****  *
+   3:GameController.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:GameController.c ****  * All Rights Reserved
+   5:GameController.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:GameController.c ****  *
+   7:GameController.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:GameController.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:GameController.c ****  *
+  10:GameController.c ****  * ========================================
+  11:GameController.c **** */
+  12:GameController.c **** #include "GameController.h"
+  13:GameController.c **** #include <stdint.h>
+  14:GameController.c **** #include <stdio.h>
+  15:GameController.c **** 
+  16:GameController.c **** static int blinking =0;
+  17:GameController.c **** static color_t turnedOffColor={.Red=0,.Green=0,.Blue=0,};
+  18:GameController.c **** static color_t myColor={.Red=0,.Green=255,.Blue=0,};
+  19:GameController.c **** static color_t opponentColor={.Red=255,.Green=0,.Blue=255,};
+  20:GameController.c **** static color_t missingCupColor={.Red=255,.Green=255,.Blue=0,};
+  21:GameController.c **** static color_t placedCupColor={.Red=0,.Green=0,.Blue=255,};
+  22:GameController.c **** static uint8_t CupStatus;
+  23:GameController.c **** static uint8_t hitStatus;
+  24:GameController.c **** static char game_buf[256];
+  25:GameController.c **** static uint8_t LED_states[8];
+  26:GameController.c **** static uint8_t CupStatus_latest=0b11000000;
+  27:GameController.c **** 
+  28:GameController.c **** //#define STUB
+  29:GameController.c **** //#define HIT_ANIMATION
+  30:GameController.c **** 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 2
+
+
+  31:GameController.c **** void setState(enum GameState state)
+  32:GameController.c **** {
+  33:GameController.c ****    switch(state)
+  34:GameController.c ****     {
+  35:GameController.c ****         case IDLE:
+  36:GameController.c ****         {
+  37:GameController.c ****                 currentState=state;
+  38:GameController.c ****                 UART_PutString("State==IDLE\n\r");
+  39:GameController.c ****                 controlAllLights(turnedOffColor);
+  40:GameController.c ****         }
+  41:GameController.c ****         break;
+  42:GameController.c ****         case STARTING:
+  43:GameController.c ****         {
+  44:GameController.c ****                 currentState=state;
+  45:GameController.c ****                 #ifdef STUB
+  46:GameController.c ****                     CupStatus = 0;
+  47:GameController.c ****                 #else
+  48:GameController.c ****                     CupStatus=getStatus();
+  49:GameController.c ****                 #endif
+  50:GameController.c ****                 ControlLights();
+  51:GameController.c ****                 sendCupStatus(CupStatus);
+  52:GameController.c ****                 UART_PutString("State==STARTING\n\r");
+  53:GameController.c ****         }
+  54:GameController.c ****         break;
+  55:GameController.c ****         case PLAYING:
+  56:GameController.c ****         {
+  57:GameController.c ****                 currentState=state;
+  58:GameController.c ****                 CupStatus=getStatus();
+  59:GameController.c ****                 #ifdef STUB
+  60:GameController.c ****                     CupStatus = 0b00111111;
+  61:GameController.c ****                 #else
+  62:GameController.c ****                     CupStatus=getStatus();
+  63:GameController.c ****                 #endif
+  64:GameController.c ****                 ControlLights();
+  65:GameController.c ****                 sendCupStatus(CupStatus);
+  66:GameController.c ****                 UART_PutString("State==PLAYING\n\r");
+  67:GameController.c ****         }
+  68:GameController.c ****         break;
+  69:GameController.c ****         case WON:
+  70:GameController.c ****         {
+  71:GameController.c ****                 currentState=state;
+  72:GameController.c ****                 controlAllLights(myColor);
+  73:GameController.c ****                 UART_PutString("state==WON\n\r");
+  74:GameController.c ****         }
+  75:GameController.c ****         break;
+  76:GameController.c ****         case LOST:
+  77:GameController.c ****         {
+  78:GameController.c ****                 currentState=state;
+  79:GameController.c ****                 controlAllLights(opponentColor);
+  80:GameController.c ****                 UART_PutString("state==LOST\n\r");
+  81:GameController.c ****         }  
+  82:GameController.c ****          break;
+  83:GameController.c ****     }
+  84:GameController.c **** }
+  85:GameController.c ****  void setMyColor(color_t c)
+  86:GameController.c **** {
+  87:GameController.c ****     myColor=c;
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 3
+
+
+  88:GameController.c ****     ControlLights();
+  89:GameController.c **** }
+  90:GameController.c ****  void setOpponentColor(color_t c)
+  91:GameController.c **** {
+  92:GameController.c ****     opponentColor=c;
+  93:GameController.c ****      ControlLights();
+  94:GameController.c **** }
+  95:GameController.c ****  void updateCupStatus(uint8_t status)
+  96:GameController.c **** {
+  28              		.loc 1 96 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  97:GameController.c ****     //if(!(status & 1<<1) && (CupStatus & 1<<1)) test_LED_Write(0);
+  98:GameController.c ****     //else test_LED_Write(0);
+  99:GameController.c ****     
+ 100:GameController.c ****     if((currentState==STARTING || currentState==PLAYING) )
+  34              		.loc 1 100 0
+  35 0000 044B     		ldr	r3, .L3
+  36 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  37 0004 013B     		subs	r3, r3, #1
+  38 0006 DBB2     		uxtb	r3, r3
+  39 0008 012B     		cmp	r3, #1
+  40 000a 01D8     		bhi	.L1
+ 101:GameController.c ****     {
+ 102:GameController.c ****         CupStatus=status;
+  41              		.loc 1 102 0
+  42 000c 024B     		ldr	r3, .L3+4
+  43 000e 1870     		strb	r0, [r3]
+  44              	.L1:
+  45 0010 7047     		bx	lr
+  46              	.L4:
+  47 0012 00BF     		.align	2
+  48              	.L3:
+  49 0014 00000000 		.word	currentState
+  50 0018 00000000 		.word	.LANCHOR0
+  51              		.cfi_endproc
+  52              	.LFE67:
+  53              		.size	updateCupStatus, .-updateCupStatus
+  54              		.section	.text.updateHitStatus,"ax",%progbits
+  55              		.align	2
+  56              		.global	updateHitStatus
+  57              		.thumb
+  58              		.thumb_func
+  59              		.type	updateHitStatus, %function
+  60              	updateHitStatus:
+  61              	.LFB68:
+ 103:GameController.c ****         //sprintf(game_buf,"Sending cupstatus. Updating cupstatus with cupstatus:%x\n\r",CupStatus)
+ 104:GameController.c ****         //UART_PutString(game_buf);
+ 105:GameController.c ****         //sendCupStatus(CupStatus);
+ 106:GameController.c ****     }
+ 107:GameController.c ****     
+ 108:GameController.c **** }
+ 109:GameController.c ****  void updateHitStatus(uint8_t status)
+ 110:GameController.c **** {
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 4
+
+
+  62              		.loc 1 110 0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              	.LVL1:
+ 111:GameController.c ****     if(currentState==PLAYING && (status == getHitStatus()))
+  67              		.loc 1 111 0
+  68 0000 064B     		ldr	r3, .L9
+  69 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  70 0004 022B     		cmp	r3, #2
+  71 0006 08D1     		bne	.L8
+ 110:GameController.c ****     if(currentState==PLAYING && (status == getHitStatus()))
+  72              		.loc 1 110 0 discriminator 1
+  73 0008 10B5     		push	{r4, lr}
+  74              		.cfi_def_cfa_offset 8
+  75              		.cfi_offset 4, -8
+  76              		.cfi_offset 14, -4
+  77 000a 0446     		mov	r4, r0
+  78              		.loc 1 111 0 discriminator 1
+  79 000c FFF7FEFF 		bl	getHitStatus
+  80              	.LVL2:
+  81 0010 A042     		cmp	r0, r4
+  82 0012 01D1     		bne	.L5
+ 112:GameController.c ****     {
+ 113:GameController.c ****         #ifdef HIT_ANIMATION
+ 114:GameController.c ****         if(status != hitStatus)
+ 115:GameController.c ****         {
+ 116:GameController.c ****             if((status^hitStatus)&(1<<0) && (status&(1<<0)))
+ 117:GameController.c ****             {
+ 118:GameController.c ****                 controlLight(0,opponentColor);
+ 119:GameController.c ****                 CyDelay(50);
+ 120:GameController.c ****                 controlLight(0,myColor);
+ 121:GameController.c ****                 controlLight(1,opponentColor);
+ 122:GameController.c ****                 controlLight(2,opponentColor);
+ 123:GameController.c ****                 CyDelay(50);
+ 124:GameController.c ****                 controlLight(1,myColor);
+ 125:GameController.c ****                 controlLight(2,myColor);
+ 126:GameController.c ****                 controlLight(3,opponentColor);
+ 127:GameController.c ****                 controlLight(4,opponentColor);
+ 128:GameController.c ****                 controlLight(5,opponentColor);
+ 129:GameController.c ****                 CyDelay(50);
+ 130:GameController.c ****                 controlLight(3,myColor);
+ 131:GameController.c ****                 controlLight(4,myColor);
+ 132:GameController.c ****                 controlLight(5,myColor);
+ 133:GameController.c ****                 
+ 134:GameController.c ****                 
+ 135:GameController.c ****             }
+ 136:GameController.c ****             else if((status^hitStatus)&(1<<1) && (status&(1<<1)))
+ 137:GameController.c ****             {
+ 138:GameController.c ****                 controlLight(1,opponentColor);
+ 139:GameController.c ****                 CyDelay(50);
+ 140:GameController.c ****                 controlLight(1,myColor);
+ 141:GameController.c ****                 
+ 142:GameController.c ****                 controlLight(0,opponentColor);
+ 143:GameController.c ****                 controlLight(2,opponentColor);
+ 144:GameController.c ****                 controlLight(3,opponentColor);
+ 145:GameController.c ****                 controlLight(4,opponentColor);
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 5
+
+
+ 146:GameController.c ****                 CyDelay(50);
+ 147:GameController.c ****                 controlLight(0,myColor);
+ 148:GameController.c ****                 controlLight(2,myColor);
+ 149:GameController.c ****                 controlLight(3,myColor);
+ 150:GameController.c ****                 controlLight(4,myColor);
+ 151:GameController.c ****                 
+ 152:GameController.c ****                 controlLight(5,opponentColor);
+ 153:GameController.c ****                 CyDelay(50);
+ 154:GameController.c ****                 controlLight(5,myColor);
+ 155:GameController.c ****             }else if((status^hitStatus)&(1<<2) && (status&(1<<2)))
+ 156:GameController.c ****             {
+ 157:GameController.c ****                 controlLight(2,opponentColor);
+ 158:GameController.c ****                 CyDelay(50);
+ 159:GameController.c ****                 controlLight(2,myColor);
+ 160:GameController.c ****                 
+ 161:GameController.c ****                 controlLight(0,opponentColor);
+ 162:GameController.c ****                 controlLight(1,opponentColor);
+ 163:GameController.c ****                 controlLight(5,opponentColor);
+ 164:GameController.c ****                 controlLight(4,opponentColor);
+ 165:GameController.c ****                 CyDelay(50);
+ 166:GameController.c ****                 controlLight(0,myColor);
+ 167:GameController.c ****                 controlLight(1,myColor);
+ 168:GameController.c ****                 controlLight(5,myColor);
+ 169:GameController.c ****                 controlLight(4,myColor);
+ 170:GameController.c ****                 
+ 171:GameController.c ****                 controlLight(3,opponentColor);
+ 172:GameController.c ****                 CyDelay(50);
+ 173:GameController.c ****                 controlLight(3,myColor);
+ 174:GameController.c ****             }else if((status^hitStatus)&(1<<3) && (status&(1<<3)))
+ 175:GameController.c ****             {
+ 176:GameController.c ****                 controlLight(3,opponentColor);
+ 177:GameController.c ****                 CyDelay(50);
+ 178:GameController.c ****                 controlLight(3,myColor);
+ 179:GameController.c ****                 
+ 180:GameController.c ****                 controlLight(1,opponentColor);
+ 181:GameController.c ****                 controlLight(4,opponentColor);
+ 182:GameController.c ****                 CyDelay(50);
+ 183:GameController.c ****                 controlLight(1,myColor);
+ 184:GameController.c ****                 controlLight(4,myColor);
+ 185:GameController.c ****                 
+ 186:GameController.c ****                 controlLight(0,opponentColor);
+ 187:GameController.c ****                 controlLight(2,opponentColor);
+ 188:GameController.c ****                 controlLight(5,opponentColor);
+ 189:GameController.c ****                 CyDelay(50);
+ 190:GameController.c ****                 controlLight(0,myColor);
+ 191:GameController.c ****                 controlLight(2,myColor);
+ 192:GameController.c ****                 controlLight(5,myColor);
+ 193:GameController.c ****             }else if((status^hitStatus)&(1<<4) && (status&(1<<4)))
+ 194:GameController.c ****             {
+ 195:GameController.c ****                 controlLight(4,opponentColor);
+ 196:GameController.c ****                 CyDelay(50);
+ 197:GameController.c ****                 controlLight(4,myColor);
+ 198:GameController.c ****                 
+ 199:GameController.c ****                 controlLight(1,opponentColor);
+ 200:GameController.c ****                 controlLight(2,opponentColor);
+ 201:GameController.c ****                 controlLight(3,opponentColor);
+ 202:GameController.c ****                 controlLight(5,opponentColor);
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 6
+
+
+ 203:GameController.c ****                 CyDelay(50);
+ 204:GameController.c ****                 controlLight(1,myColor);
+ 205:GameController.c ****                 controlLight(2,myColor);
+ 206:GameController.c ****                 controlLight(3,myColor);
+ 207:GameController.c ****                 controlLight(5,myColor);
+ 208:GameController.c ****                 
+ 209:GameController.c ****                 controlLight(0,opponentColor);
+ 210:GameController.c ****                 CyDelay(50);
+ 211:GameController.c ****                 controlLight(0,myColor);
+ 212:GameController.c ****             }else if((status^hitStatus)&(1<<5) && (status&(1<<5)))
+ 213:GameController.c ****             {
+ 214:GameController.c ****                 controlLight(5,opponentColor);
+ 215:GameController.c ****                 CyDelay(50);
+ 216:GameController.c ****                 controlLight(5,myColor);
+ 217:GameController.c ****                 
+ 218:GameController.c ****                 controlLight(2,opponentColor);
+ 219:GameController.c ****                 controlLight(4,opponentColor);
+ 220:GameController.c ****                 CyDelay(50);
+ 221:GameController.c ****                 controlLight(2,myColor);
+ 222:GameController.c ****                 controlLight(4,myColor);
+ 223:GameController.c ****                 
+ 224:GameController.c ****                 controlLight(0,opponentColor);
+ 225:GameController.c ****                 controlLight(1,opponentColor);
+ 226:GameController.c ****                 controlLight(3,opponentColor);
+ 227:GameController.c ****                 CyDelay(50);
+ 228:GameController.c ****                 controlLight(0,myColor);
+ 229:GameController.c ****                 controlLight(1,myColor);
+ 230:GameController.c ****                 controlLight(3,myColor);
+ 231:GameController.c ****             }
+ 232:GameController.c ****         }
+ 233:GameController.c ****         #endif
+ 234:GameController.c ****         hitStatus=status;
+  83              		.loc 1 234 0
+  84 0014 024B     		ldr	r3, .L9+4
+  85 0016 5C70     		strb	r4, [r3, #1]
+  86              	.L5:
+  87 0018 10BD     		pop	{r4, pc}
+  88              	.LVL3:
+  89              	.L8:
+  90              		.cfi_def_cfa_offset 0
+  91              		.cfi_restore 4
+  92              		.cfi_restore 14
+  93 001a 7047     		bx	lr
+  94              	.L10:
+  95              		.align	2
+  96              	.L9:
+  97 001c 00000000 		.word	currentState
+  98 0020 00000000 		.word	.LANCHOR0
+  99              		.cfi_endproc
+ 100              	.LFE68:
+ 101              		.size	updateHitStatus, .-updateHitStatus
+ 102              		.section	.text.ControlLights,"ax",%progbits
+ 103              		.align	2
+ 104              		.global	ControlLights
+ 105              		.thumb
+ 106              		.thumb_func
+ 107              		.type	ControlLights, %function
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 7
+
+
+ 108              	ControlLights:
+ 109              	.LFB69:
+ 235:GameController.c ****         //UART_PutString("Sending Hitstatus. Updating Hitstatus\n\r"); 
+ 236:GameController.c ****         
+ 237:GameController.c ****     }
+ 238:GameController.c **** }
+ 239:GameController.c **** 
+ 240:GameController.c **** void ControlLights()
+ 241:GameController.c **** {
+ 110              		.loc 1 241 0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114 0000 10B5     		push	{r4, lr}
+ 115              		.cfi_def_cfa_offset 8
+ 116              		.cfi_offset 4, -8
+ 117              		.cfi_offset 14, -4
+ 242:GameController.c ****     if(currentState==STARTING){
+ 118              		.loc 1 242 0
+ 119 0002 1E4B     		ldr	r3, .L23
+ 120 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 121 0006 012B     		cmp	r3, #1
+ 122 0008 1AD1     		bne	.L12
+ 243:GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 123              		.loc 1 243 0
+ 124 000a 1D48     		ldr	r0, .L23+4
+ 125 000c FFF7FEFF 		bl	UART_PutString
+ 126              	.LVL4:
+ 127              	.LBB2:
+ 244:GameController.c ****         for(int i=0;i<6;i++)
+ 128              		.loc 1 244 0
+ 129 0010 0024     		movs	r4, #0
+ 130 0012 12E0     		b	.L13
+ 131              	.LVL5:
+ 132              	.L16:
+ 245:GameController.c ****         {
+ 246:GameController.c ****             if(((~CupStatus)>>i) & 1)
+ 133              		.loc 1 246 0
+ 134 0014 1B4B     		ldr	r3, .L23+8
+ 135 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 136 0018 DB43     		mvns	r3, r3
+ 137 001a 2341     		asrs	r3, r3, r4
+ 138 001c 13F0010F 		tst	r3, #1
+ 139 0020 05D0     		beq	.L14
+ 247:GameController.c ****                 controlLight(i,missingCupColor);
+ 140              		.loc 1 247 0
+ 141 0022 194B     		ldr	r3, .L23+12
+ 142 0024 1968     		ldr	r1, [r3]
+ 143 0026 E0B2     		uxtb	r0, r4
+ 144 0028 FFF7FEFF 		bl	controlLight
+ 145              	.LVL6:
+ 146 002c 04E0     		b	.L15
+ 147              	.L14:
+ 248:GameController.c ****             else
+ 249:GameController.c ****                 controlLight(i,placedCupColor);
+ 148              		.loc 1 249 0
+ 149 002e 164B     		ldr	r3, .L23+12
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 8
+
+
+ 150 0030 5968     		ldr	r1, [r3, #4]
+ 151 0032 E0B2     		uxtb	r0, r4
+ 152 0034 FFF7FEFF 		bl	controlLight
+ 153              	.LVL7:
+ 154              	.L15:
+ 244:GameController.c ****         {
+ 155              		.loc 1 244 0 discriminator 2
+ 156 0038 0134     		adds	r4, r4, #1
+ 157              	.LVL8:
+ 158              	.L13:
+ 244:GameController.c ****         {
+ 159              		.loc 1 244 0 is_stmt 0 discriminator 1
+ 160 003a 052C     		cmp	r4, #5
+ 161 003c EADD     		ble	.L16
+ 162 003e 10BD     		pop	{r4, pc}
+ 163              	.LVL9:
+ 164              	.L12:
+ 165              	.LBE2:
+ 250:GameController.c ****         }
+ 251:GameController.c ****     }else if( currentState==PLAYING){
+ 166              		.loc 1 251 0 is_stmt 1
+ 167 0040 022B     		cmp	r3, #2
+ 168 0042 19D1     		bne	.L11
+ 252:GameController.c ****         UART_PutString("Controlling lights\n\r");
+ 169              		.loc 1 252 0
+ 170 0044 0E48     		ldr	r0, .L23+4
+ 171 0046 FFF7FEFF 		bl	UART_PutString
+ 172              	.LVL10:
+ 173              	.LBB3:
+ 253:GameController.c ****         for(int i=0;i<6;i++)
+ 174              		.loc 1 253 0
+ 175 004a 0024     		movs	r4, #0
+ 176 004c 12E0     		b	.L18
+ 177              	.LVL11:
+ 178              	.L21:
+ 254:GameController.c ****         {
+ 255:GameController.c ****             if(((~CupStatus)>>i) & 1)
+ 179              		.loc 1 255 0
+ 180 004e 0D4B     		ldr	r3, .L23+8
+ 181 0050 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 182 0052 DB43     		mvns	r3, r3
+ 183 0054 2341     		asrs	r3, r3, r4
+ 184 0056 13F0010F 		tst	r3, #1
+ 185 005a 05D0     		beq	.L19
+ 256:GameController.c ****                 controlLight(i,opponentColor);
+ 186              		.loc 1 256 0
+ 187 005c 0B4B     		ldr	r3, .L23+16
+ 188 005e 1968     		ldr	r1, [r3]
+ 189 0060 E0B2     		uxtb	r0, r4
+ 190 0062 FFF7FEFF 		bl	controlLight
+ 191              	.LVL12:
+ 192 0066 04E0     		b	.L20
+ 193              	.L19:
+ 257:GameController.c ****             else
+ 258:GameController.c ****                 controlLight(i,myColor);
+ 194              		.loc 1 258 0
+ 195 0068 084B     		ldr	r3, .L23+16
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 9
+
+
+ 196 006a 5968     		ldr	r1, [r3, #4]
+ 197 006c E0B2     		uxtb	r0, r4
+ 198 006e FFF7FEFF 		bl	controlLight
+ 199              	.LVL13:
+ 200              	.L20:
+ 253:GameController.c ****         {
+ 201              		.loc 1 253 0 discriminator 2
+ 202 0072 0134     		adds	r4, r4, #1
+ 203              	.LVL14:
+ 204              	.L18:
+ 253:GameController.c ****         {
+ 205              		.loc 1 253 0 is_stmt 0 discriminator 1
+ 206 0074 052C     		cmp	r4, #5
+ 207 0076 EADD     		ble	.L21
+ 208              	.LVL15:
+ 209              	.L11:
+ 210 0078 10BD     		pop	{r4, pc}
+ 211              	.L24:
+ 212 007a 00BF     		.align	2
+ 213              	.L23:
+ 214 007c 00000000 		.word	currentState
+ 215 0080 00000000 		.word	.LC0
+ 216 0084 00000000 		.word	.LANCHOR0
+ 217 0088 00000000 		.word	.LANCHOR1
+ 218 008c 00000000 		.word	.LANCHOR2
+ 219              	.LBE3:
+ 220              		.cfi_endproc
+ 221              	.LFE69:
+ 222              		.size	ControlLights, .-ControlLights
+ 223              		.section	.text.setState,"ax",%progbits
+ 224              		.align	2
+ 225              		.global	setState
+ 226              		.thumb
+ 227              		.thumb_func
+ 228              		.type	setState, %function
+ 229              	setState:
+ 230              	.LFB64:
+  32:GameController.c ****    switch(state)
+ 231              		.loc 1 32 0 is_stmt 1
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 0
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235              	.LVL16:
+ 236 0000 10B5     		push	{r4, lr}
+ 237              		.cfi_def_cfa_offset 8
+ 238              		.cfi_offset 4, -8
+ 239              		.cfi_offset 14, -4
+  33:GameController.c ****     {
+ 240              		.loc 1 33 0
+ 241 0002 0428     		cmp	r0, #4
+ 242 0004 42D8     		bhi	.L25
+ 243 0006 DFE800F0 		tbb	[pc, r0]
+ 244              	.L28:
+ 245 000a 03       		.byte	(.L27-.L28)/2
+ 246 000b 0D       		.byte	(.L29-.L28)/2
+ 247 000c 1C       		.byte	(.L30-.L28)/2
+ 248 000d 2E       		.byte	(.L31-.L28)/2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 10
+
+
+ 249 000e 38       		.byte	(.L32-.L28)/2
+ 250 000f 00       		.p2align 1
+ 251              	.L27:
+  37:GameController.c ****                 UART_PutString("State==IDLE\n\r");
+ 252              		.loc 1 37 0
+ 253 0010 1F4B     		ldr	r3, .L34
+ 254 0012 1870     		strb	r0, [r3]
+  38:GameController.c ****                 controlAllLights(turnedOffColor);
+ 255              		.loc 1 38 0
+ 256 0014 1F48     		ldr	r0, .L34+4
+ 257              	.LVL17:
+ 258 0016 FFF7FEFF 		bl	UART_PutString
+ 259              	.LVL18:
+  39:GameController.c ****         }
+ 260              		.loc 1 39 0
+ 261 001a 1F4B     		ldr	r3, .L34+8
+ 262 001c 9868     		ldr	r0, [r3, #8]
+ 263 001e FFF7FEFF 		bl	controlAllLights
+ 264              	.LVL19:
+  41:GameController.c ****         case STARTING:
+ 265              		.loc 1 41 0
+ 266 0022 10BD     		pop	{r4, pc}
+ 267              	.LVL20:
+ 268              	.L29:
+  44:GameController.c ****                 #ifdef STUB
+ 269              		.loc 1 44 0
+ 270 0024 1A4B     		ldr	r3, .L34
+ 271 0026 1870     		strb	r0, [r3]
+  48:GameController.c ****                 #endif
+ 272              		.loc 1 48 0
+ 273 0028 FFF7FEFF 		bl	getStatus
+ 274              	.LVL21:
+ 275 002c 1B4C     		ldr	r4, .L34+12
+ 276 002e 2070     		strb	r0, [r4]
+  50:GameController.c ****                 sendCupStatus(CupStatus);
+ 277              		.loc 1 50 0
+ 278 0030 FFF7FEFF 		bl	ControlLights
+ 279              	.LVL22:
+  51:GameController.c ****                 UART_PutString("State==STARTING\n\r");
+ 280              		.loc 1 51 0
+ 281 0034 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 282 0036 FFF7FEFF 		bl	sendCupStatus
+ 283              	.LVL23:
+  52:GameController.c ****         }
+ 284              		.loc 1 52 0
+ 285 003a 1948     		ldr	r0, .L34+16
+ 286 003c FFF7FEFF 		bl	UART_PutString
+ 287              	.LVL24:
+  54:GameController.c ****         case PLAYING:
+ 288              		.loc 1 54 0
+ 289 0040 10BD     		pop	{r4, pc}
+ 290              	.LVL25:
+ 291              	.L30:
+  57:GameController.c ****                 CupStatus=getStatus();
+ 292              		.loc 1 57 0
+ 293 0042 134B     		ldr	r3, .L34
+ 294 0044 1870     		strb	r0, [r3]
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 11
+
+
+  58:GameController.c ****                 #ifdef STUB
+ 295              		.loc 1 58 0
+ 296 0046 FFF7FEFF 		bl	getStatus
+ 297              	.LVL26:
+ 298 004a 144C     		ldr	r4, .L34+12
+ 299 004c 2070     		strb	r0, [r4]
+  62:GameController.c ****                 #endif
+ 300              		.loc 1 62 0
+ 301 004e FFF7FEFF 		bl	getStatus
+ 302              	.LVL27:
+ 303 0052 2070     		strb	r0, [r4]
+  64:GameController.c ****                 sendCupStatus(CupStatus);
+ 304              		.loc 1 64 0
+ 305 0054 FFF7FEFF 		bl	ControlLights
+ 306              	.LVL28:
+  65:GameController.c ****                 UART_PutString("State==PLAYING\n\r");
+ 307              		.loc 1 65 0
+ 308 0058 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 309 005a FFF7FEFF 		bl	sendCupStatus
+ 310              	.LVL29:
+  66:GameController.c ****         }
+ 311              		.loc 1 66 0
+ 312 005e 1148     		ldr	r0, .L34+20
+ 313 0060 FFF7FEFF 		bl	UART_PutString
+ 314              	.LVL30:
+  68:GameController.c ****         case WON:
+ 315              		.loc 1 68 0
+ 316 0064 10BD     		pop	{r4, pc}
+ 317              	.LVL31:
+ 318              	.L31:
+  71:GameController.c ****                 controlAllLights(myColor);
+ 319              		.loc 1 71 0
+ 320 0066 0A4B     		ldr	r3, .L34
+ 321 0068 1870     		strb	r0, [r3]
+  72:GameController.c ****                 UART_PutString("state==WON\n\r");
+ 322              		.loc 1 72 0
+ 323 006a 0F4B     		ldr	r3, .L34+24
+ 324 006c 5868     		ldr	r0, [r3, #4]
+ 325              	.LVL32:
+ 326 006e FFF7FEFF 		bl	controlAllLights
+ 327              	.LVL33:
+  73:GameController.c ****         }
+ 328              		.loc 1 73 0
+ 329 0072 0E48     		ldr	r0, .L34+28
+ 330 0074 FFF7FEFF 		bl	UART_PutString
+ 331              	.LVL34:
+  75:GameController.c ****         case LOST:
+ 332              		.loc 1 75 0
+ 333 0078 10BD     		pop	{r4, pc}
+ 334              	.LVL35:
+ 335              	.L32:
+  78:GameController.c ****                 controlAllLights(opponentColor);
+ 336              		.loc 1 78 0
+ 337 007a 054B     		ldr	r3, .L34
+ 338 007c 1870     		strb	r0, [r3]
+  79:GameController.c ****                 UART_PutString("state==LOST\n\r");
+ 339              		.loc 1 79 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 12
+
+
+ 340 007e 0A4B     		ldr	r3, .L34+24
+ 341 0080 1868     		ldr	r0, [r3]
+ 342              	.LVL36:
+ 343 0082 FFF7FEFF 		bl	controlAllLights
+ 344              	.LVL37:
+  80:GameController.c ****         }  
+ 345              		.loc 1 80 0
+ 346 0086 0A48     		ldr	r0, .L34+32
+ 347 0088 FFF7FEFF 		bl	UART_PutString
+ 348              	.LVL38:
+ 349              	.L25:
+ 350 008c 10BD     		pop	{r4, pc}
+ 351              	.L35:
+ 352 008e 00BF     		.align	2
+ 353              	.L34:
+ 354 0090 00000000 		.word	currentState
+ 355 0094 18000000 		.word	.LC1
+ 356 0098 00000000 		.word	.LANCHOR1
+ 357 009c 00000000 		.word	.LANCHOR0
+ 358 00a0 28000000 		.word	.LC2
+ 359 00a4 3C000000 		.word	.LC3
+ 360 00a8 00000000 		.word	.LANCHOR2
+ 361 00ac 50000000 		.word	.LC4
+ 362 00b0 60000000 		.word	.LC5
+ 363              		.cfi_endproc
+ 364              	.LFE64:
+ 365              		.size	setState, .-setState
+ 366              		.section	.text.setMyColor,"ax",%progbits
+ 367              		.align	2
+ 368              		.global	setMyColor
+ 369              		.thumb
+ 370              		.thumb_func
+ 371              		.type	setMyColor, %function
+ 372              	setMyColor:
+ 373              	.LFB65:
+  86:GameController.c ****     myColor=c;
+ 374              		.loc 1 86 0
+ 375              		.cfi_startproc
+ 376              		@ args = 0, pretend = 0, frame = 8
+ 377              		@ frame_needed = 0, uses_anonymous_args = 0
+ 378 0000 00B5     		push	{lr}
+ 379              		.cfi_def_cfa_offset 4
+ 380              		.cfi_offset 14, -4
+ 381 0002 83B0     		sub	sp, sp, #12
+ 382              		.cfi_def_cfa_offset 16
+  87:GameController.c ****     ControlLights();
+ 383              		.loc 1 87 0
+ 384 0004 044B     		ldr	r3, .L38
+ 385 0006 9880     		strh	r0, [r3, #4]	@ movhi
+ 386 0008 000C     		lsrs	r0, r0, #16
+ 387 000a 9871     		strb	r0, [r3, #6]
+  88:GameController.c **** }
+ 388              		.loc 1 88 0
+ 389 000c FFF7FEFF 		bl	ControlLights
+ 390              	.LVL39:
+  89:GameController.c ****  void setOpponentColor(color_t c)
+ 391              		.loc 1 89 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 13
+
+
+ 392 0010 03B0     		add	sp, sp, #12
+ 393              		.cfi_def_cfa_offset 4
+ 394              		@ sp needed
+ 395 0012 5DF804FB 		ldr	pc, [sp], #4
+ 396              	.L39:
+ 397 0016 00BF     		.align	2
+ 398              	.L38:
+ 399 0018 00000000 		.word	.LANCHOR2
+ 400              		.cfi_endproc
+ 401              	.LFE65:
+ 402              		.size	setMyColor, .-setMyColor
+ 403              		.section	.text.setOpponentColor,"ax",%progbits
+ 404              		.align	2
+ 405              		.global	setOpponentColor
+ 406              		.thumb
+ 407              		.thumb_func
+ 408              		.type	setOpponentColor, %function
+ 409              	setOpponentColor:
+ 410              	.LFB66:
+  91:GameController.c ****     opponentColor=c;
+ 411              		.loc 1 91 0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 8
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415 0000 00B5     		push	{lr}
+ 416              		.cfi_def_cfa_offset 4
+ 417              		.cfi_offset 14, -4
+ 418 0002 83B0     		sub	sp, sp, #12
+ 419              		.cfi_def_cfa_offset 16
+  92:GameController.c ****      ControlLights();
+ 420              		.loc 1 92 0
+ 421 0004 044B     		ldr	r3, .L42
+ 422 0006 1880     		strh	r0, [r3]	@ movhi
+ 423 0008 000C     		lsrs	r0, r0, #16
+ 424 000a 9870     		strb	r0, [r3, #2]
+  93:GameController.c **** }
+ 425              		.loc 1 93 0
+ 426 000c FFF7FEFF 		bl	ControlLights
+ 427              	.LVL40:
+  94:GameController.c ****  void updateCupStatus(uint8_t status)
+ 428              		.loc 1 94 0
+ 429 0010 03B0     		add	sp, sp, #12
+ 430              		.cfi_def_cfa_offset 4
+ 431              		@ sp needed
+ 432 0012 5DF804FB 		ldr	pc, [sp], #4
+ 433              	.L43:
+ 434 0016 00BF     		.align	2
+ 435              	.L42:
+ 436 0018 00000000 		.word	.LANCHOR2
+ 437              		.cfi_endproc
+ 438              	.LFE66:
+ 439              		.size	setOpponentColor, .-setOpponentColor
+ 440              		.section	.text.Controller,"ax",%progbits
+ 441              		.align	2
+ 442              		.global	Controller
+ 443              		.thumb
+ 444              		.thumb_func
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 14
+
+
+ 445              		.type	Controller, %function
+ 446              	Controller:
+ 447              	.LFB70:
+ 259:GameController.c ****         }
+ 260:GameController.c ****     }
+ 261:GameController.c **** }
+ 262:GameController.c **** 
+ 263:GameController.c **** void Controller()
+ 264:GameController.c **** {
+ 448              		.loc 1 264 0
+ 449              		.cfi_startproc
+ 450              		@ args = 0, pretend = 0, frame = 0
+ 451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 452 0000 10B5     		push	{r4, lr}
+ 453              		.cfi_def_cfa_offset 8
+ 454              		.cfi_offset 4, -8
+ 455              		.cfi_offset 14, -4
+ 265:GameController.c ****     RPi_IF_handleData();
+ 456              		.loc 1 265 0
+ 457 0002 FFF7FEFF 		bl	RPi_IF_handleData
+ 458              	.LVL41:
+ 266:GameController.c ****     //CupStatus = getStatus();
+ 267:GameController.c ****     if(currentState==STARTING || currentState==PLAYING){
+ 459              		.loc 1 267 0
+ 460 0006 244B     		ldr	r3, .L50
+ 461 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 462 000a 013B     		subs	r3, r3, #1
+ 463 000c DBB2     		uxtb	r3, r3
+ 464 000e 012B     		cmp	r3, #1
+ 465 0010 37D8     		bhi	.L45
+ 268:GameController.c ****         if(CupStatus!=CupStatus_latest){
+ 466              		.loc 1 268 0
+ 467 0012 224B     		ldr	r3, .L50+4
+ 468 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 469 0016 224A     		ldr	r2, .L50+8
+ 470 0018 D279     		ldrb	r2, [r2, #7]	@ zero_extendqisi2
+ 471 001a 9342     		cmp	r3, r2
+ 472 001c 0DD0     		beq	.L46
+ 269:GameController.c ****             CupStatus_latest=CupStatus;
+ 473              		.loc 1 269 0
+ 474 001e 204A     		ldr	r2, .L50+8
+ 475 0020 D371     		strb	r3, [r2, #7]
+ 270:GameController.c ****             ControlLights();
+ 476              		.loc 1 270 0
+ 477 0022 FFF7FEFF 		bl	ControlLights
+ 478              	.LVL42:
+ 271:GameController.c ****             sprintf(game_buf,"Cupstatus change:%d\n\r",CupStatus);
+ 479              		.loc 1 271 0
+ 480 0026 1D4C     		ldr	r4, .L50+4
+ 481 0028 14F8042B 		ldrb	r2, [r4], #4	@ zero_extendqisi2
+ 482 002c 1D49     		ldr	r1, .L50+12
+ 483 002e 2046     		mov	r0, r4
+ 484 0030 FFF7FEFF 		bl	sprintf
+ 485              	.LVL43:
+ 272:GameController.c ****             UART_PutString(game_buf);
+ 486              		.loc 1 272 0
+ 487 0034 2046     		mov	r0, r4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 15
+
+
+ 488 0036 FFF7FEFF 		bl	UART_PutString
+ 489              	.LVL44:
+ 490              	.L46:
+ 273:GameController.c ****         }
+ 274:GameController.c ****     if(currentState==PLAYING)
+ 491              		.loc 1 274 0
+ 492 003a 174B     		ldr	r3, .L50
+ 493 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 494 003e 022B     		cmp	r3, #2
+ 495 0040 29D1     		bne	.L44
+ 275:GameController.c ****     {
+ 276:GameController.c ****         if(hitStatus && !blinking)
+ 496              		.loc 1 276 0
+ 497 0042 164B     		ldr	r3, .L50+4
+ 498 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 499 0046 6BB1     		cbz	r3, .L48
+ 500              		.loc 1 276 0 is_stmt 0 discriminator 1
+ 501 0048 144A     		ldr	r2, .L50+4
+ 502 004a D2F80421 		ldr	r2, [r2, #260]
+ 503 004e 4AB9     		cbnz	r2, .L48
+ 277:GameController.c ****         {
+ 278:GameController.c ****             UART_PutString("Starting timer\n\r");
+ 504              		.loc 1 278 0 is_stmt 1
+ 505 0050 1548     		ldr	r0, .L50+16
+ 506 0052 FFF7FEFF 		bl	UART_PutString
+ 507              	.LVL45:
+ 279:GameController.c ****             Timer_Start();
+ 508              		.loc 1 279 0
+ 509 0056 FFF7FEFF 		bl	Timer_Start
+ 510              	.LVL46:
+ 280:GameController.c ****             blinking=1;
+ 511              		.loc 1 280 0
+ 512 005a 0122     		movs	r2, #1
+ 513 005c 0F4B     		ldr	r3, .L50+4
+ 514 005e C3F80421 		str	r2, [r3, #260]
+ 515 0062 10BD     		pop	{r4, pc}
+ 516              	.L48:
+ 281:GameController.c ****         }
+ 282:GameController.c ****         else if(!hitStatus && blinking)
+ 517              		.loc 1 282 0
+ 518 0064 BBB9     		cbnz	r3, .L44
+ 519              		.loc 1 282 0 is_stmt 0 discriminator 1
+ 520 0066 0D4B     		ldr	r3, .L50+4
+ 521 0068 D3F80431 		ldr	r3, [r3, #260]
+ 522 006c 9BB1     		cbz	r3, .L44
+ 283:GameController.c ****         {
+ 284:GameController.c ****             UART_PutString("Stopping timer\n\r");
+ 523              		.loc 1 284 0 is_stmt 1
+ 524 006e 0F48     		ldr	r0, .L50+20
+ 525 0070 FFF7FEFF 		bl	UART_PutString
+ 526              	.LVL47:
+ 285:GameController.c ****             Timer_Stop(); 
+ 527              		.loc 1 285 0
+ 528 0074 FFF7FEFF 		bl	Timer_Stop
+ 529              	.LVL48:
+ 286:GameController.c ****             blinking=0;
+ 530              		.loc 1 286 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 16
+
+
+ 531 0078 0022     		movs	r2, #0
+ 532 007a 084B     		ldr	r3, .L50+4
+ 533 007c C3F80421 		str	r2, [r3, #260]
+ 534 0080 10BD     		pop	{r4, pc}
+ 535              	.L45:
+ 287:GameController.c ****         }
+ 288:GameController.c ****     }
+ 289:GameController.c ****     }
+ 290:GameController.c ****     else
+ 291:GameController.c ****     {
+ 292:GameController.c ****         if(blinking){
+ 536              		.loc 1 292 0
+ 537 0082 064B     		ldr	r3, .L50+4
+ 538 0084 D3F80431 		ldr	r3, [r3, #260]
+ 539 0088 2BB1     		cbz	r3, .L44
+ 293:GameController.c ****             Timer_Stop();
+ 540              		.loc 1 293 0
+ 541 008a FFF7FEFF 		bl	Timer_Stop
+ 542              	.LVL49:
+ 294:GameController.c ****             blinking=0;
+ 543              		.loc 1 294 0
+ 544 008e 0022     		movs	r2, #0
+ 545 0090 024B     		ldr	r3, .L50+4
+ 546 0092 C3F80421 		str	r2, [r3, #260]
+ 547              	.L44:
+ 548 0096 10BD     		pop	{r4, pc}
+ 549              	.L51:
+ 550              		.align	2
+ 551              	.L50:
+ 552 0098 00000000 		.word	currentState
+ 553 009c 00000000 		.word	.LANCHOR0
+ 554 00a0 00000000 		.word	.LANCHOR2
+ 555 00a4 70000000 		.word	.LC6
+ 556 00a8 88000000 		.word	.LC7
+ 557 00ac 9C000000 		.word	.LC8
+ 558              		.cfi_endproc
+ 559              	.LFE70:
+ 560              		.size	Controller, .-Controller
+ 561              		.section	.text.interruptBlink,"ax",%progbits
+ 562              		.align	2
+ 563              		.global	interruptBlink
+ 564              		.thumb
+ 565              		.thumb_func
+ 566              		.type	interruptBlink, %function
+ 567              	interruptBlink:
+ 568              	.LFB71:
+ 295:GameController.c ****         }
+ 296:GameController.c ****     }
+ 297:GameController.c **** }
+ 298:GameController.c **** 
+ 299:GameController.c **** 
+ 300:GameController.c **** void interruptBlink()
+ 301:GameController.c **** { 
+ 569              		.loc 1 301 0
+ 570              		.cfi_startproc
+ 571              		@ args = 0, pretend = 0, frame = 0
+ 572              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 17
+
+
+ 573 0000 38B5     		push	{r3, r4, r5, lr}
+ 574              		.cfi_def_cfa_offset 16
+ 575              		.cfi_offset 3, -16
+ 576              		.cfi_offset 4, -12
+ 577              		.cfi_offset 5, -8
+ 578              		.cfi_offset 14, -4
+ 302:GameController.c ****     if(currentState==PLAYING)
+ 579              		.loc 1 302 0
+ 580 0002 164B     		ldr	r3, .L60
+ 581 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 582 0006 022B     		cmp	r3, #2
+ 583 0008 27D1     		bne	.L52
+ 584 000a 23E0     		b	.L58
+ 585              	.LVL50:
+ 586              	.L57:
+ 587              	.LBB4:
+ 303:GameController.c ****         for(uint8_t i=0;i<6;i++)
+ 304:GameController.c ****         {
+ 305:GameController.c ****             if((hitStatus>>i) & 1){
+ 588              		.loc 1 305 0
+ 589 000c 2546     		mov	r5, r4
+ 590 000e 144B     		ldr	r3, .L60+4
+ 591 0010 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 592 0012 2341     		asrs	r3, r3, r4
+ 593 0014 13F0010F 		tst	r3, #1
+ 594 0018 19D0     		beq	.L55
+ 306:GameController.c ****                 if(LED_states[i]){
+ 595              		.loc 1 306 0
+ 596 001a 114B     		ldr	r3, .L60+4
+ 597 001c 2344     		add	r3, r3, r4
+ 598 001e 93F80831 		ldrb	r3, [r3, #264]	@ zero_extendqisi2
+ 599 0022 53B1     		cbz	r3, .L56
+ 307:GameController.c ****                     controlLight(i,myColor);
+ 600              		.loc 1 307 0
+ 601 0024 0F4B     		ldr	r3, .L60+8
+ 602 0026 5968     		ldr	r1, [r3, #4]
+ 603 0028 2046     		mov	r0, r4
+ 604 002a FFF7FEFF 		bl	controlLight
+ 605              	.LVL51:
+ 308:GameController.c ****                     LED_states[i]=0;}
+ 606              		.loc 1 308 0
+ 607 002e 0C4B     		ldr	r3, .L60+4
+ 608 0030 1D44     		add	r5, r5, r3
+ 609 0032 0023     		movs	r3, #0
+ 610 0034 85F80831 		strb	r3, [r5, #264]
+ 611 0038 09E0     		b	.L55
+ 612              	.L56:
+ 309:GameController.c ****                 else{
+ 310:GameController.c ****                     controlLight(i,opponentColor);
+ 613              		.loc 1 310 0
+ 614 003a 0A4B     		ldr	r3, .L60+8
+ 615 003c 1968     		ldr	r1, [r3]
+ 616 003e 2046     		mov	r0, r4
+ 617 0040 FFF7FEFF 		bl	controlLight
+ 618              	.LVL52:
+ 311:GameController.c ****                     LED_states[i]=1;}
+ 619              		.loc 1 311 0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 18
+
+
+ 620 0044 064B     		ldr	r3, .L60+4
+ 621 0046 1D44     		add	r5, r5, r3
+ 622 0048 0123     		movs	r3, #1
+ 623 004a 85F80831 		strb	r3, [r5, #264]
+ 624              	.L55:
+ 303:GameController.c ****         {
+ 625              		.loc 1 303 0 discriminator 2
+ 626 004e 0134     		adds	r4, r4, #1
+ 627              	.LVL53:
+ 628 0050 E4B2     		uxtb	r4, r4
+ 629              	.LVL54:
+ 630 0052 00E0     		b	.L53
+ 631              	.LVL55:
+ 632              	.L58:
+ 633              	.LBE4:
+ 634 0054 0024     		movs	r4, #0
+ 635              	.L53:
+ 636              	.LVL56:
+ 637              	.LBB5:
+ 303:GameController.c ****         {
+ 638              		.loc 1 303 0 is_stmt 0 discriminator 1
+ 639 0056 052C     		cmp	r4, #5
+ 640 0058 D8D9     		bls	.L57
+ 641              	.LVL57:
+ 642              	.L52:
+ 643 005a 38BD     		pop	{r3, r4, r5, pc}
+ 644              	.L61:
+ 645              		.align	2
+ 646              	.L60:
+ 647 005c 00000000 		.word	currentState
+ 648 0060 00000000 		.word	.LANCHOR0
+ 649 0064 00000000 		.word	.LANCHOR2
+ 650              	.LBE5:
+ 651              		.cfi_endproc
+ 652              	.LFE71:
+ 653              		.size	interruptBlink, .-interruptBlink
+ 654              		.comm	currentState,1,1
+ 655              		.section	.rodata
+ 656              		.align	2
+ 657              		.set	.LANCHOR1,. + 0
+ 658              		.type	missingCupColor, %object
+ 659              		.size	missingCupColor, 3
+ 660              	missingCupColor:
+ 661 0000 FF       		.byte	-1
+ 662 0001 FF       		.byte	-1
+ 663 0002 00       		.byte	0
+ 664 0003 00       		.space	1
+ 665              		.type	placedCupColor, %object
+ 666              		.size	placedCupColor, 3
+ 667              	placedCupColor:
+ 668 0004 00       		.byte	0
+ 669 0005 00       		.byte	0
+ 670 0006 FF       		.byte	-1
+ 671 0007 00       		.space	1
+ 672              		.type	turnedOffColor, %object
+ 673              		.size	turnedOffColor, 3
+ 674              	turnedOffColor:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 19
+
+
+ 675 0008 000000   		.space	3
+ 676              		.data
+ 677              		.align	2
+ 678              		.set	.LANCHOR2,. + 0
+ 679              		.type	opponentColor, %object
+ 680              		.size	opponentColor, 3
+ 681              	opponentColor:
+ 682 0000 FF       		.byte	-1
+ 683 0001 00       		.byte	0
+ 684 0002 FF       		.byte	-1
+ 685 0003 00       		.space	1
+ 686              		.type	myColor, %object
+ 687              		.size	myColor, 3
+ 688              	myColor:
+ 689 0004 00       		.byte	0
+ 690 0005 FF       		.byte	-1
+ 691 0006 00       		.byte	0
+ 692              		.type	CupStatus_latest, %object
+ 693              		.size	CupStatus_latest, 1
+ 694              	CupStatus_latest:
+ 695 0007 C0       		.byte	-64
+ 696              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 697              		.align	2
+ 698              	.LC0:
+ 699 0000 436F6E74 		.ascii	"Controlling lights\012\015\000"
+ 699      726F6C6C 
+ 699      696E6720 
+ 699      6C696768 
+ 699      74730A0D 
+ 700 0015 000000   		.space	3
+ 701              	.LC1:
+ 702 0018 53746174 		.ascii	"State==IDLE\012\015\000"
+ 702      653D3D49 
+ 702      444C450A 
+ 702      0D00
+ 703 0026 0000     		.space	2
+ 704              	.LC2:
+ 705 0028 53746174 		.ascii	"State==STARTING\012\015\000"
+ 705      653D3D53 
+ 705      54415254 
+ 705      494E470A 
+ 705      0D00
+ 706 003a 0000     		.space	2
+ 707              	.LC3:
+ 708 003c 53746174 		.ascii	"State==PLAYING\012\015\000"
+ 708      653D3D50 
+ 708      4C415949 
+ 708      4E470A0D 
+ 708      00
+ 709 004d 000000   		.space	3
+ 710              	.LC4:
+ 711 0050 73746174 		.ascii	"state==WON\012\015\000"
+ 711      653D3D57 
+ 711      4F4E0A0D 
+ 711      00
+ 712 005d 000000   		.space	3
+ 713              	.LC5:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 20
+
+
+ 714 0060 73746174 		.ascii	"state==LOST\012\015\000"
+ 714      653D3D4C 
+ 714      4F53540A 
+ 714      0D00
+ 715 006e 0000     		.space	2
+ 716              	.LC6:
+ 717 0070 43757073 		.ascii	"Cupstatus change:%d\012\015\000"
+ 717      74617475 
+ 717      73206368 
+ 717      616E6765 
+ 717      3A25640A 
+ 718 0086 0000     		.space	2
+ 719              	.LC7:
+ 720 0088 53746172 		.ascii	"Starting timer\012\015\000"
+ 720      74696E67 
+ 720      2074696D 
+ 720      65720A0D 
+ 720      00
+ 721 0099 000000   		.space	3
+ 722              	.LC8:
+ 723 009c 53746F70 		.ascii	"Stopping timer\012\015\000"
+ 723      70696E67 
+ 723      2074696D 
+ 723      65720A0D 
+ 723      00
+ 724              		.bss
+ 725              		.align	2
+ 726              		.set	.LANCHOR0,. + 0
+ 727              		.type	CupStatus, %object
+ 728              		.size	CupStatus, 1
+ 729              	CupStatus:
+ 730 0000 00       		.space	1
+ 731              		.type	hitStatus, %object
+ 732              		.size	hitStatus, 1
+ 733              	hitStatus:
+ 734 0001 00       		.space	1
+ 735 0002 0000     		.space	2
+ 736              		.type	game_buf, %object
+ 737              		.size	game_buf, 256
+ 738              	game_buf:
+ 739 0004 00000000 		.space	256
+ 739      00000000 
+ 739      00000000 
+ 739      00000000 
+ 739      00000000 
+ 740              		.type	blinking, %object
+ 741              		.size	blinking, 4
+ 742              	blinking:
+ 743 0104 00000000 		.space	4
+ 744              		.type	LED_states, %object
+ 745              		.size	LED_states, 8
+ 746              	LED_states:
+ 747 0108 00000000 		.space	8
+ 747      00000000 
+ 748              		.text
+ 749              	.Letext0:
+ 750              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 21
+
+
+ 751              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 752              		.file 4 "CupLight_IF.h"
+ 753              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 754              		.file 6 "GameController.h"
+ 755              		.file 7 "CupSensor_IF.h"
+ 756              		.file 8 "Generated_Source\\PSoC5/UART.h"
+ 757              		.file 9 "RPI_IF.h"
+ 758              		.file 10 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 759              		.file 11 "Generated_Source\\PSoC5/Timer.h"
+ 760              		.section	.debug_info,"",%progbits
+ 761              	.Ldebug_info0:
+ 762 0000 E1050000 		.4byte	0x5e1
+ 763 0004 0400     		.2byte	0x4
+ 764 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 765 000a 04       		.byte	0x4
+ 766 000b 01       		.uleb128 0x1
+ 767 000c 0D030000 		.4byte	.LASF58
+ 768 0010 0C       		.byte	0xc
+ 769 0011 FC020000 		.4byte	.LASF59
+ 770 0015 2F010000 		.4byte	.LASF60
+ 771 0019 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 772 001d 00000000 		.4byte	0
+ 773 0021 00000000 		.4byte	.Ldebug_line0
+ 774 0025 02       		.uleb128 0x2
+ 775 0026 01       		.byte	0x1
+ 776 0027 06       		.byte	0x6
+ 777 0028 D9010000 		.4byte	.LASF0
+ 778 002c 03       		.uleb128 0x3
+ 779 002d 25010000 		.4byte	.LASF4
+ 780 0031 02       		.byte	0x2
+ 781 0032 1D       		.byte	0x1d
+ 782 0033 37000000 		.4byte	0x37
+ 783 0037 02       		.uleb128 0x2
+ 784 0038 01       		.byte	0x1
+ 785 0039 08       		.byte	0x8
+ 786 003a B1010000 		.4byte	.LASF1
+ 787 003e 02       		.uleb128 0x2
+ 788 003f 02       		.byte	0x2
+ 789 0040 05       		.byte	0x5
+ 790 0041 24000000 		.4byte	.LASF2
+ 791 0045 02       		.uleb128 0x2
+ 792 0046 02       		.byte	0x2
+ 793 0047 07       		.byte	0x7
+ 794 0048 3A020000 		.4byte	.LASF3
+ 795 004c 03       		.uleb128 0x3
+ 796 004d BC020000 		.4byte	.LASF5
+ 797 0051 02       		.byte	0x2
+ 798 0052 3F       		.byte	0x3f
+ 799 0053 57000000 		.4byte	0x57
+ 800 0057 02       		.uleb128 0x2
+ 801 0058 04       		.byte	0x4
+ 802 0059 05       		.byte	0x5
+ 803 005a 1C010000 		.4byte	.LASF6
+ 804 005e 02       		.uleb128 0x2
+ 805 005f 04       		.byte	0x4
+ 806 0060 07       		.byte	0x7
+ 807 0061 81020000 		.4byte	.LASF7
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 22
+
+
+ 808 0065 02       		.uleb128 0x2
+ 809 0066 08       		.byte	0x8
+ 810 0067 05       		.byte	0x5
+ 811 0068 F0000000 		.4byte	.LASF8
+ 812 006c 02       		.uleb128 0x2
+ 813 006d 08       		.byte	0x8
+ 814 006e 07       		.byte	0x7
+ 815 006f EF010000 		.4byte	.LASF9
+ 816 0073 04       		.uleb128 0x4
+ 817 0074 04       		.byte	0x4
+ 818 0075 05       		.byte	0x5
+ 819 0076 696E7400 		.ascii	"int\000"
+ 820 007a 02       		.uleb128 0x2
+ 821 007b 04       		.byte	0x4
+ 822 007c 07       		.byte	0x7
+ 823 007d 06020000 		.4byte	.LASF10
+ 824 0081 03       		.uleb128 0x3
+ 825 0082 C8000000 		.4byte	.LASF11
+ 826 0086 03       		.byte	0x3
+ 827 0087 18       		.byte	0x18
+ 828 0088 2C000000 		.4byte	0x2c
+ 829 008c 03       		.uleb128 0x3
+ 830 008d 59020000 		.4byte	.LASF12
+ 831 0091 03       		.byte	0x3
+ 832 0092 2C       		.byte	0x2c
+ 833 0093 4C000000 		.4byte	0x4c
+ 834 0097 02       		.uleb128 0x2
+ 835 0098 04       		.byte	0x4
+ 836 0099 04       		.byte	0x4
+ 837 009a EA000000 		.4byte	.LASF13
+ 838 009e 02       		.uleb128 0x2
+ 839 009f 08       		.byte	0x8
+ 840 00a0 04       		.byte	0x4
+ 841 00a1 F0020000 		.4byte	.LASF14
+ 842 00a5 02       		.uleb128 0x2
+ 843 00a6 01       		.byte	0x1
+ 844 00a7 08       		.byte	0x8
+ 845 00a8 54020000 		.4byte	.LASF15
+ 846 00ac 02       		.uleb128 0x2
+ 847 00ad 08       		.byte	0x8
+ 848 00ae 04       		.byte	0x4
+ 849 00af 9B010000 		.4byte	.LASF16
+ 850 00b3 02       		.uleb128 0x2
+ 851 00b4 04       		.byte	0x4
+ 852 00b5 07       		.byte	0x7
+ 853 00b6 C6020000 		.4byte	.LASF17
+ 854 00ba 05       		.uleb128 0x5
+ 855 00bb 2E000000 		.4byte	.LASF61
+ 856 00bf 03       		.byte	0x3
+ 857 00c0 04       		.byte	0x4
+ 858 00c1 12       		.byte	0x12
+ 859 00c2 EB000000 		.4byte	0xeb
+ 860 00c6 06       		.uleb128 0x6
+ 861 00c7 52656400 		.ascii	"Red\000"
+ 862 00cb 04       		.byte	0x4
+ 863 00cc 14       		.byte	0x14
+ 864 00cd 81000000 		.4byte	0x81
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 23
+
+
+ 865 00d1 00       		.byte	0
+ 866 00d2 07       		.uleb128 0x7
+ 867 00d3 CF020000 		.4byte	.LASF18
+ 868 00d7 04       		.byte	0x4
+ 869 00d8 15       		.byte	0x15
+ 870 00d9 81000000 		.4byte	0x81
+ 871 00dd 01       		.byte	0x1
+ 872 00de 07       		.uleb128 0x7
+ 873 00df F7020000 		.4byte	.LASF19
+ 874 00e3 04       		.byte	0x4
+ 875 00e4 16       		.byte	0x16
+ 876 00e5 81000000 		.4byte	0x81
+ 877 00e9 02       		.byte	0x2
+ 878 00ea 00       		.byte	0
+ 879 00eb 03       		.uleb128 0x3
+ 880 00ec AF000000 		.4byte	.LASF20
+ 881 00f0 04       		.byte	0x4
+ 882 00f1 17       		.byte	0x17
+ 883 00f2 BA000000 		.4byte	0xba
+ 884 00f6 08       		.uleb128 0x8
+ 885 00f7 D0000000 		.4byte	.LASF62
+ 886 00fb 01       		.byte	0x1
+ 887 00fc 37000000 		.4byte	0x37
+ 888 0100 06       		.byte	0x6
+ 889 0101 16       		.byte	0x16
+ 890 0102 25010000 		.4byte	0x125
+ 891 0106 09       		.uleb128 0x9
+ 892 0107 1F000000 		.4byte	.LASF21
+ 893 010b 00       		.byte	0
+ 894 010c 09       		.uleb128 0x9
+ 895 010d C7010000 		.4byte	.LASF22
+ 896 0111 01       		.byte	0x1
+ 897 0112 09       		.uleb128 0x9
+ 898 0113 13020000 		.4byte	.LASF23
+ 899 0117 02       		.byte	0x2
+ 900 0118 0A       		.uleb128 0xa
+ 901 0119 574F4E00 		.ascii	"WON\000"
+ 902 011d 03       		.byte	0x3
+ 903 011e 09       		.uleb128 0x9
+ 904 011f 6E020000 		.4byte	.LASF24
+ 905 0123 04       		.byte	0x4
+ 906 0124 00       		.byte	0
+ 907 0125 0B       		.uleb128 0xb
+ 908 0126 1B020000 		.4byte	.LASF25
+ 909 012a 01       		.byte	0x1
+ 910 012b 5F       		.byte	0x5f
+ 911 012c 00000000 		.4byte	.LFB67
+ 912 0130 1C000000 		.4byte	.LFE67-.LFB67
+ 913 0134 01       		.uleb128 0x1
+ 914 0135 9C       		.byte	0x9c
+ 915 0136 48010000 		.4byte	0x148
+ 916 013a 0C       		.uleb128 0xc
+ 917 013b 4D020000 		.4byte	.LASF27
+ 918 013f 01       		.byte	0x1
+ 919 0140 5F       		.byte	0x5f
+ 920 0141 81000000 		.4byte	0x81
+ 921 0145 01       		.uleb128 0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 24
+
+
+ 922 0146 50       		.byte	0x50
+ 923 0147 00       		.byte	0
+ 924 0148 0B       		.uleb128 0xb
+ 925 0149 DA000000 		.4byte	.LASF26
+ 926 014d 01       		.byte	0x1
+ 927 014e 6D       		.byte	0x6d
+ 928 014f 00000000 		.4byte	.LFB68
+ 929 0153 24000000 		.4byte	.LFE68-.LFB68
+ 930 0157 01       		.uleb128 0x1
+ 931 0158 9C       		.byte	0x9c
+ 932 0159 76010000 		.4byte	0x176
+ 933 015d 0D       		.uleb128 0xd
+ 934 015e 4D020000 		.4byte	.LASF27
+ 935 0162 01       		.byte	0x1
+ 936 0163 6D       		.byte	0x6d
+ 937 0164 81000000 		.4byte	0x81
+ 938 0168 00000000 		.4byte	.LLST0
+ 939 016c 0E       		.uleb128 0xe
+ 940 016d 10000000 		.4byte	.LVL2
+ 941 0171 76050000 		.4byte	0x576
+ 942 0175 00       		.byte	0
+ 943 0176 0F       		.uleb128 0xf
+ 944 0177 00000000 		.4byte	.LASF32
+ 945 017b 01       		.byte	0x1
+ 946 017c F0       		.byte	0xf0
+ 947 017d 00000000 		.4byte	.LFB69
+ 948 0181 90000000 		.4byte	.LFE69-.LFB69
+ 949 0185 01       		.uleb128 0x1
+ 950 0186 9C       		.byte	0x9c
+ 951 0187 34020000 		.4byte	0x234
+ 952 018b 10       		.uleb128 0x10
+ 953 018c 10000000 		.4byte	.LBB2
+ 954 0190 30000000 		.4byte	.LBE2-.LBB2
+ 955 0194 CA010000 		.4byte	0x1ca
+ 956 0198 11       		.uleb128 0x11
+ 957 0199 6900     		.ascii	"i\000"
+ 958 019b 01       		.byte	0x1
+ 959 019c F4       		.byte	0xf4
+ 960 019d 73000000 		.4byte	0x73
+ 961 01a1 2C000000 		.4byte	.LLST1
+ 962 01a5 12       		.uleb128 0x12
+ 963 01a6 2C000000 		.4byte	.LVL6
+ 964 01aa 81050000 		.4byte	0x581
+ 965 01ae B9010000 		.4byte	0x1b9
+ 966 01b2 13       		.uleb128 0x13
+ 967 01b3 01       		.uleb128 0x1
+ 968 01b4 50       		.byte	0x50
+ 969 01b5 02       		.uleb128 0x2
+ 970 01b6 74       		.byte	0x74
+ 971 01b7 00       		.sleb128 0
+ 972 01b8 00       		.byte	0
+ 973 01b9 14       		.uleb128 0x14
+ 974 01ba 38000000 		.4byte	.LVL7
+ 975 01be 81050000 		.4byte	0x581
+ 976 01c2 13       		.uleb128 0x13
+ 977 01c3 01       		.uleb128 0x1
+ 978 01c4 50       		.byte	0x50
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 25
+
+
+ 979 01c5 02       		.uleb128 0x2
+ 980 01c6 74       		.byte	0x74
+ 981 01c7 00       		.sleb128 0
+ 982 01c8 00       		.byte	0
+ 983 01c9 00       		.byte	0
+ 984 01ca 10       		.uleb128 0x10
+ 985 01cb 4A000000 		.4byte	.LBB3
+ 986 01cf 46000000 		.4byte	.LBE3-.LBB3
+ 987 01d3 09020000 		.4byte	0x209
+ 988 01d7 11       		.uleb128 0x11
+ 989 01d8 6900     		.ascii	"i\000"
+ 990 01da 01       		.byte	0x1
+ 991 01db FD       		.byte	0xfd
+ 992 01dc 73000000 		.4byte	0x73
+ 993 01e0 4B000000 		.4byte	.LLST2
+ 994 01e4 12       		.uleb128 0x12
+ 995 01e5 66000000 		.4byte	.LVL12
+ 996 01e9 81050000 		.4byte	0x581
+ 997 01ed F8010000 		.4byte	0x1f8
+ 998 01f1 13       		.uleb128 0x13
+ 999 01f2 01       		.uleb128 0x1
+ 1000 01f3 50       		.byte	0x50
+ 1001 01f4 02       		.uleb128 0x2
+ 1002 01f5 74       		.byte	0x74
+ 1003 01f6 00       		.sleb128 0
+ 1004 01f7 00       		.byte	0
+ 1005 01f8 14       		.uleb128 0x14
+ 1006 01f9 72000000 		.4byte	.LVL13
+ 1007 01fd 81050000 		.4byte	0x581
+ 1008 0201 13       		.uleb128 0x13
+ 1009 0202 01       		.uleb128 0x1
+ 1010 0203 50       		.byte	0x50
+ 1011 0204 02       		.uleb128 0x2
+ 1012 0205 74       		.byte	0x74
+ 1013 0206 00       		.sleb128 0
+ 1014 0207 00       		.byte	0
+ 1015 0208 00       		.byte	0
+ 1016 0209 12       		.uleb128 0x12
+ 1017 020a 10000000 		.4byte	.LVL4
+ 1018 020e 8C050000 		.4byte	0x58c
+ 1019 0212 20020000 		.4byte	0x220
+ 1020 0216 13       		.uleb128 0x13
+ 1021 0217 01       		.uleb128 0x1
+ 1022 0218 50       		.byte	0x50
+ 1023 0219 05       		.uleb128 0x5
+ 1024 021a 03       		.byte	0x3
+ 1025 021b 00000000 		.4byte	.LC0
+ 1026 021f 00       		.byte	0
+ 1027 0220 14       		.uleb128 0x14
+ 1028 0221 4A000000 		.4byte	.LVL10
+ 1029 0225 8C050000 		.4byte	0x58c
+ 1030 0229 13       		.uleb128 0x13
+ 1031 022a 01       		.uleb128 0x1
+ 1032 022b 50       		.byte	0x50
+ 1033 022c 05       		.uleb128 0x5
+ 1034 022d 03       		.byte	0x3
+ 1035 022e 00000000 		.4byte	.LC0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 26
+
+
+ 1036 0232 00       		.byte	0
+ 1037 0233 00       		.byte	0
+ 1038 0234 0B       		.uleb128 0xb
+ 1039 0235 D0010000 		.4byte	.LASF28
+ 1040 0239 01       		.byte	0x1
+ 1041 023a 1F       		.byte	0x1f
+ 1042 023b 00000000 		.4byte	.LFB64
+ 1043 023f B4000000 		.4byte	.LFE64-.LFB64
+ 1044 0243 01       		.uleb128 0x1
+ 1045 0244 9C       		.byte	0x9c
+ 1046 0245 22030000 		.4byte	0x322
+ 1047 0249 0D       		.uleb128 0xd
+ 1048 024a AD020000 		.4byte	.LASF29
+ 1049 024e 01       		.byte	0x1
+ 1050 024f 1F       		.byte	0x1f
+ 1051 0250 F6000000 		.4byte	0xf6
+ 1052 0254 6A000000 		.4byte	.LLST3
+ 1053 0258 12       		.uleb128 0x12
+ 1054 0259 1A000000 		.4byte	.LVL18
+ 1055 025d 8C050000 		.4byte	0x58c
+ 1056 0261 6F020000 		.4byte	0x26f
+ 1057 0265 13       		.uleb128 0x13
+ 1058 0266 01       		.uleb128 0x1
+ 1059 0267 50       		.byte	0x50
+ 1060 0268 05       		.uleb128 0x5
+ 1061 0269 03       		.byte	0x3
+ 1062 026a 18000000 		.4byte	.LC1
+ 1063 026e 00       		.byte	0
+ 1064 026f 0E       		.uleb128 0xe
+ 1065 0270 22000000 		.4byte	.LVL19
+ 1066 0274 97050000 		.4byte	0x597
+ 1067 0278 0E       		.uleb128 0xe
+ 1068 0279 2C000000 		.4byte	.LVL21
+ 1069 027d A2050000 		.4byte	0x5a2
+ 1070 0281 0E       		.uleb128 0xe
+ 1071 0282 34000000 		.4byte	.LVL22
+ 1072 0286 76010000 		.4byte	0x176
+ 1073 028a 0E       		.uleb128 0xe
+ 1074 028b 3A000000 		.4byte	.LVL23
+ 1075 028f AD050000 		.4byte	0x5ad
+ 1076 0293 12       		.uleb128 0x12
+ 1077 0294 40000000 		.4byte	.LVL24
+ 1078 0298 8C050000 		.4byte	0x58c
+ 1079 029c AA020000 		.4byte	0x2aa
+ 1080 02a0 13       		.uleb128 0x13
+ 1081 02a1 01       		.uleb128 0x1
+ 1082 02a2 50       		.byte	0x50
+ 1083 02a3 05       		.uleb128 0x5
+ 1084 02a4 03       		.byte	0x3
+ 1085 02a5 28000000 		.4byte	.LC2
+ 1086 02a9 00       		.byte	0
+ 1087 02aa 0E       		.uleb128 0xe
+ 1088 02ab 4A000000 		.4byte	.LVL26
+ 1089 02af A2050000 		.4byte	0x5a2
+ 1090 02b3 0E       		.uleb128 0xe
+ 1091 02b4 52000000 		.4byte	.LVL27
+ 1092 02b8 A2050000 		.4byte	0x5a2
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 27
+
+
+ 1093 02bc 0E       		.uleb128 0xe
+ 1094 02bd 58000000 		.4byte	.LVL28
+ 1095 02c1 76010000 		.4byte	0x176
+ 1096 02c5 0E       		.uleb128 0xe
+ 1097 02c6 5E000000 		.4byte	.LVL29
+ 1098 02ca AD050000 		.4byte	0x5ad
+ 1099 02ce 12       		.uleb128 0x12
+ 1100 02cf 64000000 		.4byte	.LVL30
+ 1101 02d3 8C050000 		.4byte	0x58c
+ 1102 02d7 E5020000 		.4byte	0x2e5
+ 1103 02db 13       		.uleb128 0x13
+ 1104 02dc 01       		.uleb128 0x1
+ 1105 02dd 50       		.byte	0x50
+ 1106 02de 05       		.uleb128 0x5
+ 1107 02df 03       		.byte	0x3
+ 1108 02e0 3C000000 		.4byte	.LC3
+ 1109 02e4 00       		.byte	0
+ 1110 02e5 0E       		.uleb128 0xe
+ 1111 02e6 72000000 		.4byte	.LVL33
+ 1112 02ea 97050000 		.4byte	0x597
+ 1113 02ee 12       		.uleb128 0x12
+ 1114 02ef 78000000 		.4byte	.LVL34
+ 1115 02f3 8C050000 		.4byte	0x58c
+ 1116 02f7 05030000 		.4byte	0x305
+ 1117 02fb 13       		.uleb128 0x13
+ 1118 02fc 01       		.uleb128 0x1
+ 1119 02fd 50       		.byte	0x50
+ 1120 02fe 05       		.uleb128 0x5
+ 1121 02ff 03       		.byte	0x3
+ 1122 0300 50000000 		.4byte	.LC4
+ 1123 0304 00       		.byte	0
+ 1124 0305 0E       		.uleb128 0xe
+ 1125 0306 86000000 		.4byte	.LVL37
+ 1126 030a 97050000 		.4byte	0x597
+ 1127 030e 14       		.uleb128 0x14
+ 1128 030f 8C000000 		.4byte	.LVL38
+ 1129 0313 8C050000 		.4byte	0x58c
+ 1130 0317 13       		.uleb128 0x13
+ 1131 0318 01       		.uleb128 0x1
+ 1132 0319 50       		.byte	0x50
+ 1133 031a 05       		.uleb128 0x5
+ 1134 031b 03       		.byte	0x3
+ 1135 031c 60000000 		.4byte	.LC5
+ 1136 0320 00       		.byte	0
+ 1137 0321 00       		.byte	0
+ 1138 0322 0B       		.uleb128 0xb
+ 1139 0323 A4000000 		.4byte	.LASF30
+ 1140 0327 01       		.byte	0x1
+ 1141 0328 55       		.byte	0x55
+ 1142 0329 00000000 		.4byte	.LFB65
+ 1143 032d 1C000000 		.4byte	.LFE65-.LFB65
+ 1144 0331 01       		.uleb128 0x1
+ 1145 0332 9C       		.byte	0x9c
+ 1146 0333 4D030000 		.4byte	0x34d
+ 1147 0337 15       		.uleb128 0x15
+ 1148 0338 6300     		.ascii	"c\000"
+ 1149 033a 01       		.byte	0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 28
+
+
+ 1150 033b 55       		.byte	0x55
+ 1151 033c EB000000 		.4byte	0xeb
+ 1152 0340 02       		.uleb128 0x2
+ 1153 0341 91       		.byte	0x91
+ 1154 0342 74       		.sleb128 -12
+ 1155 0343 0E       		.uleb128 0xe
+ 1156 0344 10000000 		.4byte	.LVL39
+ 1157 0348 76010000 		.4byte	0x176
+ 1158 034c 00       		.byte	0
+ 1159 034d 0B       		.uleb128 0xb
+ 1160 034e DF020000 		.4byte	.LASF31
+ 1161 0352 01       		.byte	0x1
+ 1162 0353 5A       		.byte	0x5a
+ 1163 0354 00000000 		.4byte	.LFB66
+ 1164 0358 1C000000 		.4byte	.LFE66-.LFB66
+ 1165 035c 01       		.uleb128 0x1
+ 1166 035d 9C       		.byte	0x9c
+ 1167 035e 78030000 		.4byte	0x378
+ 1168 0362 15       		.uleb128 0x15
+ 1169 0363 6300     		.ascii	"c\000"
+ 1170 0365 01       		.byte	0x1
+ 1171 0366 5A       		.byte	0x5a
+ 1172 0367 EB000000 		.4byte	0xeb
+ 1173 036b 02       		.uleb128 0x2
+ 1174 036c 91       		.byte	0x91
+ 1175 036d 74       		.sleb128 -12
+ 1176 036e 0E       		.uleb128 0xe
+ 1177 036f 10000000 		.4byte	.LVL40
+ 1178 0373 76010000 		.4byte	0x176
+ 1179 0377 00       		.byte	0
+ 1180 0378 16       		.uleb128 0x16
+ 1181 0379 9B030000 		.4byte	.LASF33
+ 1182 037d 01       		.byte	0x1
+ 1183 037e 0701     		.2byte	0x107
+ 1184 0380 00000000 		.4byte	.LFB70
+ 1185 0384 B0000000 		.4byte	.LFE70-.LFB70
+ 1186 0388 01       		.uleb128 0x1
+ 1187 0389 9C       		.byte	0x9c
+ 1188 038a 1B040000 		.4byte	0x41b
+ 1189 038e 0E       		.uleb128 0xe
+ 1190 038f 06000000 		.4byte	.LVL41
+ 1191 0393 B8050000 		.4byte	0x5b8
+ 1192 0397 0E       		.uleb128 0xe
+ 1193 0398 26000000 		.4byte	.LVL42
+ 1194 039c 76010000 		.4byte	0x176
+ 1195 03a0 12       		.uleb128 0x12
+ 1196 03a1 34000000 		.4byte	.LVL43
+ 1197 03a5 C3050000 		.4byte	0x5c3
+ 1198 03a9 BD030000 		.4byte	0x3bd
+ 1199 03ad 13       		.uleb128 0x13
+ 1200 03ae 01       		.uleb128 0x1
+ 1201 03af 50       		.byte	0x50
+ 1202 03b0 02       		.uleb128 0x2
+ 1203 03b1 74       		.byte	0x74
+ 1204 03b2 00       		.sleb128 0
+ 1205 03b3 13       		.uleb128 0x13
+ 1206 03b4 01       		.uleb128 0x1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 29
+
+
+ 1207 03b5 51       		.byte	0x51
+ 1208 03b6 05       		.uleb128 0x5
+ 1209 03b7 03       		.byte	0x3
+ 1210 03b8 70000000 		.4byte	.LC6
+ 1211 03bc 00       		.byte	0
+ 1212 03bd 12       		.uleb128 0x12
+ 1213 03be 3A000000 		.4byte	.LVL44
+ 1214 03c2 8C050000 		.4byte	0x58c
+ 1215 03c6 D1030000 		.4byte	0x3d1
+ 1216 03ca 13       		.uleb128 0x13
+ 1217 03cb 01       		.uleb128 0x1
+ 1218 03cc 50       		.byte	0x50
+ 1219 03cd 02       		.uleb128 0x2
+ 1220 03ce 74       		.byte	0x74
+ 1221 03cf 00       		.sleb128 0
+ 1222 03d0 00       		.byte	0
+ 1223 03d1 12       		.uleb128 0x12
+ 1224 03d2 56000000 		.4byte	.LVL45
+ 1225 03d6 8C050000 		.4byte	0x58c
+ 1226 03da E8030000 		.4byte	0x3e8
+ 1227 03de 13       		.uleb128 0x13
+ 1228 03df 01       		.uleb128 0x1
+ 1229 03e0 50       		.byte	0x50
+ 1230 03e1 05       		.uleb128 0x5
+ 1231 03e2 03       		.byte	0x3
+ 1232 03e3 88000000 		.4byte	.LC7
+ 1233 03e7 00       		.byte	0
+ 1234 03e8 0E       		.uleb128 0xe
+ 1235 03e9 5A000000 		.4byte	.LVL46
+ 1236 03ed CE050000 		.4byte	0x5ce
+ 1237 03f1 12       		.uleb128 0x12
+ 1238 03f2 74000000 		.4byte	.LVL47
+ 1239 03f6 8C050000 		.4byte	0x58c
+ 1240 03fa 08040000 		.4byte	0x408
+ 1241 03fe 13       		.uleb128 0x13
+ 1242 03ff 01       		.uleb128 0x1
+ 1243 0400 50       		.byte	0x50
+ 1244 0401 05       		.uleb128 0x5
+ 1245 0402 03       		.byte	0x3
+ 1246 0403 9C000000 		.4byte	.LC8
+ 1247 0407 00       		.byte	0
+ 1248 0408 0E       		.uleb128 0xe
+ 1249 0409 78000000 		.4byte	.LVL48
+ 1250 040d D9050000 		.4byte	0x5d9
+ 1251 0411 0E       		.uleb128 0xe
+ 1252 0412 8E000000 		.4byte	.LVL49
+ 1253 0416 D9050000 		.4byte	0x5d9
+ 1254 041a 00       		.byte	0
+ 1255 041b 16       		.uleb128 0x16
+ 1256 041c 6B000000 		.4byte	.LASF34
+ 1257 0420 01       		.byte	0x1
+ 1258 0421 2C01     		.2byte	0x12c
+ 1259 0423 00000000 		.4byte	.LFB71
+ 1260 0427 68000000 		.4byte	.LFE71-.LFB71
+ 1261 042b 01       		.uleb128 0x1
+ 1262 042c 9C       		.byte	0x9c
+ 1263 042d 6A040000 		.4byte	0x46a
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 30
+
+
+ 1264 0431 17       		.uleb128 0x17
+ 1265 0432 00000000 		.4byte	.Ldebug_ranges0+0
+ 1266 0436 18       		.uleb128 0x18
+ 1267 0437 6900     		.ascii	"i\000"
+ 1268 0439 01       		.byte	0x1
+ 1269 043a 2F01     		.2byte	0x12f
+ 1270 043c 81000000 		.4byte	0x81
+ 1271 0440 1C010000 		.4byte	.LLST4
+ 1272 0444 12       		.uleb128 0x12
+ 1273 0445 2E000000 		.4byte	.LVL51
+ 1274 0449 81050000 		.4byte	0x581
+ 1275 044d 58040000 		.4byte	0x458
+ 1276 0451 13       		.uleb128 0x13
+ 1277 0452 01       		.uleb128 0x1
+ 1278 0453 50       		.byte	0x50
+ 1279 0454 02       		.uleb128 0x2
+ 1280 0455 74       		.byte	0x74
+ 1281 0456 00       		.sleb128 0
+ 1282 0457 00       		.byte	0
+ 1283 0458 14       		.uleb128 0x14
+ 1284 0459 44000000 		.4byte	.LVL52
+ 1285 045d 81050000 		.4byte	0x581
+ 1286 0461 13       		.uleb128 0x13
+ 1287 0462 01       		.uleb128 0x1
+ 1288 0463 50       		.byte	0x50
+ 1289 0464 02       		.uleb128 0x2
+ 1290 0465 74       		.byte	0x74
+ 1291 0466 00       		.sleb128 0
+ 1292 0467 00       		.byte	0
+ 1293 0468 00       		.byte	0
+ 1294 0469 00       		.byte	0
+ 1295 046a 19       		.uleb128 0x19
+ 1296 046b 41000000 		.4byte	.LASF35
+ 1297 046f 01       		.byte	0x1
+ 1298 0470 10       		.byte	0x10
+ 1299 0471 73000000 		.4byte	0x73
+ 1300 0475 05       		.uleb128 0x5
+ 1301 0476 03       		.byte	0x3
+ 1302 0477 04010000 		.4byte	blinking
+ 1303 047b 19       		.uleb128 0x19
+ 1304 047c A6030000 		.4byte	.LASF36
+ 1305 0480 01       		.byte	0x1
+ 1306 0481 11       		.byte	0x11
+ 1307 0482 8C040000 		.4byte	0x48c
+ 1308 0486 05       		.uleb128 0x5
+ 1309 0487 03       		.byte	0x3
+ 1310 0488 08000000 		.4byte	turnedOffColor
+ 1311 048c 1A       		.uleb128 0x1a
+ 1312 048d EB000000 		.4byte	0xeb
+ 1313 0491 19       		.uleb128 0x19
+ 1314 0492 58000000 		.4byte	.LASF37
+ 1315 0496 01       		.byte	0x1
+ 1316 0497 12       		.byte	0x12
+ 1317 0498 EB000000 		.4byte	0xeb
+ 1318 049c 05       		.uleb128 0x5
+ 1319 049d 03       		.byte	0x3
+ 1320 049e 04000000 		.4byte	myColor
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 31
+
+
+ 1321 04a2 19       		.uleb128 0x19
+ 1322 04a3 73020000 		.4byte	.LASF38
+ 1323 04a7 01       		.byte	0x1
+ 1324 04a8 13       		.byte	0x13
+ 1325 04a9 EB000000 		.4byte	0xeb
+ 1326 04ad 05       		.uleb128 0x5
+ 1327 04ae 03       		.byte	0x3
+ 1328 04af 00000000 		.4byte	opponentColor
+ 1329 04b3 19       		.uleb128 0x19
+ 1330 04b4 85000000 		.4byte	.LASF39
+ 1331 04b8 01       		.byte	0x1
+ 1332 04b9 14       		.byte	0x14
+ 1333 04ba C4040000 		.4byte	0x4c4
+ 1334 04be 05       		.uleb128 0x5
+ 1335 04bf 03       		.byte	0x3
+ 1336 04c0 00000000 		.4byte	missingCupColor
+ 1337 04c4 1A       		.uleb128 0x1a
+ 1338 04c5 EB000000 		.4byte	0xeb
+ 1339 04c9 19       		.uleb128 0x19
+ 1340 04ca 2B020000 		.4byte	.LASF40
+ 1341 04ce 01       		.byte	0x1
+ 1342 04cf 15       		.byte	0x15
+ 1343 04d0 DA040000 		.4byte	0x4da
+ 1344 04d4 05       		.uleb128 0x5
+ 1345 04d5 03       		.byte	0x3
+ 1346 04d6 04000000 		.4byte	placedCupColor
+ 1347 04da 1A       		.uleb128 0x1a
+ 1348 04db EB000000 		.4byte	0xeb
+ 1349 04df 19       		.uleb128 0x19
+ 1350 04e0 E5010000 		.4byte	.LASF41
+ 1351 04e4 01       		.byte	0x1
+ 1352 04e5 16       		.byte	0x16
+ 1353 04e6 81000000 		.4byte	0x81
+ 1354 04ea 05       		.uleb128 0x5
+ 1355 04eb 03       		.byte	0x3
+ 1356 04ec 00000000 		.4byte	CupStatus
+ 1357 04f0 19       		.uleb128 0x19
+ 1358 04f1 D5020000 		.4byte	.LASF42
+ 1359 04f5 01       		.byte	0x1
+ 1360 04f6 17       		.byte	0x17
+ 1361 04f7 81000000 		.4byte	0x81
+ 1362 04fb 05       		.uleb128 0x5
+ 1363 04fc 03       		.byte	0x3
+ 1364 04fd 01000000 		.4byte	hitStatus
+ 1365 0501 1B       		.uleb128 0x1b
+ 1366 0502 A5000000 		.4byte	0xa5
+ 1367 0506 11050000 		.4byte	0x511
+ 1368 050a 1C       		.uleb128 0x1c
+ 1369 050b B3000000 		.4byte	0xb3
+ 1370 050f FF       		.byte	0xff
+ 1371 0510 00       		.byte	0
+ 1372 0511 19       		.uleb128 0x19
+ 1373 0512 B3020000 		.4byte	.LASF43
+ 1374 0516 01       		.byte	0x1
+ 1375 0517 18       		.byte	0x18
+ 1376 0518 01050000 		.4byte	0x501
+ 1377 051c 05       		.uleb128 0x5
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 32
+
+
+ 1378 051d 03       		.byte	0x3
+ 1379 051e 04000000 		.4byte	game_buf
+ 1380 0522 1B       		.uleb128 0x1b
+ 1381 0523 81000000 		.4byte	0x81
+ 1382 0527 32050000 		.4byte	0x532
+ 1383 052b 1C       		.uleb128 0x1c
+ 1384 052c B3000000 		.4byte	0xb3
+ 1385 0530 07       		.byte	0x7
+ 1386 0531 00       		.byte	0
+ 1387 0532 19       		.uleb128 0x19
+ 1388 0533 60000000 		.4byte	.LASF44
+ 1389 0537 01       		.byte	0x1
+ 1390 0538 19       		.byte	0x19
+ 1391 0539 22050000 		.4byte	0x522
+ 1392 053d 05       		.uleb128 0x5
+ 1393 053e 03       		.byte	0x3
+ 1394 053f 08010000 		.4byte	LED_states
+ 1395 0543 19       		.uleb128 0x19
+ 1396 0544 0E000000 		.4byte	.LASF45
+ 1397 0548 01       		.byte	0x1
+ 1398 0549 1A       		.byte	0x1a
+ 1399 054a 81000000 		.4byte	0x81
+ 1400 054e 05       		.uleb128 0x5
+ 1401 054f 03       		.byte	0x3
+ 1402 0550 07000000 		.4byte	CupStatus_latest
+ 1403 0554 1D       		.uleb128 0x1d
+ 1404 0555 A0020000 		.4byte	.LASF46
+ 1405 0559 05       		.byte	0x5
+ 1406 055a 1207     		.2byte	0x712
+ 1407 055c 60050000 		.4byte	0x560
+ 1408 0560 1E       		.uleb128 0x1e
+ 1409 0561 8C000000 		.4byte	0x8c
+ 1410 0565 1F       		.uleb128 0x1f
+ 1411 0566 61020000 		.4byte	.LASF47
+ 1412 056a 06       		.byte	0x6
+ 1413 056b 16       		.byte	0x16
+ 1414 056c F6000000 		.4byte	0xf6
+ 1415 0570 05       		.uleb128 0x5
+ 1416 0571 03       		.byte	0x3
+ 1417 0572 00000000 		.4byte	currentState
+ 1418 0576 20       		.uleb128 0x20
+ 1419 0577 93020000 		.4byte	.LASF48
+ 1420 057b 93020000 		.4byte	.LASF48
+ 1421 057f 07       		.byte	0x7
+ 1422 0580 12       		.byte	0x12
+ 1423 0581 20       		.uleb128 0x20
+ 1424 0582 34000000 		.4byte	.LASF49
+ 1425 0586 34000000 		.4byte	.LASF49
+ 1426 058a 04       		.byte	0x4
+ 1427 058b 1C       		.byte	0x1c
+ 1428 058c 20       		.uleb128 0x20
+ 1429 058d 95000000 		.4byte	.LASF50
+ 1430 0591 95000000 		.4byte	.LASF50
+ 1431 0595 08       		.byte	0x8
+ 1432 0596 8B       		.byte	0x8b
+ 1433 0597 20       		.uleb128 0x20
+ 1434 0598 B7000000 		.4byte	.LASF51
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 33
+
+
+ 1435 059c B7000000 		.4byte	.LASF51
+ 1436 05a0 04       		.byte	0x4
+ 1437 05a1 20       		.byte	0x20
+ 1438 05a2 20       		.uleb128 0x20
+ 1439 05a3 A7010000 		.4byte	.LASF52
+ 1440 05a7 A7010000 		.4byte	.LASF52
+ 1441 05ab 07       		.byte	0x7
+ 1442 05ac 11       		.byte	0x11
+ 1443 05ad 20       		.uleb128 0x20
+ 1444 05ae 4A000000 		.4byte	.LASF53
+ 1445 05b2 4A000000 		.4byte	.LASF53
+ 1446 05b6 09       		.byte	0x9
+ 1447 05b7 16       		.byte	0x16
+ 1448 05b8 20       		.uleb128 0x20
+ 1449 05b9 FE000000 		.4byte	.LASF54
+ 1450 05bd FE000000 		.4byte	.LASF54
+ 1451 05c1 09       		.byte	0x9
+ 1452 05c2 19       		.byte	0x19
+ 1453 05c3 20       		.uleb128 0x20
+ 1454 05c4 BF010000 		.4byte	.LASF55
+ 1455 05c8 BF010000 		.4byte	.LASF55
+ 1456 05cc 0A       		.byte	0xa
+ 1457 05cd E7       		.byte	0xe7
+ 1458 05ce 20       		.uleb128 0x20
+ 1459 05cf 10010000 		.4byte	.LASF56
+ 1460 05d3 10010000 		.4byte	.LASF56
+ 1461 05d7 0B       		.byte	0xb
+ 1462 05d8 5A       		.byte	0x5a
+ 1463 05d9 20       		.uleb128 0x20
+ 1464 05da 7A000000 		.4byte	.LASF57
+ 1465 05de 7A000000 		.4byte	.LASF57
+ 1466 05e2 0B       		.byte	0xb
+ 1467 05e3 5B       		.byte	0x5b
+ 1468 05e4 00       		.byte	0
+ 1469              		.section	.debug_abbrev,"",%progbits
+ 1470              	.Ldebug_abbrev0:
+ 1471 0000 01       		.uleb128 0x1
+ 1472 0001 11       		.uleb128 0x11
+ 1473 0002 01       		.byte	0x1
+ 1474 0003 25       		.uleb128 0x25
+ 1475 0004 0E       		.uleb128 0xe
+ 1476 0005 13       		.uleb128 0x13
+ 1477 0006 0B       		.uleb128 0xb
+ 1478 0007 03       		.uleb128 0x3
+ 1479 0008 0E       		.uleb128 0xe
+ 1480 0009 1B       		.uleb128 0x1b
+ 1481 000a 0E       		.uleb128 0xe
+ 1482 000b 55       		.uleb128 0x55
+ 1483 000c 17       		.uleb128 0x17
+ 1484 000d 11       		.uleb128 0x11
+ 1485 000e 01       		.uleb128 0x1
+ 1486 000f 10       		.uleb128 0x10
+ 1487 0010 17       		.uleb128 0x17
+ 1488 0011 00       		.byte	0
+ 1489 0012 00       		.byte	0
+ 1490 0013 02       		.uleb128 0x2
+ 1491 0014 24       		.uleb128 0x24
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 34
+
+
+ 1492 0015 00       		.byte	0
+ 1493 0016 0B       		.uleb128 0xb
+ 1494 0017 0B       		.uleb128 0xb
+ 1495 0018 3E       		.uleb128 0x3e
+ 1496 0019 0B       		.uleb128 0xb
+ 1497 001a 03       		.uleb128 0x3
+ 1498 001b 0E       		.uleb128 0xe
+ 1499 001c 00       		.byte	0
+ 1500 001d 00       		.byte	0
+ 1501 001e 03       		.uleb128 0x3
+ 1502 001f 16       		.uleb128 0x16
+ 1503 0020 00       		.byte	0
+ 1504 0021 03       		.uleb128 0x3
+ 1505 0022 0E       		.uleb128 0xe
+ 1506 0023 3A       		.uleb128 0x3a
+ 1507 0024 0B       		.uleb128 0xb
+ 1508 0025 3B       		.uleb128 0x3b
+ 1509 0026 0B       		.uleb128 0xb
+ 1510 0027 49       		.uleb128 0x49
+ 1511 0028 13       		.uleb128 0x13
+ 1512 0029 00       		.byte	0
+ 1513 002a 00       		.byte	0
+ 1514 002b 04       		.uleb128 0x4
+ 1515 002c 24       		.uleb128 0x24
+ 1516 002d 00       		.byte	0
+ 1517 002e 0B       		.uleb128 0xb
+ 1518 002f 0B       		.uleb128 0xb
+ 1519 0030 3E       		.uleb128 0x3e
+ 1520 0031 0B       		.uleb128 0xb
+ 1521 0032 03       		.uleb128 0x3
+ 1522 0033 08       		.uleb128 0x8
+ 1523 0034 00       		.byte	0
+ 1524 0035 00       		.byte	0
+ 1525 0036 05       		.uleb128 0x5
+ 1526 0037 13       		.uleb128 0x13
+ 1527 0038 01       		.byte	0x1
+ 1528 0039 03       		.uleb128 0x3
+ 1529 003a 0E       		.uleb128 0xe
+ 1530 003b 0B       		.uleb128 0xb
+ 1531 003c 0B       		.uleb128 0xb
+ 1532 003d 3A       		.uleb128 0x3a
+ 1533 003e 0B       		.uleb128 0xb
+ 1534 003f 3B       		.uleb128 0x3b
+ 1535 0040 0B       		.uleb128 0xb
+ 1536 0041 01       		.uleb128 0x1
+ 1537 0042 13       		.uleb128 0x13
+ 1538 0043 00       		.byte	0
+ 1539 0044 00       		.byte	0
+ 1540 0045 06       		.uleb128 0x6
+ 1541 0046 0D       		.uleb128 0xd
+ 1542 0047 00       		.byte	0
+ 1543 0048 03       		.uleb128 0x3
+ 1544 0049 08       		.uleb128 0x8
+ 1545 004a 3A       		.uleb128 0x3a
+ 1546 004b 0B       		.uleb128 0xb
+ 1547 004c 3B       		.uleb128 0x3b
+ 1548 004d 0B       		.uleb128 0xb
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 35
+
+
+ 1549 004e 49       		.uleb128 0x49
+ 1550 004f 13       		.uleb128 0x13
+ 1551 0050 38       		.uleb128 0x38
+ 1552 0051 0B       		.uleb128 0xb
+ 1553 0052 00       		.byte	0
+ 1554 0053 00       		.byte	0
+ 1555 0054 07       		.uleb128 0x7
+ 1556 0055 0D       		.uleb128 0xd
+ 1557 0056 00       		.byte	0
+ 1558 0057 03       		.uleb128 0x3
+ 1559 0058 0E       		.uleb128 0xe
+ 1560 0059 3A       		.uleb128 0x3a
+ 1561 005a 0B       		.uleb128 0xb
+ 1562 005b 3B       		.uleb128 0x3b
+ 1563 005c 0B       		.uleb128 0xb
+ 1564 005d 49       		.uleb128 0x49
+ 1565 005e 13       		.uleb128 0x13
+ 1566 005f 38       		.uleb128 0x38
+ 1567 0060 0B       		.uleb128 0xb
+ 1568 0061 00       		.byte	0
+ 1569 0062 00       		.byte	0
+ 1570 0063 08       		.uleb128 0x8
+ 1571 0064 04       		.uleb128 0x4
+ 1572 0065 01       		.byte	0x1
+ 1573 0066 03       		.uleb128 0x3
+ 1574 0067 0E       		.uleb128 0xe
+ 1575 0068 0B       		.uleb128 0xb
+ 1576 0069 0B       		.uleb128 0xb
+ 1577 006a 49       		.uleb128 0x49
+ 1578 006b 13       		.uleb128 0x13
+ 1579 006c 3A       		.uleb128 0x3a
+ 1580 006d 0B       		.uleb128 0xb
+ 1581 006e 3B       		.uleb128 0x3b
+ 1582 006f 0B       		.uleb128 0xb
+ 1583 0070 01       		.uleb128 0x1
+ 1584 0071 13       		.uleb128 0x13
+ 1585 0072 00       		.byte	0
+ 1586 0073 00       		.byte	0
+ 1587 0074 09       		.uleb128 0x9
+ 1588 0075 28       		.uleb128 0x28
+ 1589 0076 00       		.byte	0
+ 1590 0077 03       		.uleb128 0x3
+ 1591 0078 0E       		.uleb128 0xe
+ 1592 0079 1C       		.uleb128 0x1c
+ 1593 007a 0B       		.uleb128 0xb
+ 1594 007b 00       		.byte	0
+ 1595 007c 00       		.byte	0
+ 1596 007d 0A       		.uleb128 0xa
+ 1597 007e 28       		.uleb128 0x28
+ 1598 007f 00       		.byte	0
+ 1599 0080 03       		.uleb128 0x3
+ 1600 0081 08       		.uleb128 0x8
+ 1601 0082 1C       		.uleb128 0x1c
+ 1602 0083 0B       		.uleb128 0xb
+ 1603 0084 00       		.byte	0
+ 1604 0085 00       		.byte	0
+ 1605 0086 0B       		.uleb128 0xb
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 36
+
+
+ 1606 0087 2E       		.uleb128 0x2e
+ 1607 0088 01       		.byte	0x1
+ 1608 0089 3F       		.uleb128 0x3f
+ 1609 008a 19       		.uleb128 0x19
+ 1610 008b 03       		.uleb128 0x3
+ 1611 008c 0E       		.uleb128 0xe
+ 1612 008d 3A       		.uleb128 0x3a
+ 1613 008e 0B       		.uleb128 0xb
+ 1614 008f 3B       		.uleb128 0x3b
+ 1615 0090 0B       		.uleb128 0xb
+ 1616 0091 27       		.uleb128 0x27
+ 1617 0092 19       		.uleb128 0x19
+ 1618 0093 11       		.uleb128 0x11
+ 1619 0094 01       		.uleb128 0x1
+ 1620 0095 12       		.uleb128 0x12
+ 1621 0096 06       		.uleb128 0x6
+ 1622 0097 40       		.uleb128 0x40
+ 1623 0098 18       		.uleb128 0x18
+ 1624 0099 9742     		.uleb128 0x2117
+ 1625 009b 19       		.uleb128 0x19
+ 1626 009c 01       		.uleb128 0x1
+ 1627 009d 13       		.uleb128 0x13
+ 1628 009e 00       		.byte	0
+ 1629 009f 00       		.byte	0
+ 1630 00a0 0C       		.uleb128 0xc
+ 1631 00a1 05       		.uleb128 0x5
+ 1632 00a2 00       		.byte	0
+ 1633 00a3 03       		.uleb128 0x3
+ 1634 00a4 0E       		.uleb128 0xe
+ 1635 00a5 3A       		.uleb128 0x3a
+ 1636 00a6 0B       		.uleb128 0xb
+ 1637 00a7 3B       		.uleb128 0x3b
+ 1638 00a8 0B       		.uleb128 0xb
+ 1639 00a9 49       		.uleb128 0x49
+ 1640 00aa 13       		.uleb128 0x13
+ 1641 00ab 02       		.uleb128 0x2
+ 1642 00ac 18       		.uleb128 0x18
+ 1643 00ad 00       		.byte	0
+ 1644 00ae 00       		.byte	0
+ 1645 00af 0D       		.uleb128 0xd
+ 1646 00b0 05       		.uleb128 0x5
+ 1647 00b1 00       		.byte	0
+ 1648 00b2 03       		.uleb128 0x3
+ 1649 00b3 0E       		.uleb128 0xe
+ 1650 00b4 3A       		.uleb128 0x3a
+ 1651 00b5 0B       		.uleb128 0xb
+ 1652 00b6 3B       		.uleb128 0x3b
+ 1653 00b7 0B       		.uleb128 0xb
+ 1654 00b8 49       		.uleb128 0x49
+ 1655 00b9 13       		.uleb128 0x13
+ 1656 00ba 02       		.uleb128 0x2
+ 1657 00bb 17       		.uleb128 0x17
+ 1658 00bc 00       		.byte	0
+ 1659 00bd 00       		.byte	0
+ 1660 00be 0E       		.uleb128 0xe
+ 1661 00bf 898201   		.uleb128 0x4109
+ 1662 00c2 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 37
+
+
+ 1663 00c3 11       		.uleb128 0x11
+ 1664 00c4 01       		.uleb128 0x1
+ 1665 00c5 31       		.uleb128 0x31
+ 1666 00c6 13       		.uleb128 0x13
+ 1667 00c7 00       		.byte	0
+ 1668 00c8 00       		.byte	0
+ 1669 00c9 0F       		.uleb128 0xf
+ 1670 00ca 2E       		.uleb128 0x2e
+ 1671 00cb 01       		.byte	0x1
+ 1672 00cc 3F       		.uleb128 0x3f
+ 1673 00cd 19       		.uleb128 0x19
+ 1674 00ce 03       		.uleb128 0x3
+ 1675 00cf 0E       		.uleb128 0xe
+ 1676 00d0 3A       		.uleb128 0x3a
+ 1677 00d1 0B       		.uleb128 0xb
+ 1678 00d2 3B       		.uleb128 0x3b
+ 1679 00d3 0B       		.uleb128 0xb
+ 1680 00d4 11       		.uleb128 0x11
+ 1681 00d5 01       		.uleb128 0x1
+ 1682 00d6 12       		.uleb128 0x12
+ 1683 00d7 06       		.uleb128 0x6
+ 1684 00d8 40       		.uleb128 0x40
+ 1685 00d9 18       		.uleb128 0x18
+ 1686 00da 9742     		.uleb128 0x2117
+ 1687 00dc 19       		.uleb128 0x19
+ 1688 00dd 01       		.uleb128 0x1
+ 1689 00de 13       		.uleb128 0x13
+ 1690 00df 00       		.byte	0
+ 1691 00e0 00       		.byte	0
+ 1692 00e1 10       		.uleb128 0x10
+ 1693 00e2 0B       		.uleb128 0xb
+ 1694 00e3 01       		.byte	0x1
+ 1695 00e4 11       		.uleb128 0x11
+ 1696 00e5 01       		.uleb128 0x1
+ 1697 00e6 12       		.uleb128 0x12
+ 1698 00e7 06       		.uleb128 0x6
+ 1699 00e8 01       		.uleb128 0x1
+ 1700 00e9 13       		.uleb128 0x13
+ 1701 00ea 00       		.byte	0
+ 1702 00eb 00       		.byte	0
+ 1703 00ec 11       		.uleb128 0x11
+ 1704 00ed 34       		.uleb128 0x34
+ 1705 00ee 00       		.byte	0
+ 1706 00ef 03       		.uleb128 0x3
+ 1707 00f0 08       		.uleb128 0x8
+ 1708 00f1 3A       		.uleb128 0x3a
+ 1709 00f2 0B       		.uleb128 0xb
+ 1710 00f3 3B       		.uleb128 0x3b
+ 1711 00f4 0B       		.uleb128 0xb
+ 1712 00f5 49       		.uleb128 0x49
+ 1713 00f6 13       		.uleb128 0x13
+ 1714 00f7 02       		.uleb128 0x2
+ 1715 00f8 17       		.uleb128 0x17
+ 1716 00f9 00       		.byte	0
+ 1717 00fa 00       		.byte	0
+ 1718 00fb 12       		.uleb128 0x12
+ 1719 00fc 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 38
+
+
+ 1720 00ff 01       		.byte	0x1
+ 1721 0100 11       		.uleb128 0x11
+ 1722 0101 01       		.uleb128 0x1
+ 1723 0102 31       		.uleb128 0x31
+ 1724 0103 13       		.uleb128 0x13
+ 1725 0104 01       		.uleb128 0x1
+ 1726 0105 13       		.uleb128 0x13
+ 1727 0106 00       		.byte	0
+ 1728 0107 00       		.byte	0
+ 1729 0108 13       		.uleb128 0x13
+ 1730 0109 8A8201   		.uleb128 0x410a
+ 1731 010c 00       		.byte	0
+ 1732 010d 02       		.uleb128 0x2
+ 1733 010e 18       		.uleb128 0x18
+ 1734 010f 9142     		.uleb128 0x2111
+ 1735 0111 18       		.uleb128 0x18
+ 1736 0112 00       		.byte	0
+ 1737 0113 00       		.byte	0
+ 1738 0114 14       		.uleb128 0x14
+ 1739 0115 898201   		.uleb128 0x4109
+ 1740 0118 01       		.byte	0x1
+ 1741 0119 11       		.uleb128 0x11
+ 1742 011a 01       		.uleb128 0x1
+ 1743 011b 31       		.uleb128 0x31
+ 1744 011c 13       		.uleb128 0x13
+ 1745 011d 00       		.byte	0
+ 1746 011e 00       		.byte	0
+ 1747 011f 15       		.uleb128 0x15
+ 1748 0120 05       		.uleb128 0x5
+ 1749 0121 00       		.byte	0
+ 1750 0122 03       		.uleb128 0x3
+ 1751 0123 08       		.uleb128 0x8
+ 1752 0124 3A       		.uleb128 0x3a
+ 1753 0125 0B       		.uleb128 0xb
+ 1754 0126 3B       		.uleb128 0x3b
+ 1755 0127 0B       		.uleb128 0xb
+ 1756 0128 49       		.uleb128 0x49
+ 1757 0129 13       		.uleb128 0x13
+ 1758 012a 02       		.uleb128 0x2
+ 1759 012b 18       		.uleb128 0x18
+ 1760 012c 00       		.byte	0
+ 1761 012d 00       		.byte	0
+ 1762 012e 16       		.uleb128 0x16
+ 1763 012f 2E       		.uleb128 0x2e
+ 1764 0130 01       		.byte	0x1
+ 1765 0131 3F       		.uleb128 0x3f
+ 1766 0132 19       		.uleb128 0x19
+ 1767 0133 03       		.uleb128 0x3
+ 1768 0134 0E       		.uleb128 0xe
+ 1769 0135 3A       		.uleb128 0x3a
+ 1770 0136 0B       		.uleb128 0xb
+ 1771 0137 3B       		.uleb128 0x3b
+ 1772 0138 05       		.uleb128 0x5
+ 1773 0139 11       		.uleb128 0x11
+ 1774 013a 01       		.uleb128 0x1
+ 1775 013b 12       		.uleb128 0x12
+ 1776 013c 06       		.uleb128 0x6
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 39
+
+
+ 1777 013d 40       		.uleb128 0x40
+ 1778 013e 18       		.uleb128 0x18
+ 1779 013f 9742     		.uleb128 0x2117
+ 1780 0141 19       		.uleb128 0x19
+ 1781 0142 01       		.uleb128 0x1
+ 1782 0143 13       		.uleb128 0x13
+ 1783 0144 00       		.byte	0
+ 1784 0145 00       		.byte	0
+ 1785 0146 17       		.uleb128 0x17
+ 1786 0147 0B       		.uleb128 0xb
+ 1787 0148 01       		.byte	0x1
+ 1788 0149 55       		.uleb128 0x55
+ 1789 014a 17       		.uleb128 0x17
+ 1790 014b 00       		.byte	0
+ 1791 014c 00       		.byte	0
+ 1792 014d 18       		.uleb128 0x18
+ 1793 014e 34       		.uleb128 0x34
+ 1794 014f 00       		.byte	0
+ 1795 0150 03       		.uleb128 0x3
+ 1796 0151 08       		.uleb128 0x8
+ 1797 0152 3A       		.uleb128 0x3a
+ 1798 0153 0B       		.uleb128 0xb
+ 1799 0154 3B       		.uleb128 0x3b
+ 1800 0155 05       		.uleb128 0x5
+ 1801 0156 49       		.uleb128 0x49
+ 1802 0157 13       		.uleb128 0x13
+ 1803 0158 02       		.uleb128 0x2
+ 1804 0159 17       		.uleb128 0x17
+ 1805 015a 00       		.byte	0
+ 1806 015b 00       		.byte	0
+ 1807 015c 19       		.uleb128 0x19
+ 1808 015d 34       		.uleb128 0x34
+ 1809 015e 00       		.byte	0
+ 1810 015f 03       		.uleb128 0x3
+ 1811 0160 0E       		.uleb128 0xe
+ 1812 0161 3A       		.uleb128 0x3a
+ 1813 0162 0B       		.uleb128 0xb
+ 1814 0163 3B       		.uleb128 0x3b
+ 1815 0164 0B       		.uleb128 0xb
+ 1816 0165 49       		.uleb128 0x49
+ 1817 0166 13       		.uleb128 0x13
+ 1818 0167 02       		.uleb128 0x2
+ 1819 0168 18       		.uleb128 0x18
+ 1820 0169 00       		.byte	0
+ 1821 016a 00       		.byte	0
+ 1822 016b 1A       		.uleb128 0x1a
+ 1823 016c 26       		.uleb128 0x26
+ 1824 016d 00       		.byte	0
+ 1825 016e 49       		.uleb128 0x49
+ 1826 016f 13       		.uleb128 0x13
+ 1827 0170 00       		.byte	0
+ 1828 0171 00       		.byte	0
+ 1829 0172 1B       		.uleb128 0x1b
+ 1830 0173 01       		.uleb128 0x1
+ 1831 0174 01       		.byte	0x1
+ 1832 0175 49       		.uleb128 0x49
+ 1833 0176 13       		.uleb128 0x13
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 40
+
+
+ 1834 0177 01       		.uleb128 0x1
+ 1835 0178 13       		.uleb128 0x13
+ 1836 0179 00       		.byte	0
+ 1837 017a 00       		.byte	0
+ 1838 017b 1C       		.uleb128 0x1c
+ 1839 017c 21       		.uleb128 0x21
+ 1840 017d 00       		.byte	0
+ 1841 017e 49       		.uleb128 0x49
+ 1842 017f 13       		.uleb128 0x13
+ 1843 0180 2F       		.uleb128 0x2f
+ 1844 0181 0B       		.uleb128 0xb
+ 1845 0182 00       		.byte	0
+ 1846 0183 00       		.byte	0
+ 1847 0184 1D       		.uleb128 0x1d
+ 1848 0185 34       		.uleb128 0x34
+ 1849 0186 00       		.byte	0
+ 1850 0187 03       		.uleb128 0x3
+ 1851 0188 0E       		.uleb128 0xe
+ 1852 0189 3A       		.uleb128 0x3a
+ 1853 018a 0B       		.uleb128 0xb
+ 1854 018b 3B       		.uleb128 0x3b
+ 1855 018c 05       		.uleb128 0x5
+ 1856 018d 49       		.uleb128 0x49
+ 1857 018e 13       		.uleb128 0x13
+ 1858 018f 3F       		.uleb128 0x3f
+ 1859 0190 19       		.uleb128 0x19
+ 1860 0191 3C       		.uleb128 0x3c
+ 1861 0192 19       		.uleb128 0x19
+ 1862 0193 00       		.byte	0
+ 1863 0194 00       		.byte	0
+ 1864 0195 1E       		.uleb128 0x1e
+ 1865 0196 35       		.uleb128 0x35
+ 1866 0197 00       		.byte	0
+ 1867 0198 49       		.uleb128 0x49
+ 1868 0199 13       		.uleb128 0x13
+ 1869 019a 00       		.byte	0
+ 1870 019b 00       		.byte	0
+ 1871 019c 1F       		.uleb128 0x1f
+ 1872 019d 34       		.uleb128 0x34
+ 1873 019e 00       		.byte	0
+ 1874 019f 03       		.uleb128 0x3
+ 1875 01a0 0E       		.uleb128 0xe
+ 1876 01a1 3A       		.uleb128 0x3a
+ 1877 01a2 0B       		.uleb128 0xb
+ 1878 01a3 3B       		.uleb128 0x3b
+ 1879 01a4 0B       		.uleb128 0xb
+ 1880 01a5 49       		.uleb128 0x49
+ 1881 01a6 13       		.uleb128 0x13
+ 1882 01a7 3F       		.uleb128 0x3f
+ 1883 01a8 19       		.uleb128 0x19
+ 1884 01a9 02       		.uleb128 0x2
+ 1885 01aa 18       		.uleb128 0x18
+ 1886 01ab 00       		.byte	0
+ 1887 01ac 00       		.byte	0
+ 1888 01ad 20       		.uleb128 0x20
+ 1889 01ae 2E       		.uleb128 0x2e
+ 1890 01af 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 41
+
+
+ 1891 01b0 3F       		.uleb128 0x3f
+ 1892 01b1 19       		.uleb128 0x19
+ 1893 01b2 3C       		.uleb128 0x3c
+ 1894 01b3 19       		.uleb128 0x19
+ 1895 01b4 6E       		.uleb128 0x6e
+ 1896 01b5 0E       		.uleb128 0xe
+ 1897 01b6 03       		.uleb128 0x3
+ 1898 01b7 0E       		.uleb128 0xe
+ 1899 01b8 3A       		.uleb128 0x3a
+ 1900 01b9 0B       		.uleb128 0xb
+ 1901 01ba 3B       		.uleb128 0x3b
+ 1902 01bb 0B       		.uleb128 0xb
+ 1903 01bc 00       		.byte	0
+ 1904 01bd 00       		.byte	0
+ 1905 01be 00       		.byte	0
+ 1906              		.section	.debug_loc,"",%progbits
+ 1907              	.Ldebug_loc0:
+ 1908              	.LLST0:
+ 1909 0000 00000000 		.4byte	.LVL1
+ 1910 0004 0F000000 		.4byte	.LVL2-1
+ 1911 0008 0100     		.2byte	0x1
+ 1912 000a 50       		.byte	0x50
+ 1913 000b 0F000000 		.4byte	.LVL2-1
+ 1914 000f 1A000000 		.4byte	.LVL3
+ 1915 0013 0400     		.2byte	0x4
+ 1916 0015 F3       		.byte	0xf3
+ 1917 0016 01       		.uleb128 0x1
+ 1918 0017 50       		.byte	0x50
+ 1919 0018 9F       		.byte	0x9f
+ 1920 0019 1A000000 		.4byte	.LVL3
+ 1921 001d 24000000 		.4byte	.LFE68
+ 1922 0021 0100     		.2byte	0x1
+ 1923 0023 50       		.byte	0x50
+ 1924 0024 00000000 		.4byte	0
+ 1925 0028 00000000 		.4byte	0
+ 1926              	.LLST1:
+ 1927 002c 10000000 		.4byte	.LVL4
+ 1928 0030 14000000 		.4byte	.LVL5
+ 1929 0034 0200     		.2byte	0x2
+ 1930 0036 30       		.byte	0x30
+ 1931 0037 9F       		.byte	0x9f
+ 1932 0038 14000000 		.4byte	.LVL5
+ 1933 003c 40000000 		.4byte	.LVL9
+ 1934 0040 0100     		.2byte	0x1
+ 1935 0042 54       		.byte	0x54
+ 1936 0043 00000000 		.4byte	0
+ 1937 0047 00000000 		.4byte	0
+ 1938              	.LLST2:
+ 1939 004b 4A000000 		.4byte	.LVL10
+ 1940 004f 4E000000 		.4byte	.LVL11
+ 1941 0053 0200     		.2byte	0x2
+ 1942 0055 30       		.byte	0x30
+ 1943 0056 9F       		.byte	0x9f
+ 1944 0057 4E000000 		.4byte	.LVL11
+ 1945 005b 78000000 		.4byte	.LVL15
+ 1946 005f 0100     		.2byte	0x1
+ 1947 0061 54       		.byte	0x54
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 42
+
+
+ 1948 0062 00000000 		.4byte	0
+ 1949 0066 00000000 		.4byte	0
+ 1950              	.LLST3:
+ 1951 006a 00000000 		.4byte	.LVL16
+ 1952 006e 16000000 		.4byte	.LVL17
+ 1953 0072 0100     		.2byte	0x1
+ 1954 0074 50       		.byte	0x50
+ 1955 0075 16000000 		.4byte	.LVL17
+ 1956 0079 19000000 		.4byte	.LVL18-1
+ 1957 007d 0500     		.2byte	0x5
+ 1958 007f 03       		.byte	0x3
+ 1959 0080 00000000 		.4byte	currentState
+ 1960 0084 19000000 		.4byte	.LVL18-1
+ 1961 0088 24000000 		.4byte	.LVL20
+ 1962 008c 0400     		.2byte	0x4
+ 1963 008e F3       		.byte	0xf3
+ 1964 008f 01       		.uleb128 0x1
+ 1965 0090 50       		.byte	0x50
+ 1966 0091 9F       		.byte	0x9f
+ 1967 0092 24000000 		.4byte	.LVL20
+ 1968 0096 2B000000 		.4byte	.LVL21-1
+ 1969 009a 0100     		.2byte	0x1
+ 1970 009c 50       		.byte	0x50
+ 1971 009d 2B000000 		.4byte	.LVL21-1
+ 1972 00a1 42000000 		.4byte	.LVL25
+ 1973 00a5 0400     		.2byte	0x4
+ 1974 00a7 F3       		.byte	0xf3
+ 1975 00a8 01       		.uleb128 0x1
+ 1976 00a9 50       		.byte	0x50
+ 1977 00aa 9F       		.byte	0x9f
+ 1978 00ab 42000000 		.4byte	.LVL25
+ 1979 00af 49000000 		.4byte	.LVL26-1
+ 1980 00b3 0100     		.2byte	0x1
+ 1981 00b5 50       		.byte	0x50
+ 1982 00b6 49000000 		.4byte	.LVL26-1
+ 1983 00ba 66000000 		.4byte	.LVL31
+ 1984 00be 0400     		.2byte	0x4
+ 1985 00c0 F3       		.byte	0xf3
+ 1986 00c1 01       		.uleb128 0x1
+ 1987 00c2 50       		.byte	0x50
+ 1988 00c3 9F       		.byte	0x9f
+ 1989 00c4 66000000 		.4byte	.LVL31
+ 1990 00c8 6E000000 		.4byte	.LVL32
+ 1991 00cc 0100     		.2byte	0x1
+ 1992 00ce 50       		.byte	0x50
+ 1993 00cf 6E000000 		.4byte	.LVL32
+ 1994 00d3 71000000 		.4byte	.LVL33-1
+ 1995 00d7 0500     		.2byte	0x5
+ 1996 00d9 03       		.byte	0x3
+ 1997 00da 00000000 		.4byte	currentState
+ 1998 00de 71000000 		.4byte	.LVL33-1
+ 1999 00e2 7A000000 		.4byte	.LVL35
+ 2000 00e6 0400     		.2byte	0x4
+ 2001 00e8 F3       		.byte	0xf3
+ 2002 00e9 01       		.uleb128 0x1
+ 2003 00ea 50       		.byte	0x50
+ 2004 00eb 9F       		.byte	0x9f
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 43
+
+
+ 2005 00ec 7A000000 		.4byte	.LVL35
+ 2006 00f0 82000000 		.4byte	.LVL36
+ 2007 00f4 0100     		.2byte	0x1
+ 2008 00f6 50       		.byte	0x50
+ 2009 00f7 82000000 		.4byte	.LVL36
+ 2010 00fb 85000000 		.4byte	.LVL37-1
+ 2011 00ff 0500     		.2byte	0x5
+ 2012 0101 03       		.byte	0x3
+ 2013 0102 00000000 		.4byte	currentState
+ 2014 0106 85000000 		.4byte	.LVL37-1
+ 2015 010a B4000000 		.4byte	.LFE64
+ 2016 010e 0400     		.2byte	0x4
+ 2017 0110 F3       		.byte	0xf3
+ 2018 0111 01       		.uleb128 0x1
+ 2019 0112 50       		.byte	0x50
+ 2020 0113 9F       		.byte	0x9f
+ 2021 0114 00000000 		.4byte	0
+ 2022 0118 00000000 		.4byte	0
+ 2023              	.LLST4:
+ 2024 011c 0C000000 		.4byte	.LVL50
+ 2025 0120 50000000 		.4byte	.LVL53
+ 2026 0124 0100     		.2byte	0x1
+ 2027 0126 54       		.byte	0x54
+ 2028 0127 52000000 		.4byte	.LVL54
+ 2029 012b 54000000 		.4byte	.LVL55
+ 2030 012f 0100     		.2byte	0x1
+ 2031 0131 54       		.byte	0x54
+ 2032 0132 56000000 		.4byte	.LVL56
+ 2033 0136 5A000000 		.4byte	.LVL57
+ 2034 013a 0100     		.2byte	0x1
+ 2035 013c 54       		.byte	0x54
+ 2036 013d 00000000 		.4byte	0
+ 2037 0141 00000000 		.4byte	0
+ 2038              		.section	.debug_aranges,"",%progbits
+ 2039 0000 54000000 		.4byte	0x54
+ 2040 0004 0200     		.2byte	0x2
+ 2041 0006 00000000 		.4byte	.Ldebug_info0
+ 2042 000a 04       		.byte	0x4
+ 2043 000b 00       		.byte	0
+ 2044 000c 0000     		.2byte	0
+ 2045 000e 0000     		.2byte	0
+ 2046 0010 00000000 		.4byte	.LFB67
+ 2047 0014 1C000000 		.4byte	.LFE67-.LFB67
+ 2048 0018 00000000 		.4byte	.LFB68
+ 2049 001c 24000000 		.4byte	.LFE68-.LFB68
+ 2050 0020 00000000 		.4byte	.LFB69
+ 2051 0024 90000000 		.4byte	.LFE69-.LFB69
+ 2052 0028 00000000 		.4byte	.LFB64
+ 2053 002c B4000000 		.4byte	.LFE64-.LFB64
+ 2054 0030 00000000 		.4byte	.LFB65
+ 2055 0034 1C000000 		.4byte	.LFE65-.LFB65
+ 2056 0038 00000000 		.4byte	.LFB66
+ 2057 003c 1C000000 		.4byte	.LFE66-.LFB66
+ 2058 0040 00000000 		.4byte	.LFB70
+ 2059 0044 B0000000 		.4byte	.LFE70-.LFB70
+ 2060 0048 00000000 		.4byte	.LFB71
+ 2061 004c 68000000 		.4byte	.LFE71-.LFB71
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 44
+
+
+ 2062 0050 00000000 		.4byte	0
+ 2063 0054 00000000 		.4byte	0
+ 2064              		.section	.debug_ranges,"",%progbits
+ 2065              	.Ldebug_ranges0:
+ 2066 0000 0C000000 		.4byte	.LBB4
+ 2067 0004 54000000 		.4byte	.LBE4
+ 2068 0008 56000000 		.4byte	.LBB5
+ 2069 000c 68000000 		.4byte	.LBE5
+ 2070 0010 00000000 		.4byte	0
+ 2071 0014 00000000 		.4byte	0
+ 2072 0018 00000000 		.4byte	.LFB67
+ 2073 001c 1C000000 		.4byte	.LFE67
+ 2074 0020 00000000 		.4byte	.LFB68
+ 2075 0024 24000000 		.4byte	.LFE68
+ 2076 0028 00000000 		.4byte	.LFB69
+ 2077 002c 90000000 		.4byte	.LFE69
+ 2078 0030 00000000 		.4byte	.LFB64
+ 2079 0034 B4000000 		.4byte	.LFE64
+ 2080 0038 00000000 		.4byte	.LFB65
+ 2081 003c 1C000000 		.4byte	.LFE65
+ 2082 0040 00000000 		.4byte	.LFB66
+ 2083 0044 1C000000 		.4byte	.LFE66
+ 2084 0048 00000000 		.4byte	.LFB70
+ 2085 004c B0000000 		.4byte	.LFE70
+ 2086 0050 00000000 		.4byte	.LFB71
+ 2087 0054 68000000 		.4byte	.LFE71
+ 2088 0058 00000000 		.4byte	0
+ 2089 005c 00000000 		.4byte	0
+ 2090              		.section	.debug_line,"",%progbits
+ 2091              	.Ldebug_line0:
+ 2092 0000 20030000 		.section	.debug_str,"MS",%progbits,1
+ 2092      02001402 
+ 2092      00000201 
+ 2092      FB0E0D00 
+ 2092      01010101 
+ 2093              	.LASF32:
+ 2094 0000 436F6E74 		.ascii	"ControlLights\000"
+ 2094      726F6C4C 
+ 2094      69676874 
+ 2094      7300
+ 2095              	.LASF45:
+ 2096 000e 43757053 		.ascii	"CupStatus_latest\000"
+ 2096      74617475 
+ 2096      735F6C61 
+ 2096      74657374 
+ 2096      00
+ 2097              	.LASF21:
+ 2098 001f 49444C45 		.ascii	"IDLE\000"
+ 2098      00
+ 2099              	.LASF2:
+ 2100 0024 73686F72 		.ascii	"short int\000"
+ 2100      7420696E 
+ 2100      7400
+ 2101              	.LASF61:
+ 2102 002e 636F6C6F 		.ascii	"color\000"
+ 2102      7200
+ 2103              	.LASF49:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 45
+
+
+ 2104 0034 636F6E74 		.ascii	"controlLight\000"
+ 2104      726F6C4C 
+ 2104      69676874 
+ 2104      00
+ 2105              	.LASF35:
+ 2106 0041 626C696E 		.ascii	"blinking\000"
+ 2106      6B696E67 
+ 2106      00
+ 2107              	.LASF53:
+ 2108 004a 73656E64 		.ascii	"sendCupStatus\000"
+ 2108      43757053 
+ 2108      74617475 
+ 2108      7300
+ 2109              	.LASF37:
+ 2110 0058 6D79436F 		.ascii	"myColor\000"
+ 2110      6C6F7200 
+ 2111              	.LASF44:
+ 2112 0060 4C45445F 		.ascii	"LED_states\000"
+ 2112      73746174 
+ 2112      657300
+ 2113              	.LASF34:
+ 2114 006b 696E7465 		.ascii	"interruptBlink\000"
+ 2114      72727570 
+ 2114      74426C69 
+ 2114      6E6B00
+ 2115              	.LASF57:
+ 2116 007a 54696D65 		.ascii	"Timer_Stop\000"
+ 2116      725F5374 
+ 2116      6F7000
+ 2117              	.LASF39:
+ 2118 0085 6D697373 		.ascii	"missingCupColor\000"
+ 2118      696E6743 
+ 2118      7570436F 
+ 2118      6C6F7200 
+ 2119              	.LASF50:
+ 2120 0095 55415254 		.ascii	"UART_PutString\000"
+ 2120      5F507574 
+ 2120      53747269 
+ 2120      6E6700
+ 2121              	.LASF30:
+ 2122 00a4 7365744D 		.ascii	"setMyColor\000"
+ 2122      79436F6C 
+ 2122      6F7200
+ 2123              	.LASF20:
+ 2124 00af 636F6C6F 		.ascii	"color_t\000"
+ 2124      725F7400 
+ 2125              	.LASF51:
+ 2126 00b7 636F6E74 		.ascii	"controlAllLights\000"
+ 2126      726F6C41 
+ 2126      6C6C4C69 
+ 2126      67687473 
+ 2126      00
+ 2127              	.LASF11:
+ 2128 00c8 75696E74 		.ascii	"uint8_t\000"
+ 2128      385F7400 
+ 2129              	.LASF62:
+ 2130 00d0 47616D65 		.ascii	"GameState\000"
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 46
+
+
+ 2130      53746174 
+ 2130      6500
+ 2131              	.LASF26:
+ 2132 00da 75706461 		.ascii	"updateHitStatus\000"
+ 2132      74654869 
+ 2132      74537461 
+ 2132      74757300 
+ 2133              	.LASF13:
+ 2134 00ea 666C6F61 		.ascii	"float\000"
+ 2134      7400
+ 2135              	.LASF8:
+ 2136 00f0 6C6F6E67 		.ascii	"long long int\000"
+ 2136      206C6F6E 
+ 2136      6720696E 
+ 2136      7400
+ 2137              	.LASF54:
+ 2138 00fe 5250695F 		.ascii	"RPi_IF_handleData\000"
+ 2138      49465F68 
+ 2138      616E646C 
+ 2138      65446174 
+ 2138      6100
+ 2139              	.LASF56:
+ 2140 0110 54696D65 		.ascii	"Timer_Start\000"
+ 2140      725F5374 
+ 2140      61727400 
+ 2141              	.LASF6:
+ 2142 011c 6C6F6E67 		.ascii	"long int\000"
+ 2142      20696E74 
+ 2142      00
+ 2143              	.LASF4:
+ 2144 0125 5F5F7569 		.ascii	"__uint8_t\000"
+ 2144      6E74385F 
+ 2144      7400
+ 2145              	.LASF60:
+ 2146 012f 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 2146      73657273 
+ 2146      5C6E696B 
+ 2146      6F6C5C44 
+ 2146      6F63756D 
+ 2147 015c 5C706C61 		.ascii	"\\player_side_app\\integration\\integration\\integr"
+ 2147      7965725F 
+ 2147      73696465 
+ 2147      5F617070 
+ 2147      5C696E74 
+ 2148 018b 6174696F 		.ascii	"ation_all.cydsn\000"
+ 2148      6E5F616C 
+ 2148      6C2E6379 
+ 2148      64736E00 
+ 2149              	.LASF16:
+ 2150 019b 6C6F6E67 		.ascii	"long double\000"
+ 2150      20646F75 
+ 2150      626C6500 
+ 2151              	.LASF52:
+ 2152 01a7 67657453 		.ascii	"getStatus\000"
+ 2152      74617475 
+ 2152      7300
+ 2153              	.LASF1:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 47
+
+
+ 2154 01b1 756E7369 		.ascii	"unsigned char\000"
+ 2154      676E6564 
+ 2154      20636861 
+ 2154      7200
+ 2155              	.LASF55:
+ 2156 01bf 73707269 		.ascii	"sprintf\000"
+ 2156      6E746600 
+ 2157              	.LASF22:
+ 2158 01c7 53544152 		.ascii	"STARTING\000"
+ 2158      54494E47 
+ 2158      00
+ 2159              	.LASF28:
+ 2160 01d0 73657453 		.ascii	"setState\000"
+ 2160      74617465 
+ 2160      00
+ 2161              	.LASF0:
+ 2162 01d9 7369676E 		.ascii	"signed char\000"
+ 2162      65642063 
+ 2162      68617200 
+ 2163              	.LASF41:
+ 2164 01e5 43757053 		.ascii	"CupStatus\000"
+ 2164      74617475 
+ 2164      7300
+ 2165              	.LASF9:
+ 2166 01ef 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2166      206C6F6E 
+ 2166      6720756E 
+ 2166      7369676E 
+ 2166      65642069 
+ 2167              	.LASF10:
+ 2168 0206 756E7369 		.ascii	"unsigned int\000"
+ 2168      676E6564 
+ 2168      20696E74 
+ 2168      00
+ 2169              	.LASF23:
+ 2170 0213 504C4159 		.ascii	"PLAYING\000"
+ 2170      494E4700 
+ 2171              	.LASF25:
+ 2172 021b 75706461 		.ascii	"updateCupStatus\000"
+ 2172      74654375 
+ 2172      70537461 
+ 2172      74757300 
+ 2173              	.LASF40:
+ 2174 022b 706C6163 		.ascii	"placedCupColor\000"
+ 2174      65644375 
+ 2174      70436F6C 
+ 2174      6F7200
+ 2175              	.LASF3:
+ 2176 023a 73686F72 		.ascii	"short unsigned int\000"
+ 2176      7420756E 
+ 2176      7369676E 
+ 2176      65642069 
+ 2176      6E7400
+ 2177              	.LASF27:
+ 2178 024d 73746174 		.ascii	"status\000"
+ 2178      757300
+ 2179              	.LASF15:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 48
+
+
+ 2180 0254 63686172 		.ascii	"char\000"
+ 2180      00
+ 2181              	.LASF12:
+ 2182 0259 696E7433 		.ascii	"int32_t\000"
+ 2182      325F7400 
+ 2183              	.LASF47:
+ 2184 0261 63757272 		.ascii	"currentState\000"
+ 2184      656E7453 
+ 2184      74617465 
+ 2184      00
+ 2185              	.LASF24:
+ 2186 026e 4C4F5354 		.ascii	"LOST\000"
+ 2186      00
+ 2187              	.LASF38:
+ 2188 0273 6F70706F 		.ascii	"opponentColor\000"
+ 2188      6E656E74 
+ 2188      436F6C6F 
+ 2188      7200
+ 2189              	.LASF7:
+ 2190 0281 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2190      20756E73 
+ 2190      69676E65 
+ 2190      6420696E 
+ 2190      7400
+ 2191              	.LASF48:
+ 2192 0293 67657448 		.ascii	"getHitStatus\000"
+ 2192      69745374 
+ 2192      61747573 
+ 2192      00
+ 2193              	.LASF46:
+ 2194 02a0 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2194      52784275 
+ 2194      66666572 
+ 2194      00
+ 2195              	.LASF29:
+ 2196 02ad 73746174 		.ascii	"state\000"
+ 2196      6500
+ 2197              	.LASF43:
+ 2198 02b3 67616D65 		.ascii	"game_buf\000"
+ 2198      5F627566 
+ 2198      00
+ 2199              	.LASF5:
+ 2200 02bc 5F5F696E 		.ascii	"__int32_t\000"
+ 2200      7433325F 
+ 2200      7400
+ 2201              	.LASF17:
+ 2202 02c6 73697A65 		.ascii	"sizetype\000"
+ 2202      74797065 
+ 2202      00
+ 2203              	.LASF18:
+ 2204 02cf 47726565 		.ascii	"Green\000"
+ 2204      6E00
+ 2205              	.LASF42:
+ 2206 02d5 68697453 		.ascii	"hitStatus\000"
+ 2206      74617475 
+ 2206      7300
+ 2207              	.LASF31:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccALmMj1.s 			page 49
+
+
+ 2208 02df 7365744F 		.ascii	"setOpponentColor\000"
+ 2208      70706F6E 
+ 2208      656E7443 
+ 2208      6F6C6F72 
+ 2208      00
+ 2209              	.LASF14:
+ 2210 02f0 646F7562 		.ascii	"double\000"
+ 2210      6C6500
+ 2211              	.LASF19:
+ 2212 02f7 426C7565 		.ascii	"Blue\000"
+ 2212      00
+ 2213              	.LASF59:
+ 2214 02fc 47616D65 		.ascii	"GameController.c\000"
+ 2214      436F6E74 
+ 2214      726F6C6C 
+ 2214      65722E63 
+ 2214      00
+ 2215              	.LASF58:
+ 2216 030d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2216      43313120 
+ 2216      352E342E 
+ 2216      31203230 
+ 2216      31363036 
+ 2217 0340 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2217      20726576 
+ 2217      6973696F 
+ 2217      6E203233 
+ 2217      37373135 
+ 2218 0373 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2218      66756E63 
+ 2218      74696F6E 
+ 2218      2D736563 
+ 2218      74696F6E 
+ 2219              	.LASF33:
+ 2220 039b 436F6E74 		.ascii	"Controller\000"
+ 2220      726F6C6C 
+ 2220      657200
+ 2221              	.LASF36:
+ 2222 03a6 7475726E 		.ascii	"turnedOffColor\000"
+ 2222      65644F66 
+ 2222      66436F6C 
+ 2222      6F7200
+ 2223              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

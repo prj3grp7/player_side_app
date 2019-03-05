@@ -1,0 +1,457 @@
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB63:
+  27              		.file 1 "main.c"
+   1:main.c        **** /*******************************************************************************
+   2:main.c        **** * File Name: main.c
+   3:main.c        **** *
+   4:main.c        **** * Version: 2.40
+   5:main.c        **** *
+   6:main.c        **** * Description:
+   7:main.c        **** *  The project explains the usage of CapSense CSD component. The 2 buttons and
+   8:main.c        **** *  linear sliders are used as sensing elements. LED displays buttons active
+   9:main.c        **** *  state and slider position is shown on LCD.
+  10:main.c        **** *
+  11:main.c        **** ********************************************************************************
+  12:main.c        **** * Copyright 2012-2014, Cypress Semiconductor Corporation. All rights reserved.
+  13:main.c        **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  14:main.c        **** * by and subject to worldwide patent and copyright laws and treaties.
+  15:main.c        **** * Therefore, you may use this software only as provided in the license agreement
+  16:main.c        **** * accompanying the software package from which you obtained this software.
+  17:main.c        **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  18:main.c        **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  19:main.c        **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  20:main.c        **** *******************************************************************************/
+  21:main.c        **** 
+  22:main.c        **** #include <project.h>
+  23:main.c        **** 
+  24:main.c        **** int main()
+  25:main.c        **** {
+  28              		.loc 1 25 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 2
+
+
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 00AF     		add	r7, sp, #0
+  37              		.cfi_def_cfa_register 7
+  26:main.c        ****     /* Enable global interrupts */
+  27:main.c        ****     CyGlobalIntEnable;
+  38              		.loc 1 27 0
+  39              		.syntax unified
+  40              	@ 27 "main.c" 1
+  41 0004 62B6     		CPSIE   i
+  42              	@ 0 "" 2
+  28:main.c        ****     CapSense_CSD_TunerStart();   
+  43              		.loc 1 28 0
+  44              		.thumb
+  45              		.syntax unified
+  46 0006 FFF7FEFF 		bl	CapSense_CSD_TunerStart
+  47              	.L2:
+  29:main.c        **** 
+  30:main.c        ****     while(1u)
+  31:main.c        ****     {
+  32:main.c        ****         CapSense_CSD_TunerComm();
+  48              		.loc 1 32 0 discriminator 1
+  49 000a FFF7FEFF 		bl	CapSense_CSD_TunerComm
+  33:main.c        ****     }
+  50              		.loc 1 33 0 discriminator 1
+  51 000e FCE7     		b	.L2
+  52              		.cfi_endproc
+  53              	.LFE63:
+  54              		.size	main, .-main
+  55              		.text
+  56              	.Letext0:
+  57              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  58              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  59              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+  60              		.section	.debug_info,"",%progbits
+  61              	.Ldebug_info0:
+  62 0000 C7000000 		.4byte	0xc7
+  63 0004 0400     		.2byte	0x4
+  64 0006 00000000 		.4byte	.Ldebug_abbrev0
+  65 000a 04       		.byte	0x4
+  66 000b 01       		.uleb128 0x1
+  67 000c 63000000 		.4byte	.LASF16
+  68 0010 0C       		.byte	0xc
+  69 0011 2E000000 		.4byte	.LASF17
+  70 0015 53010000 		.4byte	.LASF18
+  71 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  72 001d 00000000 		.4byte	0
+  73 0021 00000000 		.4byte	.Ldebug_line0
+  74 0025 02       		.uleb128 0x2
+  75 0026 01       		.byte	0x1
+  76 0027 06       		.byte	0x6
+  77 0028 21010000 		.4byte	.LASF0
+  78 002c 02       		.uleb128 0x2
+  79 002d 01       		.byte	0x1
+  80 002e 08       		.byte	0x8
+  81 002f F1000000 		.4byte	.LASF1
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 3
+
+
+  82 0033 02       		.uleb128 0x2
+  83 0034 02       		.byte	0x2
+  84 0035 05       		.byte	0x5
+  85 0036 49010000 		.4byte	.LASF2
+  86 003a 02       		.uleb128 0x2
+  87 003b 02       		.byte	0x2
+  88 003c 07       		.byte	0x7
+  89 003d 0E000000 		.4byte	.LASF3
+  90 0041 03       		.uleb128 0x3
+  91 0042 39010000 		.4byte	.LASF9
+  92 0046 02       		.byte	0x2
+  93 0047 3F       		.byte	0x3f
+  94 0048 4C000000 		.4byte	0x4c
+  95 004c 02       		.uleb128 0x2
+  96 004d 04       		.byte	0x4
+  97 004e 05       		.byte	0x5
+  98 004f 04010000 		.4byte	.LASF4
+  99 0053 02       		.uleb128 0x2
+ 100 0054 04       		.byte	0x4
+ 101 0055 07       		.byte	0x7
+ 102 0056 3A000000 		.4byte	.LASF5
+ 103 005a 02       		.uleb128 0x2
+ 104 005b 08       		.byte	0x8
+ 105 005c 05       		.byte	0x5
+ 106 005d 00000000 		.4byte	.LASF6
+ 107 0061 02       		.uleb128 0x2
+ 108 0062 08       		.byte	0x8
+ 109 0063 07       		.byte	0x7
+ 110 0064 4C000000 		.4byte	.LASF7
+ 111 0068 04       		.uleb128 0x4
+ 112 0069 04       		.byte	0x4
+ 113 006a 05       		.byte	0x5
+ 114 006b 696E7400 		.ascii	"int\000"
+ 115 006f 02       		.uleb128 0x2
+ 116 0070 04       		.byte	0x4
+ 117 0071 07       		.byte	0x7
+ 118 0072 21000000 		.4byte	.LASF8
+ 119 0076 03       		.uleb128 0x3
+ 120 0077 BA010000 		.4byte	.LASF10
+ 121 007b 03       		.byte	0x3
+ 122 007c 2C       		.byte	0x2c
+ 123 007d 41000000 		.4byte	0x41
+ 124 0081 02       		.uleb128 0x2
+ 125 0082 04       		.byte	0x4
+ 126 0083 04       		.byte	0x4
+ 127 0084 43010000 		.4byte	.LASF11
+ 128 0088 02       		.uleb128 0x2
+ 129 0089 08       		.byte	0x8
+ 130 008a 04       		.byte	0x4
+ 131 008b 0D010000 		.4byte	.LASF12
+ 132 008f 02       		.uleb128 0x2
+ 133 0090 01       		.byte	0x1
+ 134 0091 08       		.byte	0x8
+ 135 0092 FF000000 		.4byte	.LASF13
+ 136 0096 02       		.uleb128 0x2
+ 137 0097 08       		.byte	0x8
+ 138 0098 04       		.byte	0x4
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 4
+
+
+ 139 0099 2D010000 		.4byte	.LASF14
+ 140 009d 02       		.uleb128 0x2
+ 141 009e 04       		.byte	0x4
+ 142 009f 07       		.byte	0x7
+ 143 00a0 C2010000 		.4byte	.LASF15
+ 144 00a4 05       		.uleb128 0x5
+ 145 00a5 35000000 		.4byte	.LASF19
+ 146 00a9 01       		.byte	0x1
+ 147 00aa 18       		.byte	0x18
+ 148 00ab 68000000 		.4byte	0x68
+ 149 00af 00000000 		.4byte	.LFB63
+ 150 00b3 10000000 		.4byte	.LFE63-.LFB63
+ 151 00b7 01       		.uleb128 0x1
+ 152 00b8 9C       		.byte	0x9c
+ 153 00b9 06       		.uleb128 0x6
+ 154 00ba 14010000 		.4byte	.LASF20
+ 155 00be 04       		.byte	0x4
+ 156 00bf 1207     		.2byte	0x712
+ 157 00c1 C5000000 		.4byte	0xc5
+ 158 00c5 07       		.uleb128 0x7
+ 159 00c6 76000000 		.4byte	0x76
+ 160 00ca 00       		.byte	0
+ 161              		.section	.debug_abbrev,"",%progbits
+ 162              	.Ldebug_abbrev0:
+ 163 0000 01       		.uleb128 0x1
+ 164 0001 11       		.uleb128 0x11
+ 165 0002 01       		.byte	0x1
+ 166 0003 25       		.uleb128 0x25
+ 167 0004 0E       		.uleb128 0xe
+ 168 0005 13       		.uleb128 0x13
+ 169 0006 0B       		.uleb128 0xb
+ 170 0007 03       		.uleb128 0x3
+ 171 0008 0E       		.uleb128 0xe
+ 172 0009 1B       		.uleb128 0x1b
+ 173 000a 0E       		.uleb128 0xe
+ 174 000b 55       		.uleb128 0x55
+ 175 000c 17       		.uleb128 0x17
+ 176 000d 11       		.uleb128 0x11
+ 177 000e 01       		.uleb128 0x1
+ 178 000f 10       		.uleb128 0x10
+ 179 0010 17       		.uleb128 0x17
+ 180 0011 00       		.byte	0
+ 181 0012 00       		.byte	0
+ 182 0013 02       		.uleb128 0x2
+ 183 0014 24       		.uleb128 0x24
+ 184 0015 00       		.byte	0
+ 185 0016 0B       		.uleb128 0xb
+ 186 0017 0B       		.uleb128 0xb
+ 187 0018 3E       		.uleb128 0x3e
+ 188 0019 0B       		.uleb128 0xb
+ 189 001a 03       		.uleb128 0x3
+ 190 001b 0E       		.uleb128 0xe
+ 191 001c 00       		.byte	0
+ 192 001d 00       		.byte	0
+ 193 001e 03       		.uleb128 0x3
+ 194 001f 16       		.uleb128 0x16
+ 195 0020 00       		.byte	0
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 5
+
+
+ 196 0021 03       		.uleb128 0x3
+ 197 0022 0E       		.uleb128 0xe
+ 198 0023 3A       		.uleb128 0x3a
+ 199 0024 0B       		.uleb128 0xb
+ 200 0025 3B       		.uleb128 0x3b
+ 201 0026 0B       		.uleb128 0xb
+ 202 0027 49       		.uleb128 0x49
+ 203 0028 13       		.uleb128 0x13
+ 204 0029 00       		.byte	0
+ 205 002a 00       		.byte	0
+ 206 002b 04       		.uleb128 0x4
+ 207 002c 24       		.uleb128 0x24
+ 208 002d 00       		.byte	0
+ 209 002e 0B       		.uleb128 0xb
+ 210 002f 0B       		.uleb128 0xb
+ 211 0030 3E       		.uleb128 0x3e
+ 212 0031 0B       		.uleb128 0xb
+ 213 0032 03       		.uleb128 0x3
+ 214 0033 08       		.uleb128 0x8
+ 215 0034 00       		.byte	0
+ 216 0035 00       		.byte	0
+ 217 0036 05       		.uleb128 0x5
+ 218 0037 2E       		.uleb128 0x2e
+ 219 0038 00       		.byte	0
+ 220 0039 3F       		.uleb128 0x3f
+ 221 003a 19       		.uleb128 0x19
+ 222 003b 03       		.uleb128 0x3
+ 223 003c 0E       		.uleb128 0xe
+ 224 003d 3A       		.uleb128 0x3a
+ 225 003e 0B       		.uleb128 0xb
+ 226 003f 3B       		.uleb128 0x3b
+ 227 0040 0B       		.uleb128 0xb
+ 228 0041 49       		.uleb128 0x49
+ 229 0042 13       		.uleb128 0x13
+ 230 0043 11       		.uleb128 0x11
+ 231 0044 01       		.uleb128 0x1
+ 232 0045 12       		.uleb128 0x12
+ 233 0046 06       		.uleb128 0x6
+ 234 0047 40       		.uleb128 0x40
+ 235 0048 18       		.uleb128 0x18
+ 236 0049 9642     		.uleb128 0x2116
+ 237 004b 19       		.uleb128 0x19
+ 238 004c 00       		.byte	0
+ 239 004d 00       		.byte	0
+ 240 004e 06       		.uleb128 0x6
+ 241 004f 34       		.uleb128 0x34
+ 242 0050 00       		.byte	0
+ 243 0051 03       		.uleb128 0x3
+ 244 0052 0E       		.uleb128 0xe
+ 245 0053 3A       		.uleb128 0x3a
+ 246 0054 0B       		.uleb128 0xb
+ 247 0055 3B       		.uleb128 0x3b
+ 248 0056 05       		.uleb128 0x5
+ 249 0057 49       		.uleb128 0x49
+ 250 0058 13       		.uleb128 0x13
+ 251 0059 3F       		.uleb128 0x3f
+ 252 005a 19       		.uleb128 0x19
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 6
+
+
+ 253 005b 3C       		.uleb128 0x3c
+ 254 005c 19       		.uleb128 0x19
+ 255 005d 00       		.byte	0
+ 256 005e 00       		.byte	0
+ 257 005f 07       		.uleb128 0x7
+ 258 0060 35       		.uleb128 0x35
+ 259 0061 00       		.byte	0
+ 260 0062 49       		.uleb128 0x49
+ 261 0063 13       		.uleb128 0x13
+ 262 0064 00       		.byte	0
+ 263 0065 00       		.byte	0
+ 264 0066 00       		.byte	0
+ 265              		.section	.debug_aranges,"",%progbits
+ 266 0000 1C000000 		.4byte	0x1c
+ 267 0004 0200     		.2byte	0x2
+ 268 0006 00000000 		.4byte	.Ldebug_info0
+ 269 000a 04       		.byte	0x4
+ 270 000b 00       		.byte	0
+ 271 000c 0000     		.2byte	0
+ 272 000e 0000     		.2byte	0
+ 273 0010 00000000 		.4byte	.LFB63
+ 274 0014 10000000 		.4byte	.LFE63-.LFB63
+ 275 0018 00000000 		.4byte	0
+ 276 001c 00000000 		.4byte	0
+ 277              		.section	.debug_ranges,"",%progbits
+ 278              	.Ldebug_ranges0:
+ 279 0000 00000000 		.4byte	.LFB63
+ 280 0004 10000000 		.4byte	.LFE63
+ 281 0008 00000000 		.4byte	0
+ 282 000c 00000000 		.4byte	0
+ 283              		.section	.debug_line,"",%progbits
+ 284              	.Ldebug_line0:
+ 285 0000 60010000 		.section	.debug_str,"MS",%progbits,1
+ 285      02003F01 
+ 285      00000201 
+ 285      FB0E0D00 
+ 285      01010101 
+ 286              	.LASF6:
+ 287 0000 6C6F6E67 		.ascii	"long long int\000"
+ 287      206C6F6E 
+ 287      6720696E 
+ 287      7400
+ 288              	.LASF3:
+ 289 000e 73686F72 		.ascii	"short unsigned int\000"
+ 289      7420756E 
+ 289      7369676E 
+ 289      65642069 
+ 289      6E7400
+ 290              	.LASF8:
+ 291 0021 756E7369 		.ascii	"unsigned int\000"
+ 291      676E6564 
+ 291      20696E74 
+ 291      00
+ 292              	.LASF17:
+ 293 002e 6D61696E 		.ascii	"main.c\000"
+ 293      2E6300
+ 294              	.LASF19:
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 7
+
+
+ 295 0035 6D61696E 		.ascii	"main\000"
+ 295      00
+ 296              	.LASF5:
+ 297 003a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 297      20756E73 
+ 297      69676E65 
+ 297      6420696E 
+ 297      7400
+ 298              	.LASF7:
+ 299 004c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 299      206C6F6E 
+ 299      6720756E 
+ 299      7369676E 
+ 299      65642069 
+ 300              	.LASF16:
+ 301 0063 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 301      43313120 
+ 301      352E342E 
+ 301      31203230 
+ 301      31363036 
+ 302 0096 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 302      20726576 
+ 302      6973696F 
+ 302      6E203233 
+ 302      37373135 
+ 303 00c9 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 303      66756E63 
+ 303      74696F6E 
+ 303      2D736563 
+ 303      74696F6E 
+ 304              	.LASF1:
+ 305 00f1 756E7369 		.ascii	"unsigned char\000"
+ 305      676E6564 
+ 305      20636861 
+ 305      7200
+ 306              	.LASF13:
+ 307 00ff 63686172 		.ascii	"char\000"
+ 307      00
+ 308              	.LASF4:
+ 309 0104 6C6F6E67 		.ascii	"long int\000"
+ 309      20696E74 
+ 309      00
+ 310              	.LASF12:
+ 311 010d 646F7562 		.ascii	"double\000"
+ 311      6C6500
+ 312              	.LASF20:
+ 313 0114 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 313      52784275 
+ 313      66666572 
+ 313      00
+ 314              	.LASF0:
+ 315 0121 7369676E 		.ascii	"signed char\000"
+ 315      65642063 
+ 315      68617200 
+ 316              	.LASF14:
+ 317 012d 6C6F6E67 		.ascii	"long double\000"
+ 317      20646F75 
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\ccLJ8U7d.s 			page 8
+
+
+ 317      626C6500 
+ 318              	.LASF9:
+ 319 0139 5F5F696E 		.ascii	"__int32_t\000"
+ 319      7433325F 
+ 319      7400
+ 320              	.LASF11:
+ 321 0143 666C6F61 		.ascii	"float\000"
+ 321      7400
+ 322              	.LASF2:
+ 323 0149 73686F72 		.ascii	"short int\000"
+ 323      7420696E 
+ 323      7400
+ 324              	.LASF18:
+ 325 0153 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 325      73657273 
+ 325      5C6E696B 
+ 325      6F6C5C44 
+ 325      6F63756D 
+ 326 0180 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\CapSense_CSD_Desig"
+ 326      7965725F 
+ 326      73696465 
+ 326      5F617070 
+ 326      5C437570 
+ 327 01b0 6E30312E 		.ascii	"n01.cydsn\000"
+ 327      63796473 
+ 327      6E00
+ 328              	.LASF10:
+ 329 01ba 696E7433 		.ascii	"int32_t\000"
+ 329      325F7400 
+ 330              	.LASF15:
+ 331 01c2 73697A65 		.ascii	"sizetype\000"
+ 331      74797065 
+ 331      00
+ 332              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

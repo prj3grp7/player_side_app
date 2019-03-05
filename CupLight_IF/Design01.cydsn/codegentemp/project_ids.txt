@@ -1,0 +1,6 @@
+C:\Users\Marcus Gasberg\Documents\GitHub\player_side_app\CupLight_IF\Design01.cydsn\Design01.cyprj|0fc4adbf-7b77-47e3-ac9a-49d453bad93b
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|416c116c-6c1f-40f5-a10b-ad0c3ff47103
+C:\Users\Marcus Gasberg\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|9e5d23d4-cee9-473b-bff1-8da727946474
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|176c931d-b379-44a2-b26e-0c61a7f58765
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|9c7e688d-8ff0-4e98-9ae0-6ec36b0b7389
+F:\Marcus\software\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|bd6368b6-92ec-4137-a09d-34f8bf9e43cb

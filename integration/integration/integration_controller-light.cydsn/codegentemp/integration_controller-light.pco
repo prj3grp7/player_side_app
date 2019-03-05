@@ -1,0 +1,103 @@
+# integration_controller-light
+# 2018-12-14 13:59:07Z
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+# IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 3
+set_location "\I2C:bI2C_UDB:status_0_split\" 2 3 1 0
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "SDA_1(0)" iocell 12 1
+set_io "SCL_1(0)" iocell 12 0
+set_io "Interrupt(0)" iocell 1 5
+set_io "Rx_1(0)" iocell 12 6
+set_io "Tx_1(0)" iocell 12 7
+set_io "Pin_sclk(0)" iocell 2 3
+set_io "Pin_miso(0)" iocell 12 3
+set_io "Pin_latch(0)" iocell 2 4
+set_io "Pin_mosi(0)" iocell 2 5
+set_location "Net_26" 0 0 1 3
+set_location "\UART:BUART:counter_load_not\" 1 0 0 2
+set_location "\UART:BUART:tx_status_0\" 1 0 0 3
+set_location "\UART:BUART:tx_status_2\" 1 0 1 2
+set_location "\UART:BUART:rx_counter_load\" 0 1 1 1
+set_location "\UART:BUART:rx_postpoll\" 0 0 0 2
+set_location "\UART:BUART:rx_status_4\" 2 3 0 1
+set_location "\UART:BUART:rx_status_5\" 3 1 1 1
+set_location "\I2C:bI2C_UDB:status_5\" 3 0 1 0
+set_location "\I2C:bI2C_UDB:scl_went_high\" 3 2 1 3
+set_location "\I2C:bI2C_UDB:counter_en\" 3 3 1 3
+set_location "\I2C:bI2C_UDB:cs_addr_shifter_1\" 2 3 1 1
+set_location "\I2C:bI2C_UDB:cs_addr_shifter_0\" 2 2 1 1
+set_location "\SPIM_led_control:BSPIM:load_rx_data\" 2 2 0 1
+set_location "\SPIM_led_control:BSPIM:tx_status_0\" 1 1 0 1
+set_location "\SPIM_led_control:BSPIM:tx_status_4\" 1 2 0 2
+set_location "\SPIM_led_control:BSPIM:rx_status_6\" 1 2 1 1
+set_location "__ONE__" 1 4 0 2
+set_location "\UART:BUART:sTX:TxShifter:u0\" 1 0 2
+set_location "\UART:BUART:sTX:sCLOCK:TxBitClkGen\" 1 2 2
+set_location "\UART:BUART:sTX:TxSts\" 1 0 4
+set_location "\UART:BUART:sRX:RxShifter:u0\" 0 0 2
+set_location "\UART:BUART:sRX:RxBitCounter\" 0 2 7
+set_location "\UART:BUART:sRX:RxSts\" 2 2 4
+set_location "\I2C:I2C_IRQ\" interrupt -1 -1 0
+set_location "\I2C:bI2C_UDB:SyncCtl:CtrlReg\" 2 0 6
+set_location "\I2C:bI2C_UDB:StsReg\" 3 1 4
+set_location "\I2C:bI2C_UDB:Shifter:u0\" 2 3 2
+set_location "\I2C:bI2C_UDB:Slave:BitCounter\" 2 3 7
+set_location "isr" interrupt -1 -1 17
+set_location "\Timer:TimerHW\" timercell -1 -1 0
+set_location "isr_1" interrupt -1 -1 2
+set_location "\SPIM_led_control:BSPIM:BitCounter\" 2 1 7
+set_location "\SPIM_led_control:BSPIM:TxStsReg\" 1 1 4
+set_location "\SPIM_led_control:BSPIM:RxStsReg\" 1 2 4
+set_location "\SPIM_led_control:BSPIM:sR8:Dp:u0\" 2 2 2
+set_location "\SPIM_led_control:TxInternalInterrupt\" interrupt -1 -1 1
+set_location "\Timer_led_updater:TimerHW\" timercell -1 -1 1
+set_location "isr_update_leds" interrupt -1 -1 18
+set_location "\I2C:bI2C_UDB:s_state_0_split\" 2 1 1 0
+set_location "\UART:BUART:txn\" 1 0 1 0
+set_location "\UART:BUART:tx_state_1\" 1 1 1 2
+set_location "\UART:BUART:tx_state_0\" 1 1 1 0
+set_location "\UART:BUART:tx_state_2\" 1 1 1 1
+set_location "\UART:BUART:tx_bitclk\" 0 0 1 2
+set_location "\UART:BUART:tx_ctrl_mark_last\" 0 1 0 3
+set_location "\UART:BUART:rx_state_0\" 0 1 1 0
+set_location "\UART:BUART:rx_load_fifo\" 0 1 0 1
+set_location "\UART:BUART:rx_state_3\" 0 1 1 2
+set_location "\UART:BUART:rx_state_2\" 0 1 0 0
+set_location "\UART:BUART:rx_bitclk_enable\" 0 2 0 2
+set_location "\UART:BUART:rx_state_stop1_reg\" 0 1 0 2
+set_location "\UART:BUART:pollcount_1\" 0 0 0 3
+set_location "\UART:BUART:pollcount_0\" 0 2 1 2
+set_location "\I2C:bI2C_UDB:s_state_1_split\" 2 0 0 0
+set_location "\UART:BUART:rx_status_3\" 0 1 1 3
+set_location "\UART:BUART:rx_last\" 0 0 0 1
+set_location "\I2C:bI2C_UDB:sda_in_reg\" 3 0 0 1
+set_location "\I2C:bI2C_UDB:status_3\" 3 3 1 2
+set_location "\I2C:bI2C_UDB:status_1\" 3 0 0 0
+set_location "\I2C:bI2C_UDB:status_0\" 2 2 1 0
+set_location "\I2C:bI2C_UDB:scl_in_reg\" 3 0 1 1
+set_location "\I2C:bI2C_UDB:scl_in_last_reg\" 3 2 1 2
+set_location "\I2C:bI2C_UDB:scl_in_last2_reg\" 3 2 1 0
+set_location "\I2C:bI2C_UDB:sda_in_last_reg\" 3 0 0 2
+set_location "\I2C:bI2C_UDB:sda_in_last2_reg\" 3 0 1 3
+set_location "\I2C:bI2C_UDB:s_state_2\" 2 1 1 2
+set_location "\I2C:bI2C_UDB:s_state_1\" 2 0 1 3
+set_location "\I2C:bI2C_UDB:s_state_0\" 3 1 1 0
+set_location "\I2C:bI2C_UDB:start_sample_reg\" 3 3 1 0
+set_location "\I2C:bI2C_UDB:start_sample0_reg\" 3 2 1 1
+set_location "\I2C:Net_643_3\" 3 1 1 2
+set_location "\I2C:sda_x_wire\" 3 3 0 3
+set_location "\I2C:bI2C_UDB:s_reset\" 3 0 1 2
+set_location "Net_151" 2 2 0 0
+set_location "\SPIM_led_control:BSPIM:state_2\" 2 1 0 1
+set_location "\SPIM_led_control:BSPIM:state_1\" 2 1 0 0
+set_location "\SPIM_led_control:BSPIM:state_0\" 1 2 0 1
+set_location "Net_153" 1 2 1 3
+set_location "\SPIM_led_control:BSPIM:load_cond\" 1 2 0 0
+set_location "\SPIM_led_control:BSPIM:ld_ident\" 2 1 0 2
+set_location "\SPIM_led_control:BSPIM:cnt_enable\" 1 1 0 0
+set_location "Net_152" 1 2 1 0

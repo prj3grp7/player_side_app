@@ -1,0 +1,7 @@
+C:\Users\marti\OneDrive\Dokumenter\3 semester repos\player_side_app\integration\integration\integration_controller-light.cydsn\integration_controller-light.cyprj|c8d687f6-5417-4524-a2f3-228d320fd521
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|daa7b3e2-7286-434a-909a-c797029073ca
+C:\Users\marti\OneDrive\Dokumenter\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|0ab4a671-d669-4c1c-af20-85140af79bc9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|88d0c9dc-f5e9-43c4-8abb-4fba8eff1e86
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|61ba2f94-cf59-4c10-94ed-afb9c1d9cbd3
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|b9e63989-cb6e-4fd3-92ed-88789d858e41
+C:\Users\marti\OneDrive\Dokumenter\3 semester repos\player_side_app\integration\integration\integration_all.cydsn\integration_all.cyprj|de6d0ad0-4e50-4e34-83a5-fa2dc5f8ad43

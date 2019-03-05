@@ -1,0 +1,6 @@
+C:\Users\marti\OneDrive\Dokumenter\3 semester repos\player_side_app\rpi_Boundary\PlayerSide_slave\Design01.cydsn\Design01.cyprj|e12b0c8a-8056-4d2e-b8af-696a2832c0f5
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|08e222ba-9db6-411c-a567-dfa15390877f
+C:\Users\marti\OneDrive\Dokumenter\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|039de08d-bd8c-4cac-ad7e-ec7b2e999e62
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ff52b1de-4369-4e2c-974a-6410a58af241
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|af317c83-23c6-489a-b7c0-604d3b617201
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0fa7d5ea-38a7-4ad2-a1d7-5b87cc753672

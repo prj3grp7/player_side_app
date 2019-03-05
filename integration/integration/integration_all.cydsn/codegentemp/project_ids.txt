@@ -1,0 +1,7 @@
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\integration\integration\integration_controller-light.cydsn\integration_controller-light.cyprj|f460b639-051c-46fd-8341-9f8ece01d4a3
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|ad204c80-ef85-4524-8cea-6927bdd6603b
+C:\Users\nikol\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|f9756df6-d526-4918-a192-e9f8b7562e0d
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|29280fee-a484-43b3-88b8-09b3064b40de
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|818248d7-d964-435e-9625-b39fd6048006
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|e1b97518-c578-4ae1-b65a-f8d321ba90ff
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\integration\integration\integration_all.cydsn\integration_all.cyprj|b1a2ab92-6480-4475-9702-560733581d5a

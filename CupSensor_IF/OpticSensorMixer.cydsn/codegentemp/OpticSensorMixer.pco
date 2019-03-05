@@ -1,0 +1,72 @@
+# OpticSensorMixer
+<<<<<<< HEAD
+# 2018-11-03 15:58:18Z
+=======
+# 2018-10-31 21:20:18Z
+>>>>>>> fix
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+# IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 3
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "PhotoIn(0)" iocell 1 7
+set_io "ExtClock(0)" iocell 1 5
+set_io "DacOut(0)" iocell 1 6
+set_io "Rx(0)" iocell 12 6
+set_io "Tx(0)" iocell 12 7
+set_location "\PWM_1:PWMUDB:status_2\" 1 2 0 2
+set_location "Net_804" 0 0 1 2
+set_location "\UART:BUART:counter_load_not\" 0 2 0 1
+set_location "\UART:BUART:tx_status_0\" 0 2 1 1
+set_location "\UART:BUART:tx_status_2\" 1 0 0 1
+set_location "\UART:BUART:rx_counter_load\" 0 1 0 1
+set_location "\UART:BUART:rx_postpoll\" 0 0 0 1
+set_location "\UART:BUART:rx_status_4\" 0 2 1 3
+set_location "\UART:BUART:rx_status_5\" 0 2 0 3
+set_location "\TIA_1:SC\" sccell -1 -1 3
+set_location "DMA_1" drqcell -1 -1 10
+set_location "\Mixer_1:SC\" sccell -1 -1 2
+set_location "\VDAC8_1:viDAC8\" vidaccell -1 -1 1
+set_location "\ADC_DelSig_1:DSM\" dsmodcell -1 -1 0
+set_location "\ADC_DelSig_1:IRQ\" interrupt -1 -1 29
+set_location "\ADC_DelSig_1:DEC\" decimatorcell -1 -1 0
+set_location "__ONE__" 2 1 0 2
+set_location "\PWM_1:PWMUDB:genblk1:ctrlreg\" 1 2 6
+set_location "\PWM_1:PWMUDB:genblk8:stsreg\" 1 2 4
+set_location "\PWM_1:PWMUDB:sP8:pwmdp:u0\" 1 0 2
+set_location "\Filter_1:DFB\" dfbcell -1 -1 0
+set_location "DMA_2" drqcell -1 -1 8
+set_location "isr_1" interrupt -1 -1 0
+set_location "\UART:BUART:sTX:TxShifter:u0\" 1 1 2
+set_location "\UART:BUART:sTX:sCLOCK:TxBitClkGen\" 0 2 2
+set_location "\UART:BUART:sTX:TxSts\" 1 0 4
+set_location "\UART:BUART:sRX:RxShifter:u0\" 0 1 2
+set_location "\UART:BUART:sRX:RxBitCounter\" 0 1 7
+set_location "\UART:BUART:sRX:RxSts\" 0 2 4
+set_location "DMA_3" drqcell -1 -1 0
+set_location "\PWM_1:PWMUDB:runmode_enable\" 1 2 1 3
+set_location "\PWM_1:PWMUDB:prevCompare1\" 1 2 1 1
+set_location "\PWM_1:PWMUDB:prevCompare2\" 1 0 1 1
+set_location "\PWM_1:PWMUDB:status_0\" 1 2 1 2
+set_location "\PWM_1:PWMUDB:status_1\" 1 0 1 0
+set_location "Net_754" 1 2 1 0
+set_location "Net_771" 1 0 1 2
+set_location "\UART:BUART:txn\" 1 0 0 0
+set_location "\UART:BUART:tx_state_1\" 0 0 1 1
+set_location "\UART:BUART:tx_state_0\" 0 2 1 0
+set_location "\UART:BUART:tx_state_2\" 0 0 1 0
+set_location "\UART:BUART:tx_bitclk\" 1 0 0 2
+set_location "\UART:BUART:tx_ctrl_mark_last\" 0 1 0 3
+set_location "\UART:BUART:rx_state_0\" 0 1 0 0
+set_location "\UART:BUART:rx_load_fifo\" 0 1 1 1
+set_location "\UART:BUART:rx_state_3\" 0 1 0 2
+set_location "\UART:BUART:rx_state_2\" 0 1 1 0
+set_location "\UART:BUART:rx_bitclk_enable\" 0 2 0 0
+set_location "\UART:BUART:rx_state_stop1_reg\" 0 2 1 2
+set_location "\UART:BUART:pollcount_1\" 0 0 0 3
+set_location "\UART:BUART:pollcount_0\" 0 0 0 0
+set_location "\UART:BUART:rx_status_3\" 0 1 1 2
+set_location "\UART:BUART:rx_last\" 0 0 0 2

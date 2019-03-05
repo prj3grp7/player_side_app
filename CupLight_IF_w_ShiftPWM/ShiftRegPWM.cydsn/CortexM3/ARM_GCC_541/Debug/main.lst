@@ -1,0 +1,1529 @@
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB63:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include <stdbool.h>
+  13:main.c        **** #include "project.h"
+  14:main.c        **** #include "ShiftRegPWM.h"
+  15:main.c        **** #include "CupLight_IF.h"
+  16:main.c        **** 
+  17:main.c        **** #define LEDTOTEST 0
+  18:main.c        **** 
+  19:main.c        **** CY_ISR_PROTO(ISR_UART_rx_handler);
+  20:main.c        **** void handleByteReceived(uint8_t byteReceived);
+  21:main.c        **** 
+  22:main.c        **** uint8_t globalRed = 0;
+  23:main.c        **** uint8_t globalGreen = 0;
+  24:main.c        **** uint8_t globalBlue = 0;
+  25:main.c        **** uint8_t flag = 0;
+  26:main.c        **** 
+  27:main.c        **** int main(void)
+  28:main.c        **** {
+  28              		.loc 1 28 0
+  29              		.cfi_startproc
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 2
+
+
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 00B5     		push	{lr}
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 14, -4
+  35 0002 87B0     		sub	sp, sp, #28
+  36              		.cfi_def_cfa_offset 32
+  29:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  37              		.loc 1 29 0
+  38              		.syntax unified
+  39              	@ 29 "main.c" 1
+  40 0004 62B6     		CPSIE   i
+  41              	@ 0 "" 2
+  30:main.c        ****     isr_uart_rx_StartEx(ISR_UART_rx_handler);
+  42              		.loc 1 30 0
+  43              		.thumb
+  44              		.syntax unified
+  45 0006 1748     		ldr	r0, .L5
+  46 0008 FFF7FEFF 		bl	isr_uart_rx_StartEx
+  47              	.LVL0:
+  31:main.c        ****     UART_1_Start();
+  48              		.loc 1 31 0
+  49 000c FFF7FEFF 		bl	UART_1_Start
+  50              	.LVL1:
+  32:main.c        ****     UART_1_PutString("Program started\r\n"); 
+  51              		.loc 1 32 0
+  52 0010 1548     		ldr	r0, .L5+4
+  53 0012 FFF7FEFF 		bl	UART_1_PutString
+  54              	.LVL2:
+  33:main.c        ****     initShiftRegPWM();
+  55              		.loc 1 33 0
+  56 0016 FFF7FEFF 		bl	initShiftRegPWM
+  57              	.LVL3:
+  58              	.L2:
+  34:main.c        ****     for(;;)
+  35:main.c        ****     {
+  36:main.c        ****         if (flag)
+  59              		.loc 1 36 0
+  60 001a 144B     		ldr	r3, .L5+8
+  61 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  62 001e 002B     		cmp	r3, #0
+  63 0020 FBD0     		beq	.L2
+  37:main.c        ****         {
+  38:main.c        ****             blinkLight(0,(color_t){255,100,0},(color_t){0,255,100},250,10000);
+  64              		.loc 1 38 0
+  65 0022 134B     		ldr	r3, .L5+12
+  66 0024 1988     		ldrh	r1, [r3]	@ unaligned
+  67 0026 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+  68 0028 ADF81010 		strh	r1, [sp, #16]	@ unaligned
+  69 002c 8DF81220 		strb	r2, [sp, #18]
+  70 0030 33F8042F 		ldrh	r2, [r3, #4]!	@ unaligned
+  71 0034 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+  72 0036 ADF81420 		strh	r2, [sp, #20]	@ unaligned
+  73 003a 8DF81630 		strb	r3, [sp, #22]
+  74 003e 42F21072 		movw	r2, #10000
+  75 0042 0023     		movs	r3, #0
+  76 0044 CDE90223 		strd	r2, [sp, #8]
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 3
+
+
+  77 0048 FA22     		movs	r2, #250
+  78 004a 0023     		movs	r3, #0
+  79 004c CDE90023 		strd	r2, [sp]
+  80 0050 059A     		ldr	r2, [sp, #20]
+  81 0052 0499     		ldr	r1, [sp, #16]
+  82 0054 0020     		movs	r0, #0
+  83 0056 FFF7FEFF 		bl	blinkLight
+  84              	.LVL4:
+  39:main.c        ****             flag = 0;
+  85              		.loc 1 39 0
+  86 005a 0022     		movs	r2, #0
+  87 005c 034B     		ldr	r3, .L5+8
+  88 005e 1A70     		strb	r2, [r3]
+  89 0060 DBE7     		b	.L2
+  90              	.L6:
+  91 0062 00BF     		.align	2
+  92              	.L5:
+  93 0064 00000000 		.word	ISR_UART_rx_handler
+  94 0068 00000000 		.word	.LC3
+  95 006c 00000000 		.word	.LANCHOR0
+  96 0070 00000000 		.word	.LANCHOR1
+  97              		.cfi_endproc
+  98              	.LFE63:
+  99              		.size	main, .-main
+ 100              		.section	.text.handleByteReceived,"ax",%progbits
+ 101              		.align	2
+ 102              		.global	handleByteReceived
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.type	handleByteReceived, %function
+ 106              	handleByteReceived:
+ 107              	.LFB65:
+  40:main.c        ****         }
+  41:main.c        ****     }
+  42:main.c        **** }
+  43:main.c        **** 
+  44:main.c        **** CY_ISR(ISR_UART_rx_handler)
+  45:main.c        **** {
+  46:main.c        ****     uint8_t bytesToRead = UART_1_GetRxBufferSize();    
+  47:main.c        ****     //Read bytes
+  48:main.c        ****     while (bytesToRead > 0)
+  49:main.c        ****     {
+  50:main.c        ****         uint8_t byteReceived = UART_1_ReadRxData();
+  51:main.c        ****         UART_1_WriteTxData(byteReceived); // echo back
+  52:main.c        ****         
+  53:main.c        ****         handleByteReceived(byteReceived);
+  54:main.c        ****         
+  55:main.c        ****         bytesToRead--;
+  56:main.c        ****     }
+  57:main.c        **** }
+  58:main.c        **** 
+  59:main.c        **** void handleByteReceived(uint8_t byteReceived)
+  60:main.c        **** {
+ 108              		.loc 1 60 0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 24
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 4
+
+
+ 112              	.LVL5:
+ 113 0000 00B5     		push	{lr}
+ 114              		.cfi_def_cfa_offset 4
+ 115              		.cfi_offset 14, -4
+ 116 0002 87B0     		sub	sp, sp, #28
+ 117              		.cfi_def_cfa_offset 32
+  61:main.c        ****     switch(byteReceived)
+ 118              		.loc 1 61 0
+ 119 0004 6138     		subs	r0, r0, #97
+ 120              	.LVL6:
+ 121 0006 1928     		cmp	r0, #25
+ 122 0008 6DD8     		bhi	.L7
+ 123 000a DFE800F0 		tbb	[pc, r0]
+ 124              	.L10:
+ 125 000e 33       		.byte	(.L9-.L10)/2
+ 126 000f 6C       		.byte	(.L7-.L10)/2
+ 127 0010 6C       		.byte	(.L7-.L10)/2
+ 128 0011 57       		.byte	(.L11-.L10)/2
+ 129 0012 26       		.byte	(.L12-.L10)/2
+ 130 0013 6C       		.byte	(.L7-.L10)/2
+ 131 0014 6C       		.byte	(.L7-.L10)/2
+ 132 0015 6C       		.byte	(.L7-.L10)/2
+ 133 0016 6C       		.byte	(.L7-.L10)/2
+ 134 0017 6C       		.byte	(.L7-.L10)/2
+ 135 0018 6C       		.byte	(.L7-.L10)/2
+ 136 0019 6C       		.byte	(.L7-.L10)/2
+ 137 001a 6C       		.byte	(.L7-.L10)/2
+ 138 001b 6C       		.byte	(.L7-.L10)/2
+ 139 001c 6C       		.byte	(.L7-.L10)/2
+ 140 001d 6C       		.byte	(.L7-.L10)/2
+ 141 001e 0D       		.byte	(.L13-.L10)/2
+ 142 001f 6C       		.byte	(.L7-.L10)/2
+ 143 0020 45       		.byte	(.L14-.L10)/2
+ 144 0021 6C       		.byte	(.L7-.L10)/2
+ 145 0022 6C       		.byte	(.L7-.L10)/2
+ 146 0023 6C       		.byte	(.L7-.L10)/2
+ 147 0024 19       		.byte	(.L15-.L10)/2
+ 148 0025 6C       		.byte	(.L7-.L10)/2
+ 149 0026 6C       		.byte	(.L7-.L10)/2
+ 150 0027 69       		.byte	(.L16-.L10)/2
+ 151              		.p2align 1
+ 152              	.L13:
+  62:main.c        ****     {
+  63:main.c        ****         case 'q' :
+  64:main.c        ****         {
+  65:main.c        ****             controlLight(0,(color_t){255,100,0});
+ 153              		.loc 1 65 0
+ 154 0028 304B     		ldr	r3, .L18
+ 155 002a 1A88     		ldrh	r2, [r3]	@ unaligned
+ 156 002c 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 157 002e ADF80020 		strh	r2, [sp]	@ unaligned
+ 158 0032 8DF80230 		strb	r3, [sp, #2]
+ 159 0036 0099     		ldr	r1, [sp]
+ 160 0038 0020     		movs	r0, #0
+ 161 003a FFF7FEFF 		bl	controlLight
+ 162              	.LVL7:
+  66:main.c        ****         }
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 5
+
+
+  67:main.c        ****         break;
+ 163              		.loc 1 67 0
+ 164 003e 52E0     		b	.L7
+ 165              	.L15:
+  68:main.c        ****         case 'w' :
+  69:main.c        ****         {
+  70:main.c        ****             controlLight(0,(color_t){0,255,100});
+ 166              		.loc 1 70 0
+ 167 0040 2A4B     		ldr	r3, .L18
+ 168 0042 33F8042F 		ldrh	r2, [r3, #4]!	@ unaligned
+ 169 0046 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 170 0048 ADF80420 		strh	r2, [sp, #4]	@ unaligned
+ 171 004c 8DF80630 		strb	r3, [sp, #6]
+ 172 0050 0199     		ldr	r1, [sp, #4]
+ 173 0052 0020     		movs	r0, #0
+ 174 0054 FFF7FEFF 		bl	controlLight
+ 175              	.LVL8:
+  71:main.c        ****         }
+  72:main.c        ****         break;
+ 176              		.loc 1 72 0
+ 177 0058 45E0     		b	.L7
+ 178              	.L12:
+  73:main.c        ****         case 'e' :
+  74:main.c        ****         {
+  75:main.c        ****             controlLight(0,(color_t){100,0,255});
+ 179              		.loc 1 75 0
+ 180 005a 244B     		ldr	r3, .L18
+ 181 005c 33F8082F 		ldrh	r2, [r3, #8]!	@ unaligned
+ 182 0060 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 183 0062 ADF80820 		strh	r2, [sp, #8]	@ unaligned
+ 184 0066 8DF80A30 		strb	r3, [sp, #10]
+ 185 006a 0299     		ldr	r1, [sp, #8]
+ 186 006c 0020     		movs	r0, #0
+ 187 006e FFF7FEFF 		bl	controlLight
+ 188              	.LVL9:
+  76:main.c        ****         }
+  77:main.c        ****         break;
+ 189              		.loc 1 77 0
+ 190 0072 38E0     		b	.L7
+ 191              	.L9:
+  78:main.c        ****         case 'a' :
+  79:main.c        ****         {
+  80:main.c        ****             globalRed += 5;
+ 192              		.loc 1 80 0
+ 193 0074 1E4A     		ldr	r2, .L18+4
+ 194 0076 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 195 0078 0533     		adds	r3, r3, #5
+ 196 007a DBB2     		uxtb	r3, r3
+ 197 007c 5370     		strb	r3, [r2, #1]
+  81:main.c        ****             controlLight(LEDTOTEST,(color_t){globalRed,globalGreen,globalBlue});
+ 198              		.loc 1 81 0
+ 199 007e 8DF80C30 		strb	r3, [sp, #12]
+ 200 0082 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 201 0084 8DF80D30 		strb	r3, [sp, #13]
+ 202 0088 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 203 008a 8DF80E30 		strb	r3, [sp, #14]
+ 204 008e 0399     		ldr	r1, [sp, #12]
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 6
+
+
+ 205 0090 0020     		movs	r0, #0
+ 206 0092 FFF7FEFF 		bl	controlLight
+ 207              	.LVL10:
+  82:main.c        ****         }
+  83:main.c        ****         break;
+ 208              		.loc 1 83 0
+ 209 0096 26E0     		b	.L7
+ 210              	.L14:
+  84:main.c        ****         case 's' :
+  85:main.c        ****         {
+  86:main.c        ****             globalGreen += 5;
+ 211              		.loc 1 86 0
+ 212 0098 154A     		ldr	r2, .L18+4
+ 213 009a 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 214 009c 0533     		adds	r3, r3, #5
+ 215 009e DBB2     		uxtb	r3, r3
+ 216 00a0 9370     		strb	r3, [r2, #2]
+  87:main.c        ****             controlLight(LEDTOTEST,(color_t){globalRed,globalGreen,globalBlue});
+ 217              		.loc 1 87 0
+ 218 00a2 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 219 00a4 8DF81010 		strb	r1, [sp, #16]
+ 220 00a8 8DF81130 		strb	r3, [sp, #17]
+ 221 00ac D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 222 00ae 8DF81230 		strb	r3, [sp, #18]
+ 223 00b2 0499     		ldr	r1, [sp, #16]
+ 224 00b4 0020     		movs	r0, #0
+ 225 00b6 FFF7FEFF 		bl	controlLight
+ 226              	.LVL11:
+  88:main.c        ****         }
+  89:main.c        ****         break;
+ 227              		.loc 1 89 0
+ 228 00ba 14E0     		b	.L7
+ 229              	.L11:
+  90:main.c        ****         case 'd' :
+  91:main.c        ****         {
+  92:main.c        ****             globalBlue += 5;
+ 230              		.loc 1 92 0
+ 231 00bc 0C4A     		ldr	r2, .L18+4
+ 232 00be D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 233 00c0 0533     		adds	r3, r3, #5
+ 234 00c2 DBB2     		uxtb	r3, r3
+ 235 00c4 D370     		strb	r3, [r2, #3]
+  93:main.c        ****             controlLight(LEDTOTEST,(color_t){globalRed,globalGreen,globalBlue});
+ 236              		.loc 1 93 0
+ 237 00c6 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 238 00c8 8DF81410 		strb	r1, [sp, #20]
+ 239 00cc 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 240 00ce 8DF81520 		strb	r2, [sp, #21]
+ 241 00d2 8DF81630 		strb	r3, [sp, #22]
+ 242 00d6 0599     		ldr	r1, [sp, #20]
+ 243 00d8 0020     		movs	r0, #0
+ 244 00da FFF7FEFF 		bl	controlLight
+ 245              	.LVL12:
+  94:main.c        ****         }
+  95:main.c        ****         break;
+ 246              		.loc 1 95 0
+ 247 00de 02E0     		b	.L7
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 7
+
+
+ 248              	.L16:
+  96:main.c        ****         case 'z' :
+  97:main.c        ****         {
+  98:main.c        ****             flag = 1;
+ 249              		.loc 1 98 0
+ 250 00e0 0122     		movs	r2, #1
+ 251 00e2 034B     		ldr	r3, .L18+4
+ 252 00e4 1A70     		strb	r2, [r3]
+ 253              	.L7:
+  99:main.c        ****         }
+ 100:main.c        ****         break;
+ 101:main.c        ****         default :
+ 102:main.c        ****         {
+ 103:main.c        ****             // nothing
+ 104:main.c        ****         }
+ 105:main.c        ****         break;
+ 106:main.c        ****     }
+ 107:main.c        **** }...
+ 254              		.loc 1 107 0
+ 255 00e6 07B0     		add	sp, sp, #28
+ 256              		.cfi_def_cfa_offset 4
+ 257              		@ sp needed
+ 258 00e8 5DF804FB 		ldr	pc, [sp], #4
+ 259              	.L19:
+ 260              		.align	2
+ 261              	.L18:
+ 262 00ec 00000000 		.word	.LANCHOR1
+ 263 00f0 00000000 		.word	.LANCHOR0
+ 264              		.cfi_endproc
+ 265              	.LFE65:
+ 266              		.size	handleByteReceived, .-handleByteReceived
+ 267              		.section	.text.ISR_UART_rx_handler,"ax",%progbits
+ 268              		.align	2
+ 269              		.global	ISR_UART_rx_handler
+ 270              		.thumb
+ 271              		.thumb_func
+ 272              		.type	ISR_UART_rx_handler, %function
+ 273              	ISR_UART_rx_handler:
+ 274              	.LFB64:
+  45:main.c        **** {
+ 275              		.loc 1 45 0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279 0000 38B5     		push	{r3, r4, r5, lr}
+ 280              		.cfi_def_cfa_offset 16
+ 281              		.cfi_offset 3, -16
+ 282              		.cfi_offset 4, -12
+ 283              		.cfi_offset 5, -8
+ 284              		.cfi_offset 14, -4
+  46:main.c        ****     uint8_t bytesToRead = UART_1_GetRxBufferSize();    
+ 285              		.loc 1 46 0
+ 286 0002 FFF7FEFF 		bl	UART_1_GetRxBufferSize
+ 287              	.LVL13:
+ 288 0006 0446     		mov	r4, r0
+ 289              	.LVL14:
+  48:main.c        ****     while (bytesToRead > 0)
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 8
+
+
+ 290              		.loc 1 48 0
+ 291 0008 09E0     		b	.L21
+ 292              	.L22:
+ 293              	.LBB2:
+  50:main.c        ****         uint8_t byteReceived = UART_1_ReadRxData();
+ 294              		.loc 1 50 0
+ 295 000a FFF7FEFF 		bl	UART_1_ReadRxData
+ 296              	.LVL15:
+ 297 000e 0546     		mov	r5, r0
+ 298              	.LVL16:
+  51:main.c        ****         UART_1_WriteTxData(byteReceived); // echo back
+ 299              		.loc 1 51 0
+ 300 0010 FFF7FEFF 		bl	UART_1_WriteTxData
+ 301              	.LVL17:
+  53:main.c        ****         handleByteReceived(byteReceived);
+ 302              		.loc 1 53 0
+ 303 0014 2846     		mov	r0, r5
+ 304 0016 FFF7FEFF 		bl	handleByteReceived
+ 305              	.LVL18:
+  55:main.c        ****         bytesToRead--;
+ 306              		.loc 1 55 0
+ 307 001a 013C     		subs	r4, r4, #1
+ 308              	.LVL19:
+ 309 001c E4B2     		uxtb	r4, r4
+ 310              	.LVL20:
+ 311              	.L21:
+ 312              	.LBE2:
+  48:main.c        ****     while (bytesToRead > 0)
+ 313              		.loc 1 48 0
+ 314 001e 002C     		cmp	r4, #0
+ 315 0020 F3D1     		bne	.L22
+  57:main.c        **** }
+ 316              		.loc 1 57 0
+ 317 0022 38BD     		pop	{r3, r4, r5, pc}
+ 318              		.cfi_endproc
+ 319              	.LFE64:
+ 320              		.size	ISR_UART_rx_handler, .-ISR_UART_rx_handler
+ 321              		.global	flag
+ 322              		.global	globalBlue
+ 323              		.global	globalGreen
+ 324              		.global	globalRed
+ 325              		.section	.rodata
+ 326              		.align	2
+ 327              		.set	.LANCHOR1,. + 0
+ 328              	.LC0:
+ 329 0000 FF       		.byte	-1
+ 330 0001 64       		.byte	100
+ 331 0002 00       		.byte	0
+ 332 0003 00       		.space	1
+ 333              	.LC1:
+ 334 0004 00       		.byte	0
+ 335 0005 FF       		.byte	-1
+ 336 0006 64       		.byte	100
+ 337 0007 00       		.space	1
+ 338              	.LC2:
+ 339 0008 64       		.byte	100
+ 340 0009 00       		.byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 9
+
+
+ 341 000a FF       		.byte	-1
+ 342              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 343              		.align	2
+ 344              	.LC3:
+ 345 0000 50726F67 		.ascii	"Program started\015\012\000"
+ 345      72616D20 
+ 345      73746172 
+ 345      7465640D 
+ 345      0A00
+ 346              		.bss
+ 347              		.set	.LANCHOR0,. + 0
+ 348              		.type	flag, %object
+ 349              		.size	flag, 1
+ 350              	flag:
+ 351 0000 00       		.space	1
+ 352              		.type	globalRed, %object
+ 353              		.size	globalRed, 1
+ 354              	globalRed:
+ 355 0001 00       		.space	1
+ 356              		.type	globalGreen, %object
+ 357              		.size	globalGreen, 1
+ 358              	globalGreen:
+ 359 0002 00       		.space	1
+ 360              		.type	globalBlue, %object
+ 361              		.size	globalBlue, 1
+ 362              	globalBlue:
+ 363 0003 00       		.space	1
+ 364              		.text
+ 365              	.Letext0:
+ 366              		.file 2 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 367              		.file 3 "f:\\marcus\\software\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 368              		.file 4 "CupLight_IF.h"
+ 369              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 370              		.file 6 "Generated_Source\\PSoC5/isr_uart_rx.h"
+ 371              		.file 7 "Generated_Source\\PSoC5/UART_1.h"
+ 372              		.file 8 "ShiftRegPWM.h"
+ 373              		.section	.debug_info,"",%progbits
+ 374              	.Ldebug_info0:
+ 375 0000 1F030000 		.4byte	0x31f
+ 376 0004 0400     		.2byte	0x4
+ 377 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 378 000a 04       		.byte	0x4
+ 379 000b 01       		.uleb128 0x1
+ 380 000c 7F000000 		.4byte	.LASF39
+ 381 0010 0C       		.byte	0xc
+ 382 0011 80020000 		.4byte	.LASF40
+ 383 0015 76010000 		.4byte	.LASF41
+ 384 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 385 001d 00000000 		.4byte	0
+ 386 0021 00000000 		.4byte	.Ldebug_line0
+ 387 0025 02       		.uleb128 0x2
+ 388 0026 01       		.byte	0x1
+ 389 0027 06       		.byte	0x6
+ 390 0028 BB020000 		.4byte	.LASF0
+ 391 002c 03       		.uleb128 0x3
+ 392 002d 21000000 		.4byte	.LASF4
+ 393 0031 02       		.byte	0x2
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 10
+
+
+ 394 0032 1D       		.byte	0x1d
+ 395 0033 37000000 		.4byte	0x37
+ 396 0037 02       		.uleb128 0x2
+ 397 0038 01       		.byte	0x1
+ 398 0039 08       		.byte	0x8
+ 399 003a 71000000 		.4byte	.LASF1
+ 400 003e 02       		.uleb128 0x2
+ 401 003f 02       		.byte	0x2
+ 402 0040 05       		.byte	0x5
+ 403 0041 9C020000 		.4byte	.LASF2
+ 404 0045 02       		.uleb128 0x2
+ 405 0046 02       		.byte	0x2
+ 406 0047 07       		.byte	0x7
+ 407 0048 3F000000 		.4byte	.LASF3
+ 408 004c 03       		.uleb128 0x3
+ 409 004d 2B000000 		.4byte	.LASF5
+ 410 0051 02       		.byte	0x2
+ 411 0052 3F       		.byte	0x3f
+ 412 0053 57000000 		.4byte	0x57
+ 413 0057 02       		.uleb128 0x2
+ 414 0058 04       		.byte	0x4
+ 415 0059 05       		.byte	0x5
+ 416 005a A6020000 		.4byte	.LASF6
+ 417 005e 02       		.uleb128 0x2
+ 418 005f 04       		.byte	0x4
+ 419 0060 07       		.byte	0x7
+ 420 0061 21010000 		.4byte	.LASF7
+ 421 0065 02       		.uleb128 0x2
+ 422 0066 08       		.byte	0x8
+ 423 0067 05       		.byte	0x5
+ 424 0068 72020000 		.4byte	.LASF8
+ 425 006c 02       		.uleb128 0x2
+ 426 006d 08       		.byte	0x8
+ 427 006e 07       		.byte	0x7
+ 428 006f 15020000 		.4byte	.LASF9
+ 429 0073 04       		.uleb128 0x4
+ 430 0074 04       		.byte	0x4
+ 431 0075 05       		.byte	0x5
+ 432 0076 696E7400 		.ascii	"int\000"
+ 433 007a 02       		.uleb128 0x2
+ 434 007b 04       		.byte	0x4
+ 435 007c 07       		.byte	0x7
+ 436 007d 02020000 		.4byte	.LASF10
+ 437 0081 03       		.uleb128 0x3
+ 438 0082 2C020000 		.4byte	.LASF11
+ 439 0086 03       		.byte	0x3
+ 440 0087 18       		.byte	0x18
+ 441 0088 2C000000 		.4byte	0x2c
+ 442 008c 03       		.uleb128 0x3
+ 443 008d 61020000 		.4byte	.LASF12
+ 444 0091 03       		.byte	0x3
+ 445 0092 2C       		.byte	0x2c
+ 446 0093 4C000000 		.4byte	0x4c
+ 447 0097 02       		.uleb128 0x2
+ 448 0098 04       		.byte	0x4
+ 449 0099 04       		.byte	0x4
+ 450 009a 6B000000 		.4byte	.LASF13
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 11
+
+
+ 451 009e 02       		.uleb128 0x2
+ 452 009f 08       		.byte	0x8
+ 453 00a0 04       		.byte	0x4
+ 454 00a1 EB010000 		.4byte	.LASF14
+ 455 00a5 02       		.uleb128 0x2
+ 456 00a6 01       		.byte	0x1
+ 457 00a7 08       		.byte	0x8
+ 458 00a8 87020000 		.4byte	.LASF15
+ 459 00ac 02       		.uleb128 0x2
+ 460 00ad 08       		.byte	0x8
+ 461 00ae 04       		.byte	0x4
+ 462 00af AF020000 		.4byte	.LASF16
+ 463 00b3 02       		.uleb128 0x2
+ 464 00b4 04       		.byte	0x4
+ 465 00b5 07       		.byte	0x7
+ 466 00b6 69020000 		.4byte	.LASF17
+ 467 00ba 05       		.uleb128 0x5
+ 468 00bb F7010000 		.4byte	.LASF42
+ 469 00bf 03       		.byte	0x3
+ 470 00c0 04       		.byte	0x4
+ 471 00c1 11       		.byte	0x11
+ 472 00c2 EB000000 		.4byte	0xeb
+ 473 00c6 06       		.uleb128 0x6
+ 474 00c7 52656400 		.ascii	"Red\000"
+ 475 00cb 04       		.byte	0x4
+ 476 00cc 13       		.byte	0x13
+ 477 00cd 81000000 		.4byte	0x81
+ 478 00d1 00       		.byte	0
+ 479 00d2 07       		.uleb128 0x7
+ 480 00d3 0F020000 		.4byte	.LASF18
+ 481 00d7 04       		.byte	0x4
+ 482 00d8 14       		.byte	0x14
+ 483 00d9 81000000 		.4byte	0x81
+ 484 00dd 01       		.byte	0x1
+ 485 00de 07       		.uleb128 0x7
+ 486 00df 65010000 		.4byte	.LASF19
+ 487 00e3 04       		.byte	0x4
+ 488 00e4 15       		.byte	0x15
+ 489 00e5 81000000 		.4byte	0x81
+ 490 00e9 02       		.byte	0x2
+ 491 00ea 00       		.byte	0
+ 492 00eb 03       		.uleb128 0x3
+ 493 00ec E5020000 		.4byte	.LASF20
+ 494 00f0 04       		.byte	0x4
+ 495 00f1 16       		.byte	0x16
+ 496 00f2 BA000000 		.4byte	0xba
+ 497 00f6 08       		.uleb128 0x8
+ 498 00f7 F2010000 		.4byte	.LASF43
+ 499 00fb 01       		.byte	0x1
+ 500 00fc 1B       		.byte	0x1b
+ 501 00fd 73000000 		.4byte	0x73
+ 502 0101 00000000 		.4byte	.LFB63
+ 503 0105 74000000 		.4byte	.LFE63-.LFB63
+ 504 0109 01       		.uleb128 0x1
+ 505 010a 9C       		.byte	0x9c
+ 506 010b 5F010000 		.4byte	0x15f
+ 507 010f 09       		.uleb128 0x9
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 12
+
+
+ 508 0110 0C000000 		.4byte	.LVL0
+ 509 0114 BF020000 		.4byte	0x2bf
+ 510 0118 26010000 		.4byte	0x126
+ 511 011c 0A       		.uleb128 0xa
+ 512 011d 01       		.uleb128 0x1
+ 513 011e 50       		.byte	0x50
+ 514 011f 05       		.uleb128 0x5
+ 515 0120 03       		.byte	0x3
+ 516 0121 00000000 		.4byte	ISR_UART_rx_handler
+ 517 0125 00       		.byte	0
+ 518 0126 0B       		.uleb128 0xb
+ 519 0127 10000000 		.4byte	.LVL1
+ 520 012b CA020000 		.4byte	0x2ca
+ 521 012f 09       		.uleb128 0x9
+ 522 0130 16000000 		.4byte	.LVL2
+ 523 0134 D5020000 		.4byte	0x2d5
+ 524 0138 46010000 		.4byte	0x146
+ 525 013c 0A       		.uleb128 0xa
+ 526 013d 01       		.uleb128 0x1
+ 527 013e 50       		.byte	0x50
+ 528 013f 05       		.uleb128 0x5
+ 529 0140 03       		.byte	0x3
+ 530 0141 00000000 		.4byte	.LC3
+ 531 0145 00       		.byte	0
+ 532 0146 0B       		.uleb128 0xb
+ 533 0147 1A000000 		.4byte	.LVL3
+ 534 014b E0020000 		.4byte	0x2e0
+ 535 014f 0C       		.uleb128 0xc
+ 536 0150 5A000000 		.4byte	.LVL4
+ 537 0154 EB020000 		.4byte	0x2eb
+ 538 0158 0A       		.uleb128 0xa
+ 539 0159 01       		.uleb128 0x1
+ 540 015a 50       		.byte	0x50
+ 541 015b 01       		.uleb128 0x1
+ 542 015c 30       		.byte	0x30
+ 543 015d 00       		.byte	0
+ 544 015e 00       		.byte	0
+ 545 015f 0D       		.uleb128 0xd
+ 546 0160 45010000 		.4byte	.LASF21
+ 547 0164 01       		.byte	0x1
+ 548 0165 3B       		.byte	0x3b
+ 549 0166 00000000 		.4byte	.LFB65
+ 550 016a F4000000 		.4byte	.LFE65-.LFB65
+ 551 016e 01       		.uleb128 0x1
+ 552 016f 9C       		.byte	0x9c
+ 553 0170 F2010000 		.4byte	0x1f2
+ 554 0174 0E       		.uleb128 0xe
+ 555 0175 D8020000 		.4byte	.LASF24
+ 556 0179 01       		.byte	0x1
+ 557 017a 3B       		.byte	0x3b
+ 558 017b 81000000 		.4byte	0x81
+ 559 017f 00000000 		.4byte	.LLST0
+ 560 0183 09       		.uleb128 0x9
+ 561 0184 3E000000 		.4byte	.LVL7
+ 562 0188 F6020000 		.4byte	0x2f6
+ 563 018c 96010000 		.4byte	0x196
+ 564 0190 0A       		.uleb128 0xa
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 13
+
+
+ 565 0191 01       		.uleb128 0x1
+ 566 0192 50       		.byte	0x50
+ 567 0193 01       		.uleb128 0x1
+ 568 0194 30       		.byte	0x30
+ 569 0195 00       		.byte	0
+ 570 0196 09       		.uleb128 0x9
+ 571 0197 58000000 		.4byte	.LVL8
+ 572 019b F6020000 		.4byte	0x2f6
+ 573 019f A9010000 		.4byte	0x1a9
+ 574 01a3 0A       		.uleb128 0xa
+ 575 01a4 01       		.uleb128 0x1
+ 576 01a5 50       		.byte	0x50
+ 577 01a6 01       		.uleb128 0x1
+ 578 01a7 30       		.byte	0x30
+ 579 01a8 00       		.byte	0
+ 580 01a9 09       		.uleb128 0x9
+ 581 01aa 72000000 		.4byte	.LVL9
+ 582 01ae F6020000 		.4byte	0x2f6
+ 583 01b2 BC010000 		.4byte	0x1bc
+ 584 01b6 0A       		.uleb128 0xa
+ 585 01b7 01       		.uleb128 0x1
+ 586 01b8 50       		.byte	0x50
+ 587 01b9 01       		.uleb128 0x1
+ 588 01ba 30       		.byte	0x30
+ 589 01bb 00       		.byte	0
+ 590 01bc 09       		.uleb128 0x9
+ 591 01bd 96000000 		.4byte	.LVL10
+ 592 01c1 F6020000 		.4byte	0x2f6
+ 593 01c5 CF010000 		.4byte	0x1cf
+ 594 01c9 0A       		.uleb128 0xa
+ 595 01ca 01       		.uleb128 0x1
+ 596 01cb 50       		.byte	0x50
+ 597 01cc 01       		.uleb128 0x1
+ 598 01cd 30       		.byte	0x30
+ 599 01ce 00       		.byte	0
+ 600 01cf 09       		.uleb128 0x9
+ 601 01d0 BA000000 		.4byte	.LVL11
+ 602 01d4 F6020000 		.4byte	0x2f6
+ 603 01d8 E2010000 		.4byte	0x1e2
+ 604 01dc 0A       		.uleb128 0xa
+ 605 01dd 01       		.uleb128 0x1
+ 606 01de 50       		.byte	0x50
+ 607 01df 01       		.uleb128 0x1
+ 608 01e0 30       		.byte	0x30
+ 609 01e1 00       		.byte	0
+ 610 01e2 0C       		.uleb128 0xc
+ 611 01e3 DE000000 		.4byte	.LVL12
+ 612 01e7 F6020000 		.4byte	0x2f6
+ 613 01eb 0A       		.uleb128 0xa
+ 614 01ec 01       		.uleb128 0x1
+ 615 01ed 50       		.byte	0x50
+ 616 01ee 01       		.uleb128 0x1
+ 617 01ef 30       		.byte	0x30
+ 618 01f0 00       		.byte	0
+ 619 01f1 00       		.byte	0
+ 620 01f2 0D       		.uleb128 0xd
+ 621 01f3 0D010000 		.4byte	.LASF22
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 14
+
+
+ 622 01f7 01       		.byte	0x1
+ 623 01f8 2C       		.byte	0x2c
+ 624 01f9 00000000 		.4byte	.LFB64
+ 625 01fd 24000000 		.4byte	.LFE64-.LFB64
+ 626 0201 01       		.uleb128 0x1
+ 627 0202 9C       		.byte	0x9c
+ 628 0203 6A020000 		.4byte	0x26a
+ 629 0207 0F       		.uleb128 0xf
+ 630 0208 52000000 		.4byte	.LASF23
+ 631 020c 01       		.byte	0x1
+ 632 020d 2E       		.byte	0x2e
+ 633 020e 81000000 		.4byte	0x81
+ 634 0212 21000000 		.4byte	.LLST1
+ 635 0216 10       		.uleb128 0x10
+ 636 0217 0A000000 		.4byte	.LBB2
+ 637 021b 14000000 		.4byte	.LBE2-.LBB2
+ 638 021f 60020000 		.4byte	0x260
+ 639 0223 0F       		.uleb128 0xf
+ 640 0224 D8020000 		.4byte	.LASF24
+ 641 0228 01       		.byte	0x1
+ 642 0229 32       		.byte	0x32
+ 643 022a 81000000 		.4byte	0x81
+ 644 022e 3F000000 		.4byte	.LLST2
+ 645 0232 0B       		.uleb128 0xb
+ 646 0233 0E000000 		.4byte	.LVL15
+ 647 0237 01030000 		.4byte	0x301
+ 648 023b 09       		.uleb128 0x9
+ 649 023c 14000000 		.4byte	.LVL17
+ 650 0240 0C030000 		.4byte	0x30c
+ 651 0244 4F020000 		.4byte	0x24f
+ 652 0248 0A       		.uleb128 0xa
+ 653 0249 01       		.uleb128 0x1
+ 654 024a 50       		.byte	0x50
+ 655 024b 02       		.uleb128 0x2
+ 656 024c 75       		.byte	0x75
+ 657 024d 00       		.sleb128 0
+ 658 024e 00       		.byte	0
+ 659 024f 0C       		.uleb128 0xc
+ 660 0250 1A000000 		.4byte	.LVL18
+ 661 0254 5F010000 		.4byte	0x15f
+ 662 0258 0A       		.uleb128 0xa
+ 663 0259 01       		.uleb128 0x1
+ 664 025a 50       		.byte	0x50
+ 665 025b 02       		.uleb128 0x2
+ 666 025c 75       		.byte	0x75
+ 667 025d 00       		.sleb128 0
+ 668 025e 00       		.byte	0
+ 669 025f 00       		.byte	0
+ 670 0260 0B       		.uleb128 0xb
+ 671 0261 06000000 		.4byte	.LVL13
+ 672 0265 17030000 		.4byte	0x317
+ 673 0269 00       		.byte	0
+ 674 026a 11       		.uleb128 0x11
+ 675 026b 58010000 		.4byte	.LASF25
+ 676 026f 05       		.byte	0x5
+ 677 0270 1207     		.2byte	0x712
+ 678 0272 76020000 		.4byte	0x276
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 15
+
+
+ 679 0276 12       		.uleb128 0x12
+ 680 0277 8C000000 		.4byte	0x8c
+ 681 027b 13       		.uleb128 0x13
+ 682 027c 35000000 		.4byte	.LASF26
+ 683 0280 01       		.byte	0x1
+ 684 0281 16       		.byte	0x16
+ 685 0282 81000000 		.4byte	0x81
+ 686 0286 05       		.uleb128 0x5
+ 687 0287 03       		.byte	0x3
+ 688 0288 00000000 		.4byte	globalRed
+ 689 028c 13       		.uleb128 0x13
+ 690 028d 6A010000 		.4byte	.LASF27
+ 691 0291 01       		.byte	0x1
+ 692 0292 17       		.byte	0x17
+ 693 0293 81000000 		.4byte	0x81
+ 694 0297 05       		.uleb128 0x5
+ 695 0298 03       		.byte	0x3
+ 696 0299 00000000 		.4byte	globalGreen
+ 697 029d 13       		.uleb128 0x13
+ 698 029e 56020000 		.4byte	.LASF28
+ 699 02a2 01       		.byte	0x1
+ 700 02a3 18       		.byte	0x18
+ 701 02a4 81000000 		.4byte	0x81
+ 702 02a8 05       		.uleb128 0x5
+ 703 02a9 03       		.byte	0x3
+ 704 02aa 00000000 		.4byte	globalBlue
+ 705 02ae 13       		.uleb128 0x13
+ 706 02af FD010000 		.4byte	.LASF29
+ 707 02b3 01       		.byte	0x1
+ 708 02b4 19       		.byte	0x19
+ 709 02b5 81000000 		.4byte	0x81
+ 710 02b9 05       		.uleb128 0x5
+ 711 02ba 03       		.byte	0x3
+ 712 02bb 00000000 		.4byte	flag
+ 713 02bf 14       		.uleb128 0x14
+ 714 02c0 00000000 		.4byte	.LASF30
+ 715 02c4 00000000 		.4byte	.LASF30
+ 716 02c8 06       		.byte	0x6
+ 717 02c9 18       		.byte	0x18
+ 718 02ca 14       		.uleb128 0x14
+ 719 02cb 14000000 		.4byte	.LASF31
+ 720 02cf 14000000 		.4byte	.LASF31
+ 721 02d3 07       		.byte	0x7
+ 722 02d4 54       		.byte	0x54
+ 723 02d5 14       		.uleb128 0x14
+ 724 02d6 C7020000 		.4byte	.LASF32
+ 725 02da C7020000 		.4byte	.LASF32
+ 726 02de 07       		.byte	0x7
+ 727 02df 8B       		.byte	0x8b
+ 728 02e0 14       		.uleb128 0x14
+ 729 02e1 8C020000 		.4byte	.LASF33
+ 730 02e5 8C020000 		.4byte	.LASF33
+ 731 02e9 08       		.byte	0x8
+ 732 02ea 17       		.byte	0x17
+ 733 02eb 14       		.uleb128 0x14
+ 734 02ec 4B020000 		.4byte	.LASF34
+ 735 02f0 4B020000 		.4byte	.LASF34
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 16
+
+
+ 736 02f4 04       		.byte	0x4
+ 737 02f5 25       		.byte	0x25
+ 738 02f6 14       		.uleb128 0x14
+ 739 02f7 5E000000 		.4byte	.LASF35
+ 740 02fb 5E000000 		.4byte	.LASF35
+ 741 02ff 04       		.byte	0x4
+ 742 0300 1B       		.byte	0x1b
+ 743 0301 14       		.uleb128 0x14
+ 744 0302 33010000 		.4byte	.LASF36
+ 745 0306 33010000 		.4byte	.LASF36
+ 746 030a 07       		.byte	0x7
+ 747 030b 6F       		.byte	0x6f
+ 748 030c 14       		.uleb128 0x14
+ 749 030d D8010000 		.4byte	.LASF37
+ 750 0311 D8010000 		.4byte	.LASF37
+ 751 0315 07       		.byte	0x7
+ 752 0316 88       		.byte	0x88
+ 753 0317 14       		.uleb128 0x14
+ 754 0318 34020000 		.4byte	.LASF38
+ 755 031c 34020000 		.4byte	.LASF38
+ 756 0320 07       		.byte	0x7
+ 757 0321 73       		.byte	0x73
+ 758 0322 00       		.byte	0
+ 759              		.section	.debug_abbrev,"",%progbits
+ 760              	.Ldebug_abbrev0:
+ 761 0000 01       		.uleb128 0x1
+ 762 0001 11       		.uleb128 0x11
+ 763 0002 01       		.byte	0x1
+ 764 0003 25       		.uleb128 0x25
+ 765 0004 0E       		.uleb128 0xe
+ 766 0005 13       		.uleb128 0x13
+ 767 0006 0B       		.uleb128 0xb
+ 768 0007 03       		.uleb128 0x3
+ 769 0008 0E       		.uleb128 0xe
+ 770 0009 1B       		.uleb128 0x1b
+ 771 000a 0E       		.uleb128 0xe
+ 772 000b 55       		.uleb128 0x55
+ 773 000c 17       		.uleb128 0x17
+ 774 000d 11       		.uleb128 0x11
+ 775 000e 01       		.uleb128 0x1
+ 776 000f 10       		.uleb128 0x10
+ 777 0010 17       		.uleb128 0x17
+ 778 0011 00       		.byte	0
+ 779 0012 00       		.byte	0
+ 780 0013 02       		.uleb128 0x2
+ 781 0014 24       		.uleb128 0x24
+ 782 0015 00       		.byte	0
+ 783 0016 0B       		.uleb128 0xb
+ 784 0017 0B       		.uleb128 0xb
+ 785 0018 3E       		.uleb128 0x3e
+ 786 0019 0B       		.uleb128 0xb
+ 787 001a 03       		.uleb128 0x3
+ 788 001b 0E       		.uleb128 0xe
+ 789 001c 00       		.byte	0
+ 790 001d 00       		.byte	0
+ 791 001e 03       		.uleb128 0x3
+ 792 001f 16       		.uleb128 0x16
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 17
+
+
+ 793 0020 00       		.byte	0
+ 794 0021 03       		.uleb128 0x3
+ 795 0022 0E       		.uleb128 0xe
+ 796 0023 3A       		.uleb128 0x3a
+ 797 0024 0B       		.uleb128 0xb
+ 798 0025 3B       		.uleb128 0x3b
+ 799 0026 0B       		.uleb128 0xb
+ 800 0027 49       		.uleb128 0x49
+ 801 0028 13       		.uleb128 0x13
+ 802 0029 00       		.byte	0
+ 803 002a 00       		.byte	0
+ 804 002b 04       		.uleb128 0x4
+ 805 002c 24       		.uleb128 0x24
+ 806 002d 00       		.byte	0
+ 807 002e 0B       		.uleb128 0xb
+ 808 002f 0B       		.uleb128 0xb
+ 809 0030 3E       		.uleb128 0x3e
+ 810 0031 0B       		.uleb128 0xb
+ 811 0032 03       		.uleb128 0x3
+ 812 0033 08       		.uleb128 0x8
+ 813 0034 00       		.byte	0
+ 814 0035 00       		.byte	0
+ 815 0036 05       		.uleb128 0x5
+ 816 0037 13       		.uleb128 0x13
+ 817 0038 01       		.byte	0x1
+ 818 0039 03       		.uleb128 0x3
+ 819 003a 0E       		.uleb128 0xe
+ 820 003b 0B       		.uleb128 0xb
+ 821 003c 0B       		.uleb128 0xb
+ 822 003d 3A       		.uleb128 0x3a
+ 823 003e 0B       		.uleb128 0xb
+ 824 003f 3B       		.uleb128 0x3b
+ 825 0040 0B       		.uleb128 0xb
+ 826 0041 01       		.uleb128 0x1
+ 827 0042 13       		.uleb128 0x13
+ 828 0043 00       		.byte	0
+ 829 0044 00       		.byte	0
+ 830 0045 06       		.uleb128 0x6
+ 831 0046 0D       		.uleb128 0xd
+ 832 0047 00       		.byte	0
+ 833 0048 03       		.uleb128 0x3
+ 834 0049 08       		.uleb128 0x8
+ 835 004a 3A       		.uleb128 0x3a
+ 836 004b 0B       		.uleb128 0xb
+ 837 004c 3B       		.uleb128 0x3b
+ 838 004d 0B       		.uleb128 0xb
+ 839 004e 49       		.uleb128 0x49
+ 840 004f 13       		.uleb128 0x13
+ 841 0050 38       		.uleb128 0x38
+ 842 0051 0B       		.uleb128 0xb
+ 843 0052 00       		.byte	0
+ 844 0053 00       		.byte	0
+ 845 0054 07       		.uleb128 0x7
+ 846 0055 0D       		.uleb128 0xd
+ 847 0056 00       		.byte	0
+ 848 0057 03       		.uleb128 0x3
+ 849 0058 0E       		.uleb128 0xe
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 18
+
+
+ 850 0059 3A       		.uleb128 0x3a
+ 851 005a 0B       		.uleb128 0xb
+ 852 005b 3B       		.uleb128 0x3b
+ 853 005c 0B       		.uleb128 0xb
+ 854 005d 49       		.uleb128 0x49
+ 855 005e 13       		.uleb128 0x13
+ 856 005f 38       		.uleb128 0x38
+ 857 0060 0B       		.uleb128 0xb
+ 858 0061 00       		.byte	0
+ 859 0062 00       		.byte	0
+ 860 0063 08       		.uleb128 0x8
+ 861 0064 2E       		.uleb128 0x2e
+ 862 0065 01       		.byte	0x1
+ 863 0066 3F       		.uleb128 0x3f
+ 864 0067 19       		.uleb128 0x19
+ 865 0068 03       		.uleb128 0x3
+ 866 0069 0E       		.uleb128 0xe
+ 867 006a 3A       		.uleb128 0x3a
+ 868 006b 0B       		.uleb128 0xb
+ 869 006c 3B       		.uleb128 0x3b
+ 870 006d 0B       		.uleb128 0xb
+ 871 006e 27       		.uleb128 0x27
+ 872 006f 19       		.uleb128 0x19
+ 873 0070 49       		.uleb128 0x49
+ 874 0071 13       		.uleb128 0x13
+ 875 0072 8701     		.uleb128 0x87
+ 876 0074 19       		.uleb128 0x19
+ 877 0075 11       		.uleb128 0x11
+ 878 0076 01       		.uleb128 0x1
+ 879 0077 12       		.uleb128 0x12
+ 880 0078 06       		.uleb128 0x6
+ 881 0079 40       		.uleb128 0x40
+ 882 007a 18       		.uleb128 0x18
+ 883 007b 9742     		.uleb128 0x2117
+ 884 007d 19       		.uleb128 0x19
+ 885 007e 01       		.uleb128 0x1
+ 886 007f 13       		.uleb128 0x13
+ 887 0080 00       		.byte	0
+ 888 0081 00       		.byte	0
+ 889 0082 09       		.uleb128 0x9
+ 890 0083 898201   		.uleb128 0x4109
+ 891 0086 01       		.byte	0x1
+ 892 0087 11       		.uleb128 0x11
+ 893 0088 01       		.uleb128 0x1
+ 894 0089 31       		.uleb128 0x31
+ 895 008a 13       		.uleb128 0x13
+ 896 008b 01       		.uleb128 0x1
+ 897 008c 13       		.uleb128 0x13
+ 898 008d 00       		.byte	0
+ 899 008e 00       		.byte	0
+ 900 008f 0A       		.uleb128 0xa
+ 901 0090 8A8201   		.uleb128 0x410a
+ 902 0093 00       		.byte	0
+ 903 0094 02       		.uleb128 0x2
+ 904 0095 18       		.uleb128 0x18
+ 905 0096 9142     		.uleb128 0x2111
+ 906 0098 18       		.uleb128 0x18
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 19
+
+
+ 907 0099 00       		.byte	0
+ 908 009a 00       		.byte	0
+ 909 009b 0B       		.uleb128 0xb
+ 910 009c 898201   		.uleb128 0x4109
+ 911 009f 00       		.byte	0
+ 912 00a0 11       		.uleb128 0x11
+ 913 00a1 01       		.uleb128 0x1
+ 914 00a2 31       		.uleb128 0x31
+ 915 00a3 13       		.uleb128 0x13
+ 916 00a4 00       		.byte	0
+ 917 00a5 00       		.byte	0
+ 918 00a6 0C       		.uleb128 0xc
+ 919 00a7 898201   		.uleb128 0x4109
+ 920 00aa 01       		.byte	0x1
+ 921 00ab 11       		.uleb128 0x11
+ 922 00ac 01       		.uleb128 0x1
+ 923 00ad 31       		.uleb128 0x31
+ 924 00ae 13       		.uleb128 0x13
+ 925 00af 00       		.byte	0
+ 926 00b0 00       		.byte	0
+ 927 00b1 0D       		.uleb128 0xd
+ 928 00b2 2E       		.uleb128 0x2e
+ 929 00b3 01       		.byte	0x1
+ 930 00b4 3F       		.uleb128 0x3f
+ 931 00b5 19       		.uleb128 0x19
+ 932 00b6 03       		.uleb128 0x3
+ 933 00b7 0E       		.uleb128 0xe
+ 934 00b8 3A       		.uleb128 0x3a
+ 935 00b9 0B       		.uleb128 0xb
+ 936 00ba 3B       		.uleb128 0x3b
+ 937 00bb 0B       		.uleb128 0xb
+ 938 00bc 27       		.uleb128 0x27
+ 939 00bd 19       		.uleb128 0x19
+ 940 00be 11       		.uleb128 0x11
+ 941 00bf 01       		.uleb128 0x1
+ 942 00c0 12       		.uleb128 0x12
+ 943 00c1 06       		.uleb128 0x6
+ 944 00c2 40       		.uleb128 0x40
+ 945 00c3 18       		.uleb128 0x18
+ 946 00c4 9742     		.uleb128 0x2117
+ 947 00c6 19       		.uleb128 0x19
+ 948 00c7 01       		.uleb128 0x1
+ 949 00c8 13       		.uleb128 0x13
+ 950 00c9 00       		.byte	0
+ 951 00ca 00       		.byte	0
+ 952 00cb 0E       		.uleb128 0xe
+ 953 00cc 05       		.uleb128 0x5
+ 954 00cd 00       		.byte	0
+ 955 00ce 03       		.uleb128 0x3
+ 956 00cf 0E       		.uleb128 0xe
+ 957 00d0 3A       		.uleb128 0x3a
+ 958 00d1 0B       		.uleb128 0xb
+ 959 00d2 3B       		.uleb128 0x3b
+ 960 00d3 0B       		.uleb128 0xb
+ 961 00d4 49       		.uleb128 0x49
+ 962 00d5 13       		.uleb128 0x13
+ 963 00d6 02       		.uleb128 0x2
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 20
+
+
+ 964 00d7 17       		.uleb128 0x17
+ 965 00d8 00       		.byte	0
+ 966 00d9 00       		.byte	0
+ 967 00da 0F       		.uleb128 0xf
+ 968 00db 34       		.uleb128 0x34
+ 969 00dc 00       		.byte	0
+ 970 00dd 03       		.uleb128 0x3
+ 971 00de 0E       		.uleb128 0xe
+ 972 00df 3A       		.uleb128 0x3a
+ 973 00e0 0B       		.uleb128 0xb
+ 974 00e1 3B       		.uleb128 0x3b
+ 975 00e2 0B       		.uleb128 0xb
+ 976 00e3 49       		.uleb128 0x49
+ 977 00e4 13       		.uleb128 0x13
+ 978 00e5 02       		.uleb128 0x2
+ 979 00e6 17       		.uleb128 0x17
+ 980 00e7 00       		.byte	0
+ 981 00e8 00       		.byte	0
+ 982 00e9 10       		.uleb128 0x10
+ 983 00ea 0B       		.uleb128 0xb
+ 984 00eb 01       		.byte	0x1
+ 985 00ec 11       		.uleb128 0x11
+ 986 00ed 01       		.uleb128 0x1
+ 987 00ee 12       		.uleb128 0x12
+ 988 00ef 06       		.uleb128 0x6
+ 989 00f0 01       		.uleb128 0x1
+ 990 00f1 13       		.uleb128 0x13
+ 991 00f2 00       		.byte	0
+ 992 00f3 00       		.byte	0
+ 993 00f4 11       		.uleb128 0x11
+ 994 00f5 34       		.uleb128 0x34
+ 995 00f6 00       		.byte	0
+ 996 00f7 03       		.uleb128 0x3
+ 997 00f8 0E       		.uleb128 0xe
+ 998 00f9 3A       		.uleb128 0x3a
+ 999 00fa 0B       		.uleb128 0xb
+ 1000 00fb 3B       		.uleb128 0x3b
+ 1001 00fc 05       		.uleb128 0x5
+ 1002 00fd 49       		.uleb128 0x49
+ 1003 00fe 13       		.uleb128 0x13
+ 1004 00ff 3F       		.uleb128 0x3f
+ 1005 0100 19       		.uleb128 0x19
+ 1006 0101 3C       		.uleb128 0x3c
+ 1007 0102 19       		.uleb128 0x19
+ 1008 0103 00       		.byte	0
+ 1009 0104 00       		.byte	0
+ 1010 0105 12       		.uleb128 0x12
+ 1011 0106 35       		.uleb128 0x35
+ 1012 0107 00       		.byte	0
+ 1013 0108 49       		.uleb128 0x49
+ 1014 0109 13       		.uleb128 0x13
+ 1015 010a 00       		.byte	0
+ 1016 010b 00       		.byte	0
+ 1017 010c 13       		.uleb128 0x13
+ 1018 010d 34       		.uleb128 0x34
+ 1019 010e 00       		.byte	0
+ 1020 010f 03       		.uleb128 0x3
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 21
+
+
+ 1021 0110 0E       		.uleb128 0xe
+ 1022 0111 3A       		.uleb128 0x3a
+ 1023 0112 0B       		.uleb128 0xb
+ 1024 0113 3B       		.uleb128 0x3b
+ 1025 0114 0B       		.uleb128 0xb
+ 1026 0115 49       		.uleb128 0x49
+ 1027 0116 13       		.uleb128 0x13
+ 1028 0117 3F       		.uleb128 0x3f
+ 1029 0118 19       		.uleb128 0x19
+ 1030 0119 02       		.uleb128 0x2
+ 1031 011a 18       		.uleb128 0x18
+ 1032 011b 00       		.byte	0
+ 1033 011c 00       		.byte	0
+ 1034 011d 14       		.uleb128 0x14
+ 1035 011e 2E       		.uleb128 0x2e
+ 1036 011f 00       		.byte	0
+ 1037 0120 3F       		.uleb128 0x3f
+ 1038 0121 19       		.uleb128 0x19
+ 1039 0122 3C       		.uleb128 0x3c
+ 1040 0123 19       		.uleb128 0x19
+ 1041 0124 6E       		.uleb128 0x6e
+ 1042 0125 0E       		.uleb128 0xe
+ 1043 0126 03       		.uleb128 0x3
+ 1044 0127 0E       		.uleb128 0xe
+ 1045 0128 3A       		.uleb128 0x3a
+ 1046 0129 0B       		.uleb128 0xb
+ 1047 012a 3B       		.uleb128 0x3b
+ 1048 012b 0B       		.uleb128 0xb
+ 1049 012c 00       		.byte	0
+ 1050 012d 00       		.byte	0
+ 1051 012e 00       		.byte	0
+ 1052              		.section	.debug_loc,"",%progbits
+ 1053              	.Ldebug_loc0:
+ 1054              	.LLST0:
+ 1055 0000 00000000 		.4byte	.LVL5
+ 1056 0004 06000000 		.4byte	.LVL6
+ 1057 0008 0100     		.2byte	0x1
+ 1058 000a 50       		.byte	0x50
+ 1059 000b 06000000 		.4byte	.LVL6
+ 1060 000f F4000000 		.4byte	.LFE65
+ 1061 0013 0400     		.2byte	0x4
+ 1062 0015 F3       		.byte	0xf3
+ 1063 0016 01       		.uleb128 0x1
+ 1064 0017 50       		.byte	0x50
+ 1065 0018 9F       		.byte	0x9f
+ 1066 0019 00000000 		.4byte	0
+ 1067 001d 00000000 		.4byte	0
+ 1068              	.LLST1:
+ 1069 0021 08000000 		.4byte	.LVL14
+ 1070 0025 1C000000 		.4byte	.LVL19
+ 1071 0029 0100     		.2byte	0x1
+ 1072 002b 54       		.byte	0x54
+ 1073 002c 1E000000 		.4byte	.LVL20
+ 1074 0030 24000000 		.4byte	.LFE64
+ 1075 0034 0100     		.2byte	0x1
+ 1076 0036 54       		.byte	0x54
+ 1077 0037 00000000 		.4byte	0
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 22
+
+
+ 1078 003b 00000000 		.4byte	0
+ 1079              	.LLST2:
+ 1080 003f 10000000 		.4byte	.LVL16
+ 1081 0043 1E000000 		.4byte	.LVL20
+ 1082 0047 0100     		.2byte	0x1
+ 1083 0049 55       		.byte	0x55
+ 1084 004a 00000000 		.4byte	0
+ 1085 004e 00000000 		.4byte	0
+ 1086              		.section	.debug_aranges,"",%progbits
+ 1087 0000 2C000000 		.4byte	0x2c
+ 1088 0004 0200     		.2byte	0x2
+ 1089 0006 00000000 		.4byte	.Ldebug_info0
+ 1090 000a 04       		.byte	0x4
+ 1091 000b 00       		.byte	0
+ 1092 000c 0000     		.2byte	0
+ 1093 000e 0000     		.2byte	0
+ 1094 0010 00000000 		.4byte	.LFB63
+ 1095 0014 74000000 		.4byte	.LFE63-.LFB63
+ 1096 0018 00000000 		.4byte	.LFB65
+ 1097 001c F4000000 		.4byte	.LFE65-.LFB65
+ 1098 0020 00000000 		.4byte	.LFB64
+ 1099 0024 24000000 		.4byte	.LFE64-.LFB64
+ 1100 0028 00000000 		.4byte	0
+ 1101 002c 00000000 		.4byte	0
+ 1102              		.section	.debug_ranges,"",%progbits
+ 1103              	.Ldebug_ranges0:
+ 1104 0000 00000000 		.4byte	.LFB63
+ 1105 0004 74000000 		.4byte	.LFE63
+ 1106 0008 00000000 		.4byte	.LFB65
+ 1107 000c F4000000 		.4byte	.LFE65
+ 1108 0010 00000000 		.4byte	.LFB64
+ 1109 0014 24000000 		.4byte	.LFE64
+ 1110 0018 00000000 		.4byte	0
+ 1111 001c 00000000 		.4byte	0
+ 1112              		.section	.debug_line,"",%progbits
+ 1113              	.Ldebug_line0:
+ 1114 0000 C3010000 		.section	.debug_str,"MS",%progbits,1
+ 1114      02006601 
+ 1114      00000201 
+ 1114      FB0E0D00 
+ 1114      01010101 
+ 1115              	.LASF30:
+ 1116 0000 6973725F 		.ascii	"isr_uart_rx_StartEx\000"
+ 1116      75617274 
+ 1116      5F72785F 
+ 1116      53746172 
+ 1116      74457800 
+ 1117              	.LASF31:
+ 1118 0014 55415254 		.ascii	"UART_1_Start\000"
+ 1118      5F315F53 
+ 1118      74617274 
+ 1118      00
+ 1119              	.LASF4:
+ 1120 0021 5F5F7569 		.ascii	"__uint8_t\000"
+ 1120      6E74385F 
+ 1120      7400
+ 1121              	.LASF5:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 23
+
+
+ 1122 002b 5F5F696E 		.ascii	"__int32_t\000"
+ 1122      7433325F 
+ 1122      7400
+ 1123              	.LASF26:
+ 1124 0035 676C6F62 		.ascii	"globalRed\000"
+ 1124      616C5265 
+ 1124      6400
+ 1125              	.LASF3:
+ 1126 003f 73686F72 		.ascii	"short unsigned int\000"
+ 1126      7420756E 
+ 1126      7369676E 
+ 1126      65642069 
+ 1126      6E7400
+ 1127              	.LASF23:
+ 1128 0052 62797465 		.ascii	"bytesToRead\000"
+ 1128      73546F52 
+ 1128      65616400 
+ 1129              	.LASF35:
+ 1130 005e 636F6E74 		.ascii	"controlLight\000"
+ 1130      726F6C4C 
+ 1130      69676874 
+ 1130      00
+ 1131              	.LASF13:
+ 1132 006b 666C6F61 		.ascii	"float\000"
+ 1132      7400
+ 1133              	.LASF1:
+ 1134 0071 756E7369 		.ascii	"unsigned char\000"
+ 1134      676E6564 
+ 1134      20636861 
+ 1134      7200
+ 1135              	.LASF39:
+ 1136 007f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1136      43313120 
+ 1136      352E342E 
+ 1136      31203230 
+ 1136      31363036 
+ 1137 00b2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1137      20726576 
+ 1137      6973696F 
+ 1137      6E203233 
+ 1137      37373135 
+ 1138 00e5 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1138      66756E63 
+ 1138      74696F6E 
+ 1138      2D736563 
+ 1138      74696F6E 
+ 1139              	.LASF22:
+ 1140 010d 4953525F 		.ascii	"ISR_UART_rx_handler\000"
+ 1140      55415254 
+ 1140      5F72785F 
+ 1140      68616E64 
+ 1140      6C657200 
+ 1141              	.LASF7:
+ 1142 0121 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1142      20756E73 
+ 1142      69676E65 
+ 1142      6420696E 
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 24
+
+
+ 1142      7400
+ 1143              	.LASF36:
+ 1144 0133 55415254 		.ascii	"UART_1_ReadRxData\000"
+ 1144      5F315F52 
+ 1144      65616452 
+ 1144      78446174 
+ 1144      6100
+ 1145              	.LASF21:
+ 1146 0145 68616E64 		.ascii	"handleByteReceived\000"
+ 1146      6C654279 
+ 1146      74655265 
+ 1146      63656976 
+ 1146      656400
+ 1147              	.LASF25:
+ 1148 0158 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1148      52784275 
+ 1148      66666572 
+ 1148      00
+ 1149              	.LASF19:
+ 1150 0165 426C7565 		.ascii	"Blue\000"
+ 1150      00
+ 1151              	.LASF27:
+ 1152 016a 676C6F62 		.ascii	"globalGreen\000"
+ 1152      616C4772 
+ 1152      65656E00 
+ 1153              	.LASF41:
+ 1154 0176 433A5C55 		.ascii	"C:\\Users\\Marcus Gasberg\\Documents\\GitHub\\playe"
+ 1154      73657273 
+ 1154      5C4D6172 
+ 1154      63757320 
+ 1154      47617362 
+ 1155 01a4 725F7369 		.ascii	"r_side_app\\CupLight_IF_w_ShiftPWM\\ShiftRegPWM.cyd"
+ 1155      64655F61 
+ 1155      70705C43 
+ 1155      75704C69 
+ 1155      6768745F 
+ 1156 01d5 736E00   		.ascii	"sn\000"
+ 1157              	.LASF37:
+ 1158 01d8 55415254 		.ascii	"UART_1_WriteTxData\000"
+ 1158      5F315F57 
+ 1158      72697465 
+ 1158      54784461 
+ 1158      746100
+ 1159              	.LASF14:
+ 1160 01eb 646F7562 		.ascii	"double\000"
+ 1160      6C6500
+ 1161              	.LASF43:
+ 1162 01f2 6D61696E 		.ascii	"main\000"
+ 1162      00
+ 1163              	.LASF42:
+ 1164 01f7 636F6C6F 		.ascii	"color\000"
+ 1164      7200
+ 1165              	.LASF29:
+ 1166 01fd 666C6167 		.ascii	"flag\000"
+ 1166      00
+ 1167              	.LASF10:
+ 1168 0202 756E7369 		.ascii	"unsigned int\000"
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 25
+
+
+ 1168      676E6564 
+ 1168      20696E74 
+ 1168      00
+ 1169              	.LASF18:
+ 1170 020f 47726565 		.ascii	"Green\000"
+ 1170      6E00
+ 1171              	.LASF9:
+ 1172 0215 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1172      206C6F6E 
+ 1172      6720756E 
+ 1172      7369676E 
+ 1172      65642069 
+ 1173              	.LASF11:
+ 1174 022c 75696E74 		.ascii	"uint8_t\000"
+ 1174      385F7400 
+ 1175              	.LASF38:
+ 1176 0234 55415254 		.ascii	"UART_1_GetRxBufferSize\000"
+ 1176      5F315F47 
+ 1176      65745278 
+ 1176      42756666 
+ 1176      65725369 
+ 1177              	.LASF34:
+ 1178 024b 626C696E 		.ascii	"blinkLight\000"
+ 1178      6B4C6967 
+ 1178      687400
+ 1179              	.LASF28:
+ 1180 0256 676C6F62 		.ascii	"globalBlue\000"
+ 1180      616C426C 
+ 1180      756500
+ 1181              	.LASF12:
+ 1182 0261 696E7433 		.ascii	"int32_t\000"
+ 1182      325F7400 
+ 1183              	.LASF17:
+ 1184 0269 73697A65 		.ascii	"sizetype\000"
+ 1184      74797065 
+ 1184      00
+ 1185              	.LASF8:
+ 1186 0272 6C6F6E67 		.ascii	"long long int\000"
+ 1186      206C6F6E 
+ 1186      6720696E 
+ 1186      7400
+ 1187              	.LASF40:
+ 1188 0280 6D61696E 		.ascii	"main.c\000"
+ 1188      2E6300
+ 1189              	.LASF15:
+ 1190 0287 63686172 		.ascii	"char\000"
+ 1190      00
+ 1191              	.LASF33:
+ 1192 028c 696E6974 		.ascii	"initShiftRegPWM\000"
+ 1192      53686966 
+ 1192      74526567 
+ 1192      50574D00 
+ 1193              	.LASF2:
+ 1194 029c 73686F72 		.ascii	"short int\000"
+ 1194      7420696E 
+ 1194      7400
+ 1195              	.LASF6:
+ARM GAS  C:\Users\MARCUS~1\AppData\Local\Temp\ccwsBh70.s 			page 26
+
+
+ 1196 02a6 6C6F6E67 		.ascii	"long int\000"
+ 1196      20696E74 
+ 1196      00
+ 1197              	.LASF16:
+ 1198 02af 6C6F6E67 		.ascii	"long double\000"
+ 1198      20646F75 
+ 1198      626C6500 
+ 1199              	.LASF0:
+ 1200 02bb 7369676E 		.ascii	"signed char\000"
+ 1200      65642063 
+ 1200      68617200 
+ 1201              	.LASF32:
+ 1202 02c7 55415254 		.ascii	"UART_1_PutString\000"
+ 1202      5F315F50 
+ 1202      75745374 
+ 1202      72696E67 
+ 1202      00
+ 1203              	.LASF24:
+ 1204 02d8 62797465 		.ascii	"byteReceived\000"
+ 1204      52656365 
+ 1204      69766564 
+ 1204      00
+ 1205              	.LASF20:
+ 1206 02e5 636F6C6F 		.ascii	"color_t\000"
+ 1206      725F7400 
+ 1207              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

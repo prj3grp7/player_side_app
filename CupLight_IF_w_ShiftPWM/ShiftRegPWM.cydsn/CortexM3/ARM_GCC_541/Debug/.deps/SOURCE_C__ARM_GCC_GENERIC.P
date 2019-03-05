@@ -1,0 +1,82 @@
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/CortexM3/ARM_GCC_541/Debug/main.o : C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Clock_SPI.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyDmac.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyFlash.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyLib.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CySpc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_latch.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_latch_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_miso.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_miso_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_mosi.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_mosi_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_sclk.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_sclk_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_update_time.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_update_time_aliases.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/SPIM_led_control.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/SPIM_led_control_PVT.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Timer_led_updater.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/UART_1.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/UART_1_IntClock.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_armcc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_compiler.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_gcc.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/core_cm3.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyPm.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydevice.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydisabledsheets.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyfitter.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cypins.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cytypes.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/isr_uart_rx.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/isr_update_leds.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/project.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/CupLight_IF.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/ShiftRegPWM.h C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/main.c 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Clock_SPI.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyDmac.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyFlash.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CyLib.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/CySpc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_latch.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_latch_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_miso.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_miso_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_mosi.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_mosi_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_sclk.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_sclk_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_update_time.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Pin_update_time_aliases.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/SPIM_led_control.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/SPIM_led_control_PVT.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/Timer_led_updater.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/UART_1.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/UART_1_IntClock.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_armcc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_compiler.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cmsis_gcc.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/core_cm3.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyPm.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydevice.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydevice_trm.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cydisabledsheets.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyfitter.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cypins.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/cytypes.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/isr_uart_rx.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/isr_update_leds.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/Generated_Source/PSoC5/project.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/CupLight_IF.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/ShiftRegPWM.h : 
+
+C:/Users/Marcus\ Gasberg/Documents/GitHub/player_side_app/CupLight_IF_w_ShiftPWM/ShiftRegPWM.cydsn/main.c : 
+

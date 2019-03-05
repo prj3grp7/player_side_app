@@ -1,0 +1,413 @@
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 1
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 1
+>>>>>>> fix
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"Filter_1_Coefficients.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	Filter_1_ChannelABiquadCoefficients
+  20              		.section	.rodata
+  21              		.align	2
+  22              		.type	Filter_1_ChannelABiquadCoefficients, %object
+  23              		.size	Filter_1_ChannelABiquadCoefficients, 20
+  24              	Filter_1_ChannelABiquadCoefficients:
+  25 0000 D3       		.byte	-45
+  26 0001 F3       		.byte	-13
+  27 0002 01       		.byte	1
+  28 0003 00       		.byte	0
+  29 0004 D3       		.byte	-45
+  30 0005 F3       		.byte	-13
+  31 0006 01       		.byte	1
+  32 0007 00       		.byte	0
+  33 0008 00       		.byte	0
+  34 0009 00       		.byte	0
+  35 000a 00       		.byte	0
+  36 000b 00       		.byte	0
+  37 000c 9A       		.byte	-102
+  38 000d 19       		.byte	25
+  39 000e 3C       		.byte	60
+  40 000f 00       		.byte	0
+  41 0010 00       		.byte	0
+  42 0011 00       		.byte	0
+  43 0012 00       		.byte	0
+  44 0013 00       		.byte	0
+  45              		.text
+  46              	.Letext0:
+  47              		.file 1 "Generated_Source\\PSoC5\\cytypes.h"
+  48              		.file 2 "Generated_Source\\PSoC5\\Filter_1_Coefficients.c"
+  49              		.section	.debug_info,"",%progbits
+  50              	.Ldebug_info0:
+  51 0000 BA000000 		.4byte	0xba
+  52 0004 0400     		.2byte	0x4
+  53 0006 00000000 		.4byte	.Ldebug_abbrev0
+  54 000a 04       		.byte	0x4
+  55 000b 01       		.uleb128 0x1
+  56 000c 3F000000 		.4byte	.LASF14
+  57 0010 0C       		.byte	0xc
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 2
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 2
+>>>>>>> fix
+
+
+  58 0011 FC000000 		.4byte	.LASF15
+  59 0015 44010000 		.4byte	.LASF16
+  60 0019 00000000 		.4byte	.Ldebug_line0
+  61 001d 02       		.uleb128 0x2
+  62 001e 04       		.byte	0x4
+  63 001f 05       		.byte	0x5
+  64 0020 696E7400 		.ascii	"int\000"
+  65 0024 03       		.uleb128 0x3
+  66 0025 04       		.byte	0x4
+  67 0026 07       		.byte	0x7
+  68 0027 0E000000 		.4byte	.LASF0
+  69 002b 03       		.uleb128 0x3
+  70 002c 08       		.byte	0x8
+  71 002d 05       		.byte	0x5
+  72 002e 00000000 		.4byte	.LASF1
+  73 0032 03       		.uleb128 0x3
+  74 0033 08       		.byte	0x8
+  75 0034 04       		.byte	0x4
+  76 0035 D5010000 		.4byte	.LASF2
+  77 0039 03       		.uleb128 0x3
+  78 003a 01       		.byte	0x1
+  79 003b 06       		.byte	0x6
+  80 003c C9010000 		.4byte	.LASF3
+  81 0040 03       		.uleb128 0x3
+  82 0041 01       		.byte	0x1
+  83 0042 08       		.byte	0x8
+  84 0043 36010000 		.4byte	.LASF4
+  85 0047 03       		.uleb128 0x3
+  86 0048 02       		.byte	0x2
+  87 0049 05       		.byte	0x5
+  88 004a E1010000 		.4byte	.LASF5
+  89 004e 03       		.uleb128 0x3
+  90 004f 02       		.byte	0x2
+  91 0050 07       		.byte	0x7
+  92 0051 B6010000 		.4byte	.LASF6
+  93 0055 03       		.uleb128 0x3
+  94 0056 04       		.byte	0x4
+  95 0057 05       		.byte	0x5
+  96 0058 A6010000 		.4byte	.LASF7
+  97 005c 03       		.uleb128 0x3
+  98 005d 04       		.byte	0x4
+  99 005e 07       		.byte	0x7
+ 100 005f D3000000 		.4byte	.LASF8
+ 101 0063 03       		.uleb128 0x3
+ 102 0064 08       		.byte	0x8
+ 103 0065 07       		.byte	0x7
+ 104 0066 E5000000 		.4byte	.LASF9
+ 105 006a 03       		.uleb128 0x3
+ 106 006b 04       		.byte	0x4
+ 107 006c 07       		.byte	0x7
+ 108 006d EB010000 		.4byte	.LASF10
+ 109 0071 03       		.uleb128 0x3
+ 110 0072 01       		.byte	0x1
+ 111 0073 08       		.byte	0x8
+ 112 0074 31010000 		.4byte	.LASF11
+ 113 0078 04       		.uleb128 0x4
+ 114 0079 CD000000 		.4byte	.LASF17
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 3
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 3
+>>>>>>> fix
+
+
+ 115 007d 01       		.byte	0x1
+ 116 007e E401     		.2byte	0x1e4
+ 117 0080 40000000 		.4byte	0x40
+ 118 0084 03       		.uleb128 0x3
+ 119 0085 04       		.byte	0x4
+ 120 0086 04       		.byte	0x4
+ 121 0087 2B010000 		.4byte	.LASF12
+ 122 008b 03       		.uleb128 0x3
+ 123 008c 08       		.byte	0x8
+ 124 008d 04       		.byte	0x4
+ 125 008e AF010000 		.4byte	.LASF13
+ 126 0092 05       		.uleb128 0x5
+ 127 0093 A2000000 		.4byte	0xa2
+ 128 0097 A2000000 		.4byte	0xa2
+ 129 009b 06       		.uleb128 0x6
+ 130 009c 6A000000 		.4byte	0x6a
+ 131 00a0 13       		.byte	0x13
+ 132 00a1 00       		.byte	0
+ 133 00a2 07       		.uleb128 0x7
+ 134 00a3 78000000 		.4byte	0x78
+ 135 00a7 08       		.uleb128 0x8
+ 136 00a8 1B000000 		.4byte	.LASF18
+ 137 00ac 02       		.byte	0x2
+ 138 00ad 11       		.byte	0x11
+ 139 00ae B8000000 		.4byte	0xb8
+ 140 00b2 05       		.uleb128 0x5
+ 141 00b3 03       		.byte	0x3
+ 142 00b4 00000000 		.4byte	Filter_1_ChannelABiquadCoefficients
+ 143 00b8 07       		.uleb128 0x7
+ 144 00b9 92000000 		.4byte	0x92
+ 145 00bd 00       		.byte	0
+ 146              		.section	.debug_abbrev,"",%progbits
+ 147              	.Ldebug_abbrev0:
+ 148 0000 01       		.uleb128 0x1
+ 149 0001 11       		.uleb128 0x11
+ 150 0002 01       		.byte	0x1
+ 151 0003 25       		.uleb128 0x25
+ 152 0004 0E       		.uleb128 0xe
+ 153 0005 13       		.uleb128 0x13
+ 154 0006 0B       		.uleb128 0xb
+ 155 0007 03       		.uleb128 0x3
+ 156 0008 0E       		.uleb128 0xe
+ 157 0009 1B       		.uleb128 0x1b
+ 158 000a 0E       		.uleb128 0xe
+ 159 000b 10       		.uleb128 0x10
+ 160 000c 17       		.uleb128 0x17
+ 161 000d 00       		.byte	0
+ 162 000e 00       		.byte	0
+ 163 000f 02       		.uleb128 0x2
+ 164 0010 24       		.uleb128 0x24
+ 165 0011 00       		.byte	0
+ 166 0012 0B       		.uleb128 0xb
+ 167 0013 0B       		.uleb128 0xb
+ 168 0014 3E       		.uleb128 0x3e
+ 169 0015 0B       		.uleb128 0xb
+ 170 0016 03       		.uleb128 0x3
+ 171 0017 08       		.uleb128 0x8
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 4
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 4
+>>>>>>> fix
+
+
+ 172 0018 00       		.byte	0
+ 173 0019 00       		.byte	0
+ 174 001a 03       		.uleb128 0x3
+ 175 001b 24       		.uleb128 0x24
+ 176 001c 00       		.byte	0
+ 177 001d 0B       		.uleb128 0xb
+ 178 001e 0B       		.uleb128 0xb
+ 179 001f 3E       		.uleb128 0x3e
+ 180 0020 0B       		.uleb128 0xb
+ 181 0021 03       		.uleb128 0x3
+ 182 0022 0E       		.uleb128 0xe
+ 183 0023 00       		.byte	0
+ 184 0024 00       		.byte	0
+ 185 0025 04       		.uleb128 0x4
+ 186 0026 16       		.uleb128 0x16
+ 187 0027 00       		.byte	0
+ 188 0028 03       		.uleb128 0x3
+ 189 0029 0E       		.uleb128 0xe
+ 190 002a 3A       		.uleb128 0x3a
+ 191 002b 0B       		.uleb128 0xb
+ 192 002c 3B       		.uleb128 0x3b
+ 193 002d 05       		.uleb128 0x5
+ 194 002e 49       		.uleb128 0x49
+ 195 002f 13       		.uleb128 0x13
+ 196 0030 00       		.byte	0
+ 197 0031 00       		.byte	0
+ 198 0032 05       		.uleb128 0x5
+ 199 0033 01       		.uleb128 0x1
+ 200 0034 01       		.byte	0x1
+ 201 0035 49       		.uleb128 0x49
+ 202 0036 13       		.uleb128 0x13
+ 203 0037 01       		.uleb128 0x1
+ 204 0038 13       		.uleb128 0x13
+ 205 0039 00       		.byte	0
+ 206 003a 00       		.byte	0
+ 207 003b 06       		.uleb128 0x6
+ 208 003c 21       		.uleb128 0x21
+ 209 003d 00       		.byte	0
+ 210 003e 49       		.uleb128 0x49
+ 211 003f 13       		.uleb128 0x13
+ 212 0040 2F       		.uleb128 0x2f
+ 213 0041 0B       		.uleb128 0xb
+ 214 0042 00       		.byte	0
+ 215 0043 00       		.byte	0
+ 216 0044 07       		.uleb128 0x7
+ 217 0045 26       		.uleb128 0x26
+ 218 0046 00       		.byte	0
+ 219 0047 49       		.uleb128 0x49
+ 220 0048 13       		.uleb128 0x13
+ 221 0049 00       		.byte	0
+ 222 004a 00       		.byte	0
+ 223 004b 08       		.uleb128 0x8
+ 224 004c 34       		.uleb128 0x34
+ 225 004d 00       		.byte	0
+ 226 004e 03       		.uleb128 0x3
+ 227 004f 0E       		.uleb128 0xe
+ 228 0050 3A       		.uleb128 0x3a
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 5
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 5
+>>>>>>> fix
+
+
+ 229 0051 0B       		.uleb128 0xb
+ 230 0052 3B       		.uleb128 0x3b
+ 231 0053 0B       		.uleb128 0xb
+ 232 0054 49       		.uleb128 0x49
+ 233 0055 13       		.uleb128 0x13
+ 234 0056 3F       		.uleb128 0x3f
+ 235 0057 19       		.uleb128 0x19
+ 236 0058 02       		.uleb128 0x2
+ 237 0059 18       		.uleb128 0x18
+ 238 005a 00       		.byte	0
+ 239 005b 00       		.byte	0
+ 240 005c 00       		.byte	0
+ 241              		.section	.debug_aranges,"",%progbits
+ 242 0000 14000000 		.4byte	0x14
+ 243 0004 0200     		.2byte	0x2
+ 244 0006 00000000 		.4byte	.Ldebug_info0
+ 245 000a 04       		.byte	0x4
+ 246 000b 00       		.byte	0
+ 247 000c 0000     		.2byte	0
+ 248 000e 0000     		.2byte	0
+ 249 0010 00000000 		.4byte	0
+ 250 0014 00000000 		.4byte	0
+ 251              		.section	.debug_line,"",%progbits
+ 252              	.Ldebug_line0:
+ 253 0000 58000000 		.section	.debug_str,"MS",%progbits,1
+ 253      02005200 
+ 253      00000201 
+ 253      FB0E0D00 
+ 253      01010101 
+ 254              	.LASF1:
+ 255 0000 6C6F6E67 		.ascii	"long long int\000"
+ 255      206C6F6E 
+ 255      6720696E 
+ 255      7400
+ 256              	.LASF0:
+ 257 000e 756E7369 		.ascii	"unsigned int\000"
+ 257      676E6564 
+ 257      20696E74 
+ 257      00
+ 258              	.LASF18:
+ 259 001b 46696C74 		.ascii	"Filter_1_ChannelABiquadCoefficients\000"
+ 259      65725F31 
+ 259      5F436861 
+ 259      6E6E656C 
+ 259      41426971 
+ 260              	.LASF14:
+ 261 003f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 261      43313120 
+ 261      352E342E 
+ 261      31203230 
+ 261      31363036 
+ 262 0072 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 262      20726576 
+ 262      6973696F 
+ 262      6E203233 
+ 262      37373135 
+ 263 00a5 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 6
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 6
+>>>>>>> fix
+
+
+ 263      66756E63 
+ 263      74696F6E 
+ 263      2D736563 
+ 263      74696F6E 
+ 264              	.LASF17:
+ 265 00cd 75696E74 		.ascii	"uint8\000"
+ 265      3800
+ 266              	.LASF8:
+ 267 00d3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 267      20756E73 
+ 267      69676E65 
+ 267      6420696E 
+ 267      7400
+ 268              	.LASF9:
+ 269 00e5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 269      206C6F6E 
+ 269      6720756E 
+ 269      7369676E 
+ 269      65642069 
+ 270              	.LASF15:
+ 271 00fc 47656E65 		.ascii	"Generated_Source\\PSoC5\\Filter_1_Coefficients.c\000"
+ 271      72617465 
+ 271      645F536F 
+ 271      75726365 
+ 271      5C50536F 
+ 272              	.LASF12:
+ 273 012b 666C6F61 		.ascii	"float\000"
+ 273      7400
+ 274              	.LASF11:
+ 275 0131 63686172 		.ascii	"char\000"
+ 275      00
+ 276              	.LASF4:
+ 277 0136 756E7369 		.ascii	"unsigned char\000"
+ 277      676E6564 
+ 277      20636861 
+ 277      7200
+ 278              	.LASF16:
+ 279 0144 433A5C55 		.ascii	"C:\\Users\\nikol\\Documents\\git\\3. Semester\\PRJ3"
+ 279      73657273 
+ 279      5C6E696B 
+ 279      6F6C5C44 
+ 279      6F63756D 
+ 280 0171 5C706C61 		.ascii	"\\player_side_app\\CupSensor_IF\\OpticSensorMixer.c"
+ 280      7965725F 
+ 280      73696465 
+ 280      5F617070 
+ 280      5C437570 
+ 281 01a1 7964736E 		.ascii	"ydsn\000"
+ 281      00
+ 282              	.LASF7:
+ 283 01a6 6C6F6E67 		.ascii	"long int\000"
+ 283      20696E74 
+ 283      00
+ 284              	.LASF13:
+ 285 01af 646F7562 		.ascii	"double\000"
+ 285      6C6500
+ 286              	.LASF6:
+<<<<<<< HEAD
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cc05vKbQ.s 			page 7
+=======
+ARM GAS  C:\Users\nikol\AppData\Local\Temp\cckpaqm5.s 			page 7
+>>>>>>> fix
+
+
+ 287 01b6 73686F72 		.ascii	"short unsigned int\000"
+ 287      7420756E 
+ 287      7369676E 
+ 287      65642069 
+ 287      6E7400
+ 288              	.LASF3:
+ 289 01c9 7369676E 		.ascii	"signed char\000"
+ 289      65642063 
+ 289      68617200 
+ 290              	.LASF2:
+ 291 01d5 6C6F6E67 		.ascii	"long double\000"
+ 291      20646F75 
+ 291      626C6500 
+ 292              	.LASF5:
+ 293 01e1 73686F72 		.ascii	"short int\000"
+ 293      7420696E 
+ 293      7400
+ 294              	.LASF10:
+ 295 01eb 73697A65 		.ascii	"sizetype\000"
+ 295      74797065 
+ 295      00
+ 296              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

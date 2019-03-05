@@ -1,0 +1,6 @@
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF_v1.cydsn\CupSensor_IF_v1.cyprj|6741054e-4389-4733-beb4-8c4520e4309c
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|a20819c6-9811-45a5-a9e0-a91ea5b3ed08
+C:\Users\nikol\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|33a814e2-a525-4a6c-b5fc-18ff0f38b522
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|4abe4bd5-7ee5-4604-aae3-2cb28bc792c1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a11027d7-427d-4ee3-a6b7-e8dabed7f238
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|80ff2037-70d6-415b-a862-e12ccf9a1cde

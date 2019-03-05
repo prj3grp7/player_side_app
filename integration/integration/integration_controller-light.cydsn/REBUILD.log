@@ -1,0 +1,14 @@
+--------------- Rebuild Started: 12/12/2018 20:14:47 Project: GameController.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/GameController.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c -o .\CortexM3\ARM_GCC_541\Debug\GameController.o
+..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c: In function 'setState':
+..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c:37:17: warning: implicit declaration of function 'ControlAllColor' [-Wimplicit-function-declaration]
+                 ControlAllColor(turnedOffColor); //alle kopholder lys slukkes
+                 ^
+..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c: At top level:
+..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c:128:6: warning: conflicting types for 'ControlAllColor'
+ void ControlAllColor(color_t color)
+      ^
+..\..\..\playerSide_gamecontroller\playerSide.cydsn\GameController.c:37:17: note: previous implicit declaration of 'ControlAllColor' was here
+                 ControlAllColor(turnedOffColor); //alle kopholder lys slukkes
+                 ^
+--------------- Rebuild Succeeded: 12/12/2018 20:14:51 ---------------

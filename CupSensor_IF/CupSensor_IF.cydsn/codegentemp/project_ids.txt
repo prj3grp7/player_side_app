@@ -1,0 +1,13 @@
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF_v1.cydsn\CupSensor_IF_v1.cyprj|8543eaa4-a312-4953-ae45-ee06cd2d436f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|54dd2858-53fa-4f1d-bb96-fd2494745e98
+C:\Users\nikol\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|5f349bc0-acda-4196-93f2-a12b876e1666
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|0c0a242e-9ae9-47e1-ab68-b61330f15407
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|8710017c-8e1f-4cd4-831a-14e5d464dc6c
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|46affe05-a96a-409c-bf17-f77f2660320f
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CapSense_CSD_Design01.cydsn\CapSense_CSD_Design01.cyprj|75a1d2ee-8100-4c29-b944-c893f08f0fc9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|b545978b-3b57-4f83-8244-9d77ddb812c8
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensor.cydsn\OpticSensor.cyprj|6cee2ff3-1425-4edb-a106-1cf885afb5f9
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorTest.cydsn\OpticSensorTest.cyprj|ab85d9a4-9f8f-4fad-8f81-966d3f4c8868
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorMixer.cydsn\OpticSensorMixer.cyprj|46ef6bf4-c8e5-4ed5-a148-6c7c835214c8
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\CupSensor_IF.cydsn\CupSensor_IF.cyprj|8e85f29f-6236-49d3-9300-1a59714c18e0
+C:\Users\nikol\Documents\git\3. Semester\PRJ3\player_side_app\CupSensor_IF\OpticSensorMoreChannels.cydsn\OpticSensorMoreChannels.cyprj|fbf49ce8-5ce0-4155-b69c-de5fbfefd08f

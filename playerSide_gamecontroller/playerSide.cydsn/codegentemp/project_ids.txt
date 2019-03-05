@@ -1,0 +1,6 @@
+C:\Users\marti\Dropbox\3. semester\github_repositories\player_side_app\playerSide_gamecontroller\playerSide.cydsn\playerSide.cyprj|46d89a38-782f-4588-bdeb-055c0acbf0a1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|d8cdbc36-bb22-4457-9aa9-1e404b902f7f
+C:\Users\marti\OneDrive\Dokumenter\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|7bab6a76-2977-46b2-9170-64c1883fa731
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|f3f0df14-43c1-42ba-ac50-eb956f796358
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|c4209dda-bdc3-45de-aae6-f96824fc1377
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|f53af255-9333-441d-a28b-d148a2c5e3f8
